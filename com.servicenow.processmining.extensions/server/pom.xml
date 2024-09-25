@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.servicenow.processmining.extensions</groupId>
+	<artifactId>com.servicenow.processmining.extensions.server</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>com.servicenow.processmining.extensions.server</name>
+	<description>Process Mining Extension server modules</description>
+
+	<modules>
+		<module>sn</module>
+		<module>sc</module>
+		<module>pm</module>
+		<module>api</module>
+		<module>docker</module>
+	</modules>
+</project>

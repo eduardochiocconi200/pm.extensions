@@ -1,0 +1,12 @@
+package com.servicenow.processmining.extensions.server.api;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication(scanBasePackages = { "com.servicenow.processmining.extensions.server.api" })
+public class ProcessMiningApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ProcessMiningApplication.class, args);
+	}
+}

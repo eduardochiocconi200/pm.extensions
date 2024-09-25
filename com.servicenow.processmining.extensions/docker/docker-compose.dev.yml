@@ -1,0 +1,33 @@
+services:
+
+  pm-frontend:
+    image: pm.extension.frontend:1.0
+    hostname: pm-frontend
+    ports:
+      - "3000:3000"
+    extra_hosts:
+      - "pm-backend:172.100.0.4"
+    networks:
+      app_net:
+        ipv4_address: 172.100.0.3
+
+  pm-backend:
+    image: pm.extension.backend:1.0
+    hostname: pm-backend
+    ports:
+      - "8080:8080"
+    extra_hosts:
+      - "pm-frontend:172.100.0.3"
+    networks:
+      app_net:
+        ipv4_address: 172.100.0.4
+
+networks:
+  app_net:
+    driver: bridge
+    driver_opts:
+      com.docker.network.enable_ipv6: "false"
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.100.0.0/24

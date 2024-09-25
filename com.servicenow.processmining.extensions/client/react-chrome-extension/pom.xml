@@ -1,0 +1,14 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.servicenow.processmining.extensions.client</groupId>
+	<artifactId>com.servicenow.processmining.extensions.client.react-chrome-extension</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>com.servicenow.processmining.extensions.client.apps</name>
+	<description>Process Mining Extension React Chrome Extension client modules</description>
+
+	<modules>
+		<module>sn-catalog-app</module>
+	</modules>
+</project>

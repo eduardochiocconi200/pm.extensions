@@ -1,0 +1,96 @@
+{ "prompt" : "I am a business analyst and I want to optimize my incident management business process. 48 incidents were created across the 6 different variants as specified by the JSON data payload that follows. The nodes attribute describe the sequence of steps that the incident goes through from begin to end. The frequency attribute describes how many executions are associated to the specific variant. The avgDuration attribute describes the average end to end time measures in second. With the JSON payload below, I am interested in learning any recommendations to help reduce the average time by 10% including reduction of rework (steps in the process described in the nodes attribute that may be repeated) and other optimization suggestions. The JSON payload is the one that follows:",
+  "variants": [
+    {
+      "id": "00e508354daf6aa52c2155c6c9662a1a",
+      "nodes": [
+        "3c6d83a605c9cbec999595f24ae86064",
+        "c80dce03df64be733cfe435d363bc415",
+        "252dc33d5185c4961c63149d71a12412",
+        "c80dce03df64be733cfe435d363bc415",
+        "c875861967cd8acd818a9325ff4b7b3a",
+        "c80dce03df64be733cfe435d363bc415",
+        "52fc856a1f5030f7c85fd2d83e2fe3c1",
+        "0487d27d7b86c232d93cafdee15e1cb7",
+        "211f7502b22101009fa46e2dfa9fdfea"
+      ],
+      "frequency": 4,
+      "avgDuration": 2259901
+    },
+    {
+      "id": "5d79e277be27c8b0006b51768af54b7c",
+      "nodes": [
+        "3c6d83a605c9cbec999595f24ae86064",
+        "23e17d813c13d248452233b28a7d365f",
+        "252dc33d5185c4961c63149d71a12412",
+        "c80dce03df64be733cfe435d363bc415",
+        "52fc856a1f5030f7c85fd2d83e2fe3c1",
+        "c80dce03df64be733cfe435d363bc415",
+        "52fc856a1f5030f7c85fd2d83e2fe3c1",
+        "0487d27d7b86c232d93cafdee15e1cb7",
+        "211f7502b22101009fa46e2dfa9fdfea"
+      ],
+      "frequency": 18,
+      "avgDuration": 957744
+    },
+    {
+      "id": "17b96756825e1d693a3f34b85ae49bf0",
+      "nodes": [
+        "3c6d83a605c9cbec999595f24ae86064",
+        "23e17d813c13d248452233b28a7d365f",
+        "252dc33d5185c4961c63149d71a12412",
+        "c80dce03df64be733cfe435d363bc415",
+        "c875861967cd8acd818a9325ff4b7b3a",
+        "c80dce03df64be733cfe435d363bc415",
+        "c875861967cd8acd818a9325ff4b7b3a",
+        "c80dce03df64be733cfe435d363bc415",
+        "c875861967cd8acd818a9325ff4b7b3a",
+        "c80dce03df64be733cfe435d363bc415",
+        "52fc856a1f5030f7c85fd2d83e2fe3c1",
+        "0487d27d7b86c232d93cafdee15e1cb7",
+        "211f7502b22101009fa46e2dfa9fdfea"
+      ],
+      "frequency": 4,
+      "avgDuration": 1032420
+    },
+    {
+      "id": "46296c2b8d8a96b00f46e26049851e0c",
+      "nodes": [
+        "3c6d83a605c9cbec999595f24ae86064",
+        "23e17d813c13d248452233b28a7d365f",
+        "252dc33d5185c4961c63149d71a12412",
+        "c80dce03df64be733cfe435d363bc415",
+        "52fc856a1f5030f7c85fd2d83e2fe3c1",
+        "0487d27d7b86c232d93cafdee15e1cb7",
+        "211f7502b22101009fa46e2dfa9fdfea"
+      ],
+      "frequency": 6,
+      "avgDuration": 654016
+    },
+    {
+      "id": "2cc68d11bf47d814e220628b7de3fa2c",
+      "nodes": [
+        "3c6d83a605c9cbec999595f24ae86064",
+        "23e17d813c13d248452233b28a7d365f",
+        "c80dce03df64be733cfe435d363bc415",
+        "52fc856a1f5030f7c85fd2d83e2fe3c1",
+        "0487d27d7b86c232d93cafdee15e1cb7",
+        "211f7502b22101009fa46e2dfa9fdfea"
+      ],
+      "frequency": 5,
+      "avgDuration": 350541
+    },
+    {
+      "id": "3e5e015e9dbb98968c6d3f25b134f1e4",
+      "nodes": [
+        "3c6d83a605c9cbec999595f24ae86064",
+        "c80dce03df64be733cfe435d363bc415",
+        "252dc33d5185c4961c63149d71a12412",
+        "c80dce03df64be733cfe435d363bc415",
+        "52fc856a1f5030f7c85fd2d83e2fe3c1",
+        "0487d27d7b86c232d93cafdee15e1cb7",
+        "211f7502b22101009fa46e2dfa9fdfea"
+      ],
+      "frequency": 11,
+      "avgDuration": 594465
+    }
+]}

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+
+        <groupId>com.servicenow.processmining.extensions.server</groupId>
+        <artifactId>com.servicenow.processmining.extensions.server.sn</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+
+        <properties>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        </properties>
+
+        <build>
+                <resources>
+                        <resource>
+                                <directory>src/main/java</directory>
+                        </resource>
+                        <resource>
+                                <directory>src/main/resources</directory>
+                        </resource>
+                </resources>
+                <plugins>
+                        <plugin>
+                                <groupId>org.apache.maven.plugins</groupId>
+                                <artifactId>maven-compiler-plugin</artifactId>
+                                <version>3.13.0</version>
+                                <configuration>
+                                        <source>${maven.compiler.source}</source>
+                                        <target>${maven.compiler.target}</target>
+                                        <encoding>${project.build.sourceEncoding}</encoding>
+                                </configuration>
+                        </plugin>
+                </plugins>
+        </build>
+
+        <dependencies>
+                <dependency>
+                        <groupId>org.apache.httpcomponents.client5</groupId>
+                        <artifactId>httpclient5</artifactId>
+                        <version>5.3.1</version>
+                </dependency>
+                <dependency>
+                        <groupId>org.apache.httpcomponents.client5</groupId>
+                        <artifactId>httpclient5-fluent</artifactId>
+                        <version>5.3.1</version>                
+                </dependency>
+                <dependency>
+                        <groupId>org.json</groupId>
+                        <artifactId>json</artifactId>
+                        <version>20240303</version>                
+                </dependency>
+                <dependency>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-api</artifactId>
+                        <version>2.0.12</version>
+                </dependency>
+                <dependency>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-core</artifactId>
+                        <version>1.5.3</version>                
+                </dependency>
+                <dependency>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                        <version>1.5.3</version>                
+                </dependency>
+        </dependencies>
+</project>

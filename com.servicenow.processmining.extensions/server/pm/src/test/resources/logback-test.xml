@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<Pattern>%d{ISO8601} %-5p [%t] - %m%n</Pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.servicenow.processmining.extensions.pm.dao" level="INFO"/>
+
+	<logger name="com.servicenow.processmining.extensions.pm.model" level="INFO" />
+	<logger name="com.servicenow.processmining.extensions.pm.model.detectors" level="INFO" />
+
+	<logger name="com.servicenow.processmining.extensions.pm.processmodel" level="INFO" />
+
+	<logger name="com.servicenow.processmining.extensions.pm.simulation.core" level="INFO" />
+	<logger name="com.servicenow.processmining.extensions.pm.simulation.workflow" level="INFO" />
+
+	<root level="OFF">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>

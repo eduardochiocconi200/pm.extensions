@@ -1,0 +1,1772 @@
+{
+  "data": {
+    "GlidePromin_Query": {
+      "scheduleModel": {
+        "project": {
+          "name": "Incident State Analysis (2024)",
+          "projectId": "950f4f0393a886506e79bb1e1dba102b",
+          "paUuid": null,
+          "domain": "global"
+        },
+        "projectEntities": [
+          {
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "parentId": null,
+            "name": "Incidents",
+            "table": { "name": "incident", "label": "Incident" },
+            "activities": [
+              {
+                "id": "2aaf078393a886506e79bb1e1dba107f",
+                "field": "state",
+                "label": "State",
+                "displayName": null
+              }
+            ],
+            "activitiesOfInterest": []
+          }
+        ],
+        "filterSets": [
+          {
+            "id": "ed54e6f6ff76c69048d5fbd38c4fd9ac",
+            "name": "Email Channel Filter",
+            "filter": {
+              "dataFilter": [],
+              "breakdowns": [
+                {
+                  "entityId": "783f434393a886506e79bb1e1dba1020",
+                  "breakdowns": [
+                    { "field": "contact_type", "values": ["email"] }
+                  ]
+                }
+              ],
+              "advancedTransitions": [],
+              "repetitions": [],
+              "variantFilter": []
+            },
+            "caseCount": 48,
+            "variantCount": 6,
+            "totalDuration": 42624576,
+            "maxDuration": 2315888,
+            "minDuration": 57203,
+            "avgDuration": 888012,
+            "medianDuration": 769085,
+            "stdDeviation": 664059,
+            "trimmedAverage": 861976
+          },
+          {
+            "id": "8187cfb2ffbac69048d5fbd38c4fd9a0",
+            "name": "Phone Channel Filter",
+            "filter": {
+              "dataFilter": [],
+              "breakdowns": [
+                {
+                  "entityId": "783f434393a886506e79bb1e1dba1020",
+                  "breakdowns": [
+                    { "field": "contact_type", "values": ["phone"] }
+                  ]
+                }
+              ],
+              "advancedTransitions": [],
+              "repetitions": [],
+              "variantFilter": []
+            },
+            "caseCount": 39,
+            "variantCount": 6,
+            "totalDuration": 47521110,
+            "maxDuration": 2340029,
+            "minDuration": 60979,
+            "avgDuration": 1218490,
+            "medianDuration": 1093491,
+            "stdDeviation": 806192,
+            "trimmedAverage": 1220804
+          },
+          {
+            "id": "d68cea03ff3e4a9048d5fbd38c4fd955",
+            "name": "Priority 1 Phone Channel",
+            "filter": {
+              "dataFilter": [],
+              "breakdowns": [
+                {
+                  "entityId": "783f434393a886506e79bb1e1dba1020",
+                  "breakdowns": [
+                    { "field": "contact_type", "values": ["phone"] },
+                    { "field": "priority", "values": ["1"] }
+                  ]
+                }
+              ],
+              "advancedTransitions": [],
+              "repetitions": [],
+              "variantFilter": []
+            },
+            "caseCount": 2,
+            "variantCount": 2,
+            "totalDuration": 1941502,
+            "maxDuration": 1078201,
+            "minDuration": 863301,
+            "avgDuration": 970751,
+            "medianDuration": 970751,
+            "stdDeviation": 151957,
+            "trimmedAverage": 970751
+          }
+        ],
+        "nodes": [
+          {
+            "key": "c875861967cd8acd818a9325ff4b7b3a",
+            "label": "On Hold",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 14,
+            "caseFreq": 10,
+            "maxReps": 3,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "3",
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 8
+                },
+                {
+                  "leftRangeInclusive": 2,
+                  "rightRangeExclusive": 3,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 3,
+                  "rightRangeExclusive": 4,
+                  "value": 2
+                }
+              ]
+            }
+          },
+          {
+            "key": "3c6d83a605c9cbec999595f24ae86064",
+            "label": "Created",
+            "activityId": "783f434393a886506e79bb1e1dba1020__case",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": true,
+            "isEnd": false,
+            "absoluteFreq": 39,
+            "caseFreq": 39,
+            "maxReps": 1,
+            "fieldLabel": "Created activities",
+            "field": "__case",
+            "value": "created",
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 39
+                }
+              ]
+            }
+          },
+          {
+            "key": "23e17d813c13d248452233b28a7d365f",
+            "label": "New",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 20,
+            "caseFreq": 20,
+            "maxReps": 1,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "1",
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 20
+                }
+              ]
+            }
+          },
+          {
+            "key": "211f7502b22101009fa46e2dfa9fdfea",
+            "label": "Completed",
+            "activityId": "783f434393a886506e79bb1e1dba1020__case",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": true,
+            "absoluteFreq": 39,
+            "caseFreq": 39,
+            "maxReps": 1,
+            "fieldLabel": "Created activities",
+            "field": "__case",
+            "value": "completed",
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 39
+                }
+              ]
+            }
+          },
+          {
+            "key": "c80dce03df64be733cfe435d363bc415",
+            "label": "In progress",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 83,
+            "caseFreq": 39,
+            "maxReps": 4,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "2",
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 7
+                },
+                {
+                  "leftRangeInclusive": 2,
+                  "rightRangeExclusive": 3,
+                  "value": 22
+                },
+                {
+                  "leftRangeInclusive": 3,
+                  "rightRangeExclusive": 4,
+                  "value": 8
+                },
+                {
+                  "leftRangeInclusive": 4,
+                  "rightRangeExclusive": 5,
+                  "value": 2
+                }
+              ]
+            }
+          },
+          {
+            "key": "0487d27d7b86c232d93cafdee15e1cb7",
+            "label": "Closed",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 39,
+            "caseFreq": 39,
+            "maxReps": 1,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "7",
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 39
+                }
+              ]
+            }
+          },
+          {
+            "key": "252dc33d5185c4961c63149d71a12412",
+            "label": "Assigned",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 37,
+            "caseFreq": 37,
+            "maxReps": 1,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "200",
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 37
+                }
+              ]
+            }
+          },
+          {
+            "key": "52fc856a1f5030f7c85fd2d83e2fe3c1",
+            "label": "Resolved",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 50,
+            "caseFreq": 39,
+            "maxReps": 2,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "6",
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 28
+                },
+                {
+                  "leftRangeInclusive": 2,
+                  "rightRangeExclusive": 3,
+                  "value": 11
+                }
+              ]
+            }
+          }
+        ],
+        "edges": [
+          {
+            "from": "252dc33d5185c4961c63149d71a12412",
+            "to": "c80dce03df64be733cfe435d363bc415",
+            "absoluteFreq": 37,
+            "caseFreq": 37,
+            "maxReps": 1,
+            "totalDuration": 5551683,
+            "maxDuration": 329991,
+            "minDuration": 10082,
+            "avgDuration": 150045,
+            "trimmedAverage": 148182,
+            "stdDeviation": 110315,
+            "medianDuration": 105075,
+            "q1": 66764,
+            "q3": 275753,
+            "q4": 329991,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 0,
+                  "rightRangeExclusive": 28800,
+                  "value": 5
+                },
+                {
+                  "leftRangeInclusive": 28800,
+                  "rightRangeExclusive": 57600,
+                  "value": 2
+                },
+                {
+                  "leftRangeInclusive": 57600,
+                  "rightRangeExclusive": 86400,
+                  "value": 10
+                },
+                {
+                  "leftRangeInclusive": 86400,
+                  "rightRangeExclusive": 115200,
+                  "value": 4
+                },
+                {
+                  "leftRangeInclusive": 115200,
+                  "rightRangeExclusive": 144000,
+                  "value": 2
+                },
+                {
+                  "leftRangeInclusive": 144000,
+                  "rightRangeExclusive": 172800,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 172800,
+                  "rightRangeExclusive": 201600,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 201600,
+                  "rightRangeExclusive": 230400,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 230400,
+                  "rightRangeExclusive": 259200,
+                  "value": 2
+                },
+                {
+                  "leftRangeInclusive": 259200,
+                  "rightRangeExclusive": 288000,
+                  "value": 5
+                },
+                {
+                  "leftRangeInclusive": 288000,
+                  "rightRangeExclusive": 316800,
+                  "value": 6
+                },
+                {
+                  "leftRangeInclusive": 316800,
+                  "rightRangeExclusive": 345600,
+                  "value": 1
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 37
+                }
+              ]
+            }
+          },
+          {
+            "from": "0487d27d7b86c232d93cafdee15e1cb7",
+            "to": "211f7502b22101009fa46e2dfa9fdfea",
+            "absoluteFreq": 39,
+            "caseFreq": 39,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0,
+            "q1": 0,
+            "q3": 0,
+            "q4": 0,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 0,
+                  "rightRangeExclusive": 15,
+                  "value": 39
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 39
+                }
+              ]
+            }
+          },
+          {
+            "from": "23e17d813c13d248452233b28a7d365f",
+            "to": "c80dce03df64be733cfe435d363bc415",
+            "absoluteFreq": 2,
+            "caseFreq": 2,
+            "maxReps": 1,
+            "totalDuration": 140141,
+            "maxDuration": 75444,
+            "minDuration": 64697,
+            "avgDuration": 70070,
+            "trimmedAverage": 70070,
+            "stdDeviation": 7599,
+            "medianDuration": 70070,
+            "q1": 64697,
+            "q3": 75444,
+            "q4": 75444,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 63900,
+                  "rightRangeExclusive": 64800,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 64800,
+                  "rightRangeExclusive": 65700,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 65700,
+                  "rightRangeExclusive": 66600,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 66600,
+                  "rightRangeExclusive": 67500,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 67500,
+                  "rightRangeExclusive": 68400,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 68400,
+                  "rightRangeExclusive": 69300,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 69300,
+                  "rightRangeExclusive": 70200,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 70200,
+                  "rightRangeExclusive": 71100,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 71100,
+                  "rightRangeExclusive": 72000,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 72000,
+                  "rightRangeExclusive": 72900,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 72900,
+                  "rightRangeExclusive": 73800,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 73800,
+                  "rightRangeExclusive": 74700,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 74700,
+                  "rightRangeExclusive": 75600,
+                  "value": 1
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 2
+                }
+              ]
+            }
+          },
+          {
+            "from": "3c6d83a605c9cbec999595f24ae86064",
+            "to": "c80dce03df64be733cfe435d363bc415",
+            "absoluteFreq": 19,
+            "caseFreq": 19,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0,
+            "q1": 0,
+            "q3": 0,
+            "q4": 0,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 0,
+                  "rightRangeExclusive": 15,
+                  "value": 19
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 19
+                }
+              ]
+            }
+          },
+          {
+            "from": "23e17d813c13d248452233b28a7d365f",
+            "to": "252dc33d5185c4961c63149d71a12412",
+            "absoluteFreq": 18,
+            "caseFreq": 18,
+            "maxReps": 1,
+            "totalDuration": 1794248,
+            "maxDuration": 170505,
+            "minDuration": 45359,
+            "avgDuration": 99680,
+            "trimmedAverage": 98649,
+            "stdDeviation": 36119,
+            "medianDuration": 92217,
+            "q1": 72104,
+            "q3": 127168,
+            "q4": 170505,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 43200,
+                  "rightRangeExclusive": 57600,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 57600,
+                  "rightRangeExclusive": 72000,
+                  "value": 3
+                },
+                {
+                  "leftRangeInclusive": 72000,
+                  "rightRangeExclusive": 86400,
+                  "value": 3
+                },
+                {
+                  "leftRangeInclusive": 86400,
+                  "rightRangeExclusive": 100800,
+                  "value": 5
+                },
+                {
+                  "leftRangeInclusive": 100800,
+                  "rightRangeExclusive": 115200,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 115200,
+                  "rightRangeExclusive": 129600,
+                  "value": 2
+                },
+                {
+                  "leftRangeInclusive": 129600,
+                  "rightRangeExclusive": 144000,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 144000,
+                  "rightRangeExclusive": 158400,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 158400,
+                  "rightRangeExclusive": 172800,
+                  "value": 2
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 18
+                }
+              ]
+            }
+          },
+          {
+            "from": "c875861967cd8acd818a9325ff4b7b3a",
+            "to": "c80dce03df64be733cfe435d363bc415",
+            "absoluteFreq": 14,
+            "caseFreq": 10,
+            "maxReps": 3,
+            "totalDuration": 5368475,
+            "maxDuration": 602289,
+            "minDuration": 172800,
+            "avgDuration": 383462,
+            "trimmedAverage": 382782,
+            "stdDeviation": 152398,
+            "medianDuration": 456262,
+            "q1": 238804,
+            "q3": 495463,
+            "q4": 602289,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 172800,
+                  "rightRangeExclusive": 216000,
+                  "value": 2
+                },
+                {
+                  "leftRangeInclusive": 216000,
+                  "rightRangeExclusive": 259200,
+                  "value": 3
+                },
+                {
+                  "leftRangeInclusive": 259200,
+                  "rightRangeExclusive": 302400,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 302400,
+                  "rightRangeExclusive": 345600,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 345600,
+                  "rightRangeExclusive": 388800,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 388800,
+                  "rightRangeExclusive": 432000,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 432000,
+                  "rightRangeExclusive": 475200,
+                  "value": 3
+                },
+                {
+                  "leftRangeInclusive": 475200,
+                  "rightRangeExclusive": 518400,
+                  "value": 3
+                },
+                {
+                  "leftRangeInclusive": 518400,
+                  "rightRangeExclusive": 561600,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 561600,
+                  "rightRangeExclusive": 604800,
+                  "value": 2
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 8
+                },
+                {
+                  "leftRangeInclusive": 2,
+                  "rightRangeExclusive": 3,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 3,
+                  "rightRangeExclusive": 4,
+                  "value": 2
+                }
+              ]
+            }
+          },
+          {
+            "from": "3c6d83a605c9cbec999595f24ae86064",
+            "to": "23e17d813c13d248452233b28a7d365f",
+            "absoluteFreq": 20,
+            "caseFreq": 20,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0,
+            "q1": 0,
+            "q3": 0,
+            "q4": 0,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 0,
+                  "rightRangeExclusive": 15,
+                  "value": 20
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 20
+                }
+              ]
+            }
+          },
+          {
+            "from": "c80dce03df64be733cfe435d363bc415",
+            "to": "252dc33d5185c4961c63149d71a12412",
+            "absoluteFreq": 19,
+            "caseFreq": 19,
+            "maxReps": 1,
+            "totalDuration": 8059868,
+            "maxDuration": 628637,
+            "minDuration": 19537,
+            "avgDuration": 424203,
+            "trimmedAverage": 435982,
+            "stdDeviation": 246968,
+            "medianDuration": 549789,
+            "q1": 31627,
+            "q3": 591946,
+            "q4": 628637,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 0,
+                  "rightRangeExclusive": 86400,
+                  "value": 5
+                },
+                {
+                  "leftRangeInclusive": 86400,
+                  "rightRangeExclusive": 172800,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 172800,
+                  "rightRangeExclusive": 259200,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 259200,
+                  "rightRangeExclusive": 345600,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 345600,
+                  "rightRangeExclusive": 432000,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 432000,
+                  "rightRangeExclusive": 518400,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 518400,
+                  "rightRangeExclusive": 604800,
+                  "value": 11
+                },
+                {
+                  "leftRangeInclusive": 604800,
+                  "rightRangeExclusive": 691200,
+                  "value": 2
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 19
+                }
+              ]
+            }
+          },
+          {
+            "from": "52fc856a1f5030f7c85fd2d83e2fe3c1",
+            "to": "0487d27d7b86c232d93cafdee15e1cb7",
+            "absoluteFreq": 39,
+            "caseFreq": 39,
+            "maxReps": 1,
+            "totalDuration": 6090239,
+            "maxDuration": 344656,
+            "minDuration": 10499,
+            "avgDuration": 156159,
+            "trimmedAverage": 153832,
+            "stdDeviation": 111917,
+            "medianDuration": 111384,
+            "q1": 66355,
+            "q3": 283209,
+            "q4": 344656,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 0,
+                  "rightRangeExclusive": 28800,
+                  "value": 5
+                },
+                {
+                  "leftRangeInclusive": 28800,
+                  "rightRangeExclusive": 57600,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 57600,
+                  "rightRangeExclusive": 86400,
+                  "value": 7
+                },
+                {
+                  "leftRangeInclusive": 86400,
+                  "rightRangeExclusive": 115200,
+                  "value": 7
+                },
+                {
+                  "leftRangeInclusive": 115200,
+                  "rightRangeExclusive": 144000,
+                  "value": 4
+                },
+                {
+                  "leftRangeInclusive": 144000,
+                  "rightRangeExclusive": 172800,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 172800,
+                  "rightRangeExclusive": 201600,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 201600,
+                  "rightRangeExclusive": 230400,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 230400,
+                  "rightRangeExclusive": 259200,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 259200,
+                  "rightRangeExclusive": 288000,
+                  "value": 5
+                },
+                {
+                  "leftRangeInclusive": 288000,
+                  "rightRangeExclusive": 316800,
+                  "value": 2
+                },
+                {
+                  "leftRangeInclusive": 316800,
+                  "rightRangeExclusive": 345600,
+                  "value": 5
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 39
+                }
+              ]
+            }
+          },
+          {
+            "from": "c80dce03df64be733cfe435d363bc415",
+            "to": "52fc856a1f5030f7c85fd2d83e2fe3c1",
+            "absoluteFreq": 50,
+            "caseFreq": 39,
+            "maxReps": 2,
+            "totalDuration": 11413085,
+            "maxDuration": 1035108,
+            "minDuration": 9676,
+            "avgDuration": 228261,
+            "trimmedAverage": 192473,
+            "stdDeviation": 272309,
+            "medianDuration": 110005,
+            "q1": 78105,
+            "q3": 297462,
+            "q4": 1035108,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 0,
+                  "rightRangeExclusive": 86400,
+                  "value": 18
+                },
+                {
+                  "leftRangeInclusive": 86400,
+                  "rightRangeExclusive": 172800,
+                  "value": 16
+                },
+                {
+                  "leftRangeInclusive": 172800,
+                  "rightRangeExclusive": 259200,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 259200,
+                  "rightRangeExclusive": 345600,
+                  "value": 8
+                },
+                {
+                  "leftRangeInclusive": 345600,
+                  "rightRangeExclusive": 432000,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 432000,
+                  "rightRangeExclusive": 518400,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 518400,
+                  "rightRangeExclusive": 604800,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 604800,
+                  "rightRangeExclusive": 691200,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 691200,
+                  "rightRangeExclusive": 777600,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 777600,
+                  "rightRangeExclusive": 864000,
+                  "value": 2
+                },
+                {
+                  "leftRangeInclusive": 864000,
+                  "rightRangeExclusive": 950400,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 950400,
+                  "rightRangeExclusive": 1036800,
+                  "value": 2
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 28
+                },
+                {
+                  "leftRangeInclusive": 2,
+                  "rightRangeExclusive": 3,
+                  "value": 11
+                }
+              ]
+            }
+          },
+          {
+            "from": "52fc856a1f5030f7c85fd2d83e2fe3c1",
+            "to": "c80dce03df64be733cfe435d363bc415",
+            "absoluteFreq": 11,
+            "caseFreq": 11,
+            "maxReps": 1,
+            "totalDuration": 6382910,
+            "maxDuration": 1064205,
+            "minDuration": 183869,
+            "avgDuration": 580264,
+            "trimmedAverage": 570537,
+            "stdDeviation": 300116,
+            "medianDuration": 622323,
+            "q1": 354818,
+            "q3": 776125,
+            "q4": 1064205,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 172800,
+                  "rightRangeExclusive": 259200,
+                  "value": 2
+                },
+                {
+                  "leftRangeInclusive": 259200,
+                  "rightRangeExclusive": 345600,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 345600,
+                  "rightRangeExclusive": 432000,
+                  "value": 3
+                },
+                {
+                  "leftRangeInclusive": 432000,
+                  "rightRangeExclusive": 518400,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 518400,
+                  "rightRangeExclusive": 604800,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 604800,
+                  "rightRangeExclusive": 691200,
+                  "value": 3
+                },
+                {
+                  "leftRangeInclusive": 691200,
+                  "rightRangeExclusive": 777600,
+                  "value": 1
+                },
+                {
+                  "leftRangeInclusive": 777600,
+                  "rightRangeExclusive": 864000,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 864000,
+                  "rightRangeExclusive": 950400,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 950400,
+                  "rightRangeExclusive": 1036800,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 1036800,
+                  "rightRangeExclusive": 1123200,
+                  "value": 2
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 11
+                }
+              ]
+            }
+          },
+          {
+            "from": "c80dce03df64be733cfe435d363bc415",
+            "to": "c875861967cd8acd818a9325ff4b7b3a",
+            "absoluteFreq": 14,
+            "caseFreq": 10,
+            "maxReps": 3,
+            "totalDuration": 2720489,
+            "maxDuration": 336464,
+            "minDuration": 53556,
+            "avgDuration": 194320,
+            "trimmedAverage": 194205,
+            "stdDeviation": 118245,
+            "medianDuration": 267471,
+            "q1": 67584,
+            "q3": 291174,
+            "q4": 336464,
+            "nQ1": -1.0,
+            "nQ3": -1.0,
+            "nQ4": -1.0,
+            "nBins": [],
+            "durationHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 28800,
+                  "rightRangeExclusive": 57600,
+                  "value": 2
+                },
+                {
+                  "leftRangeInclusive": 57600,
+                  "rightRangeExclusive": 86400,
+                  "value": 4
+                },
+                {
+                  "leftRangeInclusive": 86400,
+                  "rightRangeExclusive": 115200,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 115200,
+                  "rightRangeExclusive": 144000,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 144000,
+                  "rightRangeExclusive": 172800,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 172800,
+                  "rightRangeExclusive": 201600,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 201600,
+                  "rightRangeExclusive": 230400,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 230400,
+                  "rightRangeExclusive": 259200,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 259200,
+                  "rightRangeExclusive": 288000,
+                  "value": 4
+                },
+                {
+                  "leftRangeInclusive": 288000,
+                  "rightRangeExclusive": 316800,
+                  "value": 3
+                },
+                {
+                  "leftRangeInclusive": 316800,
+                  "rightRangeExclusive": 345600,
+                  "value": 1
+                }
+              ]
+            },
+            "repHistogram": {
+              "bins": [
+                {
+                  "leftRangeInclusive": 1,
+                  "rightRangeExclusive": 2,
+                  "value": 8
+                },
+                {
+                  "leftRangeInclusive": 2,
+                  "rightRangeExclusive": 3,
+                  "value": 0
+                },
+                {
+                  "leftRangeInclusive": 3,
+                  "rightRangeExclusive": 4,
+                  "value": 2
+                }
+              ]
+            }
+          }
+        ],
+        "findings": [],
+        "aggregates": [
+          {
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "model": {
+              "caseCount": 39,
+              "variantCount": 6,
+              "minCaseDuration": 60979,
+              "maxCaseDuration": 2340029,
+              "avgCaseDuration": 1218490,
+              "trimmedAverage": 1220804,
+              "stdDeviation": 806192,
+              "medianDuration": 1093491,
+              "uniqueParentRecords": 0
+            },
+            "node": {
+              "absoluteFreq": { "min": 14, "max": 83 },
+              "caseFreq": { "min": 10, "max": 39 },
+              "maxReps": { "min": 1, "max": 4 }
+            },
+            "edge": {
+              "absoluteFreq": { "min": 2, "max": 50 },
+              "caseFreq": { "min": 2, "max": 39 },
+              "maxReps": { "min": 1, "max": 3 },
+              "minDuration": { "min": 0, "max": 183869 },
+              "maxDuration": { "min": 0, "max": 1064205 },
+              "avgDuration": { "min": 0, "max": 580264 },
+              "totalDuration": { "min": 0, "max": 11413085 },
+              "trimmedAverage": { "min": 0, "max": 570537 },
+              "stdDeviation": { "min": 0, "max": 300116 },
+              "medianDuration": { "min": 0, "max": 622323 }
+            },
+            "variant": {
+              "nodeCount": { "min": 0, "max": 13 },
+              "caseFreq": { "min": 0, "max": 11 },
+              "avgDuration": { "min": 0, "max": 2265987 },
+              "healthScore": { "min": -592, "max": 1375 },
+              "trimmedAverage": { "min": 0, "max": 2265987 },
+              "stdDeviation": { "min": 0, "max": 1020730 },
+              "medianDuration": { "min": 0, "max": 622323 }
+            }
+          }
+        ],
+        "breakdowns": [
+          {
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "breakdownStats": [
+              {
+                "field": "contact_type",
+                "label": "Channel",
+                "displayName": "Channel",
+                "line": [
+                  {
+                    "label": "Phone",
+                    "value": "phone",
+                    "caseCount": 39,
+                    "variantCount": 6,
+                    "avgDuration": 1218490,
+                    "trimmedAverage": 1220804,
+                    "stdDeviation": 806192,
+                    "medianDuration": 1093491
+                  }
+                ]
+              },
+              {
+                "field": "assignment_group",
+                "label": "Assignment group",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "AG - Helpdesk L2",
+                    "value": "90580b83932886506e79bb1e1dba1036",
+                    "caseCount": 11,
+                    "variantCount": 4,
+                    "avgDuration": 1502405,
+                    "trimmedAverage": 1569079,
+                    "stdDeviation": 796732,
+                    "medianDuration": 1527468
+                  },
+                  {
+                    "label": "AG - Software",
+                    "value": "10580b83932886506e79bb1e1dba103b",
+                    "caseCount": 5,
+                    "variantCount": 4,
+                    "avgDuration": 1652695,
+                    "trimmedAverage": 1652695,
+                    "stdDeviation": 800891,
+                    "medianDuration": 1984375
+                  },
+                  {
+                    "label": "AG- Apps Team - EMEA",
+                    "value": "9c580b83932886506e79bb1e1dba103f",
+                    "caseCount": 5,
+                    "variantCount": 4,
+                    "avgDuration": 1083989,
+                    "trimmedAverage": 1083989,
+                    "stdDeviation": 924120,
+                    "medianDuration": 835507
+                  },
+                  {
+                    "label": "AG - Helpdesk L3",
+                    "value": "58580b83932886506e79bb1e1dba1038",
+                    "caseCount": 11,
+                    "variantCount": 5,
+                    "avgDuration": 787230,
+                    "trimmedAverage": 698645,
+                    "stdDeviation": 639140,
+                    "medianDuration": 697800
+                  },
+                  {
+                    "label": "AG - Apps Team - APAC",
+                    "value": "d4580b83932886506e79bb1e1dba103d",
+                    "caseCount": 4,
+                    "variantCount": 4,
+                    "avgDuration": 1350761,
+                    "trimmedAverage": 1350761,
+                    "stdDeviation": 895453,
+                    "medianDuration": 1437582
+                  },
+                  {
+                    "label": "AG - Helpdesk L1",
+                    "value": "94588343932886506e79bb1e1dba1054",
+                    "caseCount": 3,
+                    "variantCount": 2,
+                    "avgDuration": 1082889,
+                    "trimmedAverage": 1082889,
+                    "stdDeviation": 945275,
+                    "medianDuration": 1241716
+                  }
+                ]
+              },
+              {
+                "field": "reassignment_count",
+                "label": "Reassignment count",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "1",
+                    "value": "1",
+                    "caseCount": 38,
+                    "variantCount": 6,
+                    "avgDuration": 1230634,
+                    "trimmedAverage": 1234445,
+                    "stdDeviation": 813390,
+                    "medianDuration": 1103254
+                  },
+                  {
+                    "label": "8",
+                    "value": "8",
+                    "caseCount": 1,
+                    "variantCount": 1,
+                    "avgDuration": 757014,
+                    "trimmedAverage": 757014,
+                    "stdDeviation": 0,
+                    "medianDuration": 757014
+                  }
+                ]
+              },
+              {
+                "field": "category",
+                "label": "Category",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "Database",
+                    "value": "database",
+                    "caseCount": 1,
+                    "variantCount": 1,
+                    "avgDuration": 757014,
+                    "trimmedAverage": 757014,
+                    "stdDeviation": 0,
+                    "medianDuration": 757014
+                  },
+                  {
+                    "label": "Software",
+                    "value": "software",
+                    "caseCount": 20,
+                    "variantCount": 3,
+                    "avgDuration": 1489818,
+                    "trimmedAverage": 1521553,
+                    "stdDeviation": 716029,
+                    "medianDuration": 1366808
+                  },
+                  {
+                    "label": "Inquiry / Help",
+                    "value": "inquiry",
+                    "caseCount": 4,
+                    "variantCount": 2,
+                    "avgDuration": 133679,
+                    "trimmedAverage": 133679,
+                    "stdDeviation": 136040,
+                    "medianDuration": 66492
+                  },
+                  {
+                    "label": "Network",
+                    "value": "network",
+                    "caseCount": 6,
+                    "variantCount": 4,
+                    "avgDuration": 485177,
+                    "trimmedAverage": 485177,
+                    "stdDeviation": 361230,
+                    "medianDuration": 424128
+                  },
+                  {
+                    "label": "Hardware",
+                    "value": "hardware",
+                    "caseCount": 8,
+                    "variantCount": 3,
+                    "avgDuration": 1690245,
+                    "trimmedAverage": 1690245,
+                    "stdDeviation": 637989,
+                    "medianDuration": 1961533
+                  }
+                ]
+              },
+              {
+                "field": "priority",
+                "label": "Priority",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "1 - Critical",
+                    "value": "1",
+                    "caseCount": 2,
+                    "variantCount": 2,
+                    "avgDuration": 970751,
+                    "trimmedAverage": 970751,
+                    "stdDeviation": 151957,
+                    "medianDuration": 970751
+                  },
+                  {
+                    "label": "2 - High",
+                    "value": "2",
+                    "caseCount": 7,
+                    "variantCount": 4,
+                    "avgDuration": 1039617,
+                    "trimmedAverage": 1039617,
+                    "stdDeviation": 940333,
+                    "medianDuration": 1085491
+                  },
+                  {
+                    "label": "3 - Moderate",
+                    "value": "3",
+                    "caseCount": 17,
+                    "variantCount": 6,
+                    "avgDuration": 1319967,
+                    "trimmedAverage": 1335410,
+                    "stdDeviation": 743099,
+                    "medianDuration": 1146677
+                  },
+                  {
+                    "label": "4 - Low",
+                    "value": "4",
+                    "caseCount": 11,
+                    "variantCount": 5,
+                    "avgDuration": 1225963,
+                    "trimmedAverage": 1240795,
+                    "stdDeviation": 865088,
+                    "medianDuration": 1093491
+                  },
+                  {
+                    "label": "5 - Planning",
+                    "value": "5",
+                    "caseCount": 2,
+                    "variantCount": 2,
+                    "avgDuration": 1188638,
+                    "trimmedAverage": 1188638,
+                    "stdDeviation": 1589455,
+                    "medianDuration": 1188638
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "permissions": {
+          "canMine": true,
+          "canWrite": true,
+          "canDelete": true,
+          "canShare": true
+        },
+        "variantResult": [
+          {
+            "totalVariants": 6,
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "variants": [
+              {
+                "id": "00e508354daf6aa52c2155c6c9662a1a",
+                "statsId": "b09b41f506308c39cbc28f031298b4ec",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "252dc33d5185c4961c63149d71a12412",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "c875861967cd8acd818a9325ff4b7b3a",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "1e0a8f07936886506e79bb1e1dba107d",
+                  "cc2a0387936886506e79bb1e1dba1006",
+                  "7a2a4b87936886506e79bb1e1dba107c",
+                  "c83a8f87936886506e79bb1e1dba106a",
+                  "591a4747936886506e79bb1e1dba105b",
+                  "0e1a0b47936886506e79bb1e1dba1007",
+                  "e42a8387936886506e79bb1e1dba1013",
+                  "f21acb47936886506e79bb1e1dba10aa"
+                ],
+                "nodeCount": 9,
+                "frequency": 8,
+                "totalDuration": 18127897,
+                "maxDuration": 2340029,
+                "minDuration": 2184988,
+                "avgDuration": 2265987,
+                "trimmedAverage": 2265987,
+                "stdDeviation": 64404,
+                "medianDuration": 2280400,
+                "healthScore": 1375,
+                "model": null
+              },
+              {
+                "id": "17b96756825e1d693a3f34b85ae49bf0",
+                "statsId": "61e84aa23c0a3d3116ec88a4dbf47687",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "23e17d813c13d248452233b28a7d365f",
+                  "252dc33d5185c4961c63149d71a12412",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "c875861967cd8acd818a9325ff4b7b3a",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "c875861967cd8acd818a9325ff4b7b3a",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "c875861967cd8acd818a9325ff4b7b3a",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "8b49434f932886506e79bb1e1dba1052",
+                  "c559474f932886506e79bb1e1dba1069"
+                ],
+                "nodeCount": 13,
+                "frequency": 2,
+                "totalDuration": 2224878,
+                "maxDuration": 1146677,
+                "minDuration": 1078201,
+                "avgDuration": 1112439,
+                "trimmedAverage": 1112439,
+                "stdDeviation": 48419,
+                "medianDuration": 1112439,
+                "healthScore": -34,
+                "model": null
+              },
+              {
+                "id": "3e5e015e9dbb98968c6d3f25b134f1e4",
+                "statsId": "9e1d08713995a68d39aa0375239a6db5",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "252dc33d5185c4961c63149d71a12412",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "32a98f03936886506e79bb1e1dba10d1",
+                  "1db90743936886506e79bb1e1dba101e",
+                  "96c98383936886506e79bb1e1dba10dc",
+                  "dcd94b83936886506e79bb1e1dba1031",
+                  "b6998303936886506e79bb1e1dba1051",
+                  "96b90b43936886506e79bb1e1dba1028",
+                  "cbc90783936886506e79bb1e1dba10a6",
+                  "08f90fc3936886506e79bb1e1dba1053",
+                  "4bd9cf83936886506e79bb1e1dba10de",
+                  "c6f98307936886506e79bb1e1dba10e9",
+                  "b1e9c7c3936886506e79bb1e1dba103e"
+                ],
+                "nodeCount": 7,
+                "frequency": 11,
+                "totalDuration": 12419146,
+                "maxDuration": 2163397,
+                "minDuration": 60979,
+                "avgDuration": 1129013,
+                "trimmedAverage": 1132752,
+                "stdDeviation": 1020730,
+                "medianDuration": 1905174,
+                "healthScore": -161,
+                "model": null
+              },
+              {
+                "id": "2cc68d11bf47d814e220628b7de3fa2c",
+                "statsId": "75f3abc9d8697401be954d5b075adc5f",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "23e17d813c13d248452233b28a7d365f",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "d4780fc3932886506e79bb1e1dba10e5",
+                  "7768cbc3932886506e79bb1e1dba10c3"
+                ],
+                "nodeCount": 6,
+                "frequency": 2,
+                "totalDuration": 663452,
+                "maxDuration": 337721,
+                "minDuration": 325731,
+                "avgDuration": 331726,
+                "trimmedAverage": 331726,
+                "stdDeviation": 8478,
+                "medianDuration": 331726,
+                "healthScore": -291,
+                "model": null
+              },
+              {
+                "id": "5d79e277be27c8b0006b51768af54b7c",
+                "statsId": "6850c8e56631a3bc7cde9238d68314d4",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "23e17d813c13d248452233b28a7d365f",
+                  "252dc33d5185c4961c63149d71a12412",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "25984747932886506e79bb1e1dba10cf",
+                  "d3b883c7932886506e79bb1e1dba1023",
+                  "5ed8c30b932886506e79bb1e1dba109f",
+                  "a929c7cb932886506e79bb1e1dba10be",
+                  "a5190f8b932886506e79bb1e1dba10fc",
+                  "5e1353cb93a886506e79bb1e1dba102c",
+                  "67a88787932886506e79bb1e1dba1017",
+                  "2f19c3cb932886506e79bb1e1dba1069",
+                  "d939830f932886506e79bb1e1dba106d",
+                  "c9e88b0b932886506e79bb1e1dba10fc",
+                  "db290fcb932886506e79bb1e1dba10da"
+                ],
+                "nodeCount": 9,
+                "frequency": 11,
+                "totalDuration": 11600097,
+                "maxDuration": 1527468,
+                "minDuration": 697800,
+                "avgDuration": 1054554,
+                "trimmedAverage": 1041647,
+                "stdDeviation": 280757,
+                "medianDuration": 1085491,
+                "healthScore": -295,
+                "model": null
+              },
+              {
+                "id": "46296c2b8d8a96b00f46e26049851e0c",
+                "statsId": "8ce0456078c73728b3850ca62e9a5358",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "23e17d813c13d248452233b28a7d365f",
+                  "252dc33d5185c4961c63149d71a12412",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "e86883c3932886506e79bb1e1dba1044",
+                  "c089cf8f932886506e79bb1e1dba10a4",
+                  "68580b83932886506e79bb1e1dba10c8",
+                  "53588f83932886506e79bb1e1dba10bf",
+                  "87031b8b93a886506e79bb1e1dba108c"
+                ],
+                "nodeCount": 7,
+                "frequency": 5,
+                "totalDuration": 2485668,
+                "maxDuration": 757014,
+                "minDuration": 350977,
+                "avgDuration": 497133,
+                "trimmedAverage": 497133,
+                "stdDeviation": 158648,
+                "medianDuration": 430262,
+                "healthScore": -592,
+                "model": null
+              }
+            ]
+          }
+        ],
+        "miningStats": { "totalRecords": 167 },
+        "version": { "automationDiscoveryReport": null }
+      }
+    }
+  }
+}
