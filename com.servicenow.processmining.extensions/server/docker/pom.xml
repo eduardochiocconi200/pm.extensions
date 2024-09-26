@@ -125,15 +125,24 @@
 							</arguments>
 						</configuration>
 					</execution>
+					<execution>
+						<id>docker image prune</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>
+								<argument>image</argument>
+								<argument>prune</argument>
+								<argument>-f</argument>
+							</arguments>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
-	<distributionManagement>
-		<repository>
-			<id>dockerhub</id>
-			<url>http://central_nexus/server</url>
-		</repository>
-	</distributionManagement>
 </project>

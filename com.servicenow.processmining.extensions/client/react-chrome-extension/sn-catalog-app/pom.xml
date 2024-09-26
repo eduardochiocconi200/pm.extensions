@@ -7,6 +7,9 @@
 	<packaging>pom</packaging>
 	<name>com.servicenow.processmining.extensions.client.docker</name>
 	<description>Process Mining - Frontend extension</description>
+	<properties>
+		<dockerhub.account>eduardochiocconi200</dockerhub.account>
+	</properties>
 
 	<build>
 		<plugins>
@@ -35,6 +38,84 @@
                             </arguments>
                         </configuration>
                     </execution>
+					<execution>
+						<id>docker-tag ${project.version}</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>
+								<argument>tag</argument>
+								<argument>${project.artifactId}:${project.version}</argument>
+								<argument>${dockerhub.account}/${project.artifactId}:${project.version}</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>docker-tag latest</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>
+								<argument>tag</argument>
+								<argument>${project.artifactId}:${project.version}</argument>
+								<argument>${dockerhub.account}/${project.artifactId}:latest</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>docker-push ${project.version}</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>
+								<argument>push</argument>
+								<argument>${dockerhub.account}/${project.artifactId}:${project.version}</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>docker-push latest</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>
+								<argument>push</argument>
+								<argument>${dockerhub.account}/${project.artifactId}:latest</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>docker image prune</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>
+								<argument>image</argument>
+								<argument>prune</argument>
+								<argument>-f</argument>
+							</arguments>
+						</configuration>
+					</execution>
                 </executions>
             </plugin>
 		</plugins>
