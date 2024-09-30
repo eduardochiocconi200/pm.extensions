@@ -45,12 +45,9 @@ public class AllDistinticRoutesDetector
         }
 
         for (Graph<String, DefaultEdge> g : getGraphs()) {
-            System.out.println("G: (" + g + ")");
             CycleDetector<String, DefaultEdge> cycleDetector = new CycleDetector<String, DefaultEdge>(g);
             if (cycleDetector.detectCycles()) {
-                System.out.println("HAS CYCLES");
                 Set<String> cycleVertices = cycleDetector.findCycles();
-                System.out.println("CYCLE: (" + cycleVertices + ")");
             }
         }
 
@@ -61,13 +58,11 @@ public class AllDistinticRoutesDetector
     {
         DefaultDirectedGraph<String, DefaultEdge> g = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
         for (String node : variant.getDistinctNodes()) {
-            System.out.println("Add Vertex: (" + getModel().getNodes().get(node).getName() + ")");
             g.addVertex(getModel().getNodes().get(node).getName());
         }
 
         for (String fromNode : variant.getDistinctNodes()) {
             for (ProcessMiningModelTransition transition : variant.getOutgoingTransition(fromNode)) {
-                System.out.println("Add Transition: (" + getModel().getNodes().get(transition.getFrom()).getName() + ", " + getModel().getNodes().get(transition.getTo()).getName() + ")");
                 g.addEdge(getModel().getNodes().get(transition.getFrom()).getName(), getModel().getNodes().get(transition.getTo()).getName());
             }
         }
