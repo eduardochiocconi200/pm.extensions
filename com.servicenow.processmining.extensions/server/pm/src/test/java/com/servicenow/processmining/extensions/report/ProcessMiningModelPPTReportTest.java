@@ -13,7 +13,7 @@ public class ProcessMiningModelPPTReportTest
     public void test()
     {
         boolean runSingleTest = true;
-        if (!runSingleTest) {
+        if (runSingleTest) {
             test3();
         }
         else {
@@ -47,7 +47,7 @@ public class ProcessMiningModelPPTReportTest
     // Test with 2 Happy Path Filters.
     private void test3()
     {
-        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload5-w.json");
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload6-w.json");
         ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
