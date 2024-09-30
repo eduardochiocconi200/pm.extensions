@@ -1,12 +1,13 @@
 package com.servicenow.processmining.extensions.model;
 
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrieval;
-import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrievalVancouver;
+import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrievalFactory;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelVersionDAOREST;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersion;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import org.slf4j.Logger;
@@ -19,9 +20,8 @@ public class ProcessMiningModelTest
     @Test
     public void test()
     {
-        ServiceNowInstance snInstance = getInstance();
         String modelVersionId = "ac0c7a1f93a80a506e79bb1e1dba10af";
-        ProcessMiningModelRetrieval pmmr = new ProcessMiningModelRetrievalVancouver(snInstance, modelVersionId);
+        ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelVersionId);
         if (pmmr.runEmptyFilter()) {
             ProcessMiningModelParser pmmp = new ProcessMiningModelParser(modelVersionId);
             if (pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
@@ -36,13 +36,14 @@ public class ProcessMiningModelTest
         ProcessMiningModelVersionDAOREST dao = new ProcessMiningModelVersionDAOREST(getInstance());
         for (ProcessMiningModelVersion version : dao.findAll()) {
             String modelVersionId = version.getPK().toString();
-            ProcessMiningModelRetrieval pmmr = new ProcessMiningModelRetrievalVancouver(getInstance(), modelVersionId);
+            ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelVersionId);
             if (pmmr.runEmptyFilter()) {
                 ProcessMiningModelParser pmmp = new ProcessMiningModelParser(modelVersionId);
                 if (pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
-                    logger.info("Retrieved and parsed Process Mining Model successfully!");
+                    logger.info("Retrieved and parsed Process Mining Model successfully for project: (" + version.getName() + ") - (" + version.getLastMinedTime() + ").");
                 }
             }
+            Assert.assertNull(pmmr.getErrorMessage());
         }
     }
 
