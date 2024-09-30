@@ -64,7 +64,6 @@ public class ComplianceDetector
         int referencePathCount = 0;
         if (getModel().getFilters().size() > 0) {
             for (ProcessMiningModelFilter filter : getModel().getFilters().values()) {
-                System.out.println("Filter: (" + filter.getName() + ")");
                 if (filter.getFilterTransitions() != null) {
                     if (isHappyPath(filter)) {
                         ProcessMiningModelVariant v = getReferencePathVariant(filter, referencePathCount++);
@@ -184,7 +183,6 @@ public class ComplianceDetector
     {
         boolean isCompliant = false;
         for (String referencePathVariantId : getReferencePathGraphs().keySet()) {
-            System.out.println("Checking reference path variant: (" + referencePathVariantId + ")");
             Graph<String, DefaultEdge> referencePathGraph = getReferencePathGraphs().get(referencePathVariantId);
             ProcessMiningModelVariant referencePathVariant = getReferencePathVariants().get(referencePathVariantId);
             // checkVariantAgainstReferencePath(variant, getReferencePathVariants().get(referencePathVariant), referencePathGraph);
