@@ -1,7 +1,7 @@
 package com.servicenow.processmining.extensions.server.api.controller;
 
-import com.servicenow.processmining.extensions.sc.dao.PlatformVersionDAOREST;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.dao.PlatformVersionDAOREST;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
