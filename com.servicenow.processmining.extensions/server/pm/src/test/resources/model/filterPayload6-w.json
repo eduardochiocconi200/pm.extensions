@@ -1,0 +1,1442 @@
+{
+  "data": {
+    "GlidePromin_Query": {
+      "scheduleModel": {
+        "project": {
+          "name": "Incident State Analysis (2024)",
+          "projectId": "950f4f0393a886506e79bb1e1dba102b",
+          "paUuid": null,
+          "domain": "global"
+        },
+        "projectEntities": [
+          {
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "parentId": null,
+            "name": "Incidents",
+            "table": { "name": "incident", "label": "Incident" },
+            "activities": [
+              {
+                "id": "2aaf078393a886506e79bb1e1dba107f",
+                "field": "state",
+                "label": "State",
+                "displayName": null
+              }
+            ],
+            "activitiesOfInterest": []
+          }
+        ],
+        "filterSets": [
+          {
+            "id": "ed54e6f6ff76c69048d5fbd38c4fd9ac",
+            "name": "Email Channel Filter",
+            "filter": {
+              "dataFilter": [],
+              "breakdowns": [
+                {
+                  "entityId": "783f434393a886506e79bb1e1dba1020",
+                  "breakdowns": [
+                    { "field": "contact_type", "values": ["email"] }
+                  ]
+                }
+              ],
+              "advancedTransitions": [],
+              "repetitions": [],
+              "variantFilter": []
+            },
+            "caseCount": 48,
+            "variantCount": 6,
+            "totalDuration": 42624576,
+            "maxDuration": 2315888,
+            "minDuration": 57203,
+            "avgDuration": 888012,
+            "medianDuration": 769085,
+            "stdDeviation": 664059,
+            "trimmedAverage": 861976
+          },
+          {
+            "id": "fe51f473ff4c1ad048d5fbd38c4fd95c",
+            "name": "Happy Path",
+            "filter": {
+              "dataFilter": [],
+              "breakdowns": [],
+              "advancedTransitions": [
+                {
+                  "advancedTransitions": [
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "__case",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["created"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["1"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["200"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["2"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["6"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["7"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "__case",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["completed"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    }
+                  ],
+                  "transitionConstraints": []
+                }
+              ],
+              "repetitions": [],
+              "variantFilter": []
+            },
+            "caseCount": 22,
+            "variantCount": 1,
+            "totalDuration": 13945096,
+            "maxDuration": 862154,
+            "minDuration": 350977,
+            "avgDuration": 633868,
+            "medianDuration": 661081,
+            "stdDeviation": 187002,
+            "trimmedAverage": 636598
+          },
+          {
+            "id": "eb4233f32b78d650c09efdac5e91bf31",
+            "name": "Happy Path 2",
+            "filter": {
+              "dataFilter": [],
+              "breakdowns": [],
+              "advancedTransitions": [
+                {
+                  "advancedTransitions": [
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "__case",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["created"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["1"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["200"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["2"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["3"],
+                      "relation": "EVENTUALLY_FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["6"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "state",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["7"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    },
+                    {
+                      "entityId": "783f434393a886506e79bb1e1dba1020",
+                      "field": "__case",
+                      "predicate": "EQ",
+                      "occurrence": "ALWAYS",
+                      "values": ["completed"],
+                      "relation": "FOLLOWED_BY",
+                      "context": null
+                    }
+                  ],
+                  "transitionConstraints": []
+                }
+              ],
+              "repetitions": [],
+              "variantFilter": []
+            },
+            "caseCount": 11,
+            "variantCount": 1,
+            "totalDuration": 11660121,
+            "maxDuration": 1146677,
+            "minDuration": 966907,
+            "avgDuration": 1060011,
+            "medianDuration": 1056597,
+            "stdDeviation": 53213,
+            "trimmedAverage": 1060727
+          },
+          {
+            "id": "8187cfb2ffbac69048d5fbd38c4fd9a0",
+            "name": "Phone Channel Filter",
+            "filter": {
+              "dataFilter": [],
+              "breakdowns": [
+                {
+                  "entityId": "783f434393a886506e79bb1e1dba1020",
+                  "breakdowns": [
+                    { "field": "contact_type", "values": ["phone"] }
+                  ]
+                }
+              ],
+              "advancedTransitions": [],
+              "repetitions": [],
+              "variantFilter": []
+            },
+            "caseCount": 39,
+            "variantCount": 6,
+            "totalDuration": 47521110,
+            "maxDuration": 2340029,
+            "minDuration": 60979,
+            "avgDuration": 1218490,
+            "medianDuration": 1093491,
+            "stdDeviation": 806192,
+            "trimmedAverage": 1220804
+          },
+          {
+            "id": "d68cea03ff3e4a9048d5fbd38c4fd955",
+            "name": "Priority 1 Phone Channel",
+            "filter": {
+              "dataFilter": [],
+              "breakdowns": [
+                {
+                  "entityId": "783f434393a886506e79bb1e1dba1020",
+                  "breakdowns": [
+                    { "field": "contact_type", "values": ["phone"] },
+                    { "field": "priority", "values": ["1"] }
+                  ]
+                }
+              ],
+              "advancedTransitions": [],
+              "repetitions": [],
+              "variantFilter": []
+            },
+            "caseCount": 2,
+            "variantCount": 2,
+            "totalDuration": 1941502,
+            "maxDuration": 1078201,
+            "minDuration": 863301,
+            "avgDuration": 970751,
+            "medianDuration": 970751,
+            "stdDeviation": 151957,
+            "trimmedAverage": 970751
+          }
+        ],
+        "nodes": [
+          {
+            "key": "c80dce03df64be733cfe435d363bc415",
+            "label": "In progress",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 330,
+            "caseFreq": 160,
+            "maxReps": 4,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "2"
+          },
+          {
+            "key": "0487d27d7b86c232d93cafdee15e1cb7",
+            "label": "Closed",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 174,
+            "caseFreq": 174,
+            "maxReps": 1,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "7"
+          },
+          {
+            "key": "252dc33d5185c4961c63149d71a12412",
+            "label": "Assigned",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 149,
+            "caseFreq": 149,
+            "maxReps": 1,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "200"
+          },
+          {
+            "key": "52fc856a1f5030f7c85fd2d83e2fe3c1",
+            "label": "Resolved",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 227,
+            "caseFreq": 174,
+            "maxReps": 2,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "6"
+          },
+          {
+            "key": "3c6d83a605c9cbec999595f24ae86064",
+            "label": "Created",
+            "activityId": "783f434393a886506e79bb1e1dba1020__case",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": true,
+            "isEnd": false,
+            "absoluteFreq": 174,
+            "caseFreq": 174,
+            "maxReps": 1,
+            "fieldLabel": "Created activities",
+            "field": "__case",
+            "value": "created"
+          },
+          {
+            "key": "c875861967cd8acd818a9325ff4b7b3a",
+            "label": "On Hold",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 54,
+            "caseFreq": 32,
+            "maxReps": 3,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "3"
+          },
+          {
+            "key": "23e17d813c13d248452233b28a7d365f",
+            "label": "New",
+            "activityId": "2aaf078393a886506e79bb1e1dba107f",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 111,
+            "caseFreq": 111,
+            "maxReps": 1,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "1"
+          },
+          {
+            "key": "211f7502b22101009fa46e2dfa9fdfea",
+            "label": "Completed",
+            "activityId": "783f434393a886506e79bb1e1dba1020__case",
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "isStart": false,
+            "isEnd": true,
+            "absoluteFreq": 174,
+            "caseFreq": 174,
+            "maxReps": 1,
+            "fieldLabel": "Created activities",
+            "field": "__case",
+            "value": "completed"
+          }
+        ],
+        "edges": [
+          {
+            "from": "52fc856a1f5030f7c85fd2d83e2fe3c1",
+            "to": "c80dce03df64be733cfe435d363bc415",
+            "absoluteFreq": 53,
+            "caseFreq": 53,
+            "maxReps": 1,
+            "totalDuration": 29285325,
+            "maxDuration": 1152322,
+            "minDuration": 94477,
+            "avgDuration": 552553,
+            "trimmedAverage": 542367,
+            "stdDeviation": 305171,
+            "medianDuration": 471733
+          },
+          {
+            "from": "c80dce03df64be733cfe435d363bc415",
+            "to": "c875861967cd8acd818a9325ff4b7b3a",
+            "absoluteFreq": 54,
+            "caseFreq": 32,
+            "maxReps": 3,
+            "totalDuration": 8188910,
+            "maxDuration": 339812,
+            "minDuration": 45693,
+            "avgDuration": 151646,
+            "trimmedAverage": 146726,
+            "stdDeviation": 117153,
+            "medianDuration": 71024
+          },
+          {
+            "from": "3c6d83a605c9cbec999595f24ae86064",
+            "to": "23e17d813c13d248452233b28a7d365f",
+            "absoluteFreq": 111,
+            "caseFreq": 111,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0
+          },
+          {
+            "from": "0487d27d7b86c232d93cafdee15e1cb7",
+            "to": "211f7502b22101009fa46e2dfa9fdfea",
+            "absoluteFreq": 174,
+            "caseFreq": 174,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0
+          },
+          {
+            "from": "23e17d813c13d248452233b28a7d365f",
+            "to": "c80dce03df64be733cfe435d363bc415",
+            "absoluteFreq": 11,
+            "caseFreq": 11,
+            "maxReps": 1,
+            "totalDuration": 1024356,
+            "maxDuration": 125263,
+            "minDuration": 39093,
+            "avgDuration": 93123,
+            "trimmedAverage": 95555,
+            "stdDeviation": 26984,
+            "medianDuration": 101008
+          },
+          {
+            "from": "252dc33d5185c4961c63149d71a12412",
+            "to": "c80dce03df64be733cfe435d363bc415",
+            "absoluteFreq": 149,
+            "caseFreq": 149,
+            "maxReps": 1,
+            "totalDuration": 19988168,
+            "maxDuration": 338609,
+            "minDuration": 9031,
+            "avgDuration": 134148,
+            "trimmedAverage": 130283,
+            "stdDeviation": 103069,
+            "medianDuration": 94515
+          },
+          {
+            "from": "c875861967cd8acd818a9325ff4b7b3a",
+            "to": "c80dce03df64be733cfe435d363bc415",
+            "absoluteFreq": 54,
+            "caseFreq": 32,
+            "maxReps": 3,
+            "totalDuration": 17530314,
+            "maxDuration": 602289,
+            "minDuration": 172800,
+            "avgDuration": 324635,
+            "trimmedAverage": 317956,
+            "stdDeviation": 149056,
+            "medianDuration": 253839
+          },
+          {
+            "from": "c80dce03df64be733cfe435d363bc415",
+            "to": "52fc856a1f5030f7c85fd2d83e2fe3c1",
+            "absoluteFreq": 213,
+            "caseFreq": 160,
+            "maxReps": 2,
+            "totalDuration": 46018033,
+            "maxDuration": 1068216,
+            "minDuration": 8797,
+            "avgDuration": 216047,
+            "trimmedAverage": 183231,
+            "stdDeviation": 268869,
+            "medianDuration": 101791
+          },
+          {
+            "from": "23e17d813c13d248452233b28a7d365f",
+            "to": "252dc33d5185c4961c63149d71a12412",
+            "absoluteFreq": 86,
+            "caseFreq": 86,
+            "maxReps": 1,
+            "totalDuration": 7813155,
+            "maxDuration": 170505,
+            "minDuration": 45359,
+            "avgDuration": 90850,
+            "trimmedAverage": 89349,
+            "stdDeviation": 29617,
+            "medianDuration": 85449
+          },
+          {
+            "from": "52fc856a1f5030f7c85fd2d83e2fe3c1",
+            "to": "0487d27d7b86c232d93cafdee15e1cb7",
+            "absoluteFreq": 174,
+            "caseFreq": 174,
+            "maxReps": 1,
+            "totalDuration": 29725001,
+            "maxDuration": 608443,
+            "minDuration": 8714,
+            "avgDuration": 170833,
+            "trimmedAverage": 154922,
+            "stdDeviation": 162205,
+            "medianDuration": 104874
+          },
+          {
+            "from": "23e17d813c13d248452233b28a7d365f",
+            "to": "52fc856a1f5030f7c85fd2d83e2fe3c1",
+            "absoluteFreq": 14,
+            "caseFreq": 14,
+            "maxReps": 1,
+            "totalDuration": 1293412,
+            "maxDuration": 605328,
+            "minDuration": 6,
+            "avgDuration": 92386,
+            "trimmedAverage": 57339,
+            "stdDeviation": 218016,
+            "medianDuration": 171
+          },
+          {
+            "from": "3c6d83a605c9cbec999595f24ae86064",
+            "to": "c80dce03df64be733cfe435d363bc415",
+            "absoluteFreq": 63,
+            "caseFreq": 63,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0
+          },
+          {
+            "from": "c80dce03df64be733cfe435d363bc415",
+            "to": "252dc33d5185c4961c63149d71a12412",
+            "absoluteFreq": 63,
+            "caseFreq": 63,
+            "maxReps": 1,
+            "totalDuration": 24716737,
+            "maxDuration": 657378,
+            "minDuration": 18333,
+            "avgDuration": 392329,
+            "trimmedAverage": 398503,
+            "stdDeviation": 264217,
+            "medianDuration": 548984
+          }
+        ],
+        "findings": [
+          {
+            "id": "2ff03849fce976fa07f53ac6a85999c5",
+            "message": "Long close time: Records that take longer than 7 days to go from resolved to closed",
+            "category": "PERFORMANCE",
+            "categoryLabel": "Performance",
+            "totalDuration": 37724057,
+            "avgDuration": 838312,
+            "frequency": 45,
+            "hasCaseIds": true,
+            "stdDeviation": 254935
+          },
+          {
+            "id": "387de849a9a96ea75a352895fbbd4b96",
+            "message": "Process step missed: Incidents go directly to Resolved and Closed",
+            "category": "CONFORMANCE",
+            "categoryLabel": "Conformance",
+            "totalDuration": 9782940,
+            "avgDuration": 698781,
+            "frequency": 14,
+            "hasCaseIds": true,
+            "stdDeviation": 218561
+          },
+          {
+            "id": "5147a6bada3a086f64777fb16d28e0b4",
+            "message": "Slow resolution time: Incidents that took more than 12 hours between Work In Progress and Resolved",
+            "category": "PERFORMANCE",
+            "categoryLabel": "Performance",
+            "totalDuration": 138131074,
+            "avgDuration": 863319,
+            "frequency": 160,
+            "hasCaseIds": true,
+            "stdDeviation": 691022
+          },
+          {
+            "id": "76101af86a75dacbe331d610c221e4ce",
+            "message": "Ping-Pong between In progress and On Hold",
+            "category": "PERFORMANCE",
+            "categoryLabel": "Performance",
+            "totalDuration": 6266805,
+            "avgDuration": 569709,
+            "frequency": 11,
+            "hasCaseIds": true,
+            "stdDeviation": 32664
+          },
+          {
+            "id": "9d21eb00b7cb64addfce7b41295b8132",
+            "message": "Rework on In progress",
+            "category": "PERFORMANCE",
+            "categoryLabel": "Performance",
+            "totalDuration": 97059550,
+            "avgDuration": 764248,
+            "frequency": 127,
+            "hasCaseIds": true,
+            "stdDeviation": 525133
+          },
+          {
+            "id": "b4a07aea31f7f2fe5ce8e9abecd508ad",
+            "message": "Rework on Resolved",
+            "category": "PERFORMANCE",
+            "categoryLabel": "Performance",
+            "totalDuration": 34270870,
+            "avgDuration": 646620,
+            "frequency": 53,
+            "hasCaseIds": true,
+            "stdDeviation": 306647
+          },
+          {
+            "id": "c32bbaf036fd278eece161a066702f22",
+            "message": "Incident opened and resolved by the same person",
+            "category": "CONFORMANCE",
+            "categoryLabel": "Conformance",
+            "totalDuration": 82270,
+            "avgDuration": 11752,
+            "frequency": 7,
+            "hasCaseIds": true,
+            "stdDeviation": 26370
+          },
+          {
+            "id": "cbcb9b21b1ab9ecbd8747e93cca1ce42",
+            "message": "Misuse of On Hold state: Incidents moving to On Hold state two or more times",
+            "category": "QUALITY",
+            "categoryLabel": "Quality",
+            "totalDuration": 5574871,
+            "avgDuration": 506806,
+            "frequency": 11,
+            "hasCaseIds": true,
+            "stdDeviation": 27080
+          },
+          {
+            "id": "dddfae797e6e970f387b38fdebe21ef9",
+            "message": "Rework on On Hold",
+            "category": "PERFORMANCE",
+            "categoryLabel": "Performance",
+            "totalDuration": 5574871,
+            "avgDuration": 506806,
+            "frequency": 11,
+            "hasCaseIds": true,
+            "stdDeviation": 27080
+          },
+          {
+            "id": "e5ce087e5d3305a1f2c5f24928aa6568",
+            "message": "Solution rejection issue: Incident resolution rejected by custmer one or more times",
+            "category": "QUALITY",
+            "categoryLabel": "Quality",
+            "totalDuration": 29285325,
+            "avgDuration": 552553,
+            "frequency": 53,
+            "hasCaseIds": true,
+            "stdDeviation": 305171
+          }
+        ],
+        "aggregates": [
+          {
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "model": {
+              "caseCount": 174,
+              "variantCount": 7,
+              "minCaseDuration": 56905,
+              "maxCaseDuration": 2382138,
+              "avgCaseDuration": 1066571,
+              "trimmedAverage": 1051179,
+              "stdDeviation": 725754,
+              "medianDuration": 885963,
+              "uniqueParentRecords": 0
+            },
+            "node": {
+              "absoluteFreq": { "min": 54, "max": 330 },
+              "caseFreq": { "min": 32, "max": 174 },
+              "maxReps": { "min": 1, "max": 4 }
+            },
+            "edge": {
+              "absoluteFreq": { "min": 11, "max": 213 },
+              "caseFreq": { "min": 11, "max": 174 },
+              "maxReps": { "min": 1, "max": 3 },
+              "minDuration": { "min": 0, "max": 172800 },
+              "maxDuration": { "min": 0, "max": 1152322 },
+              "avgDuration": { "min": 0, "max": 552553 },
+              "totalDuration": { "min": 0, "max": 46018033 },
+              "trimmedAverage": { "min": 0, "max": 542367 },
+              "stdDeviation": { "min": 0, "max": 305171 },
+              "medianDuration": { "min": 0, "max": 548984 }
+            },
+            "variant": {
+              "nodeCount": { "min": 0, "max": 13 },
+              "caseFreq": { "min": 0, "max": 53 },
+              "avgDuration": { "min": 0, "max": 2286540 },
+              "healthScore": { "min": -1785, "max": 4803 },
+              "trimmedAverage": { "min": 0, "max": 2286854 },
+              "stdDeviation": { "min": 0, "max": 1006554 },
+              "medianDuration": { "min": 0, "max": 548984 }
+            }
+          }
+        ],
+        "breakdowns": [
+          {
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "breakdownStats": [
+              {
+                "field": "contact_type",
+                "label": "Channel",
+                "displayName": "Channel",
+                "line": [
+                  {
+                    "label": "Phone",
+                    "value": "phone",
+                    "caseCount": 39,
+                    "variantCount": 6,
+                    "avgDuration": 1218490,
+                    "trimmedAverage": 1220804,
+                    "stdDeviation": 806192,
+                    "medianDuration": 1093491
+                  },
+                  {
+                    "label": "Alert",
+                    "value": "Alert",
+                    "caseCount": 14,
+                    "variantCount": 1,
+                    "avgDuration": 698781,
+                    "trimmedAverage": 663760,
+                    "stdDeviation": 218561,
+                    "medianDuration": 607339
+                  },
+                  {
+                    "label": "Service Portal",
+                    "value": "service-portal",
+                    "caseCount": 34,
+                    "variantCount": 6,
+                    "avgDuration": 1292792,
+                    "trimmedAverage": 1304586,
+                    "stdDeviation": 750457,
+                    "medianDuration": 1102226
+                  },
+                  {
+                    "label": "Email",
+                    "value": "email",
+                    "caseCount": 48,
+                    "variantCount": 6,
+                    "avgDuration": 888012,
+                    "trimmedAverage": 861976,
+                    "stdDeviation": 664059,
+                    "medianDuration": 769085
+                  },
+                  {
+                    "label": "Virtual Agent",
+                    "value": "virtual_agent",
+                    "caseCount": 39,
+                    "variantCount": 6,
+                    "avgDuration": 1069224,
+                    "trimmedAverage": 1054060,
+                    "stdDeviation": 733197,
+                    "medianDuration": 892339
+                  }
+                ]
+              },
+              {
+                "field": "assignment_group",
+                "label": "Assignment group",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "",
+                    "value": null,
+                    "caseCount": 14,
+                    "variantCount": 1,
+                    "avgDuration": 698781,
+                    "trimmedAverage": 663760,
+                    "stdDeviation": 218561,
+                    "medianDuration": 607339
+                  },
+                  {
+                    "label": "AG - Helpdesk L2",
+                    "value": "90580b83932886506e79bb1e1dba1036",
+                    "caseCount": 36,
+                    "variantCount": 6,
+                    "avgDuration": 1062686,
+                    "trimmedAverage": 1045891,
+                    "stdDeviation": 680640,
+                    "medianDuration": 843242
+                  },
+                  {
+                    "label": "AG - Software",
+                    "value": "10580b83932886506e79bb1e1dba103b",
+                    "caseCount": 24,
+                    "variantCount": 5,
+                    "avgDuration": 1115376,
+                    "trimmedAverage": 1107143,
+                    "stdDeviation": 837394,
+                    "medianDuration": 964801
+                  },
+                  {
+                    "label": "AG- Apps Team - EMEA",
+                    "value": "9c580b83932886506e79bb1e1dba103f",
+                    "caseCount": 25,
+                    "variantCount": 6,
+                    "avgDuration": 1090630,
+                    "trimmedAverage": 1082536,
+                    "stdDeviation": 749939,
+                    "medianDuration": 1004611
+                  },
+                  {
+                    "label": "AG - Helpdesk L3",
+                    "value": "58580b83932886506e79bb1e1dba1038",
+                    "caseCount": 23,
+                    "variantCount": 5,
+                    "avgDuration": 1045002,
+                    "trimmedAverage": 1030161,
+                    "stdDeviation": 818359,
+                    "medianDuration": 912867
+                  },
+                  {
+                    "label": "AG - Helpdesk L1",
+                    "value": "94588343932886506e79bb1e1dba1054",
+                    "caseCount": 19,
+                    "variantCount": 5,
+                    "avgDuration": 908112,
+                    "trimmedAverage": 891105,
+                    "stdDeviation": 670375,
+                    "medianDuration": 892339
+                  },
+                  {
+                    "label": "AG - Apps Team - APAC",
+                    "value": "d4580b83932886506e79bb1e1dba103d",
+                    "caseCount": 33,
+                    "variantCount": 6,
+                    "avgDuration": 1279386,
+                    "trimmedAverage": 1288687,
+                    "stdDeviation": 747696,
+                    "medianDuration": 1056597
+                  }
+                ]
+              },
+              {
+                "field": "reassignment_count",
+                "label": "Reassignment count",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "0",
+                    "value": "0",
+                    "caseCount": 14,
+                    "variantCount": 1,
+                    "avgDuration": 698781,
+                    "trimmedAverage": 663760,
+                    "stdDeviation": 218561,
+                    "medianDuration": 607339
+                  },
+                  {
+                    "label": "1",
+                    "value": "1",
+                    "caseCount": 149,
+                    "variantCount": 6,
+                    "avgDuration": 1120263,
+                    "trimmedAverage": 1111640,
+                    "stdDeviation": 768570,
+                    "medianDuration": 1003240
+                  },
+                  {
+                    "label": "8",
+                    "value": "8",
+                    "caseCount": 11,
+                    "variantCount": 1,
+                    "avgDuration": 807381,
+                    "trimmedAverage": 808687,
+                    "stdDeviation": 39193,
+                    "medianDuration": 796468
+                  }
+                ]
+              },
+              {
+                "field": "priority",
+                "label": "Priority",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "1 - Critical",
+                    "value": "1",
+                    "caseCount": 12,
+                    "variantCount": 6,
+                    "avgDuration": 847823,
+                    "trimmedAverage": 751488,
+                    "stdDeviation": 560184,
+                    "medianDuration": 718240
+                  },
+                  {
+                    "label": "2 - High",
+                    "value": "2",
+                    "caseCount": 43,
+                    "variantCount": 6,
+                    "avgDuration": 1177805,
+                    "trimmedAverage": 1175286,
+                    "stdDeviation": 853795,
+                    "medianDuration": 1085491
+                  },
+                  {
+                    "label": "3 - Moderate",
+                    "value": "3",
+                    "caseCount": 68,
+                    "variantCount": 7,
+                    "avgDuration": 1072535,
+                    "trimmedAverage": 1063234,
+                    "stdDeviation": 633800,
+                    "medianDuration": 888262
+                  },
+                  {
+                    "label": "4 - Low",
+                    "value": "4",
+                    "caseCount": 42,
+                    "variantCount": 7,
+                    "avgDuration": 1016148,
+                    "trimmedAverage": 995608,
+                    "stdDeviation": 715718,
+                    "medianDuration": 862962
+                  },
+                  {
+                    "label": "5 - Planning",
+                    "value": "5",
+                    "caseCount": 9,
+                    "variantCount": 5,
+                    "avgDuration": 1017031,
+                    "trimmedAverage": 1017031,
+                    "stdDeviation": 993730,
+                    "medianDuration": 851173
+                  }
+                ]
+              },
+              {
+                "field": "category",
+                "label": "Category",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "Database",
+                    "value": "database",
+                    "caseCount": 11,
+                    "variantCount": 4,
+                    "avgDuration": 606706,
+                    "trimmedAverage": 618874,
+                    "stdDeviation": 337601,
+                    "medianDuration": 757014
+                  },
+                  {
+                    "label": "Software",
+                    "value": "software",
+                    "caseCount": 85,
+                    "variantCount": 6,
+                    "avgDuration": 1274738,
+                    "trimmedAverage": 1274909,
+                    "stdDeviation": 661843,
+                    "medianDuration": 1059602
+                  },
+                  {
+                    "label": "Inquiry / Help",
+                    "value": "inquiry",
+                    "caseCount": 28,
+                    "variantCount": 5,
+                    "avgDuration": 461234,
+                    "trimmedAverage": 447864,
+                    "stdDeviation": 345588,
+                    "medianDuration": 605112
+                  },
+                  {
+                    "label": "Facilities",
+                    "value": "facilities",
+                    "caseCount": 12,
+                    "variantCount": 4,
+                    "avgDuration": 468825,
+                    "trimmedAverage": 446001,
+                    "stdDeviation": 419407,
+                    "medianDuration": 374773
+                  },
+                  {
+                    "label": "Network",
+                    "value": "network",
+                    "caseCount": 11,
+                    "variantCount": 4,
+                    "avgDuration": 541811,
+                    "trimmedAverage": 528030,
+                    "stdDeviation": 317842,
+                    "medianDuration": 451742
+                  },
+                  {
+                    "label": "Hardware",
+                    "value": "hardware",
+                    "caseCount": 27,
+                    "variantCount": 4,
+                    "avgDuration": 1705795,
+                    "trimmedAverage": 1752798,
+                    "stdDeviation": 690570,
+                    "medianDuration": 2010185
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "permissions": {
+          "canMine": true,
+          "canWrite": true,
+          "canDelete": true,
+          "canShare": true
+        },
+        "variantResult": [
+          {
+            "totalVariants": 7,
+            "entityId": "783f434393a886506e79bb1e1dba1020",
+            "variants": [
+              {
+                "id": "00e508354daf6aa52c2155c6c9662a1a",
+                "statsId": "40d2ddb530d05362c9a3d63a01d1c334",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "252dc33d5185c4961c63149d71a12412",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "c875861967cd8acd818a9325ff4b7b3a",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "681ac347936886506e79bb1e1dba10ec",
+                  "7a2a4b87936886506e79bb1e1dba107c",
+                  "9d2a0787936886506e79bb1e1dba10c3",
+                  "5f1a4f47936886506e79bb1e1dba1092",
+                  "653a83c7936886506e79bb1e1dba105f",
+                  "f21acb47936886506e79bb1e1dba10aa",
+                  "1e0a8f07936886506e79bb1e1dba107d",
+                  "cc2a0387936886506e79bb1e1dba1006",
+                  "f50acb07936886506e79bb1e1dba10f1",
+                  "3f0a8347936886506e79bb1e1dba107f",
+                  "da3a07c7936886506e79bb1e1dba1025",
+                  "300a8b07936886506e79bb1e1dba102d",
+                  "7e235fcb93a886506e79bb1e1dba1074",
+                  "c83a8f87936886506e79bb1e1dba106a",
+                  "591a4747936886506e79bb1e1dba105b",
+                  "0e1a0b47936886506e79bb1e1dba1007",
+                  "272a0f87936886506e79bb1e1dba10c0",
+                  "e42a8387936886506e79bb1e1dba1013",
+                  "fc3a03c7936886506e79bb1e1dba109c",
+                  "c22ac787936886506e79bb1e1dba101f",
+                  "030a0347936886506e79bb1e1dba104a"
+                ],
+                "nodeCount": 9,
+                "frequency": 21,
+                "totalDuration": 48017357,
+                "maxDuration": 2382138,
+                "minDuration": 2184988,
+                "avgDuration": 2286540,
+                "trimmedAverage": 2286854,
+                "stdDeviation": 59135,
+                "medianDuration": 2309728,
+                "healthScore": 4803,
+                "model": null
+              },
+              {
+                "id": "17b96756825e1d693a3f34b85ae49bf0",
+                "statsId": "ffaad83624c02497de919c679c3265ee",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "23e17d813c13d248452233b28a7d365f",
+                  "252dc33d5185c4961c63149d71a12412",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "c875861967cd8acd818a9325ff4b7b3a",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "c875861967cd8acd818a9325ff4b7b3a",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "c875861967cd8acd818a9325ff4b7b3a",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "1f1317cb93a886506e79bb1e1dba1003",
+                  "8a59874f932886506e79bb1e1dba10d4",
+                  "8b594b4f932886506e79bb1e1dba10aa",
+                  "b769478f932886506e79bb1e1dba1020",
+                  "fb590f4f932886506e79bb1e1dba1027",
+                  "c369838f932886506e79bb1e1dba10ee",
+                  "bc694f4f932886506e79bb1e1dba10ef",
+                  "8b49434f932886506e79bb1e1dba1052",
+                  "ca69038f932886506e79bb1e1dba105d",
+                  "c559474f932886506e79bb1e1dba1069",
+                  "4459c34f932886506e79bb1e1dba10b3"
+                ],
+                "nodeCount": 13,
+                "frequency": 11,
+                "totalDuration": 11660130,
+                "maxDuration": 1146677,
+                "minDuration": 966907,
+                "avgDuration": 1060011,
+                "trimmedAverage": 1060727,
+                "stdDeviation": 53213,
+                "medianDuration": 1056597,
+                "healthScore": -13,
+                "model": null
+              },
+              {
+                "id": "3e5e015e9dbb98968c6d3f25b134f1e4",
+                "statsId": "c09c0e7390bf31cdc38169137fba206e",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "252dc33d5185c4961c63149d71a12412",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "8bb98b43936886506e79bb1e1dba1055",
+                  "9be98bc3936886506e79bb1e1dba105f",
+                  "d5f94307936886506e79bb1e1dba1010",
+                  "96b90b43936886506e79bb1e1dba1028",
+                  "cbc90783936886506e79bb1e1dba10a6",
+                  "c4a94703936886506e79bb1e1dba102a",
+                  "d799c303936886506e79bb1e1dba105a",
+                  "3af94707936886506e79bb1e1dba104f",
+                  "32a98f03936886506e79bb1e1dba10d1",
+                  "8cb94343936886506e79bb1e1dba1062",
+                  "42a90f03936886506e79bb1e1dba10d4",
+                  "90c98f43936886506e79bb1e1dba1017",
+                  "27c90b83936886506e79bb1e1dba1003",
+                  "b6998303936886506e79bb1e1dba1051",
+                  "a0f98fc3936886506e79bb1e1dba1024",
+                  "11a94b03936886506e79bb1e1dba10c1",
+                  "08f90fc3936886506e79bb1e1dba1053",
+                  "79b94743936886506e79bb1e1dba1078",
+                  "4bd9cf83936886506e79bb1e1dba10de",
+                  "c6f98307936886506e79bb1e1dba10e9",
+                  "b1e9c7c3936886506e79bb1e1dba103e",
+                  "1db90743936886506e79bb1e1dba101e",
+                  "96c98383936886506e79bb1e1dba10dc",
+                  "dcd94b83936886506e79bb1e1dba1031",
+                  "5fa90343936886506e79bb1e1dba1034",
+                  "8623dbcb93a886506e79bb1e1dba1022",
+                  "e3b90f43936886506e79bb1e1dba1036",
+                  "7bd943c3936886506e79bb1e1dba10fb",
+                  "a5c90383936886506e79bb1e1dba10e4",
+                  "c1e947c3936886506e79bb1e1dba10ab",
+                  "41c9cf43936886506e79bb1e1dba1092",
+                  "28e907c3936886506e79bb1e1dba108a",
+                  "140a0b07936886506e79bb1e1dba10b5",
+                  "49d98b83936886506e79bb1e1dba10c2",
+                  "e2d94f83936886506e79bb1e1dba1055",
+                  "61a9cb03936886506e79bb1e1dba10ae",
+                  "dd235bcb93a886506e79bb1e1dba1077",
+                  "63f9c707936886506e79bb1e1dba1050",
+                  "68a9c703936886506e79bb1e1dba107a",
+                  "79d9cb83936886506e79bb1e1dba10e7",
+                  "aae90bc3936886506e79bb1e1dba10e5",
+                  "20b98343936886506e79bb1e1dba107c"
+                ],
+                "nodeCount": 7,
+                "frequency": 42,
+                "totalDuration": 44341557,
+                "maxDuration": 2173226,
+                "minDuration": 56905,
+                "avgDuration": 1055751,
+                "trimmedAverage": 1049538,
+                "stdDeviation": 1006554,
+                "medianDuration": 958394,
+                "healthScore": -84,
+                "model": null
+              },
+              {
+                "id": "5d79e277be27c8b0006b51768af54b7c",
+                "statsId": "6c6b682dce546aad4ca64a047df50c56",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "23e17d813c13d248452233b28a7d365f",
+                  "252dc33d5185c4961c63149d71a12412",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "aea8c387932886506e79bb1e1dba1083",
+                  "e7880347932886506e79bb1e1dba109b",
+                  "25984747932886506e79bb1e1dba10cf",
+                  "2a294bcb932886506e79bb1e1dba10db",
+                  "5813db8b93a886506e79bb1e1dba10ee",
+                  "5ed8c30b932886506e79bb1e1dba109f",
+                  "a0a84f47932886506e79bb1e1dba1090",
+                  "52b8cf87932886506e79bb1e1dba105e",
+                  "55d8cfc7932886506e79bb1e1dba1065",
+                  "5cc807c7932886506e79bb1e1dba104e",
+                  "17390b0f932886506e79bb1e1dba10b9",
+                  "2f19c3cb932886506e79bb1e1dba1069",
+                  "0e49cf0f932886506e79bb1e1dba1079",
+                  "cbc8cbc7932886506e79bb1e1dba1088",
+                  "db290fcb932886506e79bb1e1dba10da",
+                  "adf80b4b932886506e79bb1e1dba106b",
+                  "dec80bc7932886506e79bb1e1dba1046",
+                  "98498b0f932886506e79bb1e1dba10d7",
+                  "2109838b932886506e79bb1e1dba10a3",
+                  "5e1353cb93a886506e79bb1e1dba102c",
+                  "c0e8c70b932886506e79bb1e1dba1089",
+                  "0cf8c34b932886506e79bb1e1dba1009",
+                  "c5494f0f932886506e79bb1e1dba105a",
+                  "2809038b932886506e79bb1e1dba1009",
+                  "91b8cb87932886506e79bb1e1dba10c5",
+                  "cae84f0b932886506e79bb1e1dba1060",
+                  "2019cb8b932886506e79bb1e1dba1030",
+                  "1913df8b93a886506e79bb1e1dba1017",
+                  "6c2947cb932886506e79bb1e1dba1042",
+                  "c9e88b0b932886506e79bb1e1dba10fc",
+                  "38888b07932886506e79bb1e1dba10fc",
+                  "87e8434b932886506e79bb1e1dba100b",
+                  "e209878b932886506e79bb1e1dba1031",
+                  "261903cb932886506e79bb1e1dba1046",
+                  "05f8474b932886506e79bb1e1dba1086",
+                  "e9a80387932886506e79bb1e1dba103c",
+                  "23f80f4b932886506e79bb1e1dba1096",
+                  "8e39470f932886506e79bb1e1dba1064",
+                  "d939830f932886506e79bb1e1dba106d",
+                  "2af88b4b932886506e79bb1e1dba101b",
+                  "14d84fc7932886506e79bb1e1dba1093",
+                  "6f090b8b932886506e79bb1e1dba10c8",
+                  "54b84b87932886506e79bb1e1dba1027",
+                  "eb98cb47932886506e79bb1e1dba101f",
+                  "d9c887c7932886506e79bb1e1dba1061",
+                  "ea980b47932886506e79bb1e1dba100b",
+                  "d3b883c7932886506e79bb1e1dba1023",
+                  "07d8470b932886506e79bb1e1dba109e",
+                  "a929c7cb932886506e79bb1e1dba10be",
+                  "a5190f8b932886506e79bb1e1dba10fc",
+                  "a898c347932886506e79bb1e1dba1037",
+                  "d039cfcb932886506e79bb1e1dba10a8",
+                  "67a88787932886506e79bb1e1dba1017"
+                ],
+                "nodeCount": 9,
+                "frequency": 53,
+                "totalDuration": 54140602,
+                "maxDuration": 1639844,
+                "minDuration": 586576,
+                "avgDuration": 1021520,
+                "trimmedAverage": 1011952,
+                "stdDeviation": 305492,
+                "medianDuration": 922892,
+                "healthScore": -447,
+                "model": null
+              },
+              {
+                "id": "c63795a01203ba780c27bcf8b4c6d391",
+                "statsId": "5f3591374018f628771f0ea4c8dd7427",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "23e17d813c13d248452233b28a7d365f",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "efb55ddbffbf021048d5fbd38c4fd9f4",
+                  "aa951f0847b882909938d255516d4369",
+                  "938be2a587000210449ab919cebb358e",
+                  "3208b9bb879c0ed0449ab919cebb35e0",
+                  "8754636587180a90edc4caa7cebb35f0",
+                  "3d8b26e587000210edc4caa7cebb3522",
+                  "65d08657ff12021048d5fbd38c4fd94f",
+                  "3ca91c62ff1c925048d5fbd38c4fd9f2",
+                  "5306b06887200210449ab919cebb35a0",
+                  "e7ab8424876c8214449ab919cebb3570",
+                  "d594c570472402109938d255516d4304",
+                  "d420a89687908e90449ab919cebb3517",
+                  "3b53ab97eb810210d297ff45cad0cd61",
+                  "4004c9f093a002106e79bb1e1dba1061"
+                ],
+                "nodeCount": 5,
+                "frequency": 14,
+                "totalDuration": 9782940,
+                "maxDuration": 1212897,
+                "minDuration": 604920,
+                "avgDuration": 698781,
+                "trimmedAverage": 663760,
+                "stdDeviation": 218561,
+                "medianDuration": 607339,
+                "healthScore": -965,
+                "model": null
+              },
+              {
+                "id": "2cc68d11bf47d814e220628b7de3fa2c",
+                "statsId": "aecd0ac8ee701cfb3328cfc5c08d7ba3",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "23e17d813c13d248452233b28a7d365f",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "d4780fc3932886506e79bb1e1dba10e5",
+                  "c7684bc3932886506e79bb1e1dba1021",
+                  "2d780307932886506e79bb1e1dba10de",
+                  "4a788307932886506e79bb1e1dba1084",
+                  "e2780707932886506e79bb1e1dba1036",
+                  "0b788707932886506e79bb1e1dba10b8",
+                  "67039b8b93a886506e79bb1e1dba1075",
+                  "7768cbc3932886506e79bb1e1dba10c3",
+                  "5c884b07932886506e79bb1e1dba10e6",
+                  "2f780b07932886506e79bb1e1dba1056",
+                  "fc78cfc3932886506e79bb1e1dba1018"
+                ],
+                "nodeCount": 6,
+                "frequency": 11,
+                "totalDuration": 3695722,
+                "maxDuration": 397115,
+                "minDuration": 239827,
+                "avgDuration": 335974,
+                "trimmedAverage": 339864,
+                "stdDeviation": 49490,
+                "medianDuration": 337721,
+                "healthScore": -1507,
+                "model": null
+              },
+              {
+                "id": "46296c2b8d8a96b00f46e26049851e0c",
+                "statsId": "534f825348dfbcca82463a07abe29837",
+                "entityId": "783f434393a886506e79bb1e1dba1020",
+                "nodes": [
+                  "3c6d83a605c9cbec999595f24ae86064",
+                  "23e17d813c13d248452233b28a7d365f",
+                  "252dc33d5185c4961c63149d71a12412",
+                  "c80dce03df64be733cfe435d363bc415",
+                  "52fc856a1f5030f7c85fd2d83e2fe3c1",
+                  "0487d27d7b86c232d93cafdee15e1cb7",
+                  "211f7502b22101009fa46e2dfa9fdfea"
+                ],
+                "caseIds": [
+                  "e86883c3932886506e79bb1e1dba1044",
+                  "ba8987cf932886506e79bb1e1dba10de",
+                  "d668c7c3932886506e79bb1e1dba1038",
+                  "335803c3932886506e79bb1e1dba10ba",
+                  "7999cfcf932886506e79bb1e1dba109d",
+                  "3c994fcf932886506e79bb1e1dba1033",
+                  "73894bcf932886506e79bb1e1dba10ea",
+                  "68580b83932886506e79bb1e1dba10c8",
+                  "c779cb8f932886506e79bb1e1dba10cf",
+                  "53588f83932886506e79bb1e1dba10bf",
+                  "87031b8b93a886506e79bb1e1dba108c",
+                  "62584f83932886506e79bb1e1dba1002",
+                  "0e8947cf932886506e79bb1e1dba1053",
+                  "c089cf8f932886506e79bb1e1dba10a4",
+                  "0d68c3c3932886506e79bb1e1dba1076",
+                  "102397cb93a886506e79bb1e1dba10f5",
+                  "b96847c3932886506e79bb1e1dba100f",
+                  "ca58cb83932886506e79bb1e1dba1017",
+                  "7479c78f932886506e79bb1e1dba10b6",
+                  "858983cf932886506e79bb1e1dba10c0",
+                  "4a794b8f932886506e79bb1e1dba10a1",
+                  "5d584b83932886506e79bb1e1dba10db"
+                ],
+                "nodeCount": 7,
+                "frequency": 22,
+                "totalDuration": 13945103,
+                "maxDuration": 862154,
+                "minDuration": 350977,
+                "avgDuration": 633868,
+                "trimmedAverage": 636598,
+                "stdDeviation": 187002,
+                "medianDuration": 661081,
+                "healthScore": -1785,
+                "model": null
+              }
+            ]
+          }
+        ],
+        "miningStats": { "totalRecords": 174 },
+        "version": { "automationDiscoveryReport": null }
+      }
+    }
+  }
+}
