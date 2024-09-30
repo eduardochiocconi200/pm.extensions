@@ -12,13 +12,14 @@ public class ProcessMiningModelPPTReportTest
     @Test
     public void test()
     {
-        boolean runAll = false;
-        if (!runAll) {
-            test2();
+        boolean runSingleTest = true;
+        if (!runSingleTest) {
+            test3();
         }
         else {
             test1();
             test2();
+            test3();
         }
     }
 
@@ -32,7 +33,19 @@ public class ProcessMiningModelPPTReportTest
         report.createReport();
     }
 
+    // Test with 1 Happy Path Filters.
     private void test2()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload5-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+
+        ProcessMiningModelFilterPowerpointReport report = new ProcessMiningModelFilterPowerpointReport(parser.getProcessMiningModel());
+        report.createReport();
+    }
+
+    // Test with 2 Happy Path Filters.
+    private void test3()
     {
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload5-w.json");
         ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
