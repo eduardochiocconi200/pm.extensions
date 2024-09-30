@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.dao.PlatformVersionDAOREST;
 
 public class PlatformVersionTest
 {

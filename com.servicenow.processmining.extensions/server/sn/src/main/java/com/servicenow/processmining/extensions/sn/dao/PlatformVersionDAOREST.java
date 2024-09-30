@@ -1,4 +1,4 @@
-package com.servicenow.processmining.extensions.sc.dao;
+package com.servicenow.processmining.extensions.sn.dao;
 
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowRESTService;
