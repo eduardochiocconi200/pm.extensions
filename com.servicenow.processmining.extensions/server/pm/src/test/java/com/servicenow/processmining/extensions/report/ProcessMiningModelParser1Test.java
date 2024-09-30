@@ -14,9 +14,9 @@ public class ProcessMiningModelParser1Test
     @Test
     public void test()
     {
-        boolean singleTest = true;
+        boolean singleTest = false;
         if (singleTest) {
-            test17();
+            test18();
         }
         else {
             test1();
@@ -36,6 +36,7 @@ public class ProcessMiningModelParser1Test
             test15();
             test16();
             test17();
+            test18();
         }
     }
 
@@ -248,6 +249,19 @@ public class ProcessMiningModelParser1Test
         ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(4, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test18()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload6-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(5, parser.getProcessMiningModel().getFilters().size());
 
         // Run Variation Analysis.
         ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
