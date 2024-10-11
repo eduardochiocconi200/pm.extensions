@@ -45,6 +45,7 @@ public class ProcessMiningModelFilterPowerpointReport
     private XSLFSlide filterAnalysisTitleSlide = null;
     private ArrayList<XSLFSlide> filterAnalysisDetailSlide = null;
     private boolean complianceReferencePathAnalysisPrinted = false;
+    private boolean breakdownIntroSlidePrinted = false;
 
     public ProcessMiningModelFilterPowerpointReport(final ProcessMiningModel model)
     {
@@ -284,7 +285,7 @@ public class ProcessMiningModelFilterPowerpointReport
             title1.setText("Filter Analysis");
             XSLFTextShape filterName = slide.getPlaceholder(1);
             filterName.clearText();
-            filterName.setText(getFilterDataSource().getFilterName());
+            filterName.setText("Filter: " + getFilterDataSource().getFilterName());
 
             slide.removeShape(slide.getPlaceholder(2));
             slide.removeShape(slide.getPlaceholder(3));
@@ -314,6 +315,7 @@ public class ProcessMiningModelFilterPowerpointReport
             XSLFSlideMaster slideMaster = ppt.getSlideMasters().get(0);
             XSLFSlideLayout titleLayout = slideMaster.getLayout("Two Content");
             XSLFSlide slide = null;
+            addIntroSlide(analysis);
             for (int i=0; i < analysis.getFindings().size(); i++) {
                 needToPrintDataSourceAnalysisOpening(analysis);
                 slide = ppt.createSlide(titleLayout);
@@ -350,13 +352,55 @@ public class ProcessMiningModelFilterPowerpointReport
         }
     }
 
+    private void addIntroSlide(DataSourceAnalysis analysis)
+    {
+        String analysisClassName = analysis.getClass().getName();
+        System.out.println("ACN: (" + analysisClassName + ")");
+        if (analysisClassName.indexOf("DataSourceComplianceReferencePathAnalysis") > 0) {
+            if (!complianceReferencePathAnalysisPrinted) {
+                createAnalysisIntroSlide("Compliance Analysis against Reference Path(s)");            
+                complianceReferencePathAnalysisPrinted = true;
+            }
+        }
+        else if (analysisClassName.indexOf("BreakdownDataSourceAnalysis") > 0) {
+            if (!breakdownIntroSlidePrinted) {
+                createAnalysisIntroSlide("Breakdown Analysis");
+                breakdownIntroSlidePrinted = true;
+            }
+        }
+        else if (analysisClassName.indexOf("TopVariantComparisonDataSourceAnalysis") > 0) {
+            createAnalysisIntroSlide("Top Variant Comparison Analysis");
+        }
+    }
+
     private void needToPrintDataSourceAnalysisOpening(final DataSourceAnalysis analysis)
     {
         String analysisClassName = analysis.getClass().getName();
         if (!complianceReferencePathAnalysisPrinted && analysisClassName.indexOf("DataSourceComplianceReferencePathAnalysis") > 0) {
+            addIntroSlide(analysis);
             createComplianceReferencePathSummaryTable(analysis);
             complianceReferencePathAnalysisPrinted = true;
         }
+    }
+
+    private void createAnalysisIntroSlide(final String analysis)
+    {
+        XSLFSlideMaster slideMaster = ppt.getSlideMasters().get(0);
+        XSLFSlideLayout titleLayout = slideMaster.getLayout("1_Cover_1");
+        XSLFSlide slide = ppt.createSlide(titleLayout);
+        XSLFTextShape title1 = slide.getPlaceholder(0);
+        title1.clearText();
+        title1.setText(analysis);
+        XSLFTextShape filterName = slide.getPlaceholder(1);
+        filterName.clearText();
+        filterName.setText("Filter: " + getFilterDataSource().getFilterName());
+
+        slide.removeShape(slide.getPlaceholder(2));
+        slide.removeShape(slide.getPlaceholder(3));
+        slide.removeShape(slide.getPlaceholder(4));
+        slide.removeShape(slide.getPlaceholder(5));
+        slide.removeShape(slide.getPlaceholder(6));
+        slide.removeShape(slide.getPlaceholder(7));
     }
 
     private void createComplianceReferencePathSummaryTable(final DataSourceAnalysis analysis)
