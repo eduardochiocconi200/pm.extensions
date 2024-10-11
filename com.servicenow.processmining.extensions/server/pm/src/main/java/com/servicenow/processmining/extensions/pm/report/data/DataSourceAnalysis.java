@@ -2,7 +2,7 @@ package com.servicenow.processmining.extensions.pm.report.data;
 
 import java.util.ArrayList;
 
-public class DataSourceAnalysis
+public abstract class DataSourceAnalysis
 {
     private String description = null;
     private ArrayList<DataSourceFinding> findings = null;
