@@ -53,8 +53,6 @@ public class ComplianceDetector
     {
         modelGraph = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
         for (ProcessMiningModelNode node : getModel().getNodes().values()) {
-            // logger.debug("Add Vertex: (" + getModel().getNodes().get(node).getName() + ")");
-            // g.addVertex(getModel().getNodes().get(node).getName());
             logger.debug("Model - Add Vertex: (" + node.getId() + ") - (" + node.getName() + ")");
             modelGraph.addVertex(node.getId());
         }
@@ -111,6 +109,7 @@ public class ComplianceDetector
                         ProcessMiningModelVariant v = getReferencePathVariant(filter, referencePathCount++);
                         getReferencePathGraphs().put(v.getId(), getGraphForVariant(v));
                         getReferencePathVariants().put(v.getId(), v);
+                        getModel().setReferencePathVariants(getReferencePathVariants());
                     }
                 }
             }
@@ -119,7 +118,7 @@ public class ComplianceDetector
 
     private boolean isHappyPath(final ProcessMiningModelFilter filter)
     {
-        if (filter.getName() != null && filter.getName().startsWith("Happy Path")) {
+        if (filter.getName() != null && filter.getName().contains("Happy Path")) {
             return true;
         }
 
@@ -392,7 +391,6 @@ public class ComplianceDetector
         String nonComplianceReason = "";
         String previousNode = null;
         boolean processedFirstNode = false;
-        variant.setReferenceVariant(referencePathVariant);
 
         logger.debug("NODES:");
         for (ProcessMiningModelNode n : getModel().getNodes().values()) {
