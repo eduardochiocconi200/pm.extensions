@@ -217,11 +217,13 @@ public class ProcessMiningModelFilterDataSource
         DataSourceAnalysis analysis = new DataSourceComplianceReferencePathAnalysis();
         analysis.setDescription("This analysis reviews variants compliance against specific compliant path(s).");
 
-        for (ProcessMiningModelVariant v : getModel().getVariants().values()) {
-            DataSourceVariantFindingComplianceReferencePath variantFinding = new DataSourceVariantFindingComplianceReferencePath();
+        for (ProcessMiningModelVariant v : getModel().getVariantsSortedByFrequency()) {
+            DataSourceVariantFindingComplianceReferencePath variantFinding = new DataSourceVariantFindingComplianceReferencePath(v.getId());
             variantFinding.setVariationPathAverage(v.getAvgDuration());
             if (v.getReferenceVariant() != null) {
                 variantFinding.setReferencePathAverage(v.getReferenceVariant().getAvgDuration());
+                variantFinding.setVariantIsCompliant(true);
+                variantFinding.setReferencePathVariantId(v.getReferenceVariant().getId());
             }
             variantFinding.setVariationTotalCases(v.getFrequency());
 
