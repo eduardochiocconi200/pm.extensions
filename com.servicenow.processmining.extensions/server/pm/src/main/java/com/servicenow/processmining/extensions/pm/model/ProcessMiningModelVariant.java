@@ -9,6 +9,7 @@ public class ProcessMiningModelVariant
     private String entityId = null;
     private ArrayList<String> path = null;
     private String routePath = null;
+    private String translatedRoutePath = null;
     private HashMap<String, ProcessMiningModelNode> nodes = null;
     private ArrayList<String> startNodes = null;
     private ArrayList<String> middleNodes = null;
@@ -24,6 +25,7 @@ public class ProcessMiningModelVariant
     private int medianDuration = -1;
     private double creationIntervalDuration = 0.0;
     private ArrayList<String> distinctNodes = null;
+    private ArrayList<String> translatedDistinctNodes = null;
     private ArrayList<String> nonComplianceNote = null;
     private ProcessMiningModelVariant referenceVariant = null;
     
@@ -81,6 +83,23 @@ public class ProcessMiningModelVariant
         }
 
         return routePath;
+    }
+
+    public String getTranslatedRouteNodes()
+    {
+        if (translatedRoutePath == null) {
+            translatedRoutePath = "";
+            boolean processedFirstElement = false;
+            for (String node : getPath()) {
+                if (processedFirstElement) {
+                    translatedRoutePath += ",";
+                }
+                translatedRoutePath += getNodes().get(node).getName();
+                processedFirstElement = true;
+            }
+        }
+
+        return translatedRoutePath;
     }
 
     public void setNodes(final ArrayList<ProcessMiningModelNode> nodes)
@@ -292,6 +311,21 @@ public class ProcessMiningModelVariant
         return distinctNodes;
     }
 
+    public ArrayList<String> getTranslatedDistinctNodes()
+    {
+        if (translatedDistinctNodes == null) {
+            translatedDistinctNodes = new ArrayList<String>();
+            for (String node : getPath()) {
+                if (!translatedDistinctNodes.contains(getNodes().get(node).getName())) {
+                    String translatedNode = getNodes().get(node).getName();
+                    translatedDistinctNodes.add(translatedNode);
+                }
+            }
+        }
+
+        return translatedDistinctNodes;
+    }
+
     public boolean hasNonComplianceNote()
     {
         return this.nonComplianceNote != null && this.nonComplianceNote.size() > 0;
@@ -319,6 +353,11 @@ public class ProcessMiningModelVariant
     public ProcessMiningModelVariant getReferenceVariant()
     {
         return this.referenceVariant;
+    }
+
+    public boolean isReferencePathVariation()
+    {
+        return (getAvgDuration() - getReferenceVariant().getAvgDuration()) == 0;
     }
 
     public String toString()
