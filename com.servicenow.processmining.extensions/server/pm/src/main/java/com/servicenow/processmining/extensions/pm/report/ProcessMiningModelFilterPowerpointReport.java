@@ -1,6 +1,7 @@
 package com.servicenow.processmining.extensions.pm.report;
 
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariant;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceAnalysis;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceFindingContent;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceVariantFindingComplianceReferencePath;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.apache.poi.sl.usermodel.TextParagraph;
+import org.apache.poi.sl.usermodel.TextParagraph.TextAlign;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFSlideLayout;
@@ -317,7 +319,6 @@ public class ProcessMiningModelFilterPowerpointReport
             XSLFSlide slide = null;
             addIntroSlide(analysis);
             for (int i=0; i < analysis.getFindings().size(); i++) {
-                needToPrintDataSourceAnalysisOpening(analysis);
                 slide = ppt.createSlide(titleLayout);
 
                 XSLFTextShape title1 = slide.getPlaceholder(0);
@@ -355,10 +356,10 @@ public class ProcessMiningModelFilterPowerpointReport
     private void addIntroSlide(DataSourceAnalysis analysis)
     {
         String analysisClassName = analysis.getClass().getName();
-        System.out.println("ACN: (" + analysisClassName + ")");
         if (analysisClassName.indexOf("DataSourceComplianceReferencePathAnalysis") > 0) {
             if (!complianceReferencePathAnalysisPrinted) {
-                createAnalysisIntroSlide("Compliance Analysis against Reference Path(s)");            
+                createAnalysisIntroSlide("Compliance Analysis against Reference Path(s)");
+                createComplianceReferencePathSummaryTable(analysis);
                 complianceReferencePathAnalysisPrinted = true;
             }
         }
@@ -370,16 +371,6 @@ public class ProcessMiningModelFilterPowerpointReport
         }
         else if (analysisClassName.indexOf("TopVariantComparisonDataSourceAnalysis") > 0) {
             createAnalysisIntroSlide("Top Variant Comparison Analysis");
-        }
-    }
-
-    private void needToPrintDataSourceAnalysisOpening(final DataSourceAnalysis analysis)
-    {
-        String analysisClassName = analysis.getClass().getName();
-        if (!complianceReferencePathAnalysisPrinted && analysisClassName.indexOf("DataSourceComplianceReferencePathAnalysis") > 0) {
-            addIntroSlide(analysis);
-            createComplianceReferencePathSummaryTable(analysis);
-            complianceReferencePathAnalysisPrinted = true;
         }
     }
 
@@ -438,14 +429,13 @@ public class ProcessMiningModelFilterPowerpointReport
             r.setText(getColumnHeaderLabel(i));
             r.setFontSize(12d);
             r.setFontColor(Color.WHITE);
-            tbl.setColumnWidth(i, 165);
+            tbl.setColumnWidth(i, 170);
         }
 
         int numRows = analysis.getFindings().size();
         for (int rownum = 0; rownum < numRows; rownum++) {
             XSLFTableRow tr = tbl.addRow();
             tr.setHeight(25);
-
             final DataSourceVariantFindingComplianceReferencePath findingContent = (DataSourceVariantFindingComplianceReferencePath) analysis.getFindings().get(rownum);
 
             // Variation
@@ -456,6 +446,34 @@ public class ProcessMiningModelFilterPowerpointReport
             r.setFontColor(Color.WHITE);
             r.setText("Variation # " + (rownum+1));
 
+            // Is Compliant?
+            XSLFTableCell isCompliantCell = tr.addCell();
+            p = isCompliantCell.addNewTextParagraph();
+            p.setTextAlign(TextAlign.CENTER);
+            r = p.addNewTextRun();
+            r.setFontSize(12d);
+            r.setFontColor(Color.WHITE);
+            if (findingContent.getVariantIsCompliant()) {
+                if (!findingContent.getReferencePathVariantId().equals("")) {
+                    r.setText("Yes (" + findingContent.getReferencePathVariantId() + ")");
+                }
+                else {
+                    r.setText("Yes");
+                }
+            }
+            else {
+                r.setText("No");
+            }
+
+            // Total Cases
+            XSLFTableCell totalCasesCell = tr.addCell();
+            p = totalCasesCell.addNewTextParagraph();
+            p.setTextAlign(TextAlign.CENTER);
+            r = p.addNewTextRun();
+            r.setFontSize(12d);
+            r.setFontColor(Color.WHITE);
+            r.setText(findingContent.getVariationTotalCases() + "");
+
             // Average
             XSLFTableCell avgCell = tr.addCell();
             p = avgCell.addNewTextParagraph();
@@ -464,29 +482,30 @@ public class ProcessMiningModelFilterPowerpointReport
             r.setFontColor(Color.WHITE);
             r.setText(findingContent.getVariationPathAverage() + " seconds");
 
-            // Delta
-            XSLFTableCell deltaCell = tr.addCell();
-            p = deltaCell.addNewTextParagraph();
-            r = p.addNewTextRun();
-            r.setFontSize(12d);
-            r.setFontColor(Color.WHITE);
-            r.setText(findingContent.getDelta() + " seconds");
-
-            // Total Cases
-            XSLFTableCell totalCasesCell = tr.addCell();
-            p = totalCasesCell.addNewTextParagraph();
-            r = p.addNewTextRun();
-            r.setFontSize(12d);
-            r.setFontColor(Color.WHITE);
-            r.setText(findingContent.getVariationTotalCases() + "");
-
             // Total Time
             XSLFTableCell totalTimeCell = tr.addCell();
             p = totalTimeCell.addNewTextParagraph();
             r = p.addNewTextRun();
             r.setFontSize(12d);
             r.setFontColor(Color.WHITE);    
-            r.setText(findingContent.getVariationTotalPossibleImprovementTime() + " seconds");
+            r.setText((findingContent.getVariationTotalCases() * findingContent.getVariationPathAverage()) + " seconds");
+        }
+
+        int referencePathYCoordinate = 400;
+        for (ProcessMiningModelVariant referencePathVariant : getModel().getReferencePathVariants().values()) {
+            XSLFTextShape refPath = tableSlide.createTextBox();
+            Rectangle2D shapeRefPath = new Rectangle2D.Double();
+            shapeRefPath.setFrame(50, referencePathYCoordinate, 800, 50);
+            refPath.setAnchor(shapeRefPath);
+
+            refPath.clearText();
+            XSLFTextParagraph p = refPath.addNewTextParagraph();
+            XSLFTextRun r = p.addNewTextRun();
+
+            r.setFontSize(12d);
+            r.setFontColor(Color.WHITE);
+            r.setText("Reference Path[" + referencePathVariant.getId() + "]: [" + referencePathVariant.getTranslatedRouteNodes().replaceAll(",", " -> ") + "]. Avg: (" + referencePathVariant.getAvgDuration() + ") seconds.");
+            referencePathYCoordinate += 30;
         }
     }
 
@@ -496,11 +515,11 @@ public class ProcessMiningModelFilterPowerpointReport
             case 0:
                 return "Variation";
             case 1:
-                return "Average";
+                return "Is Compliant?";
             case 2:
-                return "Delta";
-            case 3:
                 return "Total Cases";
+            case 3:
+                return "Average";
             case 4:
                 return "Total Time";
             default:
