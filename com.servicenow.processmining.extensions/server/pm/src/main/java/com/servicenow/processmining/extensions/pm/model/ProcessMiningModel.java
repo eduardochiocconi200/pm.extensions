@@ -21,6 +21,7 @@ public class ProcessMiningModel
     private HashMap<String, ProcessMiningModelVariant> variants = null;
     private TreeSet<ProcessMiningModelVariant> variantsByFrequency = null;
     private ProcessMiningModelAggregate aggregate = null;
+    private HashMap<String, ProcessMiningModelVariant> referencePathVariants = null;
 
     public ProcessMiningModel(final String versionId)
     {
@@ -319,6 +320,16 @@ public class ProcessMiningModel
     public ProcessMiningModelAggregate getAggregate()
     {
         return this.aggregate;
+    }
+
+    public void setReferencePathVariants(final HashMap<String, ProcessMiningModelVariant> referencePathVariants)
+    {
+        this.referencePathVariants = referencePathVariants;
+    }
+
+    public HashMap<String, ProcessMiningModelVariant> getReferencePathVariants()
+    {
+        return this.referencePathVariants;
     }
 
     public String toString()
