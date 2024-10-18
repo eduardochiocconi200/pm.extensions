@@ -443,14 +443,14 @@ public class ProcessMiningModelParser
                                         }
                                         // If there is no model, the edges are described by the sequence of nodes...
                                         else {
-                                                // Load Variant Nodes.
-                                                JSONArray nodesArray = variantObj.getJSONArray("nodes");
-                                                ArrayList<ProcessMiningModelNode> nodes = parseNodesFromVariantNodeSequence(nodesArray);
-                                                pmmv.setNodes(nodes);
+                                            // Load Variant Nodes.
+                                            JSONArray nodesArray = variantObj.getJSONArray("nodes");
+                                            ArrayList<ProcessMiningModelNode> nodes = parseNodesFromVariantNodeSequence(nodesArray);
+                                            pmmv.setNodes(nodes);
 
-                                                // Load Variant Edges.
-                                                ArrayList<ProcessMiningModelTransition> transitions = parseTransitionsFromVariantNodeSequence(nodesArray);
-                                                pmmv.addTransitions(transitions);
+                                            // Load Variant Edges.
+                                            ArrayList<ProcessMiningModelTransition> transitions = parseTransitionsFromVariantNodeSequence(nodesArray);
+                                            pmmv.addTransitions(transitions);
                                         }
                                     }
                                 }
@@ -475,18 +475,7 @@ public class ProcessMiningModelParser
             for (int i=0; i < nodesArray.length(); i++) {
                 String nodeId = nodesArray.getString(i);
                 if (!addedNodes.contains(nodeId)) {
-                    ProcessMiningModelNode pmmn = new ProcessMiningModelNode(nodeId, nodeId);
-                    pmmn.setActivityId(null);
-                    pmmn.setEntityId(null);
-                    pmmn.setIsStart(i==0 ? true : false);
-                    pmmn.setIsEnd((i==(nodesArray.length()-1)) ? true : false);
-                    pmmn.setAbsoluteFrequency(0);
-                    pmmn.setCaseFrequency(0);
-                    pmmn.setMaxReps(0);
-                    pmmn.setField(null);
-                    pmmn.setFieldLabel(null);
-                    pmmn.setValue(null);
-
+                    ProcessMiningModelNode pmmn = this.getProcessMiningModel().getNodes().get(nodeId);
                     nodes.add(pmmn);
                     addedNodes.add(nodeId);
                 }
