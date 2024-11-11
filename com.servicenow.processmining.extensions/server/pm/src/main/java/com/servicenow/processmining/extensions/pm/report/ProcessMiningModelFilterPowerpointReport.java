@@ -2,7 +2,8 @@ package com.servicenow.processmining.extensions.pm.report;
 
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariant;
-import com.servicenow.processmining.extensions.pm.report.data.DataSourceAnalysis;
+import com.servicenow.processmining.extensions.pm.report.analysis.BreakdownDataSourceAnalysis;
+import com.servicenow.processmining.extensions.pm.report.analysis.DataSourceAnalysis;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceFindingContent;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceVariantFindingComplianceReferencePath;
 
@@ -18,10 +19,27 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.awt.Rectangle;
 
 import org.apache.poi.sl.usermodel.TextParagraph;
 import org.apache.poi.sl.usermodel.TextParagraph.TextAlign;
+import org.apache.poi.util.Units;
+import org.apache.poi.xddf.usermodel.PresetColor;
+import org.apache.poi.xddf.usermodel.XDDFColor;
+import org.apache.poi.xddf.usermodel.chart.AxisCrossBetween;
+import org.apache.poi.xddf.usermodel.chart.AxisCrosses;
+import org.apache.poi.xddf.usermodel.chart.AxisPosition;
+import org.apache.poi.xddf.usermodel.chart.BarDirection;
+import org.apache.poi.xddf.usermodel.chart.ChartTypes;
+import org.apache.poi.xddf.usermodel.chart.XDDFBarChartData;
+import org.apache.poi.xddf.usermodel.chart.XDDFCategoryAxis;
+import org.apache.poi.xddf.usermodel.chart.XDDFCategoryDataSource;
+import org.apache.poi.xddf.usermodel.chart.XDDFChartData;
+import org.apache.poi.xddf.usermodel.chart.XDDFDataSourcesFactory;
+import org.apache.poi.xddf.usermodel.chart.XDDFNumericalDataSource;
+import org.apache.poi.xddf.usermodel.chart.XDDFValueAxis;
 import org.apache.poi.xslf.usermodel.XMLSlideShow;
+import org.apache.poi.xslf.usermodel.XSLFChart;
 import org.apache.poi.xslf.usermodel.XSLFSlide;
 import org.apache.poi.xslf.usermodel.XSLFSlideLayout;
 import org.apache.poi.xslf.usermodel.XSLFSlideMaster;
@@ -31,6 +49,15 @@ import org.apache.poi.xslf.usermodel.XSLFTableRow;
 import org.apache.poi.xslf.usermodel.XSLFTextParagraph;
 import org.apache.poi.xslf.usermodel.XSLFTextRun;
 import org.apache.poi.xslf.usermodel.XSLFTextShape;
+
+import org.joda.time.Period;
+import org.joda.time.Seconds;
+import org.joda.time.format.PeriodFormat;
+
+import org.openxmlformats.schemas.drawingml.x2006.chart.CTCatAx;
+import org.openxmlformats.schemas.drawingml.x2006.chart.CTValAx;
+import org.openxmlformats.schemas.drawingml.x2006.main.CTTextBody;
+import org.openxmlformats.schemas.drawingml.x2006.main.CTTextCharacterProperties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -331,8 +358,7 @@ public class ProcessMiningModelFilterPowerpointReport
                 XSLFTextRun bRun1 = bParagraph.getTextRuns().get(0);
                 bRun1.setFontSize(16d);
 
-                XSLFTextShape imageContent = slide.getPlaceholder(1);
-                imageContent.setText("Copy Filter Process Map Screenshot");
+                addChart(analysis, slide);
 
                 XSLFTextShape filterFindings = slide.getPlaceholder(2);
                 filterFindings.clearText();
@@ -351,6 +377,86 @@ public class ProcessMiningModelFilterPowerpointReport
                 }
             }
         }
+    }
+
+    private void addChart(DataSourceAnalysis analysis, XSLFSlide slide)
+    {
+        if (analysis.getClass().equals(BreakdownDataSourceAnalysis.class)) {
+            slide.removeShape(slide.getPlaceholder(1));
+            addBreakdownAnalysisChart(slide, (BreakdownDataSourceAnalysis) analysis);
+        }
+        else {
+            XSLFTextShape imageContent = slide.getPlaceholder(1);
+            imageContent.setText("Copy Filter Process Map Screenshot");
+        }
+    }
+
+    private void addBreakdownAnalysisChart(final XSLFSlide slide, final BreakdownDataSourceAnalysis analysis)
+    {
+        // create chart
+        XSLFChart chart = ppt.createChart();
+        chart.setTitleText("'" + analysis.getBreakdown().getDisplayName() + "' breakdown avg cycle times");
+        chart.setTitleOverlay(false);
+        chart.getTitle().getBody().getParagraphs().get(0).getTextRuns().get(0).setFontSize(12d);
+        chart.getTitle().getBody().getParagraphs().get(0).getTextRuns().get(0).setFontColor(XDDFColor.from(PresetColor.WHITE));
+
+        // set axis
+        XDDFCategoryAxis bottomAxis = chart.createCategoryAxis(AxisPosition.BOTTOM);
+        XDDFValueAxis leftAxis = chart.createValueAxis(AxisPosition.LEFT);
+        leftAxis.setCrosses(AxisCrosses.AUTO_ZERO);
+        leftAxis.setCrossBetween(AxisCrossBetween.BETWEEN);
+
+        // define chart data for bar chart
+        XDDFChartData data = chart.createData(ChartTypes.BAR, bottomAxis, leftAxis);
+        data.setVaryColors(false);
+
+        // add chart categories (x-axis data)
+        String[] breakdownLabels = new String[analysis.getBreakdown().getValue().size()];
+        for (int i=0; i < analysis.getBreakdown().getValue().size(); i++) {
+            breakdownLabels[i] = analysis.getBreakdown().getValue().get(i).getLabel();
+        }
+        String breakdownLabelsDataRange = chart.formatRange(new org.apache.poi.ss.util.CellRangeAddress(1, breakdownLabels.length, 0, 0));
+        XDDFCategoryDataSource categoryData = XDDFDataSourcesFactory.fromArray(breakdownLabels, breakdownLabelsDataRange, 0);
+
+        // add chart values (y-axis data)
+        Double[] breakdownValues = new Double[analysis.getBreakdown().getValue().size()];
+        for (int i=0; i < analysis.getBreakdown().getValue().size(); i++) {
+            // Report in Days metric.
+            breakdownValues[i] = ((double) analysis.getBreakdown().getValue().get(i).getAvgDuration())/3600/24;
+        }
+        String breakdownValuesDataRange = chart.formatRange(new org.apache.poi.ss.util.CellRangeAddress(1, breakdownValues.length, 1, 1));
+        XDDFNumericalDataSource<Double> valueData = XDDFDataSourcesFactory.fromArray(breakdownValues, breakdownValuesDataRange, 1);
+        XDDFBarChartData bar = (XDDFBarChartData) data;
+        bar.setBarDirection(BarDirection.BAR);
+
+        // add series
+        XDDFChartData.Series series = data.addSeries(categoryData, valueData);
+        series.setTitle(analysis.getBreakdown().getDisplayName(), chart.setSheetTitle(analysis.getBreakdown().getDisplayName(), 1));
+
+        CTValAx ctValAx = chart.getCTChart().getPlotArea().getValAxArray(0);
+        ctValAx.addNewSpPr().addNewLn().addNewSolidFill().addNewSrgbClr().setVal(new byte[]{(byte)255,(byte)255,(byte)255});
+        CTTextBody ctTextBody = ctValAx.addNewTxPr();
+        ctTextBody.addNewBodyPr();
+        CTTextCharacterProperties ctTextCharacterProperties = ctTextBody.addNewP().addNewPPr().addNewDefRPr();
+        ctTextCharacterProperties.setSz(10*100);
+        ctTextCharacterProperties.addNewSolidFill().addNewSrgbClr().setVal(new byte[]{(byte)255,(byte)255,(byte)255});
+
+        CTCatAx ctCatAx = chart.getCTChart().getPlotArea().getCatAxArray(0);
+        ctCatAx.addNewSpPr().addNewLn().addNewSolidFill().addNewSrgbClr().setVal(new byte[]{(byte)255,(byte)255,(byte)255});
+        ctTextBody = ctCatAx.addNewTxPr();
+        ctTextBody.addNewBodyPr();
+        ctTextCharacterProperties = ctTextBody.addNewP().addNewPPr().addNewDefRPr();
+        ctTextCharacterProperties.setSz(10*100);
+        ctTextCharacterProperties.addNewSolidFill().addNewSrgbClr().setVal(new byte[]{(byte)255,(byte)255,(byte)255});
+
+        // plot chart
+        chart.plot(data);
+
+        // set chart dimensions
+        Rectangle chartDimensions = new Rectangle(50*Units.EMU_PER_POINT, 150*Units.EMU_PER_POINT, 400*Units.EMU_PER_POINT, analysis.getBreakdown().getValue().size()*40*Units.EMU_PER_POINT);
+
+        // add chart to slide
+        slide.addChart(chart, chartDimensions);
     }
 
     private void addIntroSlide(DataSourceAnalysis analysis)
@@ -429,7 +535,7 @@ public class ProcessMiningModelFilterPowerpointReport
             r.setText(getColumnHeaderLabel(i));
             r.setFontSize(12d);
             r.setFontColor(Color.WHITE);
-            tbl.setColumnWidth(i, 170);
+            tbl.setColumnWidth(i, getColumnWith(i));
         }
 
         int numRows = analysis.getFindings().size();
@@ -480,15 +586,17 @@ public class ProcessMiningModelFilterPowerpointReport
             r = p.addNewTextRun();
             r.setFontSize(12d);
             r.setFontColor(Color.WHITE);
-            r.setText(findingContent.getVariationPathAverage() + " seconds");
+            Period avgPeriod = new Period(Seconds.seconds(findingContent.getVariationPathAverage())).normalizedStandard();
+            r.setText(PeriodFormat.getDefault().print(avgPeriod));
 
             // Total Time
             XSLFTableCell totalTimeCell = tr.addCell();
             p = totalTimeCell.addNewTextParagraph();
             r = p.addNewTextRun();
             r.setFontSize(12d);
-            r.setFontColor(Color.WHITE);    
-            r.setText((findingContent.getVariationTotalCases() * findingContent.getVariationPathAverage()) + " seconds");
+            r.setFontColor(Color.WHITE);
+            Period totalPeriod = new Period(Seconds.seconds(findingContent.getVariationTotalCases() * findingContent.getVariationPathAverage())).normalizedStandard();
+            r.setText(PeriodFormat.getDefault().print(totalPeriod));
         }
 
         int referencePathYCoordinate = 400;
@@ -504,8 +612,9 @@ public class ProcessMiningModelFilterPowerpointReport
 
             r.setFontSize(12d);
             r.setFontColor(Color.WHITE);
-            r.setText("Reference Path[" + referencePathVariant.getId() + "]: [" + referencePathVariant.getTranslatedRouteNodes().replaceAll(",", " -> ") + "]. Avg: (" + referencePathVariant.getAvgDuration() + ") seconds.");
-            referencePathYCoordinate += 30;
+            Period referencePathAvgPeriod = new Period(Seconds.seconds(referencePathVariant.getAvgDuration())).normalizedStandard();
+            r.setText("Reference Path[" + referencePathVariant.getId() + "]: [" + referencePathVariant.getTranslatedRouteNodes().replaceAll(",", " -> ") + "].\nAvg. Cycle Time: " + PeriodFormat.getDefault().print(referencePathAvgPeriod));
+            referencePathYCoordinate += 40;
         }
     }
 
@@ -524,6 +633,24 @@ public class ProcessMiningModelFilterPowerpointReport
                 return "Total Time";
             default:
                 return "N/A";
+        }
+    }
+
+    private double getColumnWith(int i)
+    {
+        switch (i) {
+            case 0:
+                return 100;
+            case 1:
+                return 100;
+            case 2:
+                return 80;
+            case 3:
+                return 300;
+            case 4:
+                return 300;
+            default:
+                return 10;
         }
     }
 
