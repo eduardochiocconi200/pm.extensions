@@ -1,4 +1,4 @@
-package com.servicenow.processmining.extensions.pm.report.data;
+package com.servicenow.processmining.extensions.pm.report.analysis;
 
 public class DataSourceComplianceReferencePathAnalysis
     extends DataSourceAnalysis

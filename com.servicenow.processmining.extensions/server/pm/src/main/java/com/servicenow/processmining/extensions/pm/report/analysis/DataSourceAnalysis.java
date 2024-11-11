@@ -1,6 +1,8 @@
-package com.servicenow.processmining.extensions.pm.report.data;
+package com.servicenow.processmining.extensions.pm.report.analysis;
 
 import java.util.ArrayList;
+
+import com.servicenow.processmining.extensions.pm.report.data.DataSourceFinding;
 
 public abstract class DataSourceAnalysis
 {
