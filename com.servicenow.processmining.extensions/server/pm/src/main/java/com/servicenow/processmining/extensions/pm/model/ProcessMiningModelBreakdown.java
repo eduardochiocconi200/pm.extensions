@@ -14,6 +14,7 @@ public class ProcessMiningModelBreakdown
     private String label = null;
     private String displayName = null;
     private int aggregateCaseCount = -1;
+    private int aggregateCaseAverage = -1;
     private ArrayList<ProcessMiningModelBreakdownStat> values = null;
     private ArrayList<ProcessMiningModelBreakdownStat> variantToCaseCountRatio = null;
 
@@ -71,6 +72,20 @@ public class ProcessMiningModelBreakdown
         }
 
         return this.aggregateCaseCount;
+    }
+
+    public int getAggregateCaseAverage()
+    {
+        if (this.aggregateCaseAverage == -1) {
+            this.aggregateCaseAverage = 0;
+            for (ProcessMiningModelBreakdownStat stat : getValue()) {
+                this.aggregateCaseAverage += stat.getAvgDuration();
+            }
+
+            this.aggregateCaseAverage = this.aggregateCaseAverage / getValue().size();
+        }
+
+        return this.aggregateCaseAverage;
     }
 
     public boolean addBreakdownStat(final ProcessMiningModelBreakdownStat stat)
@@ -172,20 +187,23 @@ public class ProcessMiningModelBreakdown
         if (hvohvaStat != null && hvohvaStat.size() > 0) {
             DataSourceFindingContent content = new DataSourceFindingContent();
             finding.addContent(content);
-            findingItem += "The following are high impact '" + getField() + "' breakdown value(s) (they represent more than 5% of the filtered cases and are over the average distribution): ";
+            findingItem += "The following are high impact '" + getField() + "' breakdown value(s) (based on aggregated records volume): ";
             content.setItem(findingItem);
             for (ProcessMiningModelBreakdownStat hvohva : hvohvaStat) {
                 if (count > 1) {
                     findingItem += ", ";
                 }
-                int avgDuration = hvohva.getAvgDuration()/3600;
-                double pct = ((hvohva.getVariantCount()) * 100 / aggregateCaseCount);
-                String findingSubItem = "Label/Value: '" + hvohva.getLabel() + "'', Count: " + hvohva.getVariantCount() + " (" + pct + "% of all routes volume), Avg Duration: '" + avgDuration + "' hours.";
+                double pct = ((hvohva.getCaseCount()) * 100 / aggregateCaseCount);
+                String avgDurationComparison = hvohva.getAvgDuration() < getAggregateCaseAverage() ? "lower" : "higher";
+                String findingSubItem = "Label/Value: '" + hvohva.getLabel() + "', Count: " + hvohva.getCaseCount() + " (" + pct + "% of all records). Avg cycle time is " + avgDurationComparison + " than the average across values.";
+                if (hvohva.getHighVariability()) {
+                    findingSubItem += " This value also has high routes variability (#routes relative to #records).";
+                }
                 content.addSubItem(findingSubItem);
                 count++;
             }
             if (count > 2) {
-                String recommendation = "Recommendation: Mine each one of these breakdown values and look for differences and similarities (volume, avg time, rework loops, long transitions, etc) across them. You may create filters and use the 'Compare' feature.";
+                String recommendation = "Recommendation: Mine breakdown values with high average and/or high variability (as they deviate the most). Consider using the 'Compare' capability to analyze performance differences (bottlenecks, rework loops, slow transitions, paths, etc).";
                 content.addSubItem(recommendation);
             }
         }
@@ -194,15 +212,18 @@ public class ProcessMiningModelBreakdown
         if (hvolvaStat != null && hvolvaStat.size() > 0) {
             DataSourceFindingContent content = new DataSourceFindingContent();
             finding.addContent(content);
-            findingItem = "The following are medium impact '" + getField() + "' breakdown value(s) (they represent more than 5% of the filtered cases and are below the average distribution): ";
+            findingItem = "The following are medium impact '" + getField() + "' breakdown value(s) (based on aggregated records volume): ";
             content.setItem(findingItem);
             for (ProcessMiningModelBreakdownStat hvolva : hvolvaStat) {
                 if (count > 1) {
                     findingItem += ", ";
                 }
-                int avgDuration = hvolva.getAvgDuration()/3600;
-                double pct = ((hvolva.getVariantCount()) * 100 / aggregateCaseCount);
-                String findingSubItem = "Label/Value: '" + hvolva.getLabel() + "'', Count: " + hvolva.getVariantCount() + " (" + pct + "% of all routes volume), Avg Duration: '" + avgDuration + "' hours.";
+                double pct = ((hvolva.getCaseCount()) * 100 / aggregateCaseCount);
+                String avgDurationComparison = hvolva.getAvgDuration() < getAggregateCaseAverage() ? "lower" : "higher";
+                String findingSubItem = "Label/Value: '" + hvolva.getLabel() + "', Count: " + hvolva.getCaseCount() + " (" + pct + "% of all records). Avg cycle time is " + avgDurationComparison + " than the average across values.";
+                if (hvolva.getHighVariability()) {
+                    findingSubItem += " This value also has high routes variability (#routes relative to #records).";
+                }
                 content.addSubItem(findingSubItem);
                 count++;
             }
@@ -212,15 +233,18 @@ public class ProcessMiningModelBreakdown
         if (lvohvaStat != null && lvohvaStat.size() > 0) {
             DataSourceFindingContent content = new DataSourceFindingContent();
             finding.addContent(content);
-            findingItem = "The following are medium impact '" + getField() + "' breakdown value(s) (they represent less than 5% of the filtered cases and are over the average distribution): ";
+            findingItem = "The following are medium impact '" + getField() + "' breakdown value(s) (based on aggregated records volume): ";            
             content.setItem(findingItem);
             for (ProcessMiningModelBreakdownStat lvohva : lvohvaStat) {
                 if (count > 1) {
                     findingItem += ", ";
                 }
-                int avgDuration = lvohva.getAvgDuration()/3600;
-                double pct = ((lvohva.getVariantCount()) * 100 / aggregateCaseCount);
-                String findingSubItem = "Label/Value: '" + lvohva.getLabel() + "'', Count: " + lvohva.getVariantCount() + " (" + pct + "% of all routes volume), Avg Duration: '" + avgDuration + "' hours.";
+                double pct = ((lvohva.getCaseCount()) * 100 / aggregateCaseCount);
+                String avgDurationComparison = lvohva.getAvgDuration() < getAggregateCaseAverage() ? "lower" : "higher";
+                String findingSubItem = "Label/Value: '" + lvohva.getLabel() + "', Count: " + lvohva.getCaseCount() + " (" + pct + "% of all records). Avg cycle time is " + avgDurationComparison + " than the average across values.";
+                if (lvohva.getHighVariability()) {
+                    findingSubItem += " This value also has high routes variability (#routes relative to #records).";
+                }
                 content.addSubItem(findingSubItem);
                 count++;
             }
@@ -230,15 +254,18 @@ public class ProcessMiningModelBreakdown
         if (lvolvaStat != null && lvolvaStat.size() > 0) {
             DataSourceFindingContent content = new DataSourceFindingContent();
             finding.addContent(content);
-            findingItem = "The following are low impact dominant '" + getField() + "' breakdown value(s) (they represent less than 5% of the filtered cases and are below the average distribution): ";
+            findingItem = "The following are low impact '" + getField() + "' breakdown value(s) (based on aggregated records volume): ";            
             content.setItem(findingItem);
             for (ProcessMiningModelBreakdownStat lvolva : lvolvaStat) {
                 if (count > 1) {
                     findingItem += ", ";
                 }
-                int avgDuration = lvolva.getAvgDuration()/3600;
-                double pct = ((lvolva.getVariantCount()) * 100 / aggregateCaseCount);
-                String findingSubItem = "Label/Value: '" + lvolva.getLabel() + "'', Count: " + lvolva.getVariantCount() + " (" + pct + "% of all routes volume), Avg Duration: '" + avgDuration + "' hours.";
+                double pct = ((lvolva.getCaseCount()) * 100 / aggregateCaseCount);
+                String avgDurationComparison = lvolva.getAvgDuration() < getAggregateCaseAverage() ? "lower" : "higher";
+                String findingSubItem = "Label/Value: '" + lvolva.getLabel() + "', Count: " + lvolva.getCaseCount() + " (" + pct + "% of all records). Avg cycle time is " + avgDurationComparison + " than the average across values.";
+                if (lvolva.getHighVariability()) {
+                    findingSubItem += " This value also has high routes variability (#routes relative to #records).";
+                }
                 content.addSubItem(findingSubItem);
                 count++;
             }
