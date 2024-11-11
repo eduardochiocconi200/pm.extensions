@@ -2,6 +2,8 @@ package com.servicenow.processmining.extensions.pm.report.data;
 
 import java.util.ArrayList;
 
+import com.servicenow.processmining.extensions.pm.report.analysis.DataSourceAnalysis;
+
 public class DataSourceFindings
 {
     private String filterName = null;
