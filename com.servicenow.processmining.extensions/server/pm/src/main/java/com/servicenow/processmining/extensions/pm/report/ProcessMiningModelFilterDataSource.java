@@ -9,11 +9,11 @@ import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVarian
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariantDelta;
 import com.servicenow.processmining.extensions.pm.model.detectors.ComplianceDetector;
 import com.servicenow.processmining.extensions.pm.model.detectors.ReworkLoopDetector;
-import com.servicenow.processmining.extensions.pm.report.data.BreakdownDataSourceAnalysis;
-import com.servicenow.processmining.extensions.pm.report.data.DataSourceAnalysis;
-import com.servicenow.processmining.extensions.pm.report.data.DataSourceComplianceReferencePathAnalysis;
+import com.servicenow.processmining.extensions.pm.report.analysis.BreakdownDataSourceAnalysis;
+import com.servicenow.processmining.extensions.pm.report.analysis.DataSourceAnalysis;
+import com.servicenow.processmining.extensions.pm.report.analysis.DataSourceComplianceReferencePathAnalysis;
+import com.servicenow.processmining.extensions.pm.report.analysis.TopVariantComparisonDataSourceAnalysis;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceVariantFindingComplianceReferencePath;
-import com.servicenow.processmining.extensions.pm.report.data.TopVariantComparisonDataSourceAnalysis;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceFindingContent;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceFindings;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceVariantFinding;
@@ -72,9 +72,9 @@ public class ProcessMiningModelFilterDataSource
     private boolean runVariantToCaseCountAnalysis()
     {
         for (ProcessMiningModelBreakdown breakdown : getModel().getBreakdowns().values()) {
-            DataSourceAnalysis analysis = new BreakdownDataSourceAnalysis();
+            DataSourceAnalysis analysis = new BreakdownDataSourceAnalysis(breakdown);
             String breakdownId = breakdown.getDisplayName() != null && !breakdown.getDisplayName().equals("") ? breakdown.getDisplayName() : breakdown.getField();
-            analysis.setDescription("This analysis reviews the '" + breakdownId + "' breakdown values relevance. Breakdown values with high volume and high average execution categorization will offer the best place to start looking for inefficiences as they offer the better potential return for their fix.");
+            analysis.setDescription("This analysis reviews the '" + breakdownId + "' breakdown values relevance. Breakdown values with high volume and high average execution relative to other breakdown value averages will offer the best place to start looking for inefficiencies.");
             breakdown.getVariantToCaseCountRatioAnalysis();
             analysis.getFindings().addAll(breakdown.getFindings());
             findings.addAnalysis(analysis);
