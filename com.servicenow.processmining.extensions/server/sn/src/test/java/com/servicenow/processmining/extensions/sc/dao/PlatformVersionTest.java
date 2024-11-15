@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 import com.servicenow.processmining.extensions.sn.dao.PlatformVersionDAOREST;
 
 public class PlatformVersionTest
@@ -17,7 +18,7 @@ public class PlatformVersionTest
         Assert.assertNotNull(version);
     }
 
-    protected static final String snInstance = "empechiocconi2";
-    protected static final String snUser = "admin";
-    protected static final String snPassword = "StarWars!1";
+    protected static final String snInstance = ServiceNowTestCredentials.getInstanceName();
+    protected static final String snUser = ServiceNowTestCredentials.getUserName();
+    protected static final String snPassword = ServiceNowTestCredentials.getPassword();
 }
