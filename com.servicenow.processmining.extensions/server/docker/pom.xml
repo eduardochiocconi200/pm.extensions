@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>echiocconisn</groupId>
 	<artifactId>pm.extension.backend</artifactId>
-	<version>1.1</version>
+	<version>1.2</version>
 	<packaging>pom</packaging>
 	<name>com.servicenow.processmining.extensions.server.docker</name>
 	<description>Process Mining - Backend extension</description>
@@ -19,7 +19,6 @@
 				<executions>
 					<execution>
 						<id>copy-backend</id>
-						<!-- here the phase you need -->
 						<phase>install</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -95,54 +94,74 @@
 							</arguments>
 						</configuration>
 					</execution>
-					<execution>
-						<id>docker-push ${project.version}</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>docker</executable>
-							<workingDirectory>${project.basedir}</workingDirectory>
-							<arguments>
-								<argument>push</argument>
-								<argument>${dockerhub.account}/${project.artifactId}:${project.version}</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>docker-push latest</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>docker</executable>
-							<workingDirectory>${project.basedir}</workingDirectory>
-							<arguments>
-								<argument>push</argument>
-								<argument>${dockerhub.account}/${project.artifactId}:latest</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>docker image prune</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>docker</executable>
-							<workingDirectory>${project.basedir}</workingDirectory>
-							<arguments>
-								<argument>image</argument>
-								<argument>prune</argument>
-								<argument>-f</argument>
-							</arguments>
-						</configuration>
-					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
+
+    <profiles>
+        <profile>
+            <id>push</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>3.0.0</version>
+						<executions>
+							<execution>
+								<id>docker-push ${project.version}</id>
+								<phase>install</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>docker</executable>
+									<workingDirectory>${project.basedir}</workingDirectory>
+									<arguments>
+										<argument>push</argument>
+										<argument>${dockerhub.account}/${project.artifactId}:${project.version}</argument>
+									</arguments>
+								</configuration>
+							</execution>
+							<execution>
+								<id>docker-push latest</id>
+								<phase>install</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>docker</executable>
+									<workingDirectory>${project.basedir}</workingDirectory>
+									<arguments>
+										<argument>push</argument>
+										<argument>${dockerhub.account}/${project.artifactId}:latest</argument>
+									</arguments>
+								</configuration>
+							</execution>
+							<execution>
+								<id>docker image prune</id>
+								<phase>install</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>docker</executable>
+									<workingDirectory>${project.basedir}</workingDirectory>
+									<arguments>
+										<argument>image</argument>
+										<argument>prune</argument>
+										<argument>-f</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+	    </profile>
+	</profiles>
 </project>
