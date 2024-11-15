@@ -312,6 +312,17 @@ public class ProcessMiningModel
         return labeledPath;
     }
 
+    public ArrayList<String> getAllCaseIds()
+    {
+        ArrayList<String> caseIds = new ArrayList<String>();
+
+        for (ProcessMiningModelVariant variant  : getVariants().values()) {
+            caseIds.addAll(variant.getCaseIds());
+        }
+
+        return caseIds;
+    }
+
     public void setAggregate(final ProcessMiningModelAggregate aggregate)
     {
         this.aggregate = aggregate;
