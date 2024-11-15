@@ -34,6 +34,8 @@ public class SysAuditLogDAOREST
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
 		int baseOffset = 0;
+		int batchSize = getBatchSize(id);
+		int maxResultSet = getMaxResultSetSize(id);
 		boolean continueRetrieving = true;
 		SysAuditLog sysAuditLog = new SysAuditLog(id);
 		logger.debug("Retrieving Sys Audit Logs: ");
@@ -48,12 +50,12 @@ public class SysAuditLogDAOREST
 			else {
 				url += "&";
 			}
-			url += "sysparm_limit=" + BATCH_SIZE + "&";
+			url += "sysparm_limit=" + batchSize + "&";
 			url += "sysparm_offset=" + baseOffset + "&";
 			url += "sysparm_fields=sys_id,documentkey,tablename,fieldname,oldvalue,newvalue,sys_created_on,sys_created_by";
 			String response = snrs.executeGetRequest(url);
 			long endTime = System.currentTimeMillis();
-			logger.debug("Retrieved (" + BATCH_SIZE + ") records [" + baseOffset + "-" + (baseOffset+BATCH_SIZE) + "] from sys_audit in (" + (endTime-startTime) + ") milliseconds.");
+			logger.debug("Retrieved (" + batchSize + ") records [" + baseOffset + "-" + (baseOffset+batchSize) + "] from sys_audit in (" + (endTime-startTime) + ") milliseconds.");
 
 			if (response == null || response != null && response.equals("")) {
 				logger.error("The requested REST API operation (SysAuditLogDAOREST.findById) could not complete successfully on ServiceNow instance: (" + getInstance().getInstance() + ")!");
@@ -89,8 +91,8 @@ public class SysAuditLogDAOREST
 					}
 				}
 
-				baseOffset += BATCH_SIZE;
-				if (processedEntries < BATCH_SIZE || baseOffset >= MAX_RESULT_SET) {
+				baseOffset += batchSize;
+				if (processedEntries < batchSize || baseOffset >= maxResultSet) {
 					continueRetrieving = false;
 				}
 			}
@@ -98,6 +100,24 @@ public class SysAuditLogDAOREST
 
 		logger.debug("SysAuditLogDAOREST.findById(): (" + sysAuditLog.getLog().size() + ")");
 		return sysAuditLog;
+	}
+
+	private int getBatchSize(SysAuditLogPK id)
+	{
+		if (id.getResultSetSize() < BATCH_SIZE) {
+			return id.getResultSetSize();
+		}
+
+		return BATCH_SIZE;
+	}
+
+	private int getMaxResultSetSize(SysAuditLogPK id)
+	{
+		if (id.getResultSetSize() < MAX_RESULT_SET) {
+			return id.getResultSetSize();
+		}
+
+		return MAX_RESULT_SET;
 	}
 
 	public SysAuditLog findByIds(final SysAuditLogPK id, final ArrayList<String> ids)
@@ -239,7 +259,7 @@ public class SysAuditLogDAOREST
 		return true;
 	}
 
-	private static final int BATCH_SIZE = 1000;
+	private static final int BATCH_SIZE = 2000;
 	private static final int IDS_BATCH_SIZE = 500;
 	private static final int MAX_RESULT_SET = 10000;
 
