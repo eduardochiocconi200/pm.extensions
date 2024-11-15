@@ -10,6 +10,8 @@ import com.servicenow.processmining.extensions.sn.core.ServiceNowRESTService;
 import com.servicenow.processmining.extensions.sn.dao.GenericDAOREST;
 import com.servicenow.processmining.extensions.sn.exceptions.ObjectNotFoundException;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,13 @@ public class SysAuditLogDAOREST
 		do {
 			long startTime = System.currentTimeMillis();
 			String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sys_audit?";
-			url += "sysparm_query=tablename=" + id.getTableName() + "&";
+			url += "sysparm_query=tablename=" + id.getTableName();
+			if (id.getFieldName() != null) {
+				url += URLEncoder.encode("^", StandardCharsets.UTF_8) + "fieldname=" + id.getFieldName() + "&";
+			}
+			else {
+				url += "&";
+			}
 			url += "sysparm_limit=" + BATCH_SIZE + "&";
 			url += "sysparm_offset=" + baseOffset + "&";
 			url += "sysparm_fields=sys_id,documentkey,tablename,fieldname,oldvalue,newvalue,sys_created_on,sys_created_by";
