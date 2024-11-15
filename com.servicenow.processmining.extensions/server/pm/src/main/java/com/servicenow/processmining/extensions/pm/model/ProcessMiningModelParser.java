@@ -439,6 +439,10 @@ public class ProcessMiningModelParser
                                                 JSONArray edgesArray = modelObj.getJSONArray("edges");
                                                 ArrayList<ProcessMiningModelTransition> transitions = parseTransitions(edgesArray);
                                                 pmmv.addTransitions(transitions);
+
+                                                JSONArray caseIdsArray = variantObj.getJSONArray("caseIds");
+                                                ArrayList<String> caseIds = parseCaseIdsFromVariantNodeSequence(caseIdsArray);
+                                                pmmv.setCaseIds(caseIds);
                                             }
                                         }
                                         // If there is no model, the edges are described by the sequence of nodes...
@@ -447,6 +451,10 @@ public class ProcessMiningModelParser
                                             JSONArray nodesArray = variantObj.getJSONArray("nodes");
                                             ArrayList<ProcessMiningModelNode> nodes = parseNodesFromVariantNodeSequence(nodesArray);
                                             pmmv.setNodes(nodes);
+
+                                            JSONArray caseIdsArray = variantObj.getJSONArray("caseIds");
+                                            ArrayList<String> caseIds = parseCaseIdsFromVariantNodeSequence(caseIdsArray);
+                                            pmmv.setCaseIds(caseIds);
 
                                             // Load Variant Edges.
                                             ArrayList<ProcessMiningModelTransition> transitions = parseTransitionsFromVariantNodeSequence(nodesArray);
@@ -485,6 +493,25 @@ public class ProcessMiningModelParser
 
         logger.debug("Parsed (" + pmm.getNodes().size() + ") nodes.");
         return nodes;
+    }
+
+    private ArrayList<String> parseCaseIdsFromVariantNodeSequence(JSONArray caseIdsArray)
+    {
+        ArrayList<String> caseIds = new ArrayList<String>();
+        HashSet<String> addedCaseIds = new HashSet<String>();
+        if (caseIdsArray != null) {
+            for (int i=0; i < caseIdsArray.length(); i++) {
+                String caseId = caseIdsArray.getString(i);
+                if (!addedCaseIds.contains(caseId)) {
+                    caseIds.add(caseId);
+                    addedCaseIds.add(caseId);
+                }
+            }
+        }
+        addedCaseIds = null;
+
+        logger.debug("Parsed (" + pmm.getNodes().size() + ") case Ids.");
+        return caseIds;
     }
 
     private ArrayList<ProcessMiningModelTransition> parseTransitionsFromVariantNodeSequence(JSONArray nodesArray)
