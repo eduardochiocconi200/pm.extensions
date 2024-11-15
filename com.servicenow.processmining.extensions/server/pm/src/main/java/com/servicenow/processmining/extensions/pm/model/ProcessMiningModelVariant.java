@@ -15,6 +15,7 @@ public class ProcessMiningModelVariant
     private ArrayList<String> middleNodes = null;
     private ArrayList<String> endNodes = null;
     private HashMap<String, ProcessMiningModelTransition> transitions = null;
+    private ArrayList<String> caseIds = null;
     private int nodeCount = -1;
     private int frequency = -1;
     private int totalDuration = -1;
@@ -215,6 +216,16 @@ public class ProcessMiningModelVariant
     public int getNodeCount()
     {
         return this.nodeCount;
+    }
+
+    public void setCaseIds(final ArrayList<String> caseIds)
+    {
+        this.caseIds = caseIds;
+    }
+
+    public ArrayList<String> getCaseIds()
+    {
+        return this.caseIds;
     }
 
     public void setFrequency(final int frequency)
