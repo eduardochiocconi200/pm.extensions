@@ -2,6 +2,7 @@ package com.servicenow.processmining.extensions.model;
 
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
 import com.servicenow.processmining.extensions.sc.dao.SysAuditLogDAOREST;
+import com.servicenow.processmining.extensions.sc.entities.SysAuditEntry;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLog;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLogPK;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
@@ -27,11 +28,11 @@ public class ProcessMiningModelAuditLogRetrievalTest
 
     private void test1()
     {
-        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload2-v.json");
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload3-v.json");
         ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         ArrayList<String> processModelCaseIds = parser.getProcessMiningModel().getAllCaseIds();
-        Assert.assertEquals(288, processModelCaseIds.size());
+        Assert.assertEquals(167, processModelCaseIds.size());
 
         ServiceNowInstance instance = new ServiceNowInstance(ServiceNowTestCredentials.getInstanceName(), ServiceNowTestCredentials.getUserName(), ServiceNowTestCredentials.getPassword());
         SysAuditLogDAOREST wfDAO = new SysAuditLogDAOREST(instance);
