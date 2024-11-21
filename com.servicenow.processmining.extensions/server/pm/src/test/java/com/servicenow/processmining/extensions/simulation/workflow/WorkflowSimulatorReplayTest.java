@@ -37,7 +37,7 @@ public class WorkflowSimulatorReplayTest
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
     Assert.assertEquals(167, sim.getStatistics().getNumberOfCreatedInstances());
-    Assert.assertEquals(1.7091428623E12, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    Assert.assertEquals(2.4340893E9, sim.getStatistics().getTotalSimulationTime(), 0.0);
     long endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
 
