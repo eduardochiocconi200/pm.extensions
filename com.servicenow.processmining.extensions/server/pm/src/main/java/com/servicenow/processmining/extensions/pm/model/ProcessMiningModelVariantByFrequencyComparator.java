@@ -2,7 +2,8 @@ package com.servicenow.processmining.extensions.pm.model;
 
 import java.util.Comparator;
 
-public class ProcessMiningModelVariantByFrequencyComparator implements Comparator<ProcessMiningModelVariant>
+public class ProcessMiningModelVariantByFrequencyComparator
+    implements Comparator<ProcessMiningModelVariant>
 {
     public int compare(ProcessMiningModelVariant v1, ProcessMiningModelVariant v2) 
     {
