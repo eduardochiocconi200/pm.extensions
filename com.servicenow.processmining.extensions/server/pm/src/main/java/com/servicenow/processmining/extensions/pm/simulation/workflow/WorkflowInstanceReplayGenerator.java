@@ -20,6 +20,7 @@ public class WorkflowInstanceReplayGenerator
     private SysAuditLog sortedAuditLog = null;
     private int numberOfCreatedSimulatorWorkflowInstances = 0;
     private int lastCreationEventIndex = 0;
+    private long firstReplayTimestamp = 0;
 
     public WorkflowInstanceReplayGenerator(final Simulator simulator, final ProcessMiningModelVariant processModelVariant, final SysAuditLog auditLog)
     {
@@ -105,7 +106,10 @@ public class WorkflowInstanceReplayGenerator
     private double getAuditEntryTimeStamp(final SysAuditEntry entry)
     {
         Timestamp ts = Timestamp.valueOf(entry.getSysCreatedOn());
-        return ts.getTime();
+        if (firstReplayTimestamp == 0) {
+            firstReplayTimestamp = ts.getTime();
+        }
+        return ts.getTime() - firstReplayTimestamp;
     }
 
     @Override
