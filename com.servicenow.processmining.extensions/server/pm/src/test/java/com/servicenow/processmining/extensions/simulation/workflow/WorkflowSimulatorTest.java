@@ -17,7 +17,6 @@ public class WorkflowSimulatorTest
   public void test()
   {
     logger.info("Starting Simulation Tests ...");
-    test11();
     test1();
     test2();
     test3();
@@ -39,7 +38,7 @@ public class WorkflowSimulatorTest
     long startTime = System.currentTimeMillis();
     WorkflowInstance.setDisplay(new PrintSimulationState());
     ProcessMiningModelVariant sample1 = new WorkflowSimulationSamplesTest1("2").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample1);
+    WorkflowSimulator sim = new WorkflowSimulator(sample1, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -59,7 +58,7 @@ public class WorkflowSimulatorTest
     long startTime = System.currentTimeMillis();
     WorkflowInstance.setDisplay(new PrintSimulationState());
     ProcessMiningModelVariant sample1 = new WorkflowSimulationSamplesTest1("2").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample1);
+    WorkflowSimulator sim = new WorkflowSimulator(sample1, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -70,7 +69,7 @@ public class WorkflowSimulatorTest
 
     startTime = System.currentTimeMillis();
     sample1 = new WorkflowSimulationSamplesTest1("100").getSample();
-    sim = new WorkflowSimulator(sample1);
+    sim = new WorkflowSimulator(sample1, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -81,7 +80,7 @@ public class WorkflowSimulatorTest
 
     startTime = System.currentTimeMillis();
     sample1 = new WorkflowSimulationSamplesTest1("1000").getSample();
-    sim = new WorkflowSimulator(sample1);
+    sim = new WorkflowSimulator(sample1, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -92,7 +91,7 @@ public class WorkflowSimulatorTest
 
     startTime = System.currentTimeMillis();
     sample1 = new WorkflowSimulationSamplesTest1("10000").getSample();
-    sim = new WorkflowSimulator(sample1);
+    sim = new WorkflowSimulator(sample1, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -109,7 +108,7 @@ public class WorkflowSimulatorTest
   {
     logger.info("Starting Simulation Test2 ...");
     ProcessMiningModelVariant sample2 = new WorkflowSimulationSamplesTest2("2").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample2);
+    WorkflowSimulator sim = new WorkflowSimulator(sample2, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -123,7 +122,7 @@ public class WorkflowSimulatorTest
   {
     logger.info("Starting Simulation Test3 ...");
     ProcessMiningModelVariant sample3 = new WorkflowSimulationSamplesTest3("10").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample3);
+    WorkflowSimulator sim = new WorkflowSimulator(sample3, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -136,7 +135,7 @@ public class WorkflowSimulatorTest
   {
     logger.info("Starting Simulation Test4 ...");
     ProcessMiningModelVariant sample4 = new WorkflowSimulationSamplesTest4("10").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample4);
+    WorkflowSimulator sim = new WorkflowSimulator(sample4, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -149,7 +148,7 @@ public class WorkflowSimulatorTest
   {
     logger.info("Starting Simulation Test5 ...");
     ProcessMiningModelVariant sample5 = new WorkflowSimulationSamplesTest5("2").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample5);
+    WorkflowSimulator sim = new WorkflowSimulator(sample5, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -163,7 +162,7 @@ public class WorkflowSimulatorTest
   {
     logger.info("Starting Simulation Test6 ...");
     ProcessMiningModelVariant sample6 = new WorkflowSimulationSamplesTest6("3").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample6);
+    WorkflowSimulator sim = new WorkflowSimulator(sample6, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -176,7 +175,7 @@ public class WorkflowSimulatorTest
   {
     logger.info("Starting Simulation Test7 ...");
     ProcessMiningModelVariant sample7 = new WorkflowSimulationSamplesTest7("1").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample7);
+    WorkflowSimulator sim = new WorkflowSimulator(sample7, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -189,7 +188,7 @@ public class WorkflowSimulatorTest
   {
     logger.info("Starting Simulation Test8 ...");
     ProcessMiningModelVariant sample8 = new WorkflowSimulationSamplesTest8("3").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample8);
+    WorkflowSimulator sim = new WorkflowSimulator(sample8, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -202,7 +201,7 @@ public class WorkflowSimulatorTest
   {
     logger.info("Starting Simulation Test9 ...");
     ProcessMiningModelVariant sample9 = new WorkflowSimulationSamplesTest9("3").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample9);
+    WorkflowSimulator sim = new WorkflowSimulator(sample9, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -215,7 +214,7 @@ public class WorkflowSimulatorTest
   {
     logger.info("Starting Simulation Test10 ...");
     ProcessMiningModelVariant sample10 = new WorkflowSimulationSamplesTest10("1").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample10);
+    WorkflowSimulator sim = new WorkflowSimulator(sample10, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -223,7 +222,7 @@ public class WorkflowSimulatorTest
     Assert.assertEquals(49200628.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
 
     sample10 = new WorkflowSimulationSamplesTest10("2").getSample();
-    sim = new WorkflowSimulator(sample10);
+    sim = new WorkflowSimulator(sample10, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -236,7 +235,7 @@ public class WorkflowSimulatorTest
   {
     logger.info("Starting Simulation Test11 ...");
     ProcessMiningModelVariant sample11 = new WorkflowSimulationSamplesTest11("398").getSample();
-    WorkflowSimulator sim = new WorkflowSimulator(sample11);
+    WorkflowSimulator sim = new WorkflowSimulator(sample11, WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION);
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
