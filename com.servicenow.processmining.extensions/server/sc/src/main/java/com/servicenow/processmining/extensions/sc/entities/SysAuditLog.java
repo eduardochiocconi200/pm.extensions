@@ -9,7 +9,8 @@ public class SysAuditLog
     extends ServiceNowEntity
 {
     private ArrayList<SysAuditEntry> log = null;
-    private HashMap<String, ArrayList<SysAuditEntry>> filteredLogs = null;
+    private HashMap<String, ArrayList<SysAuditEntry>> fieldNameFilteredLogs = null;
+    private HashMap<String, ArrayList<SysAuditEntry>> documentKeyFilteredLogs = null;
 
     public SysAuditLog(SysAuditLogPK pk)
     {
@@ -22,28 +23,90 @@ public class SysAuditLog
         return this.log;
     }
 
-    public ArrayList<SysAuditEntry> getFilteredLog(final String fieldName)
+    public ArrayList<SysAuditEntry> getFieldNameFilteredLog(final String fieldName)
     {
-        if (getFilteredLogs().get(fieldName) == null) {
+        HashMap<String, String> createdRecords = new HashMap<String, String>();
+
+        if (getFieldNameFilteredLogs().get(fieldName) == null) {
             ArrayList<SysAuditEntry> filteredLog = new ArrayList<SysAuditEntry>();
             for (SysAuditEntry entry : getLog()) {
-                if (entry.getFieldName().equals(fieldName)) {
+                if (createdRecords.get(entry.getDocumentKey()) == null) {
+                    createdRecords.put(entry.getDocumentKey(), "n");
+                }
+
+                if (entry.getFieldName().equals("opened_at")) {
+                    if (createdRecords.get(entry.getDocumentKey()).equals("n")) {
+                        createdRecords.remove(entry.getDocumentKey());
+                        createdRecords.put(entry.getDocumentKey(), "o");
+                        filteredLog.add(entry);
+                    }
+                }
+                else if (entry.getFieldName().equals("active")) {
+                    if (entry.getNewValue().equals("0")) {
+                        if (createdRecords.get(entry.getDocumentKey()).equals("o")) {
+                            createdRecords.remove(entry.getDocumentKey());
+                            createdRecords.put(entry.getDocumentKey(), "c");
+                            filteredLog.add(entry);
+                        }
+                    }
+                }
+                else if (entry.getFieldName().equals(fieldName)) {
+                    if (createdRecords.get(entry.getDocumentKey()).equals("n")) {
+                        createdRecords.remove(entry.getDocumentKey());
+                        createdRecords.put(entry.getDocumentKey(), "o");
+
+                        SysAuditEntry newOpenedEntry = new SysAuditEntry(null);
+                        newOpenedEntry.setDocumentKey(entry.getDocumentKey());
+                        newOpenedEntry.setFieldName("opened_at");
+                        newOpenedEntry.setNewValue(entry.getSysCreatedOn());
+                        newOpenedEntry.setOldValue(entry.getSysCreatedOn());
+                        newOpenedEntry.setSysCreatedBy(entry.getSysCreatedBy());
+                        newOpenedEntry.setSysCreatedOn(entry.getSysCreatedOn());
+                        newOpenedEntry.setTableName(entry.getTableName());
+                        newOpenedEntry.setUser(entry.getUser());
+                        filteredLog.add(newOpenedEntry);
+                    }
                     filteredLog.add(entry);
                 }
             }
 
-            getFilteredLogs().put(fieldName, filteredLog);
+            getFieldNameFilteredLogs().put(fieldName, filteredLog);
         }
 
-        return getFilteredLogs().get(fieldName);
+        return getFieldNameFilteredLogs().get(fieldName);
     }
 
-    private HashMap<String, ArrayList<SysAuditEntry>> getFilteredLogs()
+    private HashMap<String, ArrayList<SysAuditEntry>> getFieldNameFilteredLogs()
     {
-        if (filteredLogs == null) {
-            this.filteredLogs = new HashMap<String, ArrayList<SysAuditEntry>>();
+        if (fieldNameFilteredLogs == null) {
+            this.fieldNameFilteredLogs = new HashMap<String, ArrayList<SysAuditEntry>>();
         }
 
-        return this.filteredLogs;
+        return this.fieldNameFilteredLogs;
+    }
+
+    public ArrayList<SysAuditEntry> getDocumentKeyFilteredLog(final String documentKey)
+    {
+        if (getDocumentKeyFilteredLogs().get(documentKey) == null) {
+            ArrayList<SysAuditEntry> filteredLog = new ArrayList<SysAuditEntry>();
+            for (SysAuditEntry entry : getLog()) {
+                if (entry.getDocumentKey().equals(documentKey)) {
+                    filteredLog.add(entry);
+                }
+            }
+
+            getDocumentKeyFilteredLogs().put(documentKey, filteredLog);
+        }
+
+        return getDocumentKeyFilteredLogs().get(documentKey);
+    }
+
+    private HashMap<String, ArrayList<SysAuditEntry>> getDocumentKeyFilteredLogs()
+    {
+        if (documentKeyFilteredLogs == null) {
+            this.documentKeyFilteredLogs = new HashMap<String, ArrayList<SysAuditEntry>>();
+        }
+
+        return this.documentKeyFilteredLogs;
     }
 }
