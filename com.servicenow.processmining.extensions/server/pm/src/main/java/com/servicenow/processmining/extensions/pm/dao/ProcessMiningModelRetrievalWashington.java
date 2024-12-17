@@ -1,5 +1,6 @@
 package com.servicenow.processmining.extensions.pm.dao;
 
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelFilter;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 
 import org.slf4j.Logger;
@@ -26,7 +27,8 @@ public class ProcessMiningModelRetrievalWashington
         "\t\t\t\"advancedTransition\": [],\n" +
         "\t\t\t\"findingFilter\": \"\",\n" +
         "\t\t\t\"adIntentFilter\": \"\"\n" +
-        "\t\t}\n" +
+        "\t\t},\n" +
+        "\t\"limit\" : 20" +
         "\t}";
 
         String payload = "{\n";
@@ -40,23 +42,33 @@ public class ProcessMiningModelRetrievalWashington
         return payload;
     }
 
-    protected String getBreakdownsFilterPayload(final String entityId, final String breakdownConditions)
+    protected String getFilterPayload(final String entityId, final ProcessMiningModelFilter filter)
     {
         logger.debug("Enter ProcessMiningModelRetrievalVancouver.getBreakdownsFilterPayload()");
         String variables = "{\n" +
         "\t\t\"versionId\": \"" + getProcessModelVersionId() + "\",\n" +
         "\t\t\"filterSets\": {\n" +
-        "\t\t\t\"dataFilter\": [],\n" +
-        "\t\t\t\"breakdowns\": [\n" +
-        "\t\t\t\t{\n" +
-        "\t\t\t\t\t\"entityId\": \"" + entityId + "\",\n" +
-        "\t\t\t\t\t\"breakdowns\": [" + breakdownConditions + "]\n" +
-        "\t\t\t\t}\n"+
-        "\t\t\t],\n" +
-        "\t\t\t\"variantFilter\": [],\n" +
-        "\t\t\t\"repetitions\": [],\n" +
-        "\t\t\t\"advancedTransition\": [],\n" +
-        "\t\t\t\"findingFilter\": \"\",\n" +
+        "\t\t\t\"dataFilter\": [],\n";
+        if (filter.getBreakdownCondition() != null) {
+            variables += "\t\t\t\"breakdowns\": [\n" +
+            "\t\t\t\t{\n" +
+            "\t\t\t\t\t\"entityId\": \"" + entityId + "\",\n" +
+            "\t\t\t\t\t\"breakdowns\": [" + filter.getBreakdownConditionJSON() + "]\n" +
+            "\t\t\t\t}\n"+
+            "\t\t\t],\n";
+        }
+        else {
+            variables += "\t\t\t\"breakdowns\": [],\n";
+        }
+        variables += "\t\t\t\"variantFilter\": [],\n" +
+        "\t\t\t\"repetitions\": [],\n";
+        if (filter.getFilterTransitions() != null) {
+            variables += "\t\t\t\"advancedTransition\": [],\n";
+        }
+        else {
+            variables += "\t\t\t\"advancedTransition\": [" + filter.getFilterTransitionsJSON()+ "],\n";
+        }
+        variables += "\t\t\t\"findingFilter\": \"\",\n" +
         "\t\t\t\"adIntentFilter\": \"\"\n" +
         "\t\t}\n" +
         "\t}";
