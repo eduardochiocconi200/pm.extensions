@@ -1,0 +1,543 @@
+{
+  "data": {
+    "GlidePromin_Query": {
+      "scheduleModel": {
+        "project": {
+          "name": "Service Catalog Requests",
+          "projectId": "ae282dfe9360c2506e79bb1e1dba109e",
+          "paUuid": null,
+          "domain": "global"
+        },
+        "projectEntities": [
+          {
+            "entityId": "3058253293a0c2506e79bb1e1dba105d",
+            "parentId": null,
+            "name": "SC Requests",
+            "table": { "name": "sc_request", "label": "Request" },
+            "activities": [
+              {
+                "id": "ecd8657293a0c2506e79bb1e1dba107b",
+                "field": "state",
+                "label": "State",
+                "displayName": null
+              }
+            ],
+            "activitiesOfInterest": []
+          }
+        ],
+        "filterSets": [],
+        "nodes": [
+          {
+            "key": "a44aa3f0bab3e02977d992961c67dffb",
+            "label": "Closed Complete",
+            "activityId": "ecd8657293a0c2506e79bb1e1dba107b",
+            "entityId": "3058253293a0c2506e79bb1e1dba105d",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 59,
+            "caseFreq": 59,
+            "maxReps": 1,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "3"
+          },
+          {
+            "key": "b87390b623ed2119675237334953fd42",
+            "label": "Completed",
+            "activityId": "3058253293a0c2506e79bb1e1dba105d__case",
+            "entityId": "3058253293a0c2506e79bb1e1dba105d",
+            "isStart": false,
+            "isEnd": true,
+            "absoluteFreq": 61,
+            "caseFreq": 61,
+            "maxReps": 1,
+            "fieldLabel": "Created activities",
+            "field": "__case",
+            "value": "completed"
+          },
+          {
+            "key": "90e16d68882c3c4275a150104409609e",
+            "label": "Work in Progress",
+            "activityId": "ecd8657293a0c2506e79bb1e1dba107b",
+            "entityId": "3058253293a0c2506e79bb1e1dba105d",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 1,
+            "caseFreq": 1,
+            "maxReps": 1,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "2"
+          },
+          {
+            "key": "4655a12aa2375c31d98c7c1d9328652b",
+            "label": "Open",
+            "activityId": "ecd8657293a0c2506e79bb1e1dba107b",
+            "entityId": "3058253293a0c2506e79bb1e1dba105d",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 17,
+            "caseFreq": 17,
+            "maxReps": 1,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "1"
+          },
+          {
+            "key": "a244fe6b62e71af7342f6f3ec43c8701",
+            "label": "Closed Incomplete",
+            "activityId": "ecd8657293a0c2506e79bb1e1dba107b",
+            "entityId": "3058253293a0c2506e79bb1e1dba105d",
+            "isStart": false,
+            "isEnd": false,
+            "absoluteFreq": 1,
+            "caseFreq": 1,
+            "maxReps": 1,
+            "fieldLabel": "State",
+            "field": "state",
+            "value": "4"
+          },
+          {
+            "key": "c5ab20b563f4030ea87287ed96f7983b",
+            "label": "Created",
+            "activityId": "3058253293a0c2506e79bb1e1dba105d__case",
+            "entityId": "3058253293a0c2506e79bb1e1dba105d",
+            "isStart": true,
+            "isEnd": false,
+            "absoluteFreq": 61,
+            "caseFreq": 61,
+            "maxReps": 1,
+            "fieldLabel": "Created activities",
+            "field": "__case",
+            "value": "created"
+          }
+        ],
+        "edges": [
+          {
+            "from": "c5ab20b563f4030ea87287ed96f7983b",
+            "to": "a44aa3f0bab3e02977d992961c67dffb",
+            "absoluteFreq": 42,
+            "caseFreq": 42,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0
+          },
+          {
+            "from": "c5ab20b563f4030ea87287ed96f7983b",
+            "to": "90e16d68882c3c4275a150104409609e",
+            "absoluteFreq": 1,
+            "caseFreq": 1,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0
+          },
+          {
+            "from": "90e16d68882c3c4275a150104409609e",
+            "to": "b87390b623ed2119675237334953fd42",
+            "absoluteFreq": 1,
+            "caseFreq": 1,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0
+          },
+          {
+            "from": "c5ab20b563f4030ea87287ed96f7983b",
+            "to": "4655a12aa2375c31d98c7c1d9328652b",
+            "absoluteFreq": 17,
+            "caseFreq": 17,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0
+          },
+          {
+            "from": "a44aa3f0bab3e02977d992961c67dffb",
+            "to": "b87390b623ed2119675237334953fd42",
+            "absoluteFreq": 59,
+            "caseFreq": 59,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0
+          },
+          {
+            "from": "a244fe6b62e71af7342f6f3ec43c8701",
+            "to": "b87390b623ed2119675237334953fd42",
+            "absoluteFreq": 1,
+            "caseFreq": 1,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0
+          },
+          {
+            "from": "c5ab20b563f4030ea87287ed96f7983b",
+            "to": "a244fe6b62e71af7342f6f3ec43c8701",
+            "absoluteFreq": 1,
+            "caseFreq": 1,
+            "maxReps": 1,
+            "totalDuration": 0,
+            "maxDuration": 0,
+            "minDuration": 0,
+            "avgDuration": 0,
+            "trimmedAverage": 0,
+            "stdDeviation": 0,
+            "medianDuration": 0
+          },
+          {
+            "from": "4655a12aa2375c31d98c7c1d9328652b",
+            "to": "a44aa3f0bab3e02977d992961c67dffb",
+            "absoluteFreq": 17,
+            "caseFreq": 17,
+            "maxReps": 1,
+            "totalDuration": 203,
+            "maxDuration": 23,
+            "minDuration": 4,
+            "avgDuration": 11,
+            "trimmedAverage": 11,
+            "stdDeviation": 5,
+            "medianDuration": 10
+          }
+        ],
+        "findings": [],
+        "aggregates": [
+          {
+            "entityId": "3058253293a0c2506e79bb1e1dba105d",
+            "model": {
+              "caseCount": 61,
+              "variantCount": 4,
+              "minCaseDuration": 0,
+              "maxCaseDuration": 23,
+              "avgCaseDuration": 3,
+              "trimmedAverage": 2,
+              "stdDeviation": 6,
+              "medianDuration": 0,
+              "uniqueParentRecords": 0
+            },
+            "node": {
+              "absoluteFreq": { "min": 1, "max": 61 },
+              "caseFreq": { "min": 1, "max": 61 },
+              "maxReps": { "min": 1, "max": 1 }
+            },
+            "edge": {
+              "absoluteFreq": { "min": 1, "max": 59 },
+              "caseFreq": { "min": 1, "max": 59 },
+              "maxReps": { "min": 1, "max": 1 },
+              "minDuration": { "min": 0, "max": 4 },
+              "maxDuration": { "min": 0, "max": 23 },
+              "avgDuration": { "min": 0, "max": 11 },
+              "totalDuration": { "min": 0, "max": 203 },
+              "trimmedAverage": { "min": 0, "max": 11 },
+              "stdDeviation": { "min": 0, "max": 5 },
+              "medianDuration": { "min": 0, "max": 10 }
+            },
+            "variant": {
+              "nodeCount": { "min": 0, "max": 4 },
+              "caseFreq": { "min": 0, "max": 42 },
+              "avgDuration": { "min": 0, "max": 11 },
+              "healthScore": { "min": -8400, "max": 9066 },
+              "trimmedAverage": { "min": 0, "max": 11 },
+              "stdDeviation": { "min": 0, "max": 5 },
+              "medianDuration": { "min": 0, "max": 10 }
+            }
+          }
+        ],
+        "breakdowns": [
+          {
+            "entityId": "3058253293a0c2506e79bb1e1dba105d",
+            "breakdownStats": [
+              {
+                "field": "made_sla",
+                "label": "Made SLA",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "true",
+                    "value": "true",
+                    "caseCount": 61,
+                    "variantCount": 4,
+                    "avgDuration": 3,
+                    "trimmedAverage": 2,
+                    "stdDeviation": 6,
+                    "medianDuration": 0
+                  }
+                ]
+              },
+              {
+                "field": "assignment_group",
+                "label": "Assignment group",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "",
+                    "value": "",
+                    "caseCount": 61,
+                    "variantCount": 4,
+                    "avgDuration": 3,
+                    "trimmedAverage": 2,
+                    "stdDeviation": 6,
+                    "medianDuration": 0
+                  }
+                ]
+              },
+              {
+                "field": "stage",
+                "label": "Stage",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "Requested",
+                    "value": "requested",
+                    "caseCount": 60,
+                    "variantCount": 3,
+                    "avgDuration": 3,
+                    "trimmedAverage": 2,
+                    "stdDeviation": 6,
+                    "medianDuration": 0
+                  },
+                  {
+                    "label": "Closed Incomplete",
+                    "value": "closed_incomplete",
+                    "caseCount": 1,
+                    "variantCount": 1,
+                    "avgDuration": 0,
+                    "trimmedAverage": 0,
+                    "stdDeviation": 0,
+                    "medianDuration": 0
+                  }
+                ]
+              },
+              {
+                "field": "reassignment_count",
+                "label": "Reassignment count",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "0",
+                    "value": "0",
+                    "caseCount": 61,
+                    "variantCount": 4,
+                    "avgDuration": 3,
+                    "trimmedAverage": 2,
+                    "stdDeviation": 6,
+                    "medianDuration": 0
+                  }
+                ]
+              },
+              {
+                "field": "priority",
+                "label": "Priority",
+                "displayName": null,
+                "line": [
+                  {
+                    "label": "4 - Low",
+                    "value": "4",
+                    "caseCount": 61,
+                    "variantCount": 4,
+                    "avgDuration": 3,
+                    "trimmedAverage": 2,
+                    "stdDeviation": 6,
+                    "medianDuration": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "permissions": {
+          "canMine": true,
+          "canWrite": true,
+          "canDelete": true,
+          "canShare": true
+        },
+        "variantResult": [
+          {
+            "totalVariants": 4,
+            "entityId": "3058253293a0c2506e79bb1e1dba105d",
+            "variants": [
+              {
+                "id": "6dc0fdab50bc38705dc48a887a81039a",
+                "statsId": "d4c23c0ca9dc1ea1085360db545db510",
+                "entityId": "3058253293a0c2506e79bb1e1dba105d",
+                "nodes": [
+                  "c5ab20b563f4030ea87287ed96f7983b",
+                  "4655a12aa2375c31d98c7c1d9328652b",
+                  "a44aa3f0bab3e02977d992961c67dffb",
+                  "b87390b623ed2119675237334953fd42"
+                ],
+                "caseIds": [
+                  "8f9c623f1b5e6110be09ea4a234bcbe8",
+                  "eb9ce23f1b5e6110be09ea4a234bcb5a",
+                  "723c66bb1b5e6110be09ea4a234bcb30",
+                  "956c22fb1b5e6110be09ea4a234bcbf8",
+                  "726ca2fb1b5e6110be09ea4a234bcb73",
+                  "a7fb6a3b1b5e6110be09ea4a234bcb54",
+                  "11cc667f1b5e6110be09ea4a234bcbe2",
+                  "947c26fb1b5e6110be09ea4a234bcb25",
+                  "2eac2a3f1b5e6110be09ea4a234bcbbe",
+                  "429c623f1b5e6110be09ea4a234bcb3e",
+                  "86eb223b1b5e6110be09ea4a234bcb0c",
+                  "7a2c22bb1b5e6110be09ea4a234bcba8",
+                  "6f2c62bb1b5e6110be09ea4a234bcba9",
+                  "240cea3b1b5e6110be09ea4a234bcb0a",
+                  "c10cea3b1b5e6110be09ea4a234bcbdc",
+                  "d66ca2fb1b5e6110be09ea4a234bcb1f",
+                  "9c3ca2bb1b5e6110be09ea4a234bcb4a"
+                ],
+                "nodeCount": 4,
+                "frequency": 17,
+                "totalDuration": 203,
+                "maxDuration": 23,
+                "minDuration": 4,
+                "avgDuration": 11,
+                "trimmedAverage": 11,
+                "stdDeviation": 5,
+                "medianDuration": 10,
+                "healthScore": 9066,
+                "model": null
+              },
+              {
+                "id": "4d4ebd33589f8eac01b2138d8ebe18d2",
+                "statsId": "fdebb4abc24c92c5f53af39cca92b5cc",
+                "entityId": "3058253293a0c2506e79bb1e1dba105d",
+                "nodes": [
+                  "c5ab20b563f4030ea87287ed96f7983b",
+                  "90e16d68882c3c4275a150104409609e",
+                  "b87390b623ed2119675237334953fd42"
+                ],
+                "caseIds": ["6079695c3b1c081052ca655593efc44b"],
+                "nodeCount": 3,
+                "frequency": 1,
+                "totalDuration": 0,
+                "maxDuration": 0,
+                "minDuration": 0,
+                "avgDuration": 0,
+                "trimmedAverage": 0,
+                "stdDeviation": 0,
+                "medianDuration": 0,
+                "healthScore": -164,
+                "model": null
+              },
+              {
+                "id": "1a7659a0ada058f08c22559e13b3c8ee",
+                "statsId": "ffc09c505df6b7bf33ec46ec08f0db78",
+                "entityId": "3058253293a0c2506e79bb1e1dba105d",
+                "nodes": [
+                  "c5ab20b563f4030ea87287ed96f7983b",
+                  "a244fe6b62e71af7342f6f3ec43c8701",
+                  "b87390b623ed2119675237334953fd42"
+                ],
+                "caseIds": ["2e4fb4391bba6010a8dd5240604bcb9e"],
+                "nodeCount": 3,
+                "frequency": 1,
+                "totalDuration": 0,
+                "maxDuration": 0,
+                "minDuration": 0,
+                "avgDuration": 0,
+                "trimmedAverage": 0,
+                "stdDeviation": 0,
+                "medianDuration": 0,
+                "healthScore": -164,
+                "model": null
+              },
+              {
+                "id": "a557947f10c1246e9b5623922c070782",
+                "statsId": "8d8a1ff5f38c0b98b3e2dfdc1af59329",
+                "entityId": "3058253293a0c2506e79bb1e1dba105d",
+                "nodes": [
+                  "c5ab20b563f4030ea87287ed96f7983b",
+                  "a44aa3f0bab3e02977d992961c67dffb",
+                  "b87390b623ed2119675237334953fd42"
+                ],
+                "caseIds": [
+                  "0a79ed983bd00c1052ca655593efc462",
+                  "2279a11c3b944c1052ca655593efc433",
+                  "2a3c1caedb15230087999007db961977",
+                  "9b7969583b9c8c1052ca655593efc4b7",
+                  "a8059c96db9523005e749646db96194e",
+                  "9d79e55c3bd8881052ca655593efc4dd",
+                  "432df80478131110f87714d19dc0b0f5",
+                  "39c45896db9523005e749646db961977",
+                  "5a0d380478131110f87714d19dc0b02b",
+                  "c3e41c96db9523005e749646db9619bc",
+                  "80892d983b50005052ca655593efc488",
+                  "048961d43b94005052ca655593efc43c",
+                  "0779e9143b108c1052ca655593efc49b",
+                  "2a7f230adb1523005e749646db96190b",
+                  "355f8862db15230087999007db961911",
+                  "af79e1903b18cc1052ca655593efc41f",
+                  "413d3c0478131110f87714d19dc0b00e",
+                  "1b79655c3b588c1052ca655593efc403",
+                  "8979ad143b90881052ca655593efc475",
+                  "1889a9dc3bdc005052ca655593efc4a4",
+                  "1e7929d03b5c0c1052ca655593efc4ca",
+                  "9a7925d43b180c1052ca655593efc416",
+                  "2f79ad543bd0cc1052ca655593efc46b",
+                  "357965903b98c81052ca655593efc4fa",
+                  "01ab90aedb15230087999007db96198a",
+                  "ae796ddc3b504c1052ca655593efc47e",
+                  "1bbf00a2db15230087999007db961944",
+                  "64f45c96db9523005e749646db961974",
+                  "faf49c96db9523005e749646db961913",
+                  "877921503b548c1052ca655593efc44f",
+                  "796adf10db25230087999007db9619a4",
+                  "a02db80478131110f87714d19dc0b0d3",
+                  "f689fb8edb1523005e749646db96199c",
+                  "1d79e1503bd4881052ca655593efc429",
+                  "a17961943b54c81052ca655593efc446",
+                  "aa1db80478131110f87714d19dc0b019",
+                  "3379e59c3b1ccc1052ca655593efc4d4",
+                  "b279a5183bd84c1052ca655593efc4e7",
+                  "21792d583b10c81052ca655593efc492",
+                  "f4895710db25230087999007db96190d",
+                  "948965d03bd8005052ca655593efc4f0",
+                  "8679a99c3b9cc81052ca655593efc4ae"
+                ],
+                "nodeCount": 3,
+                "frequency": 42,
+                "totalDuration": 0,
+                "maxDuration": 0,
+                "minDuration": 0,
+                "avgDuration": 0,
+                "trimmedAverage": 0,
+                "stdDeviation": 0,
+                "medianDuration": 0,
+                "healthScore": -8400,
+                "model": null
+              }
+            ]
+          }
+        ],
+        "miningStats": { "totalRecords": 61 },
+        "version": { "automationDiscoveryReport": null }
+      }
+    }
+  }
+}
