@@ -1,5 +1,6 @@
 package com.servicenow.processmining.extensions.pm.dao;
 
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelFilter;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowRESTService;
 
@@ -61,13 +62,13 @@ public abstract class ProcessMiningModelRetrieval
 
     protected abstract String getEmptyFilterPayload();
 
-    public boolean runBreakdownFilter(final String entityId, final String breakdownDownFilter)
+    public boolean runFilter(final String entityId, final ProcessMiningModelFilter filter)
     {
         boolean result = true;
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
         String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/graphql";
         logger.debug("Retrieving Process Mining GraphQL for versionId: '" + getProcessModelVersionId() + "'");
-        String payload = getBreakdownsFilterPayload(entityId, breakdownDownFilter);
+        String payload = getFilterPayload(entityId, filter);
         logger.debug("Payload: (" + payload + ")");
         processMiningModelJSONString = snrs.executePostRequest(url, payload);
         if (processMiningModelJSONString == null || (processMiningModelJSONString != null && processMiningModelJSONString.equals(""))) {
@@ -87,7 +88,7 @@ public abstract class ProcessMiningModelRetrieval
         return result;
     }
 
-    protected abstract String getBreakdownsFilterPayload(final String entityId, final String breakdownConditions);
+    protected abstract String getFilterPayload(final String entityId, final ProcessMiningModelFilter filter);
 
     public String getErrorMessage()
     {
