@@ -9,8 +9,7 @@ public class ProcessMiningModel
     private String versionId = null;
     private String projectId = null;
     private String name = null;
-    private String tableName = null;
-    private String tableLabel = null;
+    private ArrayList<ProcessMiningModelEntity> entities = null;
     private HashMap<String, ProcessMiningModelFilter> filters = null;
     private HashMap<String, ProcessMiningModelNode> nodes = null;
     private ArrayList<String> startNodes = null;
@@ -53,24 +52,26 @@ public class ProcessMiningModel
         return this.name;
     }
 
-    public void setTableName(final String tableName)
+    public ArrayList<ProcessMiningModelEntity> getEntities()
     {
-        this.tableName = tableName;
+        if (entities == null) {
+            entities = new ArrayList<ProcessMiningModelEntity>();
+        }
+
+        return entities;
     }
 
-    public String getTableName()
+    public ProcessMiningModelEntity getEntity(String tableName, String fieldName)
     {
-        return this.tableName;
-    }
+        for (ProcessMiningModelEntity entity : getEntities()) {
+            if (entity.getTableName().equals(tableName)) {
+                if (entity.getFieldName().equals(fieldName)) {
+                    return entity;
+                }
+            }
+        }
 
-    public void setTableLabel(final String tableLabel)
-    {
-        this.tableLabel = tableLabel;
-    }
-
-    public String getTableLabel()
-    {
-        return this.tableLabel;
+        return null;
     }
 
     public HashMap<String, ProcessMiningModelFilter> getFilters()
@@ -191,6 +192,13 @@ public class ProcessMiningModel
         }
 
         return label;
+    }
+
+    public void setTransitions(ArrayList<ProcessMiningModelTransition> transitions)
+    {
+        for (ProcessMiningModelTransition transition : transitions) {
+            addTransition(transition);
+        }
     }
 
     public HashMap<String, ProcessMiningModelTransition> getTransitions()
