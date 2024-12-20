@@ -6,7 +6,7 @@ import com.servicenow.processmining.extensions.pm.simulation.core.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WorkflowInstance
+public abstract class WorkflowInstance
     implements MessageHandler
 {
     private static MessageHandler display = null;
@@ -43,12 +43,9 @@ public class WorkflowInstance
         return this.currentPath;
     }
 
-    public void create(final double startOffset)
-    {
-        Message newEvent = new Message(this, getId(), "", getSimulator().getSimulationState().getStartingNode(),
-                startOffset, Message.REGULAR);
-        getSimulator().insert(newEvent);
-    }
+    public abstract void create(final double startOffset);
+
+    public abstract String getNextNode();
 
     public void handle(final Message message)
     {
@@ -61,8 +58,8 @@ public class WorkflowInstance
     private void route(final Message message)
     {
         getSimulator().validateCounters();
-        logger.debug("Time: (" + simulator.now() + ") - [" + getId() + "] - BEGIN route: ------------------------------------------------------------------------");
-        logger.debug("Time: (" + simulator.now() + ") - [" + getId() + "] - route: BEGIN - Current Path: ("
+        logger.debug("Time: (" + getSimulator().now() + ") - [" + getId() + "] - BEGIN route: ------------------------------------------------------------------------");
+        logger.debug("Time: (" + getSimulator().now() + ") - [" + getId() + "] - route: BEGIN - Current Path: ("
                 + getCurrentPath() + ") - Simulation State\nStates   : "
                 + getSimulator().getSimulationState().getActivityStateCounts() + "\nResources: "
                 + getSimulator().getSimulationState().getActivityStateQueueResources() + "\nQueues   : "
@@ -95,8 +92,7 @@ public class WorkflowInstance
         double nextNodeCompletionTime = 0;
 
         // If we receive a route for a WorkflowInstance that has been marked with no
-        // capacity to be routed,
-        // then we need to enqueue it.
+        // capacity to be routed, then we need to enqueue it.
         if (message.isEnqueueMessageType()) {
             // At the time to scheduling a message in state ENQUEUE, the capacity of the
             // node was exceeded and as such
@@ -108,7 +104,7 @@ public class WorkflowInstance
             // If there is still no capacity, then enqueue.
             if (!getSimulator().getSimulationState().doesCurrentNodeHasCapacity(getActivityState())) {
                 currentNode = getActivityState();
-                nextNode = getSimulator().getSimulationState().getNextNode(currentNode, getCurrentPath());
+                nextNode = getNextNode();
                 logger.debug("Time: (" + getSimulator().now() + ") - [" + message.getReferenceId()
                         + "] - Routing - There IS NO capacity target Node: (" + nextNode
                         + "). Will need to enqueue WorkflowInstance.");
@@ -131,7 +127,7 @@ public class WorkflowInstance
         // If we are not enqueing the message, then we proceed to process the message...
         if (message.isRegularMessageType() || message.isResumedMessageType()) {
             currentNode = getActivityState();
-            nextNode = getSimulator().getSimulationState().getNextNode(getActivityState(), getCurrentPath());
+            nextNode = getNextNode();
 
             // If nextNode == null, then we reached the end of that path and we should stop
             // scheduling more events
@@ -145,11 +141,11 @@ public class WorkflowInstance
             }
             else {
                 logger.debug("Looking for transition: (" + currentNode + ", " + nextNode + ")");
-                ProcessMiningModelTransition transition = getSimulator().getSimulationState().getProcessModelVariant().getTransition(currentNode, nextNode);
+                ProcessMiningModelTransition transition = getSimulator().getSimulationState().getProcessModel().getTransition(currentNode, nextNode);
                 nextNodeCompletionTime += Double.valueOf(transition.getAvgDuration()).doubleValue();
                 logger.debug("Time: (" + getSimulator().now() + ") - [" + message.getReferenceId()
                         + "] - Routing - Creating Node: '" + currentNode
-                        + "' completion event. When the event completes in :'" + currentNode
+                        + "' completion event. When the event completes at :'" + currentNode
                         + "', it will be routed to Node: '" + nextNode + "'");
 
                 // We need to determine if the target state has capacity to process this future
@@ -169,19 +165,20 @@ public class WorkflowInstance
                 getSimulator().getSimulationState().checkIfThereAreEnquedWorkflowInstances(executedNode);
             }
         }
-        logger.debug("Time: (" + simulator.now() + ") - [" + getId() + "] - route: - Current Path: (" + getCurrentPath()
+        logger.debug("Time: (" + getSimulator().now() + ") - [" + getId() + "] - route: - Current Path: (" + getCurrentPath()
                 + ") - Simulation State\nStates   : " + getSimulator().getSimulationState().getActivityStateCounts()
                 + "\nResources: " + getSimulator().getSimulationState().getActivityStateQueueResources()
                 + "\nQueues   : " + getSimulator().getSimulationState().getActivityStateQueues());
-        logger.debug("Time: (" + simulator.now() + ") - [" + getId()
+        logger.debug("Time: (" + getSimulator().now() + ") - [" + getId()
                 + "] - END route: --------------------------------------------------------------------------\n");
         getSimulator().validateCounters();
     }
 
-    private void updateActivityState(final Message message) {
-        logger.debug("Time: (" + simulator.now() + ") - [" + getId() + "] - UpdateActivityState: Completed: ("
+    private void updateActivityState(final Message message)
+    {
+        logger.debug("Time: (" + getSimulator().now() + ") - [" + getId() + "] - UpdateActivityState: Completed: ("
                 + message.getFrom() + ") and routing to: (" + message.getTo() + ")");
-        logger.debug("Time: (" + simulator.now() + ") - [" + getId() + "] - UpdateActivityState: BEFORE\nCurrent Path: "
+        logger.debug("Time: (" + getSimulator().now() + ") - [" + getId() + "] - UpdateActivityState: BEFORE\nCurrent Path: "
                 + getCurrentPath() + "\nStates   : " + getSimulator().getSimulationState().getActivityStateCounts()
                 + "\nResources: " + getSimulator().getSimulationState().getActivityStateQueueResources()
                 + "\nQueues   : " + getSimulator().getSimulationState().getActivityStateQueues());
@@ -196,7 +193,7 @@ public class WorkflowInstance
             incrementUsage(newActivityState);
         }
         updatePath();
-        logger.debug("Time: (" + simulator.now() + ") - [" + getId() + "] - UpdateActivityState: AFTER\nCurrent Path: "
+        logger.debug("Time: (" + getSimulator().now() + ") - [" + getId() + "] - UpdateActivityState: AFTER\nCurrent Path: "
                 + getCurrentPath() + "\nStates   : " + getSimulator().getSimulationState().getActivityStateCounts()
                 + "\nResources: " + getSimulator().getSimulationState().getActivityStateQueueResources()
                 + "\nQueues   : " + getSimulator().getSimulationState().getActivityStateQueues());
