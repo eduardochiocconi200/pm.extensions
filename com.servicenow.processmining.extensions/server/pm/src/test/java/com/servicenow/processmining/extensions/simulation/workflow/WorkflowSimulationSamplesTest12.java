@@ -14,12 +14,12 @@ import java.util.HashMap;
 
 import org.junit.Assert;
 
-public class WorkflowSimulationSamplesTest11
+public class WorkflowSimulationSamplesTest12
     extends WorkflowSimulationSamples
 {
     private ProcessMiningModel model = null;
 
-    public WorkflowSimulationSamplesTest11(final String numberOfInstances)
+    public WorkflowSimulationSamplesTest12(final String numberOfInstances)
     {
         super(numberOfInstances);
     }
@@ -27,7 +27,7 @@ public class WorkflowSimulationSamplesTest11
     @Override
     public String getProcessName()
     {
-        return "Sample11";
+        return "Incident State Analysis (2024)";
     }
 
     @Override
@@ -45,19 +45,19 @@ public class WorkflowSimulationSamplesTest11
     @Override
     public String getVariantName()
     {
-        return "9e4f2646364eb4776a9351d2f75e2a18";
+        return "00e508354daf6aa52c2155c6c9662a1a";
     }
 
     public double getCreationIntervalDuration()
     {
-        return 60.0;
+        return 0.0;
     }
 
     @Override
     public ProcessMiningModel getModel()
     {
         if (model == null) {
-            String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload4-w.json");
+            String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload5-w.json");
             ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
             Assert.assertTrue(parser.parse(processMiningModelJSONString));
             model = parser.getProcessMiningModel();

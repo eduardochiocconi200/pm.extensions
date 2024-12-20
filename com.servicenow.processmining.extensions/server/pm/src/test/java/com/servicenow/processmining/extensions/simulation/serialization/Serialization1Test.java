@@ -16,9 +16,9 @@ public class Serialization1Test
 
     private void test1()
     {
-        String auditLogJSONString = new TestUtility().loadProcessMiningModel("/simulation/audit-log-1.json");
+        String auditLogJSONString = new TestUtility().loadProcessMiningAuditLogs("/simulation/audit-log-1.json");
         AuditLogSerializer serializer = new AuditLogSerializer();
         Assert.assertTrue(serializer.parse(auditLogJSONString));
-        Assert.assertEquals(857, serializer.getLog().getLog().size());
+        Assert.assertEquals(7953, serializer.getLog().getLog().size());
     }
 }

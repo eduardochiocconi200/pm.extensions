@@ -15,11 +15,25 @@ public class WorkflowSimulationSamplesTest5
         super(numberOfInstances);
     }
 
+    @Override
     public String getProcessName()
     {
         return "Sample5";
     }
 
+    @Override
+    public String getTableName()
+    {
+        return "id";
+    }
+
+    @Override
+    public String getFieldName()
+    {
+        return "id";
+    }
+
+    @Override
     public String getVariantName()
     {
         return "Variant1";
@@ -133,16 +147,16 @@ public class WorkflowSimulationSamplesTest5
 
         resources = new HashMap<String, ProcessMiningModelResources>();
 
-        ProcessMiningModelResources resource1 = new ProcessMiningModelResources("1", "ResourceCreated", ProcessMiningModelResources.UNLIMITED);
+        ProcessMiningModelResources resource1 = new ProcessMiningModelResources("1", "Created", ProcessMiningModelResources.UNLIMITED);
         resources.put("1", resource1);
 
-        ProcessMiningModelResources resource2 = new ProcessMiningModelResources("2", "ResourceNew", 1);
+        ProcessMiningModelResources resource2 = new ProcessMiningModelResources("2", "New", 1);
         resources.put("2", resource2);
 
-        ProcessMiningModelResources resource3 = new ProcessMiningModelResources("3", "ResourceAssigned", 1);
+        ProcessMiningModelResources resource3 = new ProcessMiningModelResources("3", "Assigned", 1);
         resources.put("3", resource3);
 
-        ProcessMiningModelResources resource4 = new ProcessMiningModelResources("4", "ResourceCompleted", ProcessMiningModelResources.UNLIMITED);
+        ProcessMiningModelResources resource4 = new ProcessMiningModelResources("4", "Completed", ProcessMiningModelResources.UNLIMITED);
         resources.put("4", resource4);
 
         return resources;

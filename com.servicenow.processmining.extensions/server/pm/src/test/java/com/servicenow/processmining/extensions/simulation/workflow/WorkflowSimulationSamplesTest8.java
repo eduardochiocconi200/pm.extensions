@@ -15,11 +15,25 @@ public class WorkflowSimulationSamplesTest8
         super(numberOfInstances);
     }
 
+    @Override
     public String getProcessName()
     {
         return "Sample8";
     }
 
+    @Override
+    public String getTableName()
+    {
+        return "id";
+    }
+
+    @Override
+    public String getFieldName()
+    {
+        return "id";
+    }
+
+    @Override
     public String getVariantName()
     {
         return "Variant1";
@@ -162,19 +176,19 @@ public class WorkflowSimulationSamplesTest8
 
         resources = new HashMap<String, ProcessMiningModelResources>();
 
-        ProcessMiningModelResources resource1 = new ProcessMiningModelResources("1", "Resource Created", ProcessMiningModelResources.UNLIMITED);
+        ProcessMiningModelResources resource1 = new ProcessMiningModelResources("1", "Created", ProcessMiningModelResources.UNLIMITED);
         resources.put("1", resource1);
 
-        ProcessMiningModelResources resource2 = new ProcessMiningModelResources("2", "Resource New", 5);
+        ProcessMiningModelResources resource2 = new ProcessMiningModelResources("2", "New", 5);
         resources.put("2", resource2);
 
-        ProcessMiningModelResources resource3 = new ProcessMiningModelResources("3", "Resource Assigned", 5);
+        ProcessMiningModelResources resource3 = new ProcessMiningModelResources("3", "Assigned", 5);
         resources.put("3", resource3);
 
-        ProcessMiningModelResources resource4 = new ProcessMiningModelResources("4", "Resource Work In Progress", 5);
+        ProcessMiningModelResources resource4 = new ProcessMiningModelResources("4", "Work In Progress", 5);
         resources.put("4", resource4);
 
-        ProcessMiningModelResources resource5 = new ProcessMiningModelResources("5", "Resource Completed", ProcessMiningModelResources.UNLIMITED);
+        ProcessMiningModelResources resource5 = new ProcessMiningModelResources("5", "Completed", ProcessMiningModelResources.UNLIMITED);
         resources.put("5", resource5);
 
         return resources;

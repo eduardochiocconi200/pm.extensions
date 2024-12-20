@@ -1,5 +1,7 @@
 package com.servicenow.processmining.extensions.simulation.workflow;
 
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelEntity;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelNode;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelResources;
@@ -15,19 +17,35 @@ import org.junit.Assert;
 public class WorkflowSimulationSamplesTest10
     extends WorkflowSimulationSamples
 {
+    private ProcessMiningModel model = null;
+
     public WorkflowSimulationSamplesTest10(final String numberOfInstances)
     {
         super(numberOfInstances);
     }
 
+    @Override
     public String getProcessName()
     {
         return "Sample10";
     }
 
+    @Override
+    public String getTableName()
+    {
+        return "incident";
+    }
+
+    @Override
+    public String getFieldName()
+    {
+        return "state";
+    }
+
+    @Override
     public String getVariantName()
     {
-        return "Variant1";
+        return "9e4f2646364eb4776a9351d2f75e2a18";
     }
 
     public double getCreationIntervalDuration()
@@ -36,27 +54,28 @@ public class WorkflowSimulationSamplesTest10
     }
 
     @Override
-    public ProcessMiningModelVariant getSample()
+    public ProcessMiningModel getModel()
     {
-        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload4-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
-        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        if (model == null) {
+            String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload4-w.json");
+            ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+            Assert.assertTrue(parser.parse(processMiningModelJSONString));
+            model = parser.getProcessMiningModel();
+            attachResourcesToNodes();
+        }
 
-        ProcessMiningModelVariant variant = parser.getProcessMiningModel().getVariants().get("9e4f2646364eb4776a9351d2f75e2a18");
-        attachResourcesToNodes(variant);
-        variant.setCreationInterval(1.0);
+        return model;
+    }
+
+    @Override
+    public ProcessMiningModelVariant getVariation()
+    {
+        ProcessMiningModelVariant variant = getModel().getVariants().get(getVariantName());
+        variant.setCreationInterval(getCreationIntervalDuration());
         // Let's overwrite the frequency.
         variant.setFrequency(Integer.valueOf(getNumberOfInstances()).intValue());
 
         return variant;
-    }    
-
-    private void attachResourcesToNodes(final ProcessMiningModelVariant variant)
-    {
-        for (String nodeResourceIds: getResources().keySet()) {
-            ProcessMiningModelNode node = variant.getNodes().get(nodeResourceIds);
-            node.setResources(getResources().get(nodeResourceIds));
-        }
     }
 
     @Override
@@ -68,13 +87,13 @@ public class WorkflowSimulationSamplesTest10
     @Override
     public HashMap<String, ProcessMiningModelNode> getNodes()
     {
-        return null;
+        return getModel().getNodes();
     }
 
     @Override
     public HashMap<String, ProcessMiningModelTransition> getTransitions()
     {
-        return null;
+        return getModel().getTransitions();
     }
 
     @Override
@@ -86,23 +105,13 @@ public class WorkflowSimulationSamplesTest10
 
         resources = new HashMap<String, ProcessMiningModelResources>();
 
-        ProcessMiningModelResources resource1 = new ProcessMiningModelResources("2cf2659a1a3da45ce92bfcf8ee891195", "Resource Problem attached", 1);
-        resources.put("2cf2659a1a3da45ce92bfcf8ee891195", resource1);
-
-        ProcessMiningModelResources resource2 = new ProcessMiningModelResources("aa6c9d3603332072c4e0305cd4f0929a", "Resource Resolved", 1);
-        resources.put("aa6c9d3603332072c4e0305cd4f0929a", resource2);
-
-        ProcessMiningModelResources resource3 = new ProcessMiningModelResources("ff9936b92a853c3acb21567fa0cd870e", "Resource Completed", 1);
-        resources.put("ff9936b92a853c3acb21567fa0cd870e", resource3);
-
-        ProcessMiningModelResources resource4 = new ProcessMiningModelResources("24bbd1f096e1bb7eeab76e5a6078a464", "Resource Closed", ProcessMiningModelResources.UNLIMITED);
-        resources.put("24bbd1f096e1bb7eeab76e5a6078a464", resource4);
-
-        ProcessMiningModelResources resource5 = new ProcessMiningModelResources("96e3f3343efc685eebdec2266fa4ac2f", "Resource New", 1);
-        resources.put("96e3f3343efc685eebdec2266fa4ac2f", resource5);
-
-        ProcessMiningModelResources resource6 = new ProcessMiningModelResources("b095dc38e81104af34c4f56352271ab6", "Resource Created", ProcessMiningModelResources.UNLIMITED);
-        resources.put("b095dc38e81104af34c4f56352271ab6", resource6);
+        ProcessMiningModelEntity entity = getModel().getEntity(getTableName(), getFieldName());
+        for (ProcessMiningModelNode node : model.getNodes().values()) {
+            if (entity.getTableId().equals(node.getEntityId())) {
+                ProcessMiningModelResources r = new ProcessMiningModelResources(node.getId(), node.getName(), 1);
+                resources.put(node.getId(), r);    
+            }
+        }
 
         return resources;
     }
