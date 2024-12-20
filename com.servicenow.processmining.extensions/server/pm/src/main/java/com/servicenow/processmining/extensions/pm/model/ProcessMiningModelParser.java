@@ -109,14 +109,28 @@ public class ProcessMiningModelParser
                     if (scheduleModelObj.has("projectEntities")) {
                         JSONArray projectEntities = (JSONArray) scheduleModelObj.getJSONArray("projectEntities");
                         if (projectEntities != null) {
-                            JSONObject entityObj = (JSONObject) projectEntities.get(0);
-                            if (entityObj != null) {
-                                JSONObject table = (JSONObject) entityObj.getJSONObject("table");
-                                if (table != null) {
-                                    String tableName = table.getString("name");
-                                    String tableLabel = table.getString("label");
-                                    pmm.setTableName(tableName);
-                                    pmm.setTableLabel(tableLabel);
+                            for (int i=0; i < projectEntities.length(); i++) {
+                                JSONObject entityObj = (JSONObject) projectEntities.get(i);
+                                String tableId = entityObj.getString("entityId");
+                                JSONObject tableNameObj = (JSONObject) entityObj.getJSONObject("table");
+                                String tableName = null;
+                                if (tableNameObj != null) {
+                                    tableName = tableNameObj.getString("name");
+                                }
+
+                                if (entityObj != null) {
+                                    if (entityObj.has("activities")) {
+                                        JSONArray activities = (JSONArray) entityObj.getJSONArray("activities");
+                                        if (activities != null) {
+                                            for (int j=0; j < activities.length(); j++) {
+                                                JSONObject activityObj = (JSONObject) activities.get(j);
+                                                String fieldId = activityObj.getString("id");
+                                                String fieldName = activityObj.getString("field");
+                                                ProcessMiningModelEntity entity = new ProcessMiningModelEntity(tableId, tableName, fieldId, fieldName);
+                                                pmm.getEntities().add(entity);
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -176,18 +190,20 @@ public class ProcessMiningModelParser
                                     JSONObject filterObj = filterDetails.getJSONObject("filter");
                                     if (filterObj.has("breakdowns")) {
                                         JSONArray breakdowns = filterObj.getJSONArray("breakdowns");
-                                        ProcessMiningModelFilterBreakdown filterBreakdown = new ProcessMiningModelFilterBreakdown();
-                                        filter.setBreakdownCondition(filterBreakdown);
-                                        for (int j=0; j < breakdowns.length(); j++) {
-                                            JSONObject breakdownObj = (JSONObject) breakdowns.get(j);
-                                            String filterEntityId = breakdownObj.getString("entityId");
-                                            filterBreakdown.setEntityId(filterEntityId);
-                                            JSONArray innerBreakdowns = breakdownObj.getJSONArray("breakdowns");
-                                            for (int k=0; k < innerBreakdowns.length(); k++) {
-                                                String condition = innerBreakdowns.get(k).toString();
-                                                ProcessMiningModelFilterBreakdownCondition bCondition = new ProcessMiningModelFilterBreakdownCondition();
-                                                bCondition.setCondition(condition);
-                                                filterBreakdown.addCondition(bCondition);
+                                        if (breakdowns != null && breakdowns.length() > 0) {
+                                            ProcessMiningModelFilterBreakdown filterBreakdown = new ProcessMiningModelFilterBreakdown();
+                                            filter.setBreakdownCondition(filterBreakdown);
+                                            for (int j=0; j < breakdowns.length(); j++) {
+                                                JSONObject breakdownObj = (JSONObject) breakdowns.get(j);
+                                                String filterEntityId = breakdownObj.getString("entityId");
+                                                filterBreakdown.setEntityId(filterEntityId);
+                                                JSONArray innerBreakdowns = breakdownObj.getJSONArray("breakdowns");
+                                                for (int k=0; k < innerBreakdowns.length(); k++) {
+                                                    String condition = innerBreakdowns.get(k).toString();
+                                                    ProcessMiningModelFilterBreakdownCondition bCondition = new ProcessMiningModelFilterBreakdownCondition();
+                                                    bCondition.setCondition(condition);
+                                                    filterBreakdown.addCondition(bCondition);
+                                                }
                                             }
                                         }
                                     }
