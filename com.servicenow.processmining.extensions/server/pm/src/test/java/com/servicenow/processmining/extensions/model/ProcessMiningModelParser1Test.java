@@ -37,6 +37,18 @@ public class ProcessMiningModelParser1Test
             test16();
             test17();
             test18();
+            test19();
+            test20();
+            test21();
+            test22();
+            test23();
+            test24();
+            test25();
+            test26();
+            test27();
+            test28();
+            test29();
+            test30();
         }
     }
 
@@ -46,7 +58,6 @@ public class ProcessMiningModelParser1Test
         ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(10, parser.getProcessMiningModel().getVariants().size());
-        System.out.println("Keys: (" + parser.getProcessMiningModel().getVariants().keySet() + ")");
         Assert.assertEquals(160, parser.getProcessMiningModel().getVariants().get("f4dbf4607130d4eedcbb2b977d7f6f42").getCaseIds().size());
         Assert.assertEquals(11, parser.getProcessMiningModel().getVariants().get("84e2704c49e004085c8a7e4e68e49999").getCaseIds().size());
         Assert.assertEquals(3, parser.getProcessMiningModel().getVariants().get("9f1c43f8dbe6f94a319b0fca20163972").getCaseIds().size());
@@ -274,6 +285,162 @@ public class ProcessMiningModelParser1Test
         ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(5, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test19()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload1-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test20()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload2-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test21()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload3-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test22()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload4-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test23()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload4-2-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test24()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload5-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test25()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload6-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test26()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload7-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test27()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload9-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test28()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload10-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test29()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload11-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
+
+        // Run Variation Analysis.
+        ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
+        Assert.assertTrue(ds.runAllAnalysis());
+        logger.debug(ds.getFindings().toString());
+    }
+
+    public void test30()
+    {
+        String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload12-w.json");
+        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        Assert.assertTrue(parser.parse(processMiningModelJSONString));
+        Assert.assertEquals(3, parser.getProcessMiningModel().getFilters().size());
 
         // Run Variation Analysis.
         ProcessMiningModelFilterDataSource ds = new ProcessMiningModelFilterDataSource(parser.getProcessMiningModel());
