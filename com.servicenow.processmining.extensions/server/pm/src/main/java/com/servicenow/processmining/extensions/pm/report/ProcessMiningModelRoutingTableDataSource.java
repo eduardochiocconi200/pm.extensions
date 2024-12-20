@@ -81,7 +81,7 @@ public class ProcessMiningModelRoutingTableDataSource
         // Routing Table Identifier and name
         routingTableCurrentRow = 0;
         baseAsIsTableRow = 1;
-        String modelSummary = "Process Model: Name: " + getProcessMiningModel().getName() + ", Table: " + getProcessMiningModel().getTableLabel() + ", Records: " + getProcessMiningModel().getAggregate().getCaseCount() + ", Variants: " + getProcessMiningModel().getVariants().size() + ".";
+        String modelSummary = "Process Model: Name: " + getProcessMiningModel().getName() + ", Table: " + getProcessMiningModel().getEntities().get(0).getTableName() + ", Records: " + getProcessMiningModel().getAggregate().getCaseCount() + ", Variants: " + getProcessMiningModel().getVariants().size() + ".";
         routingTable[routingTableCurrentRow][0] = modelSummary;
         routingTableCurrentRow++;
         routingTable[routingTableCurrentRow][0] = "AS-IS Routing Matrix";
