@@ -1,9 +1,10 @@
 package com.servicenow.processmining.extensions.pm.simulation.workflow;
 
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariant;
-import com.servicenow.processmining.extensions.pm.simulation.core.ListQueue;
 import com.servicenow.processmining.extensions.pm.simulation.core.SimulationGenerator;
 import com.servicenow.processmining.extensions.pm.simulation.core.Simulator;
+
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLog;
 
 import org.slf4j.Logger;
@@ -14,24 +15,31 @@ public class WorkflowSimulator
 {
     private WorkflowInstanceSimulationState simulatorState = null;
     private int generationType = NO_GENERATION;
+    private ProcessMiningModelVariant variant = null;
     private SimulationGenerator generator = null;
     private SysAuditLog sysAuditLog = null;
+    private String tableName = null;
+    private String fieldName = null;
 
-    public WorkflowSimulator(final ProcessMiningModelVariant processModelVariant, final int generationType)
+    public WorkflowSimulator(final ProcessMiningModel model, final ProcessMiningModelVariant processModelVariant, final String tableName, final String fieldName)
     {
-        this.simulatorState = new WorkflowInstanceSimulationState(processModelVariant, this);
-        this.generationType = generationType;
-        this.events = new ListQueue();
+        super();
+        this.simulatorState = new WorkflowInstanceSimulationState(model, this);
+        this.variant = processModelVariant;
+        this.generationType = UNIFORM_INCREMENTAL_GENERATION;
+        this.tableName = tableName;
+        this.fieldName = fieldName;
     }
 
-    public WorkflowSimulator(final ProcessMiningModelVariant processModelVariant, final SysAuditLog log, final int generationType)
+    public WorkflowSimulator(final ProcessMiningModel model, final SysAuditLog log, final String tableName, final String fieldName)
     {
-        this.simulatorState = new WorkflowInstanceSimulationState(processModelVariant, this);
+        super();
+        this.simulatorState = new WorkflowInstanceSimulationState(model, this);
         this.sysAuditLog = log;
-        this.generationType = generationType;
-        this.events = new ListQueue();
+        this.generationType = REPLAY_GENERATION;
+        this.tableName = tableName;
+        this.fieldName = fieldName;
     }
-
 
     public WorkflowInstanceSimulationState getSimulationState()
     {
@@ -43,19 +51,34 @@ public class WorkflowSimulator
         return this.generationType;
     }
 
+    public String getTableName()
+    {
+        return this.tableName;
+    }
+
+    public String getFieldName()
+    {
+        return this.fieldName;
+    }
+
+    public ProcessMiningModelVariant getProcessModelVariant()
+    {
+        return this.variant;
+    }
+
     /**
      * Run the simulation. This means to trigger the processing of all added events.
      */
     public void run()
     {
-        logger.info("Running simulation with (" + getSimulationState().getProcessModelVariant().getFrequency() + ") instances with increments of: (" + getSimulationState().getProcessModelVariant().getCreationIntervalDuration() + ")");
         setGenerator(getGenerator());
         switch (generationType) {
             case WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION:
-                logger.info("Starting Simulation for Process: (" + getSimulationState().getProcessModelVariant().getId() + ") and will run (" + getGenerator().getNumberOfSumulatorInstances() + ") instances starting at: (" + getStartTime() + ") with a spaced starting interval of: (" + getGenerator().getStartIncrementInverval() + ")");
+            logger.info("Running simulation with (" + getProcessModelVariant().getFrequency() + ") instances with increments of: (" + getProcessModelVariant().getCreationIntervalDuration() + ")");
+                logger.info("Starting Simulation for Process: (" + getSimulationState().getProcessModel().getName() + ") and will run (" + getGenerator().getNumberOfSumulatorInstances() + ") instances starting at: (" + getStartTime() + ") with a spaced starting interval of: (" + getGenerator().getStartIncrementInverval() + ")");
                 break;
             case WorkflowSimulator.REPLAY_GENERATION:
-                logger.info("Starting Replay Simulation for Process: (" + getSimulationState().getProcessModelVariant().getId() + ")");
+                logger.info("Starting Replay Simulation for Process: (" + getSimulationState().getProcessModel().getName() + ")");
                 break;
             default:
                 throw new RuntimeException("Invalid simulator generation type: (" + generationType + ")");
@@ -83,11 +106,10 @@ public class WorkflowSimulator
         if (generator == null) {
             switch (generationType) {
                 case WorkflowSimulator.UNIFORM_INCREMENTAL_GENERATION:
-                    generator = new WorkflowInstanceGenerator(this, getSimulationState().getProcessModelVariant().getFrequency(),
-                        getSimulationState().getProcessModelVariant().getCreationIntervalDuration());
+                    generator = new WorkflowInstanceGenerator(this, getProcessModelVariant());
                     break;
                 case WorkflowSimulator.REPLAY_GENERATION:
-                    generator = new WorkflowInstanceReplayGenerator(this, getSimulationState().getProcessModelVariant(), sysAuditLog);
+                    generator = new WorkflowInstanceReplayGenerator(this, sysAuditLog);
                     break;
                 default:
                     throw new RuntimeException("Invalid Simulation Generation Type: (" + generationType + ")");
