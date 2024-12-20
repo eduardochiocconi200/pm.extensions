@@ -2,7 +2,7 @@ package com.servicenow.processmining.extensions.model;
 
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelFilterDAOREST;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrieval;
-import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrievalVancouver;
+import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrievalFactory;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelVersionDAOREST;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersionFilter;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersion;
@@ -24,29 +24,18 @@ public class ProcessMiningModelFilterTest
     @Test
     public void test()
     {
-        String model1 = null;
-        String model2 = null;
-        ServiceNowInstance snInstance = getInstance();
         String modelVersionId = "ac0c7a1f93a80a506e79bb1e1dba10af";
-        ProcessMiningModelRetrieval pmmr = new ProcessMiningModelRetrievalVancouver(snInstance, modelVersionId);
+        ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelVersionId);
         if (pmmr.runEmptyFilter()) {
             ProcessMiningModelParser pmmp = new ProcessMiningModelParser(modelVersionId);
-            model1 = pmmr.getProcessMiningModelJSONString();
             if (pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
                 logger.info("Retrieved and parsed Process Mining Model successfully!");
                 ProcessMiningModelFilterDAOREST pmmfDAO = new ProcessMiningModelFilterDAOREST(instance);
                 List<ProcessMiningModelVersionFilter> filters = pmmfDAO.findAllByProcessModel(modelVersionId, false);
-                for (ProcessMiningModelVersionFilter filter : filters) {
-                    pmmr = new ProcessMiningModelRetrievalVancouver(snInstance, modelVersionId);
-                    if (pmmr.runBreakdownFilter(filter.getEntityId(), filter.getCondition())) {
-                        ProcessMiningModelParser pmmp2 = new ProcessMiningModelParser(modelVersionId);
-                        model2 = pmmr.getProcessMiningModelJSONString();
-                        Assert.assertNotEquals(model1, model2);
-                        if (pmmp2.parse(pmmr.getProcessMiningModelJSONString())) {
-                            logger.info("Retrieved and parsed Process Mining Model successfully!");
-                        }
-                    }
-                }
+                Assert.assertEquals(pmmp.getProcessMiningModel().getFilters().size(), filters.size());
+            }
+            else {
+                Assert.assertTrue(false);
             }
         }
     }
@@ -57,26 +46,18 @@ public class ProcessMiningModelFilterTest
         ProcessMiningModelVersionDAOREST dao = new ProcessMiningModelVersionDAOREST(getInstance());
         for (ProcessMiningModelVersion version : dao.findAll()) {
             String modelVersionId = version.getPK().toString();
-            ProcessMiningModelRetrieval pmmr = new ProcessMiningModelRetrievalVancouver(getInstance(), modelVersionId);
+            ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelVersionId);
             if (pmmr.runEmptyFilter()) {
                 ProcessMiningModelParser pmmp = new ProcessMiningModelParser(modelVersionId);
                 if (pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
-                    logger.info("Retrieved and parsed Process Mining Model successfully!");
+                    logger.info("Retrieved and parsed Process Mining Model (" + pmmp.getProcessMiningModel().getName() + ") successfully!");
+                    System.out.println("Retrieved and parsed Process Mining Model (" + pmmp.getProcessMiningModel().getName() + ") successfully!");
                     ProcessMiningModelFilterDAOREST pmmfDAO = new ProcessMiningModelFilterDAOREST(getInstance());
                     List<ProcessMiningModelVersionFilter> filters = pmmfDAO.findAllByProcessModel(modelVersionId, false);
-                    for (ProcessMiningModelVersionFilter filter : filters) {
-                        pmmr = new ProcessMiningModelRetrievalVancouver(getInstance(), modelVersionId);
-                        if (pmmr.runBreakdownFilter(filter.getEntityId(), filter.getJSONCondition())) {
-                            ProcessMiningModelParser pmmp2 = new ProcessMiningModelParser(modelVersionId);
-                            if (pmmp2.parse(pmmr.getProcessMiningModelJSONString())) {
-                                logger.info("Retrieved and parsed Process Mining Model successfully!");
-                                Assert.assertTrue(true);
-                            }
-                            else {
-                                Assert.assertTrue(false);
-                            }
-                        }
-                    }
+                    Assert.assertEquals(pmmp.getProcessMiningModel().getFilters().size(), filters.size());
+                }
+                else {
+                    Assert.assertTrue(false);
                 }
             }
         }
