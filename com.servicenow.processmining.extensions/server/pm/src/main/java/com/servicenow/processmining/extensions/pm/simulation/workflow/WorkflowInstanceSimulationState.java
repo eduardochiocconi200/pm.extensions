@@ -1,11 +1,9 @@
 package com.servicenow.processmining.extensions.pm.simulation.workflow;
 
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelNode;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelResources;
-import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelTransition;
-import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariant;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -14,23 +12,23 @@ import org.slf4j.LoggerFactory;
 
 public class WorkflowInstanceSimulationState
 {
-    private ProcessMiningModelVariant processModelVariant = null;
+    private ProcessMiningModel processModel = null;
     private WorkflowSimulator simulator = null;
     private HashMap<String, Integer> activityStateCount = null;
     private HashMap<String, Vector<WorkflowInstanceQueuedInfo>> activityStateQueue = null;
     private HashMap<String, WorkflowInstanceResource> activityStateQueueResource = null;
     private java.util.Vector<WorkflowInstance> workflowInstances = null;
 
-    public WorkflowInstanceSimulationState(final ProcessMiningModelVariant processModelVariant, final WorkflowSimulator simulator)
+    public WorkflowInstanceSimulationState(final ProcessMiningModel processModel, final WorkflowSimulator simulator)
     {
-        this.processModelVariant = processModelVariant;
+        this.processModel = processModel;
         this.simulator = simulator;
         initializeWorkflowMetadata();
     }
 
-    public ProcessMiningModelVariant getProcessModelVariant()
+    public ProcessMiningModel getProcessModel()
     {
-        return this.processModelVariant;
+        return this.processModel;
     }
 
     public WorkflowSimulator getSimulator()
@@ -101,19 +99,22 @@ public class WorkflowInstanceSimulationState
         activityStateQueue = new HashMap<String, Vector<WorkflowInstanceQueuedInfo>>();
         activityStateQueueResource = new HashMap<String, WorkflowInstanceResource>();
 
-        for (ProcessMiningModelNode node : getProcessModelVariant().getNodes().values()) {
-            activityStateCount.put(node.getId(), 0);
-            activityStateQueue.put(node.getId(), new Vector<WorkflowInstanceQueuedInfo>());
-            ProcessMiningModelResources nodeResources = node.getResources();
-            boolean isStartingNode = getProcessModelVariant().getStartingNodes().contains(node.getId());
-            boolean isEndingNode = getProcessModelVariant().getEndingNodes().contains(node.getId());
-            if (isStartingNode || isEndingNode) {
-                activityStateQueueResource.put(node.getId(), new WorkflowInstanceResource(nodeResources.getId(),
-                        nodeResources.getName(), ProcessMiningModelResources.UNLIMITED));
-            }
-            else {
-                activityStateQueueResource.put(node.getId(), new WorkflowInstanceResource(nodeResources.getId(),
-                        nodeResources.getName(), nodeResources.getCapacity()));
+        for (ProcessMiningModelNode node : getProcessModel().getNodes().values()) {
+            // We will ONLY simulate nodes that have resources attached to them...
+            if (node.getResources() != null) {
+                activityStateCount.put(node.getId(), 0);
+                activityStateQueue.put(node.getId(), new Vector<WorkflowInstanceQueuedInfo>());
+                ProcessMiningModelResources nodeResources = node.getResources();
+                boolean isStartingNode = getProcessModel().getStartingNodes().contains(node.getId());
+                boolean isEndingNode = getProcessModel().getEndingNodes().contains(node.getId());
+                if (isStartingNode || isEndingNode) {
+                    activityStateQueueResource.put(node.getId(), new WorkflowInstanceResource(nodeResources.getId(),
+                            nodeResources.getName(), ProcessMiningModelResources.UNLIMITED));
+                }
+                else {
+                    activityStateQueueResource.put(node.getId(), new WorkflowInstanceResource(nodeResources.getId(),
+                            nodeResources.getName(), nodeResources.getCapacity()));
+                }
             }
         }
     }
@@ -192,59 +193,9 @@ public class WorkflowInstanceSimulationState
         return true;
     }
 
-    public String getStartingNode()
-    {
-        if (getProcessModelVariant().getStartingNodes().size() > 1) {
-            throw new RuntimeException("Need to Implement Logic when there is more than one starting transition");
-        }
-
-        return getProcessModelVariant().getStartingNodes().get(0);
-    }
-
     public boolean isEndingNode(final String nodeId)
     {
-        return getProcessModelVariant().getEndingNodes().contains(nodeId);
-    }
-
-    public String getNextNode(final String activityState, final String currentPath)
-    {
-        // If the current activity state is empty, it means we need to assume it is one
-        // of the starting nodes.
-        // As we return one of the starting nodes, let's make sure we properly account
-        // for the WorkflowInstance count in the stats.
-        if (activityState.equals("")) {
-            if (getProcessModelVariant().getStartingNodes().size() > 1) {
-                throw new RuntimeException("Need to Implement Logic when there is more than one starting transition");
-            }
-
-            String startingNode = getProcessModelVariant().getStartingNodes().get(0);
-            activityStateQueueResource.get(startingNode).increaseUsage();
-            return startingNode;
-        }
-
-        ArrayList<ProcessMiningModelTransition> outgoingTransitions = getProcessModelVariant().getOutgoingTransition(activityState);
-        // If there are no outgoing transitions, then we reached the end!
-        if (outgoingTransitions.size() == 0) {
-            return null;
-        }
-
-        String nextRouteNode = null;
-        if (outgoingTransitions.size() > 1) {
-            nextRouteNode = getNextRouteNode(currentPath);
-        }
-        else {
-            nextRouteNode = outgoingTransitions.get(0).getTo();
-        }
-
-        return nextRouteNode;
-    }
-
-    public String getNextRouteNode(final String currentPath)
-    {
-        String routeNodes = getProcessModelVariant().getRouteNodes();
-        String nextRouteNode = routeNodes.substring(currentPath.length() + 1);
-        nextRouteNode = nextRouteNode.substring(0, nextRouteNode.indexOf(","));
-        return nextRouteNode;
+        return getProcessModel().getEndingNodes().contains(nodeId);
     }
 
     public String getActivityStateCounts()
@@ -326,7 +277,7 @@ public class WorkflowInstanceSimulationState
                 Integer activityStateCount = getActivityStateCount().get(nodeId);
                 if (activityStateCount.intValue() != 0) {
                     // Only END nodes can have a value higher than zero.
-                    if (!getProcessModelVariant().getEndingNodes().contains(nodeId)) {
+                    if (!getProcessModel().getEndingNodes().contains(nodeId)) {
                         return false;
                     }
                 }
