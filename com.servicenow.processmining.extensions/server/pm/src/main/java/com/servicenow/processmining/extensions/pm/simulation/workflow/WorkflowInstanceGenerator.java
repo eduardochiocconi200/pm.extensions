@@ -1,5 +1,6 @@
 package com.servicenow.processmining.extensions.pm.simulation.workflow;
 
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariant;
 import com.servicenow.processmining.extensions.pm.simulation.core.SimulationGenerator;
 import com.servicenow.processmining.extensions.pm.simulation.core.Simulator;
 
@@ -7,6 +8,7 @@ public class WorkflowInstanceGenerator
     extends SimulationGenerator
 {
     private Simulator simulator = null;
+    private ProcessMiningModelVariant variant = null;
     private int numberOfSimulatorWorkflowInstances = 0;
     private int numberOfCreatedSimulatorWorkflowInstances = 0;
     private double startIncrementInterval = 0.0;
@@ -14,16 +16,22 @@ public class WorkflowInstanceGenerator
     // Strategy 2 variables
     private double nextSimulationCreationTime = 0.0;
 
-    public WorkflowInstanceGenerator(final Simulator simulator, final int numberOfSimulatorWorkflowInstances, final double startIncrementInterval)
+    public WorkflowInstanceGenerator(final Simulator simulator, final ProcessMiningModelVariant variant)
     {
         this.simulator = simulator;
-        this.numberOfSimulatorWorkflowInstances = numberOfSimulatorWorkflowInstances;
-        this.startIncrementInterval = startIncrementInterval;
+        this.variant = variant;
+        this.numberOfSimulatorWorkflowInstances = variant.getFrequency();
+        this.startIncrementInterval = variant.getCreationIntervalDuration();
     }
 
     public Simulator getSimulator()
     {
         return this.simulator;
+    }
+
+    public ProcessMiningModelVariant getProcessMiningModelVariant()
+    {
+        return this.variant;
     }
 
     public int getNumberOfSumulatorInstances()
@@ -62,7 +70,7 @@ public class WorkflowInstanceGenerator
     {
         double startOffset = getSimulator().now();
         for (int i = 0; i < getNumberOfSumulatorInstances(); i++) {
-            WorkflowInstance newInstance = new WorkflowInstance(String.valueOf(i + 1), getSimulator());
+            WorkflowInstance newInstance = new WorkflowVariationInstance(String.valueOf(i + 1), getSimulator(), getProcessMiningModelVariant());
             newInstance.create(startOffset);
             getSimulator().getStatistics().incrementCreatedInstances();
             startOffset += getStartIncrementInverval();
@@ -78,7 +86,7 @@ public class WorkflowInstanceGenerator
         }
         int numberOfInstancesToCreate = 1;
         for (int i = 0; i < numberOfInstancesToCreate; i++) {
-            WorkflowInstance newInstance = new WorkflowInstance(String.valueOf(numberOfCreatedSimulatorWorkflowInstances + 1), getSimulator());
+            WorkflowInstance newInstance = new WorkflowVariationInstance(String.valueOf(numberOfCreatedSimulatorWorkflowInstances + 1), getSimulator(), getProcessMiningModelVariant());
             newInstance.create(nextSimulationCreationTime);
             getSimulator().getStatistics().incrementCreatedInstances();
             nextSimulationCreationTime += getStartIncrementInverval();
@@ -95,7 +103,7 @@ public class WorkflowInstanceGenerator
         int maxBatchCreationSize = 2;
         int batchCreatedInstances = 0;
         while (nextSimulationCreationTime <= nextDispatchTime && batchCreatedInstances < maxBatchCreationSize && getNumberOfStartedSumulatorInstances() < getNumberOfSumulatorInstances()) {
-            WorkflowInstance newInstance = new WorkflowInstance(String.valueOf(numberOfCreatedSimulatorWorkflowInstances + 1), getSimulator());
+            WorkflowInstance newInstance = new WorkflowVariationInstance(String.valueOf(numberOfCreatedSimulatorWorkflowInstances + 1), getSimulator(), getProcessMiningModelVariant());
             newInstance.create(nextSimulationCreationTime);
             getSimulator().getStatistics().incrementCreatedInstances();
             nextSimulationCreationTime += getStartIncrementInverval();
