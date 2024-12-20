@@ -15,6 +15,7 @@ public class Simulator
     public Simulator()
     {
         statistics = new SimulationStatistics();
+        this.events = new ListQueue();
     }
 
     public void setGenerator(final SimulationGenerator generator)
