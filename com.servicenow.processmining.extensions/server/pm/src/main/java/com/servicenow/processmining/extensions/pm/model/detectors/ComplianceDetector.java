@@ -254,9 +254,6 @@ public class ComplianceDetector
     {
         boolean isCompliant = false;
         logger.debug("Checking Variant: (" + variant.getId() + ") = (" + variant.getTranslatedRouteNodes() + ") against Reference Paths!");
-        if (variant.getId().equals("17b96756825e1d693a3f34b85ae49bf0")) {
-            System.out.println("FOUND");
-        }
         for (String referencePathVariantId : getReferencePathVariants().keySet()) {
             logger.debug("Checking against Reference Path: (" + referencePathVariantId + ")");
             ProcessMiningModelVariant referencePathVariant = getReferencePathVariants().get(referencePathVariantId);
@@ -332,8 +329,6 @@ public class ComplianceDetector
     {
         referencePathVariant.getDistinctNodes().sort(null);
         variant.getDistinctNodes().sort(null);
-        System.out.println("REFERENCE DISTINCT NODES (" + referencePathVariant.getId() + "): " + referencePathVariant.getTranslatedDistinctNodes());
-        System.out.println("VARIANT DISTINCT NODES (" + variant.getId() + "): " + variant.getTranslatedDistinctNodes());
         boolean sameNodes = referencePathVariant.getDistinctNodes().equals(variant.getDistinctNodes());
         return sameNodes;
     }
@@ -367,7 +362,6 @@ public class ComplianceDetector
                 // or through a different path...
                 else if (!referencePathVariantGraph.containsEdge(previousNode, node)) {
                     logger.debug("No direct transition. Checking for rework loop...");
-                    System.out.println("LIST: (" + variant.getPath().subList(0, nodeTraversalPosition) + "). Has (" + node + ")");
                     if (!variant.getPath().subList(0, nodeTraversalPosition).contains(node)) {
                         isOverlay = false;
                         break;    
