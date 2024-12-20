@@ -69,6 +69,115 @@ public class ProcessMiningModelFilter
         return sb.toString();
     }
 
+    public String getBreakdownConditionJSON()
+    {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getBreakdownConditionJSON'");
+    }
+
+    public void setFilterTransitions(ProcessMiningModelFilterTransitions transitionsFilter)
+    {
+        this.filterTransitions = transitionsFilter;
+    }
+
+    public ProcessMiningModelFilterTransitions getFilterTransitions()
+    {
+        return this.filterTransitions;
+    }
+
+    public String getFilterTransitionsJSON()
+    {
+        // TODO Auto-generated method stub
+        // 
+/*
+[
+  {
+    "advancedTransitions": [
+      {
+        "entityId": "783f434393a886506e79bb1e1dba1020",
+        "field": "__case",
+        "predicate": "EQ",
+        "occurrence": "ALWAYS",
+        "values": [
+          "created"
+        ],
+        "relation": "FOLLOWED_BY",
+        "context": null
+      },
+      {
+        "entityId": "783f434393a886506e79bb1e1dba1020",
+        "field": "state",
+        "predicate": "EQ",
+        "occurrence": "ALWAYS",
+        "values": [
+          "1"
+        ],
+        "relation": "FOLLOWED_BY",
+        "context": null
+      },
+      {
+        "entityId": "783f434393a886506e79bb1e1dba1020",
+        "field": "state",
+        "predicate": "EQ",
+        "occurrence": "ALWAYS",
+        "values": [
+          "200"
+        ],
+        "relation": "FOLLOWED_BY",
+        "context": null
+      },
+      {
+        "entityId": "783f434393a886506e79bb1e1dba1020",
+        "field": "state",
+        "predicate": "EQ",
+        "occurrence": "ALWAYS",
+        "values": [
+          "2"
+        ],
+        "relation": "FOLLOWED_BY",
+        "context": null
+      },
+      {
+        "entityId": "783f434393a886506e79bb1e1dba1020",
+        "field": "state",
+        "predicate": "EQ",
+        "occurrence": "ALWAYS",
+        "values": [
+          "6"
+        ],
+        "relation": "FOLLOWED_BY",
+        "context": null
+      },
+      {
+        "entityId": "783f434393a886506e79bb1e1dba1020",
+        "field": "state",
+        "predicate": "EQ",
+        "occurrence": "ALWAYS",
+        "values": [
+          "7"
+        ],
+        "relation": "FOLLOWED_BY",
+        "context": null
+      },
+      {
+        "entityId": "783f434393a886506e79bb1e1dba1020",
+        "field": "__case",
+        "predicate": "EQ",
+        "occurrence": "ALWAYS",
+        "values": [
+          "completed"
+        ],
+        "relation": "FOLLOWED_BY",
+        "context": null
+      }
+    ],
+    "transitionConstraints": []
+  }
+]
+*/
+        throw new UnsupportedOperationException("Unimplemented method 'getFilterTransitionsJSON'");
+    }
+
     public void setCaseFrequency(final int freq)
     {
         this.caseFrequency = freq;
@@ -147,15 +256,5 @@ public class ProcessMiningModelFilter
     public int getStdDeviation()
     {
         return this.stdDeviation;
-    }
-
-    public void setFilterTransitions(ProcessMiningModelFilterTransitions transitionsFilter)
-    {
-        this.filterTransitions = transitionsFilter;
-    }
-
-    public ProcessMiningModelFilterTransitions getFilterTransitions()
-    {
-        return this.filterTransitions;
     }
 }
