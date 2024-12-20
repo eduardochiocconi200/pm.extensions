@@ -13,15 +13,18 @@ public class ProcessMiningModelResources
         this.capacity = resourceCapacity;
     }
 
-    public String getId() {
+    public String getId()
+    {
         return this.id;
     }
 
-    public String getName() {
-        return this.name;
+    public String getName()
+    {
+        return "Resource '" + this.name + "'";
     }
 
-    public int getCapacity() {
+    public int getCapacity()
+    {
         return this.capacity;
     }
 
