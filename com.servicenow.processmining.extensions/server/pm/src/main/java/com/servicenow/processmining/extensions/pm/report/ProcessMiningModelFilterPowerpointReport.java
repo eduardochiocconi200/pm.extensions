@@ -219,7 +219,7 @@ public class ProcessMiningModelFilterPowerpointReport
             bulletRun1.setBold(true);
             bulletRun1.setFontSize(14d);
             bulletRun2 = bulletP.addNewTextRun();
-            content = getFilterDataSource().getModel().getTableName();
+            content = getFilterDataSource().getModel().getEntities().get(0).getTableName();
             bulletRun2.setText(content);
             bulletRun2.setFontSize(14d);
 
