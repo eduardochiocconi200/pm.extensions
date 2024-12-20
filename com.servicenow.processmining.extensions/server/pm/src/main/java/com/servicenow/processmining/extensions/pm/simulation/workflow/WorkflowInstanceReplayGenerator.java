@@ -1,9 +1,9 @@
 package com.servicenow.processmining.extensions.pm.simulation.workflow;
 
-import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariant;
 import com.servicenow.processmining.extensions.pm.simulation.core.SimulationGenerator;
 import com.servicenow.processmining.extensions.pm.simulation.core.Simulator;
 import com.servicenow.processmining.extensions.pm.simulation.serialization.SysAuditEntryComparator;
+
 import com.servicenow.processmining.extensions.sc.entities.SysAuditEntry;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLog;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLogPK;
@@ -11,23 +11,22 @@ import com.servicenow.processmining.extensions.sc.entities.SysAuditLogPK;
 import java.sql.Timestamp;
 import java.util.TreeSet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class WorkflowInstanceReplayGenerator
     extends SimulationGenerator
 {
     private Simulator simulator = null;
-    private ProcessMiningModelVariant processModelVariant = null;
     private SysAuditLog auditLog = null;
     private SysAuditLog sortedAuditLog = null;
-    private int numberOfCreatedSimulatorWorkflowInstances = 0;
     private int lastCreationEventIndex = 0;
     private long firstReplayTimestamp = 0;
 
-    public WorkflowInstanceReplayGenerator(final Simulator simulator, final ProcessMiningModelVariant processModelVariant, final SysAuditLog auditLog)
+    public WorkflowInstanceReplayGenerator(final Simulator simulator, final SysAuditLog auditLog)
     {
         this.simulator = simulator;
-        this.processModelVariant = processModelVariant;
         this.auditLog = auditLog;
-        this.numberOfCreatedSimulatorWorkflowInstances = 0;
     }
 
     public Simulator getSimulator()
@@ -35,17 +34,12 @@ public class WorkflowInstanceReplayGenerator
         return this.simulator;
     }
 
-    public ProcessMiningModelVariant getProcessModelVariant()
-    {
-        return this.processModelVariant;
-    }
-
     public SysAuditLog getAuditLog()
     {
         return this.auditLog;
     }
 
-    private SysAuditLog getSortedAuditLog()
+    public SysAuditLog getSortedAuditLog()
     {
         if (sortedAuditLog == null) {
             TreeSet<SysAuditEntry> cronologicallySortedAuditEvents = new TreeSet<SysAuditEntry>(new SysAuditEntryComparator());
@@ -58,12 +52,11 @@ public class WorkflowInstanceReplayGenerator
                 sortedAuditLog.getLog().add(sae);
             }
 
-            // DEBUG
-            /*
-            for (SysAuditEntry sae: sortedAuditLog.getLog()) {
-                System.out.println(sae.getSysCreatedOn() + "," + sae.getDocumentKey() + "," + sae.getFieldName() + "," + sae.getOldValue() + "," + sae.getNewValue());
+            if (debug) {
+                for (SysAuditEntry sae: sortedAuditLog.getLog()) {
+                    logger.debug(sae.getSysCreatedOn() + "," + sae.getDocumentKey() + "," + sae.getFieldName() + "," + sae.getOldValue() + "," + sae.getNewValue());
+                }
             }
-            */
         }
 
         return sortedAuditLog;
@@ -85,6 +78,7 @@ public class WorkflowInstanceReplayGenerator
         for (int i=lastCreationEventIndex; i < getSortedAuditLog().getLog().size(); i++) {
             // If it is a creation event
             SysAuditEntry sae = getSortedAuditLog().getLog().get(i);
+            logger.debug("Inspecting Event Log: (" + sae + ")");
             if (sae.getFieldName().equals("opened_at")) {
                 return i;
             }
@@ -96,7 +90,7 @@ public class WorkflowInstanceReplayGenerator
     private void dispatchStrategy(final int nextCreationEventIndex)
     {
         SysAuditEntry nextCreationEventEntry = getSortedAuditLog().getLog().get(nextCreationEventIndex);
-        WorkflowInstance newInstance = new WorkflowInstance(String.valueOf(numberOfCreatedSimulatorWorkflowInstances + 1), getSimulator());
+        WorkflowInstance newInstance = new WorkflowReplayInstance(nextCreationEventEntry.getDocumentKey(), nextCreationEventIndex, getSimulator());
         double newInstanceCreationTime = getAuditEntryTimeStamp(nextCreationEventEntry);
         newInstance.create(newInstanceCreationTime);
         getSimulator().getStatistics().incrementCreatedInstances();
@@ -109,6 +103,7 @@ public class WorkflowInstanceReplayGenerator
         if (firstReplayTimestamp == 0) {
             firstReplayTimestamp = ts.getTime();
         }
+
         return ts.getTime() - firstReplayTimestamp;
     }
 
@@ -140,4 +135,7 @@ public class WorkflowInstanceReplayGenerator
 
         return true;
     }
+
+    private final static boolean debug = true;
+    private static final Logger logger = LoggerFactory.getLogger(WorkflowInstanceReplayGenerator.class);
 }
