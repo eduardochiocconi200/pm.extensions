@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import com.servicenow.processmining.extensions.sc.entities.ServiceCatalogItem;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 
 public class ServiceCatalogItemDAOTest
     extends BaseDAOTest
@@ -26,7 +27,7 @@ public class ServiceCatalogItemDAOTest
         Assert.assertTrue(scItems.size() >= scActiveItems.size());
     }
 
-    private static final String snInstance = "empechiocconi2";
-    private static final String snUser = "admin";
-    private static final String snPassword = "StarWars!1";
+    private static final String snInstance = ServiceNowTestCredentials.getInstanceName();
+    private static final String snUser = ServiceNowTestCredentials.getUserName();
+    private static final String snPassword = ServiceNowTestCredentials.getPassword();
 }
