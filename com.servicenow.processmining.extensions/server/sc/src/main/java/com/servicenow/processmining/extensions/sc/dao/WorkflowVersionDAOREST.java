@@ -28,7 +28,7 @@ public class WorkflowVersionDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/wf_workflow?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/wf_workflow?";
 		url += "sysparm_query=sys_id=" + id.getSysId() + "&";
 		url += "sysparm_fields=sys_id,name,description,table,workflow.sys_id,sys_created_on,sys_updated_on";
         String response = snrs.executeGetRequest(url);
@@ -79,7 +79,7 @@ public class WorkflowVersionDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-		String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/wf_workflow_version?";
+		String url = "https://" + getInstance().getInstance() + "/api/now/table/wf_workflow_version?";
 		url += "sysparm_fields=sys_id,name,description,table,workflow.sys_id,sys_created_on,sys_updated_on";
 		String response = snrs.executeGetRequest(url);
 
@@ -124,7 +124,7 @@ public class WorkflowVersionDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-		String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/wf_workflow_version?";
+		String url = "https://" + getInstance().getInstance() + "/api/now/table/wf_workflow_version?";
 		url += "sysparm_query=active=true&";
 		url += "sysparm_fields=sys_id,name,description,table,workflow.sys_id,sys_created_on,sys_updated_on";
 		String response = snrs.executeGetRequest(url);
