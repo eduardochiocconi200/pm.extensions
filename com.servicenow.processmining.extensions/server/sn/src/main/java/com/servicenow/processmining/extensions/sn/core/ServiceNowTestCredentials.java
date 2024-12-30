@@ -17,7 +17,7 @@ public class ServiceNowTestCredentials
         return snPassword;
     }
 
-    private static final String snInstance = "empechiocconi2";
+    private static final String snInstance = "empechiocconi2.service-now.com";
     private static final String snUser = "admin";
     private static final String snPassword = "StarWars!1";
 }
