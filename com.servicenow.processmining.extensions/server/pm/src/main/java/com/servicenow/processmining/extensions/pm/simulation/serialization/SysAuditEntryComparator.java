@@ -10,6 +10,10 @@ public class SysAuditEntryComparator
     public int compare(SysAuditEntry e1, SysAuditEntry e2) 
     {
         if (e2.getSysCreatedOn().equals(e1.getSysCreatedOn())) {
+            if (e1.getDocumentKey().equals(e2.getDocumentKey())) {
+                return e1.getFieldName().compareTo(e2.getFieldName());
+            }
+
             return e1.getDocumentKey().compareTo(e2.getDocumentKey());
         }
 
