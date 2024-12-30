@@ -108,7 +108,7 @@ public class WorkflowSimulationSamplesTest12
         ProcessMiningModelEntity entity = getModel().getEntity(getTableName(), getFieldName());
         for (ProcessMiningModelNode node : model.getNodes().values()) {
             if (entity.getTableId().equals(node.getEntityId())) {
-                ProcessMiningModelResources r = new ProcessMiningModelResources(node.getId(), node.getName(), 1);
+                ProcessMiningModelResources r = new ProcessMiningModelResources(node.getId(), node.getName(), ProcessMiningModelResources.UNLIMITED);
                 resources.put(node.getId(), r);    
             }
         }
