@@ -27,7 +27,6 @@ public class SysAuditLogDAOTest
         Assert.assertNotNull(sysAuditLog);
         Assert.assertTrue(sysAuditLog.getLog().size() > 0 && sysAuditLog.getLog().size() <= 100);
         logger.debug("Retrieved: (" + sysAuditLog.getLog().size() + ") history entries.");
-        System.out.println("Retrieved: (" + sysAuditLog.getLog().size() + ") history entries.");
     }
 
     private void sysAuditLog2Test()
@@ -38,7 +37,6 @@ public class SysAuditLogDAOTest
         Assert.assertNotNull(sysAuditLog);
         Assert.assertTrue(sysAuditLog.getLog().size() > 0 && sysAuditLog.getLog().size() <= 100);
         logger.debug("Retrieved: (" + sysAuditLog.getLog().size() + ") history entries.");
-        System.out.println("Retrieved: (" + sysAuditLog.getLog().size() + ") history entries.");
     }
 
     private static final Logger logger = LoggerFactory.getLogger(SysAuditLogDAOTest.class);
