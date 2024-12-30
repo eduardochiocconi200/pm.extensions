@@ -42,7 +42,7 @@ public class SysAuditLogDAOREST
 
 		do {
 			long startTime = System.currentTimeMillis();
-			String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sys_audit?";
+			String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit?";
 			url += "sysparm_query=tablename=" + id.getTableName();
 			if (id.getFieldName() != null) {
 				url += URLEncoder.encode("^", StandardCharsets.UTF_8) + "fieldname=" + id.getFieldName() + "&";
@@ -52,7 +52,7 @@ public class SysAuditLogDAOREST
 			}
 			url += "sysparm_limit=" + batchSize + "&";
 			url += "sysparm_offset=" + baseOffset + "&";
-			url += "sysparm_fields=sys_id,documentkey,tablename,fieldname,oldvalue,newvalue,sys_created_on,sys_created_by";
+			url += "sysparm_fields=sys_id,documentkey,tablename,fieldname,oldvalue,newvalue,reason,sys_created_on,sys_created_by";
 			String response = snrs.executeGetRequest(url);
 			long endTime = System.currentTimeMillis();
 			logger.debug("Retrieved (" + batchSize + ") records [" + baseOffset + "-" + (baseOffset+batchSize) + "] from sys_audit in (" + (endTime-startTime) + ") milliseconds.");
@@ -77,6 +77,7 @@ public class SysAuditLogDAOREST
 						String newvalue = resultObject.getString("newvalue");
 						String createdOn = resultObject.getString("sys_created_on");
 						String createdBy = resultObject.getString("sys_created_by");
+						String reason = resultObject.has("reason") ? resultObject.getString("reason") : "";
 
 						SysAuditEntry entry = new SysAuditEntry(new SysAuditEntryPK(sysId));
 						entry.setDocumentKey(documentkey);
@@ -86,6 +87,7 @@ public class SysAuditLogDAOREST
 						entry.setNewValue(newvalue);
 						entry.setSysCreatedOn(createdOn);
 						entry.setSysCreatedBy(createdBy);
+						entry.setReason(reason);
 
 						sysAuditLog.getLog().add(entry);
 					}
@@ -131,9 +133,9 @@ public class SysAuditLogDAOREST
 		do {
 			long startTime = System.currentTimeMillis();
 			String instancesInSysLog = getNextBatch(baseOffset, ids);
-			String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sys_audit?";
+			String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit?";
 			url += "sysparm_query=documentkeyIN" + instancesInSysLog + "&";
-			url += "sysparm_fields=sys_id,documentkey,tablename,fieldname,oldvalue,newvalue,sys_created_on,sys_created_by";
+			url += "sysparm_fields=sys_id,documentkey,tablename,fieldname,oldvalue,newvalue,reason,sys_created_on,sys_created_by";
 			String response = snrs.executeGetRequest(url);
 			if (response == null || response != null && response.equals("")) {
 				logger.error("The requested REST API operation (SysAuditLogDAOREST.findById) could not complete successfully on ServiceNow instance: (" + getInstance().getInstance() + ")!");
@@ -157,6 +159,7 @@ public class SysAuditLogDAOREST
 						String newvalue = resultObject.getString("newvalue");
 						String createdOn = resultObject.getString("sys_created_on");
 						String createdBy = resultObject.getString("sys_created_by");
+						String reason = resultObject.has("reason") ? resultObject.getString("reason") : "";
 
 						SysAuditEntry entry = new SysAuditEntry(new SysAuditEntryPK(sysId));
 						entry.setDocumentKey(documentkey);
@@ -166,6 +169,7 @@ public class SysAuditLogDAOREST
 						entry.setNewValue(newvalue);
 						entry.setSysCreatedOn(createdOn);
 						entry.setSysCreatedBy(createdBy);
+						entry.setReason(reason);
 
 						sysAuditLog.getLog().add(entry);
 					}
@@ -225,7 +229,7 @@ public class SysAuditLogDAOREST
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
 
 		long startTime = System.currentTimeMillis();
-		String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sys_audit";
+		String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit";
 		String payload = auditLogEntry.toJSON();
 		logger.debug("Inserting SysAuditEntry: (" + payload + ")");
 		String response = snrs.executePostRequest(url, payload);
@@ -240,12 +244,32 @@ public class SysAuditLogDAOREST
 		return true;
 	}
 
+	public boolean update(final SysAuditEntry auditLogEntry)
+	{
+		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
+
+		long startTime = System.currentTimeMillis();
+		String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit";
+		String payload = auditLogEntry.toJSON();
+		logger.debug("Updating SysAuditEntry: (" + payload + ")");
+		String response = snrs.executePutRequest(url, payload);
+		long endTime = System.currentTimeMillis();
+		logger.debug("Completed updating (" + auditLogEntry.getPK() + ") records in the sys_audit table in: (" + (endTime-startTime) + ") milliseconds.");
+
+		if (response == null || response != null && response.equals("")) {
+			logger.error("The requested REST API operation (SysAuditLogDAOREST.update) could not complete successfully on ServiceNow instance: (" + getInstance().getInstance() + ")!");
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean delete(final SysAuditEntry auditLogEntry)
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
 		String auditLogEntrySysId = ((SysAuditEntryPK) auditLogEntry.getPK()).getSysId();
 		long startTime = System.currentTimeMillis();
-		String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sys_audit/" + auditLogEntrySysId;
+		String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit/" + auditLogEntrySysId;
 		String response = snrs.executeDeleteRequest(url);
 		long endTime = System.currentTimeMillis();
 		logger.debug("Completed deleting record with key: (" + auditLogEntrySysId + ") from sys_audit table in: (" + (endTime-startTime) + ") milliseconds.");
