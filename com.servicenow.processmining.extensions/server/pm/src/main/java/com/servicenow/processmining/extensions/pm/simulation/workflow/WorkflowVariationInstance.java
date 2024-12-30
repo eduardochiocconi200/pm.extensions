@@ -27,6 +27,7 @@ public class WorkflowVariationInstance
         return this.variant;
     }
 
+    @Override
     public void create(final double startOffset)
     {
         String fromNode = "";
@@ -46,6 +47,7 @@ public class WorkflowVariationInstance
         getSimulator().insert(newEvent);
     }
 
+    @Override
     public String getNextNode()
     {
         String nextNode = getNextNode(getActivityState(), getCurrentPath());
@@ -94,6 +96,15 @@ public class WorkflowVariationInstance
         nextRouteNode = nextRouteNode.substring(0, nextRouteNode.indexOf(","));
         return nextRouteNode;
     }
+
+    @Override
+    public double getNextNodeCompletionTime(final String fromNode, final String toNode, final Message message)
+    {
+        ProcessMiningModelTransition transition = getSimulator().getSimulationState().getProcessModel().getTransition(fromNode, toNode);
+        double nextNodeCompletionTime = Double.valueOf(transition.getAvgDuration()).doubleValue();
+
+        return nextNodeCompletionTime;
+}
 
     private static final Logger logger = LoggerFactory.getLogger(WorkflowVariationInstance.class);
 }
