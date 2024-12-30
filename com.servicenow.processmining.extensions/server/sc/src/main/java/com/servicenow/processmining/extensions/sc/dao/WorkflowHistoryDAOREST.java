@@ -34,7 +34,7 @@ public class WorkflowHistoryDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/wf_history?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/wf_history?";
 		url += "sysparm_query=workflow_version.sys_id=" + id.getWorkflowVersionId() + URLEncoder.encode("^", StandardCharsets.UTF_8) + "GROUPBYcontext.sys_id" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "ORDERBYactivity_index&";
 		url += "sysparm_fields=sys_id,context.sys_id,activity_index,activity.name,sys_created_on,sys_created_by";
         String response = snrs.executeGetRequest(url);
