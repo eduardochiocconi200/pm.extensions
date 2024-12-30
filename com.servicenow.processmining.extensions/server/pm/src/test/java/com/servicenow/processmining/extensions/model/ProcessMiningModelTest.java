@@ -6,6 +6,7 @@ import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelVersionD
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersion;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,9 +57,9 @@ public class ProcessMiningModelTest
         return instance;
     }
 
-    private static final String snInstance = "empechiocconi2";
-    private static final String snUser = "admin";
-    private static final String snPassword = "StarWars!1";
+    private static final String snInstance = ServiceNowTestCredentials.getInstanceName();
+    private static final String snUser = ServiceNowTestCredentials.getUserName();
+    private static final String snPassword = ServiceNowTestCredentials.getPassword();
 
     private static final Logger logger = LoggerFactory.getLogger(ProcessMiningModelTest.class);
 }
