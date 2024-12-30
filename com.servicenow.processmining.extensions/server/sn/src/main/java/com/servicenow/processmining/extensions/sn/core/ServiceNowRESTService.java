@@ -8,6 +8,7 @@ import org.apache.hc.client5.http.HttpResponseException;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.client5.http.classic.methods.HttpUriRequestBase;
 import org.apache.hc.client5.http.impl.classic.BasicHttpClientResponseHandler;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -46,17 +47,33 @@ public class ServiceNowRESTService
 
     public String executePostRequest(final String url, final String payload)
     {
+        return executePostPutRequest(url, payload, true);
+    }
+
+    public String executePutRequest(final String url, final String payload)
+    {
+        return executePostPutRequest(url, payload, false);
+    }
+
+    private String executePostPutRequest(final String url, final String payload, final boolean isPost)
+    {
         logger.debug("Enter ServiceNowRESTService.executePostRequest(" + url + ")");
         String response = null;
         this.errorStatusCode = -1;
         this.errorMessage = "";
         try (CloseableHttpClient httpclient = HttpClients.custom().build()) {
             try {
-                HttpPost postRequest = getPostRequest(url);
+                HttpUriRequestBase request = null;
+                if (isPost) {
+                    request = getPostRequest(url);
+                }
+                else {
+                    request = getPutRequest(url);
+                }
                 StringEntity signingPayload = new StringEntity(payload);
-                postRequest.setEntity(signingPayload);
+                request.setEntity(signingPayload);
                 HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
-                response = httpclient.execute(postRequest, responseHandler);
+                response = httpclient.execute(request, responseHandler);
             } catch (HttpResponseException e) {
                 errorStatusCode = e.getStatusCode();
                 if (e.getStatusCode() == 403) {
@@ -93,6 +110,14 @@ public class ServiceNowRESTService
     private HttpPost getPostRequest(final String url)
     {
         HttpPost request = new HttpPost(url);
+        addRequestHeaders(request);
+
+        return request;
+    }
+
+    private HttpPut getPutRequest(final String url)
+    {
+        HttpPut request = new HttpPut(url);
         addRequestHeaders(request);
 
         return request;
