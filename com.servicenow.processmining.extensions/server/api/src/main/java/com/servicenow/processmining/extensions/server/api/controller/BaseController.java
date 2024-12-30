@@ -1,6 +1,7 @@
 package com.servicenow.processmining.extensions.server.api.controller;
 
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 import com.servicenow.processmining.extensions.sn.dao.PlatformVersionDAOREST;
 
 import org.slf4j.Logger;
@@ -66,10 +67,10 @@ public class BaseController
 	}
 
 	protected static final String CROSS_ORIGIN_DOMAIN = "http://localhost:3000";
-	// protected static final String CROSS_ORIGIN_DOMAIN = "https://empechiocconi2.service-now.com";
-    protected static final String snSampleInstance = "empechiocconi2";
-    protected static final String snSampleUser = "admin";
-    protected static final String snSamplePassword = "StarWars!1";
+	// protected static final String CROSS_ORIGIN_DOMAIN = ServiceNowTestCredentials.getInstanceName();
+    protected static final String snSampleInstance = ServiceNowTestCredentials.getInstanceName();
+    protected static final String snSampleUser = ServiceNowTestCredentials.getUserName();
+    protected static final String snSamplePassword = ServiceNowTestCredentials.getPassword();
 
 	private static final Logger logger = LoggerFactory.getLogger(BaseController.class);	
 }
