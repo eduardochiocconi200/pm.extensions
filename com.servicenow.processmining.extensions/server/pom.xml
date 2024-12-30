@@ -13,6 +13,7 @@
 		<module>sc</module>
 		<module>pm</module>
 		<module>api</module>
+		<module>demo</module>
 		<module>docker</module>
 	</modules>
 </project>
