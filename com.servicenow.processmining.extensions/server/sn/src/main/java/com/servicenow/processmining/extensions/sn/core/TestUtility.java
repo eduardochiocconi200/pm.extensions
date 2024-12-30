@@ -9,6 +9,16 @@ public class TestUtility
 {
     public String loadProcessMiningModel(final String filePath)
     {
+        return loadFileAsResource(filePath);
+    }
+
+    public String loadProcessMiningAuditLogs(final String filePath)
+    {
+        return loadFileAsResource(filePath);
+    }
+
+    private String loadFileAsResource(final String filePath)
+    {
         StringBuilder contents = new StringBuilder();
 
         try {
