@@ -2,7 +2,6 @@ package com.servicenow.processmining.extensions.model;
 
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
 import com.servicenow.processmining.extensions.sc.dao.SysAuditLogDAOREST;
-import com.servicenow.processmining.extensions.sc.entities.SysAuditEntry;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLog;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLogPK;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
