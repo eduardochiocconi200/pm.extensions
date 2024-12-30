@@ -41,13 +41,13 @@ public class WorkflowSimulatorReplayTest
     long testCaseStartTime = System.currentTimeMillis();
     long startTime = System.currentTimeMillis();
     WorkflowInstance.setDisplay(new PrintSimulationState());
-    WorkflowSimulationSamples sample1 = new WorkflowSimulationSamplesTest1("2");
-    WorkflowSimulator sim = new WorkflowSimulator(sample1.getModel(), getSysAuditLog1(), "incident", "state");
+    WorkflowSimulationSamples sample12 = new WorkflowSimulationSamplesTest12("1");
+    WorkflowSimulator sim = new WorkflowSimulator(sample12.getModel(), getSysAuditLog1(), "incident", "state");
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
-    Assert.assertEquals(167, sim.getStatistics().getNumberOfCreatedInstances());
-    Assert.assertEquals(2.4340893E9, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    Assert.assertEquals(1, sim.getStatistics().getNumberOfCreatedInstances());
+    Assert.assertEquals(1387112.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
     long endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
 
@@ -66,10 +66,8 @@ public class WorkflowSimulatorReplayTest
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
-    Assert.assertEquals(1, sim.getStatistics().getNumberOfCreatedInstances());
-    // First event: 2024-01-27 02:24:42
-    // Last event : 2024-02-19 18:41:44
-    Assert.assertEquals(300.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    Assert.assertEquals(2, sim.getStatistics().getNumberOfCreatedInstances());
+    Assert.assertEquals(1387112.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
     long endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
 
@@ -86,18 +84,8 @@ public class WorkflowSimulatorReplayTest
     }
   }
 
-  // All records
-  private SysAuditLog getSysAuditLog1()
-  {
-    loadAuditData();
-    SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
-    stateAuditLog.getLog().addAll(serializer.getLog().getFieldNameFilteredLog("state"));
-
-    return stateAuditLog;
-  }
-
   // Load one record: da3a07c7936886506e79bb1e1dba1025
-  private SysAuditLog getSysAuditLog2()
+  private SysAuditLog getSysAuditLog1()
   {
     loadAuditData();
     SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
@@ -114,7 +102,7 @@ public class WorkflowSimulatorReplayTest
   }
 
   // Load 2 records
-  private SysAuditLog getSysAuditLog3()
+  private SysAuditLog getSysAuditLog2()
   {
     loadAuditData();
     SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
@@ -126,13 +114,13 @@ public class WorkflowSimulatorReplayTest
       }
     }
 
-    Assert.assertEquals(8, stateAuditLog.getLog().size());
+    Assert.assertEquals(16, stateAuditLog.getLog().size());
 
     return stateAuditLog;
   }
 
   // Load 4 records
-  private SysAuditLog getSysAuditLog4()
+  private SysAuditLog getSysAuditLog3()
   {
     loadAuditData();
     SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
@@ -147,6 +135,16 @@ public class WorkflowSimulatorReplayTest
     }
 
     Assert.assertEquals(8, stateAuditLog.getLog().size());
+
+    return stateAuditLog;
+  }
+
+  // All records
+  private SysAuditLog getSysAuditLog4()
+  {
+    loadAuditData();
+    SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
+    stateAuditLog.getLog().addAll(serializer.getLog().getLog());
 
     return stateAuditLog;
   }
