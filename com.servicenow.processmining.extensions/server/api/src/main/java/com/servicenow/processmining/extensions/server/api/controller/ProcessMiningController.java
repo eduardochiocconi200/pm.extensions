@@ -141,10 +141,9 @@ public class ProcessMiningController
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + ")");
 		ProcessMiningModelVersionFilterPK pk = new ProcessMiningModelVersionFilterPK("1");
 		ProcessMiningModelVersionFilter filter = new ProcessMiningModelVersionFilter(pk);
-		filter.setEntityId("abcd1234");
 		filter.setName("Email Channel Filter");
 		filter.setProjectId("abcdef123456");
-		filter.setCondition("{\"condition\":\"ABC=1\"}");
+		filter.setBreakdownFiltersCondition("{\"condition\":\"ABC=1\"}");
 
 		logger.info("Exit ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + ")");
 		return filter;
