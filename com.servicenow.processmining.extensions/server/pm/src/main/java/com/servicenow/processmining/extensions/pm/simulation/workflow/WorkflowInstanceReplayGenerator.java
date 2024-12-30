@@ -57,6 +57,10 @@ public class WorkflowInstanceReplayGenerator
                     logger.debug(sae.getSysCreatedOn() + "," + sae.getDocumentKey() + "," + sae.getFieldName() + "," + sae.getOldValue() + "," + sae.getNewValue());
                 }
             }
+
+            if (getAuditLog().getLog().size() != sortedAuditLog.getLog().size()) {
+                throw new RuntimeException("Audit Logs should have SAME size.");
+            }
         }
 
         return sortedAuditLog;
@@ -76,9 +80,8 @@ public class WorkflowInstanceReplayGenerator
     private int getNextCreationEventIndex()
     {
         for (int i=lastCreationEventIndex; i < getSortedAuditLog().getLog().size(); i++) {
-            // If it is a creation event
+            // If it is a creation event ...
             SysAuditEntry sae = getSortedAuditLog().getLog().get(i);
-            logger.debug("Inspecting Event Log: (" + sae + ")");
             if (sae.getFieldName().equals("opened_at")) {
                 return i;
             }
