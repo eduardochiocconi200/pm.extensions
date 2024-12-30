@@ -43,6 +43,7 @@ public class DemoModelCases
     {
         for (DemoModelPath path : getModel().getPaths()) {
             DateTime pathFirstStartTime = DateTime.now().minusSeconds((int)path.getTotalDuration());
+            DateTime start = DateTime.now();
             System.out.println("Creating [" + path.getCount() + "] [" + path.getTable() + "] records (A '.' will be incrementally printed below for each created record. Be patient!)");
             for (int count=0; count < path.getCount(); count++) {
                 if (!createCase(path, pathFirstStartTime)) {
@@ -51,7 +52,8 @@ public class DemoModelCases
                 System.out.print(".");
                 pathFirstStartTime.minusSeconds((int)path.getCreationDelta());
             }
-            System.out.println("\nCreated (" + path.getCount() + ") " + path.getTable() + " records along with its audit log records.");
+            double elapsedTime = DateTime.now().minus(start.getMillis()).getMillis() / 1000.0 / 60.0;
+            System.out.println("\nCreated (" + path.getCount() + ") " + path.getTable() + " records along with its audit log records in (" + elapsedTime + ") mins.");
         }
 
         return true;
