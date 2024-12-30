@@ -1,6 +1,5 @@
 package com.servicenow.processmining.extensions.pm.simulation.workflow;
 
-import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelTransition;
 import com.servicenow.processmining.extensions.pm.simulation.core.*;
 
 import org.slf4j.Logger;
@@ -46,6 +45,8 @@ public abstract class WorkflowInstance
     public abstract void create(final double startOffset);
 
     public abstract String getNextNode();
+
+    public abstract double getNextNodeCompletionTime(final String fromNode, final String toNode, final Message message);
 
     public void handle(final Message message)
     {
@@ -109,8 +110,7 @@ public abstract class WorkflowInstance
                         + "] - Routing - There IS NO capacity target Node: (" + nextNode
                         + "). Will need to enqueue WorkflowInstance.");
                 nextNodeCompletionTime = getSimulator().now() + message.getTime();
-                getSimulator().getSimulationState().enqueueWorkflowInstanceDueToNoCapacity(this, message, currentNode,
-                        nextNode, nextNodeCompletionTime);
+                getSimulator().getSimulationState().enqueueWorkflowInstanceDueToNoCapacity(this, message, currentNode, nextNode, nextNodeCompletionTime);
                 getSimulator().getSimulationState().checkIfThereAreEnquedWorkflowInstances(executedNode);
             }
             else {
@@ -141,8 +141,7 @@ public abstract class WorkflowInstance
             }
             else {
                 logger.debug("Looking for transition: (" + currentNode + ", " + nextNode + ")");
-                ProcessMiningModelTransition transition = getSimulator().getSimulationState().getProcessModel().getTransition(currentNode, nextNode);
-                nextNodeCompletionTime += Double.valueOf(transition.getAvgDuration()).doubleValue();
+                nextNodeCompletionTime += getNextNodeCompletionTime(currentNode, nextNode, message);
                 logger.debug("Time: (" + getSimulator().now() + ") - [" + message.getReferenceId()
                         + "] - Routing - Creating Node: '" + currentNode
                         + "' completion event. When the event completes at :'" + currentNode
