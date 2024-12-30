@@ -13,6 +13,7 @@ public class SysAuditEntry
     private String user = "admin"; // we will pretend it is executed by the admin user.
     private String sysCreatedOn = null;
     private String sysCreatedBy = "system"; // use this default.
+    private String reason = "";
 
     public SysAuditEntry(SysAuditEntryPK pk)
     {
@@ -99,9 +100,14 @@ public class SysAuditEntry
         return this.sysCreatedBy;
     }
 
+    public void setReason(final String reason)
+    {
+        this.reason = reason;
+    }
+
     public String getReason()
     {
-        return "PMSync";
+        return this.reason;
     }
 
     public String toJSON()
@@ -129,6 +135,6 @@ public class SysAuditEntry
 
     public String toString()
     {
-        return "[SysAuditEntry: (" + getPK().toString() + ", " + getTableName() + ", " + getDocumentKey() + ", " + getFieldName() + ", " + getNewValue() + ", " + getOldValue() + ", " + getUser() + ", " + getSysCreatedOn() + ", " + getSysCreatedBy() + ")]";
+        return "[SysAuditEntry: (" + getDocumentKey() + ", " + getTableName() + ", " + getFieldName() + ", " + getOldValue() + ", " + getNewValue() + ", " + getUser() + ", " + getSysCreatedOn() + ", " + getSysCreatedBy() + ")]";
     }
 }
