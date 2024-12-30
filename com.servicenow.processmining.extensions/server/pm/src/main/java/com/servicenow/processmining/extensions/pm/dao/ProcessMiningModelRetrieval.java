@@ -39,7 +39,7 @@ public abstract class ProcessMiningModelRetrieval
     {
         boolean result = true;
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/graphql";
+        String url = "https://" + getInstance().getInstance() + "/api/now/graphql";
         logger.debug("Retrieving Process Mining GraphQL for versionId: '" + getProcessModelVersionId() + "'");
         String payload = getEmptyFilterPayload();
         processMiningModelJSONString = snrs.executePostRequest(url, payload);
@@ -66,7 +66,7 @@ public abstract class ProcessMiningModelRetrieval
     {
         boolean result = true;
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/graphql";
+        String url = "https://" + getInstance().getInstance() + "/api/now/graphql";
         logger.debug("Retrieving Process Mining GraphQL for versionId: '" + getProcessModelVersionId() + "'");
         String payload = getFilterPayload(entityId, filter);
         logger.debug("Payload: (" + payload + ")");
