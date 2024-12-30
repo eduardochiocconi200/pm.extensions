@@ -32,7 +32,7 @@ public class ProcessMiningModelFilterDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/promin_filter_set?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/promin_filter_set?";
         url += "sysparm_query=sys_id=" + id.getSysId() + URLEncoder.encode("^", StandardCharsets.UTF_8) + "state=AVAILABLE" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "release_nameINVANCOUVER&";
 		url += "sysparm_fields=sys_id,name,total_records,release_name,go_to_workbench,last_mined_time,project.sys_id";
 		logger.debug("URL: (" + url + ")");
@@ -84,7 +84,7 @@ public class ProcessMiningModelFilterDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/promin_filter_set?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/promin_filter_set?";
 		url += "sysparm_fields=sys_id,name,conditions.md_conditions,entity.project.sys_id";
 		logger.debug("URL: (" + url + ")");
 
