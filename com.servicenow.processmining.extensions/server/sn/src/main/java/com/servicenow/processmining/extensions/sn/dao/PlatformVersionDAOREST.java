@@ -23,7 +23,7 @@ public class PlatformVersionDAOREST
 	public String getVersion()
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sys_properties?sysparm_query=name=glide.war";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_properties?sysparm_query=name=glide.war";
         String response = snrs.executeGetRequest(url);
 		String version = null;
 
