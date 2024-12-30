@@ -36,7 +36,7 @@ public class ServiceCatalogItemDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sc_cat_item?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/sc_cat_item?";
 		url += "sysparm_fields=sys_name,name,workflow.sys_id,flow_designer_flow.sys_id,short_description,roles,sc_catalogs";
         String response = snrs.executeGetRequest(url);
 
@@ -81,7 +81,7 @@ public class ServiceCatalogItemDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sc_cat_item?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/sc_cat_item?";
 		url += "sysparm_query=active=true&state=published&sysparm_fields=sys_name,name,workflow.sys_id,flow_designer_flow.sys_id,short_description,roles,sc_catalogs";
         String response = snrs.executeGetRequest(url);
 
