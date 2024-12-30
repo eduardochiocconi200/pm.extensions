@@ -31,7 +31,7 @@ public class ProcessMiningModelVersionDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/promin_model_def_version?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/promin_model_def_version?";
         url += "sysparm_query=sys_id=" + id.getSysId() + URLEncoder.encode("^", StandardCharsets.UTF_8) + "state=AVAILABLE" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "sys_created_by=" + getInstance().getUser() + URLEncoder.encode("^", StandardCharsets.UTF_8) + "release_nameIN" + PLATFORM_VERSIONS + "&";
 		url += "sysparm_fields=sys_id,name,total_records,release_name,go_to_workbench,last_mined_time,project.sys_id";
 		logger.debug("URL: (" + url + ")");
@@ -84,7 +84,7 @@ public class ProcessMiningModelVersionDAOREST
 		List<ProcessMiningModelVersion> modelVersions = new ArrayList<ProcessMiningModelVersion>();
 
 		// First we traverse the projects and then their project versions ... We do this to make sure we are respecting permissions.
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/promin_project?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/promin_project?";
         url += "sysparm_query=state=AVAILABLE&";
 		url += "sysparm_fields=sys_id";
 		logger.debug("URL: (" + url + ")");
@@ -102,7 +102,7 @@ public class ProcessMiningModelVersionDAOREST
 			boolean continueProcessingVersions = true;
 			int startIds = 0;
 			do {
-				url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/promin_model_def_version?";
+				url = "https://" + getInstance().getInstance() + "/api/now/table/promin_model_def_version?";
 				url += "sysparm_query=state=AVAILABLE" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "sys_created_by=" + getInstance().getUser() + URLEncoder.encode("^", StandardCharsets.UTF_8) + "release_nameIN" + PLATFORM_VERSIONS + URLEncoder.encode("^", StandardCharsets.UTF_8) + "project.sys_idIN" + getProcessModelIds(projectIds, startIds) + "&";
 				url += "sysparm_fields=sys_id,name,total_records,release_name,go_to_workbench,last_mined_time,project.sys_id";
 				logger.debug("URL: (" + url + ")");
