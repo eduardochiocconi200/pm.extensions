@@ -30,7 +30,7 @@ public class FlowVersionDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sys_hub_flow?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_hub_flow?";
 		url += "sysparm_query=sys_id=" + id.getSysId() + URLEncoder.encode("^", StandardCharsets.UTF_8);
 		url += "sysparm_fields=sys_id,name,description,type,copied_from,sys_created_on,sys_updated_on";
         String response = snrs.executeGetRequest(url);
@@ -81,7 +81,7 @@ public class FlowVersionDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sys_hub_flow?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_hub_flow?";
 		url += "sysparm_fields=sys_id,name,description,type,copied_from,sys_created_on,sys_updated_on";
 		String response = snrs.executeGetRequest(url);
 
@@ -127,7 +127,7 @@ public class FlowVersionDAOREST
 		throws ObjectNotFoundException
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + ".service-now.com/api/now/table/sys_hub_flow?";
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_hub_flow?";
 		url += "sysparm_query=active=true&";
 		url += "sysparm_fields=sys_id,name,description,type,copied_from,sys_created_on,sys_updated_on";
 		logger.debug("FlowVersionDAOREST.findAllActive: URL: (" + url + ")");
