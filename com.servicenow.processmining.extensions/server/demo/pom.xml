@@ -72,6 +72,24 @@
                                                 </manifest>
                                         </archive>                                        
                                 </configuration>
+                        </plugin>
+                        <plugin>
+                                <groupId>com.coderplus.maven.plugins</groupId>
+                                <artifactId>copy-rename-maven-plugin</artifactId>
+                                <version>1.0</version>
+                                <executions>
+                                        <execution>
+                                                <id>copy-file</id>
+                                                <phase>install</phase>
+                                                <goals>
+                                                        <goal>copy</goal>
+                                                </goals>
+                                                <configuration>
+                                                        <sourceFile>target/com.servicenow.processmining.extensions.server.demo-0.0.1-SNAPSHOT-jar-with-dependencies.jar</sourceFile>
+                                                        <destinationFile>../../applications/demodata/com.servicenow.processmining.extensions.server.demo.jar</destinationFile>
+                                                </configuration>
+                                        </execution>
+                                </executions>
                         </plugin>                        
                 </plugins>
         </build>
