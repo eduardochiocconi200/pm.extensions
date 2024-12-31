@@ -173,7 +173,7 @@ public class DemoModelCases
                 recordUpdateTS = recordUpdateTS.plusSeconds(updateTime.intValue());
             }
             else {
-                recordUpdateTS = recordUpdateTS.plusSeconds(previousUpdateTS.intValue() - updateTime.intValue());
+                recordUpdateTS = recordUpdateTS.plusSeconds(updateTime.intValue() - previousUpdateTS.intValue());
             }
             if (!processUpdateRecordBatch(path, recordUpdateTS, updateBatches.get(updateTime))) {
                 return false;
