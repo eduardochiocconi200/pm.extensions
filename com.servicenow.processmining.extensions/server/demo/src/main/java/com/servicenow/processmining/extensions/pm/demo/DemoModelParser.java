@@ -67,7 +67,7 @@ public class DemoModelParser
         double creationDelta = getCellValueAsDouble(sheet.getRow(1).getCell(1));
         String table = getCellValueAsString(sheet.getRow(2).getCell(1));
         DemoModelPath path = new DemoModelPath(count, creationDelta, table);
-        for (int i=5; i < sheet.getLastRowNum(); i++) {
+        for (int i=5; i <= sheet.getLastRowNum(); i++) {
             double time = getCellValueAsDouble(sheet.getRow(i).getCell(0));
             String field = getCellValueAsString(sheet.getRow(i).getCell(1));
             String values = getCellValueAsString(sheet.getRow(i).getCell(2));
