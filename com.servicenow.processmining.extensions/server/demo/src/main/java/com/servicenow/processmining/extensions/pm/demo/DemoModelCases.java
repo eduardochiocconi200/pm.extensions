@@ -62,7 +62,7 @@ public class DemoModelCases
     private String dateToString(final DateTime dt)
     {
         if (dt.isAfterNow()) {
-            throw new RuntimeException("It is not possible to create a Date in the future and after NOW");
+            throw new RuntimeException("It is not possible to create a Date (" + dt + ") in the future and after NOW (" + DateTime.now() + ")");
         }
 
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
