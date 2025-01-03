@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 
 public class ProcessMiningModelParser
 {
-    private String versionId = null;
-    private ProcessMiningModel pmm = null;
-    private JSONObject processModelJSON = null;
-    private String errors = null;
+    protected String versionId = null;
+    protected ProcessMiningModel pmm = null;
+    protected JSONObject processModelJSON = null;
+    protected String errors = null;
 
     public ProcessMiningModelParser(final String versionId)
     {
@@ -62,7 +62,7 @@ public class ProcessMiningModelParser
         return parseResult;
     }
 
-    private boolean modelHasErrors()
+    protected boolean modelHasErrors()
     {
         if (processModelJSON.has("errors")) {
             JSONArray errorsObj = (JSONArray) processModelJSON.getJSONArray("errors");
@@ -75,12 +75,12 @@ public class ProcessMiningModelParser
         return false;
     }
 
-    private void createEmptyProcessMiningModel()
+    protected void createEmptyProcessMiningModel()
     {
         this.pmm = new ProcessMiningModel(getVersionId());
     }
 
-    private void createJSONObject(final String processModelJSONString)
+    protected void createJSONObject(final String processModelJSONString)
     {
         processModelJSON = new JSONObject(processModelJSONString);
     }
@@ -408,7 +408,7 @@ public class ProcessMiningModelParser
         return breakdownsObj;
     }
 
-    private void parseVariations()
+    protected void parseVariations()
     {
         if (processModelJSON.has("data")) {
             JSONObject dataObj = (JSONObject) processModelJSON.getJSONObject("data");
@@ -421,6 +421,8 @@ public class ProcessMiningModelParser
                         if (variantResultObj != null) {
                             for (int i=0; i < variantResultObj.length(); i++) {
                                 JSONObject vObj = (JSONObject) variantResultObj.get(i);
+                                int totalVariants = vObj.has("totalVariants") ? vObj.getInt("totalVariants") : 0;
+                                pmm.setTotalVariants(totalVariants);
                                 if (vObj != null) {
                                     JSONArray variantsObj = (JSONArray) vObj.getJSONArray("variants");
                                     for (int j=0; j < variantsObj.length(); j++) {
@@ -499,7 +501,11 @@ public class ProcessMiningModelParser
             for (int i=0; i < nodesArray.length(); i++) {
                 String nodeId = nodesArray.getString(i);
                 if (!addedNodes.contains(nodeId)) {
+                    // When parsing 'variants', we do not get a node map. So we need to recreate the node object.
                     ProcessMiningModelNode pmmn = this.getProcessMiningModel().getNodes().get(nodeId);
+                    if  (pmmn == null) {
+                        pmmn = new ProcessMiningModelNode(nodeId, nodeId);
+                    }
                     nodes.add(pmmn);
                     addedNodes.add(nodeId);
                 }
