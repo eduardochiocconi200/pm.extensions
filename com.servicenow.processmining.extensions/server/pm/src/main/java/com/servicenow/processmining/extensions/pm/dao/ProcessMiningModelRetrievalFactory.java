@@ -22,7 +22,7 @@ public class ProcessMiningModelRetrievalFactory
 	{
 		checkPlatformVersion(snInstance);
 
-        String snVersion = snInstance.getSNVersion();
+		String snVersion = snInstance.getSNVersion();
 		if (snVersion.equals(ServiceNowInstance.WASHINGTON)) {
 			logger.debug("Creating Washington Filter Retriever");
 			return new ProcessMiningModelRetrievalWashington(snInstance, modelVersionId);
@@ -34,6 +34,20 @@ public class ProcessMiningModelRetrievalFactory
 		else if (snVersion.equals(ServiceNowInstance.UTAH)) {
 			logger.debug("Creating Utah Filter Retriever");
 			return new ProcessMiningModelRetrievalUtah(snInstance, modelVersionId);
+		}
+		else {
+			throw new RuntimeException("Not supported ServiceNow Platform release: (" + snVersion + ")");
+		}
+	}
+
+	public static ProcessMiningModelRetrieval getProcessMiningVariantRetrieval(final ServiceNowInstance snInstance, final String modelVersionId, final String entityId, final int numberOfVariants)
+	{
+		checkPlatformVersion(snInstance);
+
+		String snVersion = snInstance.getSNVersion();
+		if (snVersion.equals(ServiceNowInstance.WASHINGTON) || snVersion.equals(ServiceNowInstance.XANADU)) {
+			logger.debug("Creating Washington/Xanadu Filter Retriever");
+			return new ProcessMiningVariantRetrievalWashington(snInstance, modelVersionId, entityId, numberOfVariants);
 		}
 		else {
 			throw new RuntimeException("Not supported ServiceNow Platform release: (" + snVersion + ")");
