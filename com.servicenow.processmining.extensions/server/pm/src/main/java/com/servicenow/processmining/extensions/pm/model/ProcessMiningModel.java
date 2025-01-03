@@ -17,6 +17,7 @@ public class ProcessMiningModel
     private ArrayList<String> endNodes = null;
     private HashMap<String, ProcessMiningModelTransition> transitions = null;
     private HashMap<String, ProcessMiningModelBreakdown> breakdowns = null;
+    private int totalVariants = -1;
     private HashMap<String, ProcessMiningModelVariant> variants = null;
     private TreeSet<ProcessMiningModelVariant> variantsByFrequency = null;
     private ProcessMiningModelAggregate aggregate = null;
@@ -281,6 +282,16 @@ public class ProcessMiningModel
         return false;
     }
 
+    public void setTotalVariants(final int totalVariants)
+    {
+        this.totalVariants = totalVariants;
+    }
+
+    public int getTotalVariants()
+    {
+        return this.totalVariants;
+    }
+
     public HashMap<String, ProcessMiningModelVariant> getVariants()
     {
         if (this.variants == null) {
@@ -354,7 +365,12 @@ public class ProcessMiningModel
     public String toString()
     {
         StringBuffer sb = new StringBuffer();
-        sb.append("[ProcessMiningModel: Total Records: '" + getAggregate().getCaseCount() + "', Avg Cycle Time: '" + getAggregate().getAvgCaseDuration() + "']");
+        if (getAggregate() != null) {
+            sb.append("[ProcessMiningModel: Total Records: '" + getAggregate().getCaseCount() + "', Avg Cycle Time: '" + getAggregate().getAvgCaseDuration() + "']");
+        }
+        else {
+            sb.append("[ProcessMiningModel - Variant]");
+        }
         
         return sb.toString();
     }
