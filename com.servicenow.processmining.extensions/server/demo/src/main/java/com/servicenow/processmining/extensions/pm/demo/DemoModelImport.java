@@ -83,7 +83,7 @@ public class DemoModelImport
         sb.append(" -u [specifies the user in the instance specified in the -i parameter, that will own the created cases. Specify a user with enough permissions.]\n");
         sb.append(" -p [specifies the password for the user specified in the -u parameter.]\n\n");
         sb.append("For example:\n");
-        sb.append("# java -jar pm-demo-data-import.jar -f demo.xslx -i processminingec1demo -u admin -p password\n");
+        sb.append("# java -jar pm-demo-data-import.jar -f demo.xslx -i processminingec1demo.service-now.com -u admin -p password\n");
 
         return sb.toString();
     }
