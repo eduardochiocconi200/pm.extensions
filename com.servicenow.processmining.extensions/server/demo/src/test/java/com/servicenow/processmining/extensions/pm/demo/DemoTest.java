@@ -10,7 +10,7 @@ public class DemoTest
     @Test
     public void test()
     {
-        DemoModelParser parser = new DemoModelParser("/Users/eduardo.chiocconi/Desktop/Demo Scripts/Incidents Evaluation Project/Incident Demo Data.xlsx");
+        DemoModelParser parser = new DemoModelParser("/Users/eduardo.chiocconi/Downloads/Incident Demo Data.xlsx");
         Assert.assertTrue(parser.parse());
 
         ServiceNowInstance instance = new ServiceNowInstance(snInstance, snUser, snPassword);
