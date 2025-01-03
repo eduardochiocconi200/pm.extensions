@@ -52,7 +52,6 @@ public class ProcessMiningModelFilterTest
                 ProcessMiningModelParser pmmp = new ProcessMiningModelParser(modelVersionId);
                 if (pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
                     logger.info("Retrieved and parsed Process Mining Model (" + pmmp.getProcessMiningModel().getName() + ") successfully!");
-                    System.out.println("Retrieved and parsed Process Mining Model (" + pmmp.getProcessMiningModel().getName() + ") successfully!");
                     ProcessMiningModelFilterDAOREST pmmfDAO = new ProcessMiningModelFilterDAOREST(getInstance());
                     List<ProcessMiningModelVersionFilter> filters = pmmfDAO.findAllByProcessModel(modelVersionId, false);
                     Assert.assertEquals(pmmp.getProcessMiningModel().getFilters().size(), filters.size());
