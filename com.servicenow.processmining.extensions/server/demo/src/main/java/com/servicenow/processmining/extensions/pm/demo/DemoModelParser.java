@@ -43,7 +43,6 @@ public class DemoModelParser
             // Get first/desired sheet from the workbook
             for (int i=0; i < workbook.getNumberOfSheets(); i++) {
                 XSSFSheet sheet = workbook.getSheetAt(i);
-                System.out.println("Sheet: (" + sheet.getSheetName() + ")");
                 if (sheet.getSheetName().startsWith("Path")) {
                     getModel().addPath(parsePathSheet(sheet));
                 }
@@ -67,13 +66,22 @@ public class DemoModelParser
         double creationDelta = getCellValueAsDouble(sheet.getRow(1).getCell(1));
         String table = getCellValueAsString(sheet.getRow(2).getCell(1));
         DemoModelPath path = new DemoModelPath(count, creationDelta, table);
-        for (int i=5; i <= sheet.getLastRowNum(); i++) {
-            double time = getCellValueAsDouble(sheet.getRow(i).getCell(0));
-            String field = getCellValueAsString(sheet.getRow(i).getCell(1));
-            String values = getCellValueAsString(sheet.getRow(i).getCell(2));
-            DemoModelPathEntry entry = new DemoModelPathEntry(time, field, values);
-            path.addEntry(entry);
+        int i=5;
+        boolean hasRows = true;
+        do {
+            if (sheet.getRow(i) == null) {
+                hasRows = false;
+            }
+            else {
+                double time = getCellValueAsDouble(sheet.getRow(i).getCell(0));
+                String field = getCellValueAsString(sheet.getRow(i).getCell(1));
+                String values = getCellValueAsString(sheet.getRow(i).getCell(2));
+                DemoModelPathEntry entry = new DemoModelPathEntry(time, field, values);
+                path.addEntry(entry);
+                i++;
+            }
         }
+        while (hasRows);
         path.setTotalDuration(path.getEntries().get(path.getEntries().size()-1).getTime());
 
         return path;
