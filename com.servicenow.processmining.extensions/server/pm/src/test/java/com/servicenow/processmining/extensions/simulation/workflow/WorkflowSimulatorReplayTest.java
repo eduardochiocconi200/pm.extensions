@@ -25,13 +25,15 @@ public class WorkflowSimulatorReplayTest
   public void test()
   {
     logger.info("Starting Simulation Replay Tests ...");
-    boolean runOne = true;
+    boolean runOne = false;
     if (runOne) {
       test2();
     }
     else {
       test1();
-      test2();  
+      test2();
+      test3();
+      test4();
     }
   }
 
@@ -47,7 +49,7 @@ public class WorkflowSimulatorReplayTest
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
     Assert.assertEquals(1, sim.getStatistics().getNumberOfCreatedInstances());
-    Assert.assertEquals(1387112.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    Assert.assertEquals(2025111000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
     long endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
 
@@ -67,7 +69,47 @@ public class WorkflowSimulatorReplayTest
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
     Assert.assertEquals(2, sim.getStatistics().getNumberOfCreatedInstances());
-    Assert.assertEquals(1387112.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    Assert.assertEquals(2263213000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    long endTime = System.currentTimeMillis();
+    logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
+
+    long testCaseEndTime = System.currentTimeMillis();
+    logger.info("Completing Simulation Replay Test1 in (" + (testCaseEndTime - testCaseStartTime) + ") ...");
+  }
+
+  private void test3()
+  {
+    logger.info("Starting Simulation Replay Test3 ...");
+    long testCaseStartTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
+    WorkflowInstance.setDisplay(new PrintSimulationState());
+    WorkflowSimulationSamples sample12 = new WorkflowSimulationSamplesTest12("4");
+    WorkflowSimulator sim = new WorkflowSimulator(sample12.getModel(), getSysAuditLog3(), "incident", "state");
+    Assert.assertTrue(sim.validateEmptyQueues());
+    sim.run();
+    Assert.assertTrue(sim.validateEmptyQueues());
+    Assert.assertEquals(4, sim.getStatistics().getNumberOfCreatedInstances());
+    Assert.assertEquals(2263213000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    long endTime = System.currentTimeMillis();
+    logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
+
+    long testCaseEndTime = System.currentTimeMillis();
+    logger.info("Completing Simulation Replay Test1 in (" + (testCaseEndTime - testCaseStartTime) + ") ...");
+  }
+
+  private void test4()
+  {
+    logger.info("Starting Simulation Replay Test4 ...");
+    long testCaseStartTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
+    WorkflowInstance.setDisplay(new PrintSimulationState());
+    WorkflowSimulationSamples sample12 = new WorkflowSimulationSamplesTest12("4");
+    WorkflowSimulator sim = new WorkflowSimulator(sample12.getModel(), getSysAuditLog4(), "incident", "state");
+    Assert.assertTrue(sim.validateEmptyQueues());
+    sim.run();
+    Assert.assertTrue(sim.validateEmptyQueues());
+    Assert.assertEquals(4, sim.getStatistics().getNumberOfCreatedInstances());
+    Assert.assertEquals(2263213000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
     long endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
 
@@ -134,7 +176,7 @@ public class WorkflowSimulatorReplayTest
       }
     }
 
-    Assert.assertEquals(8, stateAuditLog.getLog().size());
+    Assert.assertEquals(32, stateAuditLog.getLog().size());
 
     return stateAuditLog;
   }
