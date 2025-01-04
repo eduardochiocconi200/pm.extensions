@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Base64;
 
+import javax.net.ssl.SSLHandshakeException;
+
 import org.apache.hc.client5.http.HttpResponseException;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -61,42 +63,60 @@ public class ServiceNowRESTService
         String response = null;
         this.errorStatusCode = -1;
         this.errorMessage = "";
+        int retryCount = 0;
+        boolean retry = false;
         try (CloseableHttpClient httpclient = HttpClients.custom().build()) {
-            try {
-                HttpUriRequestBase request = null;
-                if (isPost) {
-                    request = getPostRequest(url);
-                }
-                else {
-                    request = getPutRequest(url);
-                }
-                StringEntity signingPayload = new StringEntity(payload);
-                request.setEntity(signingPayload);
-                HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
-                response = httpclient.execute(request, responseHandler);
-            } catch (HttpResponseException e) {
-                errorStatusCode = e.getStatusCode();
-                if (e.getStatusCode() == 403) {
-                    this.errorMessage = "The current user: (" + getInstance().getUser()
-                            + ") is not authorized to access the resource: (" + url
-                            + "). Properly entitle this user to have READ access and try again.";
-                }
-                else {
-                    this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
-                }
+            do {
+                try {
+                    HttpUriRequestBase request = null;
+                    if (isPost) {
+                        request = getPostRequest(url);
+                    }
+                    else {
+                        request = getPutRequest(url);
+                    }
+                    StringEntity signingPayload = new StringEntity(payload);
+                    request.setEntity(signingPayload);
+                    HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
+                    response = httpclient.execute(request, responseHandler);
+                } catch (HttpResponseException e) {
+                    errorStatusCode = e.getStatusCode();
+                    if (e.getStatusCode() == 403) {
+                        this.errorMessage = "The current user: (" + getInstance().getUser()
+                                + ") is not authorized to access the resource: (" + url
+                                + "). Properly entitle this user to have READ access and try again.";
+                    }
+                    else {
+                        this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
+                    }
 
-                logger.error(errorMessage);
-                logger.debug("Exit ServiceNowRESTService.executePostRequest(" + url + ") = null");
-                return null;
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-                logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.debug("Exit ServiceNowRESTService.executePostRequest(" + url + ") != null");
-                return null;
-            }
+                    logger.error(errorMessage);
+                    logger.debug("Exit ServiceNowRESTService.executePostRequest(" + url + ") = null");
+                    return null;
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                    logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
+                    return null;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    if (e instanceof SSLHandshakeException) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                        retry = true;
+                        if (retryCount > 2) {
+                            retry = false;
+                        }
+                        retryCount++;
+                    }
+                    else {
+                        logger.debug("Exit ServiceNowRESTService.executePostRequest(" + url + ") != null");
+                        return null;
+                    }
+                }
+            } while (retry);
         } catch (IOException e) {
             e.printStackTrace();
             logger.debug("Exit ServiceNowRESTService.executePostRequest(" + url + ") != null");
@@ -129,33 +149,51 @@ public class ServiceNowRESTService
         String response = null;
         this.errorStatusCode = -1;
         this.errorMessage = "";
-        try (CloseableHttpClient httpclient = HttpClients.custom().build()) {
-            HttpGet getRequest = getGetRequest(url);
-            HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
-            response = httpclient.execute(getRequest, responseHandler);
-        } catch (HttpResponseException e) {
-            errorStatusCode = e.getStatusCode();
-            if (e.getStatusCode() == 403) {
-                this.errorMessage = "The current user: (" + getInstance().getUser()
-                        + ") is not authorized to access the resource: (" + url
-                        + "). Properly entitle this user to have READ access and try again.";
-            }
-            else {
-                this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
-            }
+        int retryCount = 0;
+        boolean retry = false;
+        do {
+            try (CloseableHttpClient httpclient = HttpClients.custom().build()) {
+                HttpGet getRequest = getGetRequest(url);
+                HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
+                response = httpclient.execute(getRequest, responseHandler);
+            } catch (HttpResponseException e) {
+                errorStatusCode = e.getStatusCode();
+                if (e.getStatusCode() == 403) {
+                    this.errorMessage = "The current user: (" + getInstance().getUser()
+                            + ") is not authorized to access the resource: (" + url
+                            + "). Properly entitle this user to have READ access and try again.";
+                }
+                else {
+                    this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
+                }
 
-            logger.error(errorMessage);
-            logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (1)");
-            return null;
-        } catch (UnknownHostException e) {
-            logger.error("Unknown Host. Please specific a valid host name. Error: (" + e.getLocalizedMessage() + ")");
-            logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (3)");
-            return null;
-        }
+                logger.error(errorMessage);
+                logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (1)");
+                return null;
+            } catch (UnknownHostException e) {
+                logger.error("Unknown Host. Please specific a valid host name. Error: (" + e.getLocalizedMessage() + ")");
+                logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
+                return null;
+            } catch (IOException e) {
+                e.printStackTrace();
+                if (e instanceof SSLHandshakeException) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                    retry = true;
+                    if (retryCount > 2) {
+                        retry = false;
+                    }
+                    retryCount++;
+                }
+                else {
+                    logger.debug("Exit ServiceNowRESTService.executePostRequest(" + url + ") != null");
+                    return null;
+                }
+            }
+        } while (retry);
 
         logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") != null");
         return response;
@@ -175,34 +213,52 @@ public class ServiceNowRESTService
         String response = null;
         this.errorStatusCode = -1;
         this.errorMessage = "";
+        int retryCount = 0;
+        boolean retry = false;
         try (CloseableHttpClient httpclient = HttpClients.custom().build()) {
-            try {
-                HttpDelete deleteRequest = getDeleteRequest(url);
-                HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
-                response = httpclient.execute(deleteRequest, responseHandler);
-            } catch (HttpResponseException e) {
-                errorStatusCode = e.getStatusCode();
-                if (e.getStatusCode() == 403) {
-                    this.errorMessage = "The current user: (" + getInstance().getUser()
-                            + ") is not authorized to access the resource: (" + url
-                            + "). Properly entitle this user to have READ access and try again.";
-                }
-                else {
-                    this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
-                }
+            do {
+                try {
+                    HttpDelete deleteRequest = getDeleteRequest(url);
+                    HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
+                    response = httpclient.execute(deleteRequest, responseHandler);
+                } catch (HttpResponseException e) {
+                    errorStatusCode = e.getStatusCode();
+                    if (e.getStatusCode() == 403) {
+                        this.errorMessage = "The current user: (" + getInstance().getUser()
+                                + ") is not authorized to access the resource: (" + url
+                                + "). Properly entitle this user to have READ access and try again.";
+                    }
+                    else {
+                        this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
+                    }
 
-                logger.error(errorMessage);
-                logger.debug("Exit ServiceNowRESTService.executeDeleteRequest(" + url + ") = null");
-                return null;
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-                logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                logger.debug("Exit ServiceNowRESTService.executeDeleteRequest(" + url + ") != null");
-                return null;
-            }
+                    logger.error(errorMessage);
+                    logger.debug("Exit ServiceNowRESTService.executeDeleteRequest(" + url + ") = null");
+                    return null;
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                    logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
+                    return null;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    if (e instanceof SSLHandshakeException) {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        }
+                        retry = true;
+                        if (retryCount > 2) {
+                            retry = false;
+                        }
+                        retryCount++;
+                    }
+                    else {
+                        logger.debug("Exit ServiceNowRESTService.executePostRequest(" + url + ") != null");
+                        return null;
+                    }
+                }
+            } while (retry);
         } catch (IOException e) {
             e.printStackTrace();
             logger.debug("Exit ServiceNowRESTService.executeDeleteRequest(" + url + ") != null");
