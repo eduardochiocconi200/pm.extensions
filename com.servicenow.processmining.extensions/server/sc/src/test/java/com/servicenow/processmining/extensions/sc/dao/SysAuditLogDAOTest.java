@@ -33,7 +33,10 @@ public class SysAuditLogDAOTest
     {
         ServiceNowInstance instance = new ServiceNowInstance(snInstance, snUser, snPassword);
         SysAuditLogDAOREST wfDAO = new SysAuditLogDAOREST(instance);
+        long startTime = System.currentTimeMillis();
         SysAuditLog sysAuditLog = wfDAO.findById(new SysAuditLogPK("incident", "state", 100));
+        long endTime = System.currentTimeMillis();
+        logger.info("Long query completed in: (" + (endTime-startTime) + ") milliseconds.");
         Assert.assertNotNull(sysAuditLog);
         Assert.assertTrue(sysAuditLog.getLog().size() > 0 && sysAuditLog.getLog().size() <= 100);
         logger.debug("Retrieved: (" + sysAuditLog.getLog().size() + ") history entries.");
