@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 public class WorkflowReplayInstance
     extends WorkflowInstance
 {
+    private int firstAuditEntryIndex = -1;
     private int currentAuditEntryIndex = 0;
 
     public WorkflowReplayInstance(final String id, final int startAuditEntryIndex, final Simulator simulator)
@@ -35,11 +36,17 @@ public class WorkflowReplayInstance
         WorkflowInstanceReplayGenerator generator = ((WorkflowInstanceReplayGenerator) getSimulator().getGenerator());
         for (int i=currentAuditEntryIndex; i < generator.getSortedAuditLog().getLog().size(); i++) {
             SysAuditEntry sae = generator.getSortedAuditLog().getLog().get(i);
+            if (firstAuditEntryIndex == -1 && sae.getDocumentKey().equals(this.getId())) {
+                this.firstAuditEntryIndex = i;
+            }
             if (sae.getFieldName().equals(getSimulator().getFieldName()) && sae.getDocumentKey().equals(this.getId())) {
                 toNode = getSimulator().getSimulationState().getProcessModel().getNodeKeyByValue(sae.getOldValue());
                 break;
             }
             currentAuditEntryIndex++;
+            if (currentAuditEntryIndex >= generator.getSortedAuditLog().getLog().size()) {
+                throw new RuntimeException("NO1");
+            }
         }
         Message newEvent = new Message(this, getId(), fromNode, toNode, startOffset, Message.REGULAR);
         getSimulator().insert(newEvent);
@@ -48,6 +55,13 @@ public class WorkflowReplayInstance
     @Override
     public String getNextNode()
     {
+        if (getSimulator().getSimulationState().getProcessModel().getEndingNodes().size() > 1) {
+            throw new RuntimeException("There is more than one ending node. We need to improve the logic to determine which is the right ending node.");
+        }
+        else if (getSimulator().getSimulationState().getProcessModel().getEndingNodes().get(0).equals(this.getActivityState())) {
+            return null;    
+        }
+
         String nextNode = null;
         WorkflowInstanceReplayGenerator generator = ((WorkflowInstanceReplayGenerator) getSimulator().getGenerator());
         for (int i=currentAuditEntryIndex; i < generator.getSortedAuditLog().getLog().size(); i++) {
@@ -62,10 +76,6 @@ public class WorkflowReplayInstance
         if (nextNode == null) {
             if (currentAuditEntryIndex == generator.getSortedAuditLog().getLog().size()) {
                 nextNode = getSimulator().getSimulationState().getProcessModel().getEndingNodes().get(0);
-                if (getSimulator().getSimulationState().getProcessModel().getEndingNodes().size() > 1) {
-                    throw new RuntimeException("There is more than one ending node. We need to improve the logic to determine which is the right ending node.");
-                }
-                currentAuditEntryIndex++;
             }
         }
 
@@ -85,7 +95,8 @@ public class WorkflowReplayInstance
         }
 
         WorkflowInstanceReplayGenerator generator = ((WorkflowInstanceReplayGenerator) getSimulator().getGenerator());
-        for (int i=currentAuditEntryIndex; i >= 0; i--) {
+        int startCount = currentAuditEntryIndex == generator.getSortedAuditLog().getLog().size() ? currentAuditEntryIndex-1 : currentAuditEntryIndex;
+        for (int i=startCount; i >= 0; i--) {
             SysAuditEntry sae = generator.getSortedAuditLog().getLog().get(i);
             if (sae.getDocumentKey().equals(getId())) {
                 if (i > 0 && sae.getFieldName().equals(getSimulator().getFieldName())) {
@@ -108,7 +119,7 @@ public class WorkflowReplayInstance
                         }
                     }
                 }
-                else if (i == 0) {
+                else if (i == firstAuditEntryIndex) {
                     if (fromNodeTS == null) {
                         try {
                             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
