@@ -14,7 +14,7 @@ public class AuditLogSerializer
     public AuditLogSerializer()
     {
     }
-    
+
     public boolean parse(final String jsonPayload)
     {
         SysAuditLogPK pk = new SysAuditLogPK("a");
@@ -24,8 +24,8 @@ public class AuditLogSerializer
         long counter = 0;
         for (int i = 0; i < auditLogEntries.length(); i++) {
             String tablename = auditLogEntries.getJSONObject(i).getString("tablename");
-            String documentkey = auditLogEntries.getJSONObject(i).getString("documentkey");
             String fieldname = auditLogEntries.getJSONObject(i).getString("fieldname");
+            String documentkey = auditLogEntries.getJSONObject(i).getString("documentkey");
             String oldvalue = auditLogEntries.getJSONObject(i).getString("oldvalue");
             String newvalue = auditLogEntries.getJSONObject(i).getString("newvalue");
             String user = auditLogEntries.getJSONObject(i).getString("user");
