@@ -5,10 +5,12 @@ import com.servicenow.processmining.extensions.pm.simulation.core.Simulator;
 import com.servicenow.processmining.extensions.pm.simulation.serialization.SysAuditEntryComparator;
 
 import com.servicenow.processmining.extensions.sc.entities.SysAuditEntry;
+import com.servicenow.processmining.extensions.sc.entities.SysAuditEntryPK;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLog;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLogPK;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.TreeSet;
 
 import org.slf4j.Logger;
@@ -43,7 +45,20 @@ public class WorkflowInstanceReplayGenerator
     {
         if (sortedAuditLog == null) {
             TreeSet<SysAuditEntry> cronologicallySortedAuditEvents = new TreeSet<SysAuditEntry>(new SysAuditEntryComparator());
+            HashMap<String, String> createdRecords = new HashMap<String, String>();
             for (SysAuditEntry entry : getAuditLog().getLog()) {
+                if (createdRecords.get(entry.getDocumentKey()) == null) {
+                    createdRecords.put(entry.getDocumentKey(), entry.getDocumentKey());
+                    SysAuditEntry createdEntry = new SysAuditEntry(new SysAuditEntryPK(entry.getDocumentKey()));
+                    createdEntry.setDocumentKey(entry.getDocumentKey());
+                    createdEntry.setTableName(entry.getTableName());
+                    createdEntry.setFieldName(CREATED_FIELD_ATTRIBUTE_NAME);
+                    createdEntry.setReason(entry.getReason());
+                    createdEntry.setSysCreatedOn(entry.getSysCreatedOn());
+                    createdEntry.setSysCreatedBy(entry.getSysCreatedBy());
+                    createdEntry.setNewValue(entry.getSysCreatedOn());
+                    cronologicallySortedAuditEvents.add(createdEntry);
+                }
                 cronologicallySortedAuditEvents.add(entry);
             }
 
@@ -58,8 +73,8 @@ public class WorkflowInstanceReplayGenerator
                 }
             }
 
-            if (getAuditLog().getLog().size() != sortedAuditLog.getLog().size()) {
-                throw new RuntimeException("Audit Logs should have SAME size.");
+            if ((getAuditLog().getLog().size() + createdRecords.size()) != sortedAuditLog.getLog().size()) {
+                throw new RuntimeException("Audit Logs should have SAME size. Log size is: (" + getAuditLog().getLog().size() + "). Sorted Log size is: (" + this.sortedAuditLog.getLog().size() + ")");
             }
         }
 
@@ -82,7 +97,7 @@ public class WorkflowInstanceReplayGenerator
         for (int i=lastCreationEventIndex; i < getSortedAuditLog().getLog().size(); i++) {
             // If it is a creation event ...
             SysAuditEntry sae = getSortedAuditLog().getLog().get(i);
-            if (sae.getFieldName().equals("opened_at")) {
+            if (sae.getFieldName().equals(CREATED_FIELD_ATTRIBUTE_NAME)) {
                 return i;
             }
         }
@@ -140,5 +155,6 @@ public class WorkflowInstanceReplayGenerator
     }
 
     private final static boolean debug = true;
+    private final static String CREATED_FIELD_ATTRIBUTE_NAME = "created";
     private static final Logger logger = LoggerFactory.getLogger(WorkflowInstanceReplayGenerator.class);
 }
