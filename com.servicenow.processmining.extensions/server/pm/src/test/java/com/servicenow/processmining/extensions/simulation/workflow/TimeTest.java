@@ -10,7 +10,7 @@ public class TimeTest
     public static void main(String args[]) throws ParseException
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        String dateInString1 = "2024-01-27 02:24:42";
+        String dateInString1 = "2024-01-30 15:34:17";
         Date date1 = formatter.parse(dateInString1);
         String dateInString2 = "2024-02-19 18:41:44";
         Date date2 = formatter.parse(dateInString2);
