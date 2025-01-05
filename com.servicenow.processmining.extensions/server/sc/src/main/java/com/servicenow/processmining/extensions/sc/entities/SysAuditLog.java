@@ -25,47 +25,10 @@ public class SysAuditLog
 
     public ArrayList<SysAuditEntry> getFieldNameFilteredLog(final String fieldName)
     {
-        HashMap<String, String> createdRecords = new HashMap<String, String>();
-
         if (getFieldNameFilteredLogs().get(fieldName) == null) {
             ArrayList<SysAuditEntry> filteredLog = new ArrayList<SysAuditEntry>();
             for (SysAuditEntry entry : getLog()) {
-                if (createdRecords.get(entry.getDocumentKey()) == null) {
-                    createdRecords.put(entry.getDocumentKey(), "n");
-                }
-
-                if (entry.getFieldName().equals("opened_at")) {
-                    if (createdRecords.get(entry.getDocumentKey()).equals("n")) {
-                        createdRecords.remove(entry.getDocumentKey());
-                        createdRecords.put(entry.getDocumentKey(), "o");
-                        filteredLog.add(entry);
-                    }
-                }
-                else if (entry.getFieldName().equals("active")) {
-                    if (entry.getNewValue().equals("0")) {
-                        if (createdRecords.get(entry.getDocumentKey()).equals("o")) {
-                            createdRecords.remove(entry.getDocumentKey());
-                            createdRecords.put(entry.getDocumentKey(), "c");
-                            filteredLog.add(entry);
-                        }
-                    }
-                }
-                else if (entry.getFieldName().equals(fieldName)) {
-                    if (createdRecords.get(entry.getDocumentKey()).equals("n")) {
-                        createdRecords.remove(entry.getDocumentKey());
-                        createdRecords.put(entry.getDocumentKey(), "o");
-
-                        SysAuditEntry newOpenedEntry = new SysAuditEntry(null);
-                        newOpenedEntry.setDocumentKey(entry.getDocumentKey());
-                        newOpenedEntry.setFieldName("opened_at");
-                        newOpenedEntry.setNewValue(entry.getSysCreatedOn());
-                        newOpenedEntry.setOldValue(entry.getSysCreatedOn());
-                        newOpenedEntry.setSysCreatedBy(entry.getSysCreatedBy());
-                        newOpenedEntry.setSysCreatedOn(entry.getSysCreatedOn());
-                        newOpenedEntry.setTableName(entry.getTableName());
-                        newOpenedEntry.setUser(entry.getUser());
-                        filteredLog.add(newOpenedEntry);
-                    }
+                if (entry.getFieldName().equals(fieldName)) {
                     filteredLog.add(entry);
                 }
             }
