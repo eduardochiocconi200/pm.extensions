@@ -7,6 +7,8 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DemoModelParser
 {
@@ -76,12 +78,18 @@ public class DemoModelParser
                 double time = getCellValueAsDouble(sheet.getRow(i).getCell(0));
                 String field = getCellValueAsString(sheet.getRow(i).getCell(1));
                 String values = getCellValueAsString(sheet.getRow(i).getCell(2));
-                DemoModelPathEntry entry = new DemoModelPathEntry(time, field, values);
-                path.addEntry(entry);
-                i++;
+                if (field == null || values == null) {
+                    hasRows = false;
+                }
+                else {
+                    DemoModelPathEntry entry = new DemoModelPathEntry(time, field, values);
+                    path.addEntry(entry);
+                    i++;
+                }
             }
         }
         while (hasRows);
+        logger.debug("Sheet: (" + sheet.getSheetName() + "). Last Row: (" + i + ")");
         path.setTotalDuration(path.getEntries().get(path.getEntries().size()-1).getTime());
 
         return path;
@@ -104,4 +112,6 @@ public class DemoModelParser
 
         return value;
     }
+
+    private static final Logger logger = LoggerFactory.getLogger(DemoModelParser.class);
 }
