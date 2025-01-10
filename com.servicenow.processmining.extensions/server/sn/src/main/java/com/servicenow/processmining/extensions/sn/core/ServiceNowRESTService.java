@@ -165,6 +165,7 @@ public class ServiceNowRESTService
                 }
                 else {
                     this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
+                    e.printStackTrace();
                 }
 
                 logger.error(errorMessage);
