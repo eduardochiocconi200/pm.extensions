@@ -88,12 +88,17 @@ public class ProcessMiningModelVariant
 
     public String getTranslatedRouteNodes()
     {
+        return getTranslatedRouteNodes(",");
+    }
+
+    public String getTranslatedRouteNodes(final String delimiter)
+    {
         if (translatedRoutePath == null) {
             translatedRoutePath = "";
             boolean processedFirstElement = false;
             for (String node : getPath()) {
                 if (processedFirstElement) {
-                    translatedRoutePath += ",";
+                    translatedRoutePath += delimiter;
                 }
                 translatedRoutePath += getNodes().get(node).getName();
                 processedFirstElement = true;
