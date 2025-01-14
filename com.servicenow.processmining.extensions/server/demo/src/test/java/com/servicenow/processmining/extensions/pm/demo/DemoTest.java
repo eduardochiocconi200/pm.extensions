@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 
 public class DemoTest
 {
@@ -18,7 +19,7 @@ public class DemoTest
         Assert.assertTrue(cases.create());
     }
 
-    protected static final String snInstance = "processminingec1demo.service-now.com";
-    protected static final String snUser = "admin";
-    protected static final String snPassword = "323ElatiCtDanville!";
+    protected static final String snInstance = ServiceNowTestCredentials.getInstanceName();
+    protected static final String snUser = ServiceNowTestCredentials.getUserName();
+    protected static final String snPassword = ServiceNowTestCredentials.getPassword();
 }
