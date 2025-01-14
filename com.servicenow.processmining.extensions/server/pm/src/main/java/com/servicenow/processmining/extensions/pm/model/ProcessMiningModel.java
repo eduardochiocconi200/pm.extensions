@@ -182,6 +182,19 @@ public class ProcessMiningModel
         return key;
     }
 
+    public String getNodeKeyByName(final String name)
+    {
+        String key = null;
+        for (ProcessMiningModelNode node : getNodes().values()) {
+            if (node.getName() != null && node.getName().equals(name)) {
+                key = node.getId();
+                break;
+            }
+        }
+
+        return key;
+    }
+
     public String getNodeLabelByValue(final String value)
     {
         String label = null;
