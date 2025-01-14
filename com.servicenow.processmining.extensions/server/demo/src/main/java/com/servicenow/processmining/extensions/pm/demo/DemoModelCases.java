@@ -109,6 +109,12 @@ public class DemoModelCases
 		payload = createPayload(creationUpdateValues);
 		response = snrs.executePutRequest(url, payload);
 		if (response == null || response != null && response.equals("")) {
+			if (snrs.getErrorStatusCode() == 400) {
+				String errorMessage = "The '/api/snc/fixaudittrail/{table}/{id}" + this.caseSysId + "' REST Scripted endpoint does not exist and it must be created. Check the documentation to create it and try again.";
+				logger.error(errorMessage);
+				System.err.println(errorMessage);
+			}
+
 			return false;
 		}
 
