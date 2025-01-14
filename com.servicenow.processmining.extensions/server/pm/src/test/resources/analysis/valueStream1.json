@@ -1,0 +1,38 @@
+{
+    "phases" : [
+        {
+            "name" : "New",
+            "nodes" : [
+                { "name" : "Created" },
+                { "name" : "New" }
+            ]
+        },
+        {
+            "name" : "Triage",
+            "nodes" : [
+                { "name" : "Assigned" }
+            ]
+        },
+        {
+            "name" : "Work",
+            "nodes" : [
+                { "name" : "In progress" },
+                { "name" : "On Hold" }                
+            ]
+        },
+        {
+            "name" : "Resolve",
+            "nodes" : [
+                { "name" : "Resolved" }
+            ]
+        },
+        {
+            "name" : "Closed",
+            "nodes" : [
+                { "name" : "Closed" },
+                { "name" : "Completed" }
+            ]
+        }
+
+    ]
+}
