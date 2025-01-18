@@ -12,7 +12,7 @@ interface FlowType {
 }
 
 function syncAction(fType: string, fId: string) {
-  var data = {}
+  const data = {}
   axios.post('http://localhost:8080/servicecatalog/' + fType + '/' + fId + '/sync', data, { headers: { "Access-Control-Allow-Origin" : "*"} })
     .then((data) => {
       console.log('Requested sync action: (' + data + ')');
@@ -23,7 +23,7 @@ function syncAction(fType: string, fId: string) {
 }
 
 function mineAction(fType: string, fId: string) {
-  var data = {}
+  const data = {}
   axios.post('http://localhost:8080/servicecatalog/' + fType + '/' + fId + '/mine', data, { headers: { "Access-Control-Allow-Origin" : "*"} })
     .then((data) => {
       console.log('Requested mine action: (' + data + ')');

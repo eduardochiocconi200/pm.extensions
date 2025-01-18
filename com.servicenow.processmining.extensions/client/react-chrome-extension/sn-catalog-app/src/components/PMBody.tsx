@@ -43,7 +43,7 @@ function PMProjectBody()
       .catch((err) => {
         console.log("AXIOS ERROR: ", err)
       })
-  };
+  }
 
   function getProcessMiningModelFilters(model : string) {
     setSelectedModel(model);
@@ -59,7 +59,7 @@ function PMProjectBody()
       .catch((err) => {
         console.log("AXIOS ERROR: ", err)
       })
-  };
+  }
 
   const requestPowerPointDeckForFilter = (model: string, filter: string) => {
     const url = 'http://localhost:8080/models/' + model + '/filters/' + filter + '/ppt';
@@ -72,8 +72,8 @@ function PMProjectBody()
         // Create a temporary <a> element to trigger the download
         const tempLink = document.createElement("a");
         tempLink.href = url;
-        var currentdate = new Date();
-        var datetime = currentdate.getDate() + "-"
+        const currentdate = new Date();
+        const datetime = currentdate.getDate() + "-"
                 + (currentdate.getMonth()+1)  + "-"
                 + currentdate.getFullYear() + " "
                 + currentdate.getHours() + "-"
@@ -108,8 +108,8 @@ function PMProjectBody()
         // Create a temporary <a> element to trigger the download
         const tempLink = document.createElement("a");
         tempLink.href = url;
-        var currentdate = new Date();
-        var datetime = currentdate.getDate() + "-"
+        const currentdate = new Date();
+        const datetime = currentdate.getDate() + "-"
                 + (currentdate.getMonth()+1)  + "-"
                 + currentdate.getFullYear() + " "
                 + currentdate.getHours() + "-"
@@ -144,8 +144,8 @@ function PMProjectBody()
         // Create a temporary <a> element to trigger the download
         const tempLink = document.createElement("a");
         tempLink.href = url;
-        var currentdate = new Date();
-        var datetime = currentdate.getDate() + "-"
+        const currentdate = new Date();
+        const datetime = currentdate.getDate() + "-"
                 + (currentdate.getMonth()+1)  + "-"
                 + currentdate.getFullYear() + " "
                 + currentdate.getHours() + "-"

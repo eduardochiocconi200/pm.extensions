@@ -21,11 +21,6 @@ function App() {
       </div>
     </Router>
   )
-/*
-    <div className="container">
-      <Home></Home>
-    </div>)
-*/
 }
 
 export default App;
