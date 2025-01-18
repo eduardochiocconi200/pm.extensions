@@ -22,22 +22,17 @@ function Login() {
 
     // Check if the user has entered both fields correctly
     if ("" === user) {
-        setUserError("Please enter your user")
+        setUserError("Please provide a user in the target SN Instance to connect to.")
         return
     }
 
     if ("" === password) {
-        setPasswordError("Please enter a password")
+        setPasswordError("Provide the user's password in the target SN Instance to connect to.")
         return
     }
 
-    if (password.length < 7) {
-      setPasswordError("The password must be 8 characters or longer");
-      return;
-    }
-
     if ("" === instance) {
-      setInstanceError("Please enter the name of a ServiceNow Instance password");
+      setInstanceError("Provide the name of a ServiceNow Instance you want to connect to.");
       return;
     }
 
@@ -56,12 +51,12 @@ function Login() {
         }
         else if (data == "error") {
           console.log('Could not log into the ServiceNow instance: ' + instance);
-          setLoginError('Could not be logged into the ServiceNow instance: ' + instance);
+          setLoginError('Error Details: Could not be logged into the ServiceNow instance: ' + instance);
         }
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err);
-        setLoginError('Could not be logged into the ServiceNow instance: ' + instance);
+        setLoginError('Error Details: Could not connect to the Process Optimization Center service. The Service may be down. Check with the administrator.');
       })
   }  
 
@@ -100,10 +95,13 @@ function Login() {
         <br />
         <div className={"inputContainer"}>
             <input
-                className={"inputButton"}
+                value={"Log in"}
                 type="button"
                 onClick={onButtonClick}
-                value={"Log in"} />
+                className={"inputButton"} />
+            <br></br>
+          </div>
+          <div className={"inputContainer"}>
             <label className="errorLabel">{loginError}</label>                
         </div>
     </div>)
