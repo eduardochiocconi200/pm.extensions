@@ -27,7 +27,6 @@ public class ServiceCatalogItemDAOREST
 	public ServiceCatalogItem findById(ServiceCatalogItemPK id)
 		throws ObjectNotFoundException
 	{
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'findById'");
 	}
 
@@ -126,9 +125,8 @@ public class ServiceCatalogItemDAOREST
 	public boolean existEntity(ServiceCatalogItemPK id)
 		throws ObjectNotFoundException
 	{
-		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'existEntity'");
 	}
 
-	    private static final Logger logger = LoggerFactory.getLogger(ServiceCatalogItemDAOREST.class);
+	private static final Logger logger = LoggerFactory.getLogger(ServiceCatalogItemDAOREST.class);
 }
