@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>echiocconisn</groupId>
 	<artifactId>pm.extension.frontend</artifactId>
@@ -13,31 +12,31 @@
 
 	<build>
 		<plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>docker-build</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>docker</executable>
-                            <workingDirectory>${project.basedir}</workingDirectory>
-                            <arguments>
-                                <argument>build</argument>
-                                <argument>--no-cache</argument>
-                                <argument>-f</argument>
-                                <argument>Dockerfile</argument>
-                                <argument>-t</argument>
-                                <argument>${project.artifactId}:${project.version}</argument>
-                                <argument>.</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<executions>
+					<execution>
+						<id>docker-build</id>
+						<phase>install</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>docker</executable>
+							<workingDirectory>${project.basedir}</workingDirectory>
+							<arguments>
+								<argument>build</argument>
+								<argument>--no-cache</argument>
+								<argument>-f</argument>
+								<argument>Dockerfile</argument>
+								<argument>-t</argument>
+								<argument>${project.artifactId}:${project.version}</argument>
+								<argument>.</argument>
+							</arguments>
+						</configuration>
+					</execution>
 					<execution>
 						<id>docker-tag ${project.version}</id>
 						<phase>install</phase>
@@ -50,7 +49,8 @@
 							<arguments>
 								<argument>tag</argument>
 								<argument>${project.artifactId}:${project.version}</argument>
-								<argument>${dockerhub.account}/${project.artifactId}:${project.version}</argument>
+								<argument>${dockerhub.account}/${project.artifactId}:${project.version}
+								</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -70,54 +70,74 @@
 							</arguments>
 						</configuration>
 					</execution>
-					<execution>
-						<id>docker-push ${project.version}</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>docker</executable>
-							<workingDirectory>${project.basedir}</workingDirectory>
-							<arguments>
-								<argument>push</argument>
-								<argument>${dockerhub.account}/${project.artifactId}:${project.version}</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>docker-push latest</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>docker</executable>
-							<workingDirectory>${project.basedir}</workingDirectory>
-							<arguments>
-								<argument>push</argument>
-								<argument>${dockerhub.account}/${project.artifactId}:latest</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
-						<id>docker image prune</id>
-						<phase>install</phase>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<configuration>
-							<executable>docker</executable>
-							<workingDirectory>${project.basedir}</workingDirectory>
-							<arguments>
-								<argument>image</argument>
-								<argument>prune</argument>
-								<argument>-f</argument>
-							</arguments>
-						</configuration>
-					</execution>
-                </executions>
-            </plugin>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+
+    <profiles>
+        <profile>
+            <id>push</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>3.0.0</version>
+						<executions>
+							<execution>
+								<id>docker-push ${project.version}</id>
+								<phase>install</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>docker</executable>
+									<workingDirectory>${project.basedir}</workingDirectory>
+									<arguments>
+										<argument>push</argument>
+										<argument>${dockerhub.account}/${project.artifactId}:${project.version}</argument>
+									</arguments>
+								</configuration>
+							</execution>
+							<execution>
+								<id>docker-push latest</id>
+								<phase>install</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>docker</executable>
+									<workingDirectory>${project.basedir}</workingDirectory>
+									<arguments>
+										<argument>push</argument>
+										<argument>${dockerhub.account}/${project.artifactId}:latest</argument>
+									</arguments>
+								</configuration>
+							</execution>
+							<execution>
+								<id>docker image prune</id>
+								<phase>install</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>docker</executable>
+									<workingDirectory>${project.basedir}</workingDirectory>
+									<arguments>
+										<argument>image</argument>
+										<argument>prune</argument>
+										<argument>-f</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
