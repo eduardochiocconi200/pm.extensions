@@ -1,6 +1,9 @@
 package com.servicenow.processmining.extensions.pm.model;
 
+import java.io.Serializable;
+
 public class ProcessMiningModelFilterTransitionsNode
+    implements Serializable
 {
     private String entityId = null;
     private String field = null;
@@ -71,5 +74,33 @@ public class ProcessMiningModelFilterTransitionsNode
     public String getRelation()
     {
         return this.relation;
+    }
+
+    public String getTransitionNodeJSON()
+    {
+        String json = "{";
+        json += "\"entityId\" : \"" + entityId + "\", ";
+        json += "\"field\" : \"" + field + "\", ";
+        json += "\"predicate\" : \"" + predicate + "\", ";
+        json += "\"occurrence\" : \"" + occurrence + "\", ";
+        json += "\"values\" : \"" + values + "\", ";
+        json += "\"relation\" : \"" + relation + "\", ";
+        json += "}";
+
+        return json;
+    }
+
+    public String toString()
+    {
+        StringBuffer sb = new StringBuffer();
+
+        sb.append("[ EntityId: (" + entityId + "), ");
+        sb.append(" Field: (" + field + "), ");
+        sb.append(" Predicate: (" + predicate + "), ");
+        sb.append(" Ocurrence: (" + occurrence + "), ");
+        sb.append(" Values: (" + values + "), ");
+        sb.append(" Relation: (" + relation + ")");
+
+        return sb.toString();
     }
 }
