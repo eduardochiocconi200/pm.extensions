@@ -1,5 +1,6 @@
 package com.servicenow.processmining.extensions.server.api.controller;
 
+import com.servicenow.processmining.extensions.pm.bpmn.BPMNProcessGenerator;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModeValueStreamDAOREST;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelFilterDAOREST;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrieval;
@@ -241,14 +242,31 @@ public class ProcessMiningController
 	{
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/bpmn)");
 		ResponseEntity<Resource> response = null;
+		String fileName = null;
 		try {
-			FileSystemResource resource = new FileSystemResource("/tmp/variant.bpmn");
-			MediaType mediaType = MediaTypeFactory.getMediaType(resource).orElse(MediaType.APPLICATION_OCTET_STREAM);
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(mediaType);
-			ContentDisposition disposition = ContentDisposition.attachment().filename(resource.getFilename()).build();
-			headers.setContentDisposition(disposition);
-			response = new ResponseEntity<>(resource, headers, HttpStatus.OK);
+			ProcessMiningModelParser parser = null;
+			ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
+			if (pmmr.runEmptyFilter()) {
+				parser = new ProcessMiningModelParser(modelId);
+				if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
+					logger.error("Could not parse filter payload successfully!");
+				}
+				else {
+					if (parser.getProcessMiningModel().getAggregate().getCaseCount() > 0) {
+						BPMNProcessGenerator generator = new BPMNProcessGenerator(parser.getProcessMiningModel());
+						if (generator.createBPMNProcessFile()) {
+							fileName = generator.getBPMNFileName();
+							FileSystemResource resource = new FileSystemResource(fileName);
+							MediaType mediaType = MediaTypeFactory.getMediaType(resource).orElse(MediaType.APPLICATION_OCTET_STREAM);
+							HttpHeaders headers = new HttpHeaders();
+							headers.setContentType(mediaType);
+							ContentDisposition disposition = ContentDisposition.attachment().filename(resource.getFilename()).build();
+							headers.setContentDisposition(disposition);
+							response = new ResponseEntity<>(resource, headers, HttpStatus.OK);
+						}
+					}
+				}
+			}
 		}
 		catch (Throwable t) {
 			t.printStackTrace();
