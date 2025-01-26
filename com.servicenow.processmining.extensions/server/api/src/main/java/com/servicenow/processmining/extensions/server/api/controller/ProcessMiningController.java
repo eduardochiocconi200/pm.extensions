@@ -1,11 +1,14 @@
 package com.servicenow.processmining.extensions.server.api.controller;
 
+import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModeValueStreamDAOREST;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelFilterDAOREST;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrieval;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrievalFactory;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelVersionDAOREST;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersionFilter;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersionFilterPK;
+import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelValueStream;
+import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelValueStreamPK;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersion;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersionPK;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
@@ -143,7 +146,7 @@ public class ProcessMiningController
 		ProcessMiningModelVersionFilter filter = new ProcessMiningModelVersionFilter(pk);
 		filter.setName("Email Channel Filter");
 		filter.setProjectId("abcdef123456");
-		filter.setBreakdownFiltersCondition("{\"condition\":\"ABC=1\"}");
+		filter.setBreakdownFilterCondition("{\"condition\":\"ABC=1\"}");
 
 		logger.info("Exit ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + ")");
 		return filter;
@@ -253,6 +256,25 @@ public class ProcessMiningController
 
 		logger.info("Exit ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/bpmn)");
 		return response;
+	}
+
+	@GetMapping("/models/{modelId}/valuestream")
+	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
+	public ProcessMiningModelValueStream processModelVersionValueStream(@PathVariable String modelId)
+	{
+		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/valuestream");
+		ProcessMiningModelValueStream vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK(modelId));
+		try {
+			ProcessMiningModeValueStreamDAOREST pmmvsDAO = new ProcessMiningModeValueStreamDAOREST(getInstance());
+			vStream = pmmvsDAO.findAllByProcessModel(modelId, true).get(0);
+		}
+		catch (Throwable t) {
+			t.printStackTrace();
+			throw t;
+		}
+
+		logger.info("Exit ProcessMiningController.GET(/models/" + modelId + "/valuestream");
+		return vStream;
 	}
 
 	private static final Logger logger = LoggerFactory.getLogger(ProcessMiningController.class);
