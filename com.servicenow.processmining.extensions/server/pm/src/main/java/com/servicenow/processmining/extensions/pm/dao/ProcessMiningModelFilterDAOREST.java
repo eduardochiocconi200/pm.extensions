@@ -60,14 +60,14 @@ public class ProcessMiningModelFilterDAOREST
 					JSONObject rawConditionJsonObject = new JSONObject(rawCondition);
 					filter = new ProcessMiningModelVersionFilter(new ProcessMiningModelVersionFilterPK(sysId));
 					filter.setName(name);
-					filter.setProjectId(projectId);		
+					filter.setProjectId(projectId);
 					if (rawConditionJsonObject.has("breakdownConditions")) {
 						String condition = rawConditionJsonObject.getJSONObject("breakdownConditions").toString();
-						filter.setBreakdownFiltersCondition(condition);
+						filter.setBreakdownFilterCondition(condition);
 					}
 					else if (rawConditionJsonObject.has("transitionCondition")) {
 						String condition = rawConditionJsonObject.getJSONObject("transitionCondition").toString();
-						filter.setTransitionFiltersCondition(condition);
+						filter.setTransitionFilterCondition(condition);
 					}
 				}
 			}
@@ -114,11 +114,11 @@ public class ProcessMiningModelFilterDAOREST
 					filter.setProjectId(projectId);		
 					if (rawConditionJsonObject.has("breakdownConditions")) {
 						String condition = rawConditionJsonObject.getJSONObject("breakdownConditions").toString();
-						filter.setBreakdownFiltersCondition(condition);
+						filter.setBreakdownFilterCondition(condition);
 					}
 					else if (rawConditionJsonObject.has("transitionCondition")) {
 						String condition = rawConditionJsonObject.getJSONObject("transitionCondition").toString();
-						filter.setTransitionFiltersCondition(condition);
+						filter.setTransitionFilterCondition(condition);
 					}
 					modelFilters.add(filter);
 				}
@@ -145,8 +145,8 @@ public class ProcessMiningModelFilterDAOREST
 					ProcessMiningModelVersionFilter f = new ProcessMiningModelVersionFilter(pk);
 					f.setName("Main Process - No Filter");
 					f.setCaseFrequency(pmmp.getProcessMiningModel().getAggregate().getCaseCount());
-					f.setBreakdownFiltersCondition(null);
-					f.setTransitionFiltersCondition(null);
+					f.setBreakdownFilterCondition(null);
+					f.setTransitionFilterCondition(null);
 					f.setAvgDuration(pmmp.getProcessMiningModel().getAggregate().getAvgCaseDuration());
 					f.setMaxDuration(pmmp.getProcessMiningModel().getAggregate().getMaxCaseDuration());
 					f.setMinDuration(pmmp.getProcessMiningModel().getAggregate().getMinCaseDuration());
@@ -156,12 +156,13 @@ public class ProcessMiningModelFilterDAOREST
 					f.setVariantCount(pmmp.getProcessMiningModel().getAggregate().getVariantCount());
 					modelFilters.add(f);
 				}
+
 				for (ProcessMiningModelFilter filter : pmmp.getProcessMiningModel().getFilters().values()) {
 					ProcessMiningModelVersionFilterPK pk = new ProcessMiningModelVersionFilterPK(filter.getId());
 					ProcessMiningModelVersionFilter f = new ProcessMiningModelVersionFilter(pk);
 					f.setName(filter.getName());
-					f.setBreakdownFilters(pmmp.getProcessMiningModel().getFilters());
-					f.setTransitionFilters(pmmp.getProcessMiningModel().getFilters());
+					f.setBreakdownFilter(filter.getBreakdownCondition());
+					f.setTransitionsFilter(filter.getFilterTransitions());
 					f.setCaseFrequency(filter.getCaseFrequency());
 					f.setAvgDuration(filter.getAvgDuration());
 					f.setMaxDuration(filter.getMaxDuration());
