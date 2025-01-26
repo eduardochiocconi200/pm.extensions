@@ -1,6 +1,9 @@
 package com.servicenow.processmining.extensions.pm.model;
 
+import java.io.Serializable;
+
 public class ProcessMiningModelFilterBreakdownCondition
+    implements Serializable
 {
     private String condition = null;
 
@@ -16,5 +19,15 @@ public class ProcessMiningModelFilterBreakdownCondition
     public String getCondition()
     {
         return this.condition;
+    }
+
+    public String getConditionJSON()
+    {
+        return "{ \"condition\" : \"" + condition + "\" }";
+    }
+
+    public String toString()
+    {
+        return "[ Condition: (" + condition + ") ]";
     }
 }
