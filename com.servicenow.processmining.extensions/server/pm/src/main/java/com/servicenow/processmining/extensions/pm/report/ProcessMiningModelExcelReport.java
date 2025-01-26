@@ -20,7 +20,7 @@ import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
 public class ProcessMiningModelExcelReport
 {
     private ProcessMiningModel model = null;
-    private String excelReportFolderName = "/tmp/ProcessMiningROIReport";
+    private String excelReportFolderName = "/tmp/ProcessMiningExcelGenerator";
     private String excelReportFileName = null;
     private ProcessMiningModelRoutingTableDataSource routingTableDataSource = null;
     private XSSFWorkbook templateWorkbook = null;
@@ -45,7 +45,7 @@ public class ProcessMiningModelExcelReport
         if (excelReportFileName == null) {
             Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-            this.excelReportFileName = this.excelReportFolderName + " - " + getModel().getName() + " - " + dateFormat.format(date) + ".xlsx";
+            this.excelReportFileName = this.excelReportFolderName + "-" + getModel().getName() + "-" + dateFormat.format(date) + ".xlsx";
         }
 
         return this.excelReportFileName;
