@@ -1,12 +1,9 @@
 package com.servicenow.processmining.extensions.pm.entities;
 
-import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelFilter;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelFilterBreakdown;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelFilterBreakdownCondition;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelFilterTransitions;
 import com.servicenow.processmining.extensions.sn.entities.ServiceNowEntity;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,10 +12,10 @@ public class ProcessMiningModelVersionFilter
     extends ServiceNowEntity
 {
     private String name = null;
-    private String breakdownFiltersCondition = null;
-    private ArrayList<ProcessMiningModelFilter> breakdownFilters = null;
-    private String transitionsFiltersCondition = null;
-    private ArrayList<ProcessMiningModelFilter> transitionsFilters = null;
+    private String breakdownFilterCondition = null;
+    private ProcessMiningModelFilterBreakdown breakdownFilter = null;
+    private String transitionsFilterCondition = null;
+    private ProcessMiningModelFilterTransitions transitionsFilter = null;
     private String projectId = null;
     private int caseFrequency = -1;
     private int variantCount = -1;
@@ -134,87 +131,73 @@ public class ProcessMiningModelVersionFilter
         return this.stdDeviation;
     }
 
-    public String toString()
+    public void setBreakdownFilterCondition(final String condition)
     {
-        return "[ProcessMiningModelFilter: (" + getPK().toString() + "), Name: '" + getName() + "'', Breakdown Filters: '" + getBreakdownFilters() + "', Transitions Filters: '" + getTransitionsFilters() + "', ProjectId: '" + getProjectId() + "', Records: '" + getCaseFrequency() + "', Routes: '" + getVariantCount() + "', Avg: '" + getAvgDuration() +"', Median: '" + getMedianDuration() + "', Std Dev: '" + getStdDeviation() + "']";
+        this.breakdownFilterCondition = condition;
+        if (condition != null && !condition.equals("")) {
+            breakdownFilter = parseBreakdownFilterFromCondition();
+        }
     }
 
-    public void setBreakdownFiltersCondition(final String condition)
+    public String getBreakdownFilterCondition()
     {
-        this.breakdownFiltersCondition = condition;
-        breakdownFilters = parseBreakdownFiltersFromCondition();
+        return this.breakdownFilterCondition;
     }
 
-    public String getBreakdownFiltersCondition()
+    public void setBreakdownFilter(final ProcessMiningModelFilterBreakdown breakdownFilter)
     {
-        return this.breakdownFiltersCondition;
+        this.breakdownFilter = breakdownFilter;
     }
 
-    public void setBreakdownFilters(final HashMap<String, ProcessMiningModelFilter> filters)
+    public ProcessMiningModelFilterBreakdown getBreakdownFilter()
     {
-        if (filters != null) {
-            for (ProcessMiningModelFilter filter : filters.values()) {
-                if (filter.getBreakdownCondition() != null) {
-                    getBreakdownFilters().add(filter);
-                }
+        if (breakdownFilter == null) {
+            if (getBreakdownFilterCondition() != null && !getBreakdownFilterCondition().equals("")) {
+                breakdownFilter = parseBreakdownFilterFromCondition();
             }
         }
+
+        return breakdownFilter;
     }
 
-    public ArrayList<ProcessMiningModelFilter> getBreakdownFilters()
+    public void setTransitionFilterCondition(final String condition)
     {
-        if (breakdownFilters == null) {
-            breakdownFilters = new ArrayList<ProcessMiningModelFilter>();
+        this.transitionsFilterCondition = condition;
+        if (condition != null && !condition.equals("")) {
+            transitionsFilter = parseTransitionFilterFromCondition();
         }
-
-        return breakdownFilters;
     }
 
-    public void setTransitionFiltersCondition(final String condition)
+    public String getTransitionFilterCondition()
     {
-        this.transitionsFiltersCondition = condition;
-        transitionsFilters = parseTransitionFilterFromCondition();
+        return this.transitionsFilterCondition;
     }
 
-    public String getTransitionFiltersCondition()
+    public void setTransitionsFilter(final ProcessMiningModelFilterTransitions transitionsFilter)
     {
-        return this.transitionsFiltersCondition;
+        this.transitionsFilter = transitionsFilter;
     }
 
-    public void setTransitionFilters(final HashMap<String, ProcessMiningModelFilter> filters)
+    public ProcessMiningModelFilterTransitions getTransitionsFilters()
     {
-        if (filters != null) {
-            for (ProcessMiningModelFilter filter : filters.values()) {
-                if (filter.getFilterTransitions() != null) {
-                    getTransitionsFilters().add(filter);
-                }
+        if (this.transitionsFilter == null) {
+            if (getTransitionFilterCondition() != null && !getTransitionFilterCondition().equals("")) {
+                this.transitionsFilter = parseTransitionFilterFromCondition();
             }
         }
+
+        return this.transitionsFilter;
     }
 
-    public ArrayList<ProcessMiningModelFilter> getTransitionsFilters()
+    // {"breakdownConditions":{"783f434393a88x506e79bb1e1dba1020":{"breakdowns":[{"field":"contact_type","values":["phone"]},{"field":"priority","values":["1"]}]}}}
+    private ProcessMiningModelFilterBreakdown parseBreakdownFilterFromCondition()
     {
-        if (transitionsFilters == null) {
-            transitionsFilters = new ArrayList<ProcessMiningModelFilter>();
-        }
-
-        return transitionsFilters;
-    }
-
-    // {"breakdownConditions":{"783f434393a886506e79bb1e1dba1020":{"breakdowns":[{"field":"contact_type","values":["phone"]},{"field":"priority","values":["1"]}]}}}
-    private ArrayList<ProcessMiningModelFilter> parseBreakdownFiltersFromCondition()
-    {
-        ArrayList<ProcessMiningModelFilter> filters = new ArrayList<ProcessMiningModelFilter>();
-        ProcessMiningModelFilter filter = new ProcessMiningModelFilter();
-        filters.add(filter);
-
-        JSONObject breakdownFilterConditions = new JSONObject(getBreakdownFiltersCondition());
+        ProcessMiningModelFilterBreakdown filterBreakdown = new ProcessMiningModelFilterBreakdown();
+        JSONObject breakdownFilterConditions = new JSONObject(getBreakdownFilterCondition());
         for (String entry : breakdownFilterConditions.keySet()) {
             JSONObject breakdownsObj = breakdownFilterConditions.getJSONObject(entry);
             JSONArray breakdowns = breakdownsObj.getJSONArray("breakdowns");
             if (breakdowns != null && breakdowns.length() > 0) {
-                ProcessMiningModelFilterBreakdown filterBreakdown = new ProcessMiningModelFilterBreakdown();
-                filter.setBreakdownCondition(filterBreakdown);
                 for (int k=0; k < breakdowns.length(); k++) {
                     String condition = breakdowns.get(k).toString();
                     ProcessMiningModelFilterBreakdownCondition bCondition = new ProcessMiningModelFilterBreakdownCondition();
@@ -224,12 +207,17 @@ public class ProcessMiningModelVersionFilter
             }
         }
 
-        throw new RuntimeException("Need to validate the implementation of this method.");
+        return filterBreakdown;
     }
 
     // {"transitionCondition":{"queries":[[{"eventVar":"x0","entityId":"783f434393a886506e79bb1e1dba1020","field":"__case","value":["created"],"predicate":"EQ","relation":"FOLLOWED_BY","occurrence":"ALWAYS"},{"eventVar":"x1","entityId":"783f434393a886506e79bb1e1dba1020","field":"state","value":["1"],"predicate":"EQ","relation":"FOLLOWED_BY","occurrence":"ALWAYS"},{"eventVar":"x2","entityId":"783f434393a886506e79bb1e1dba1020","field":"state","value":["200"],"predicate":"EQ","relation":"FOLLOWED_BY","occurrence":"ALWAYS"},{"eventVar":"x3","entityId":"783f434393a886506e79bb1e1dba1020","field":"state","value":["2"],"predicate":"EQ","relation":"FOLLOWED_BY","occurrence":"ALWAYS"},{"eventVar":"x4","entityId":"783f434393a886506e79bb1e1dba1020","field":"state","value":["6"],"predicate":"EQ","relation":"FOLLOWED_BY","occurrence":"ALWAYS"},{"eventVar":"x5","entityId":"783f434393a886506e79bb1e1dba1020","field":"state","value":["7"],"predicate":"EQ","relation":"FOLLOWED_BY","occurrence":"ALWAYS"},{"eventVar":"x6","entityId":"783f434393a886506e79bb1e1dba1020","field":"__case","value":["completed"],"predicate":"EQ","relation":"FOLLOWED_BY","occurrence":"ALWAYS"}]]}}
-    private ArrayList<ProcessMiningModelFilter> parseTransitionFilterFromCondition()
+    private ProcessMiningModelFilterTransitions parseTransitionFilterFromCondition()
     {
         throw new RuntimeException("Need to validate the implementation of this method.");
+    }
+
+    public String toString()
+    {
+        return "[ProcessMiningModelVersionFilter: (" + getPK().toString() + "), Name: '" + getName() + "', ProjectId: '" + getProjectId() + "', Records: '" + getCaseFrequency() + "', Routes: '" + getVariantCount() + "', Avg: '" + getAvgDuration() +"', Median: '" + getMedianDuration() + "', Std Dev: '" + getStdDeviation() + "',\nBreakdown Filters: '" + getBreakdownFilter() + "',\nTransitions Filters: '" + getTransitionsFilters() + "']";
     }
 }
