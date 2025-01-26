@@ -1,7 +1,9 @@
 package com.servicenow.processmining.extensions.pm.bpmn;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.camunda.bpm.model.bpmn.Bpmn;
@@ -25,6 +27,7 @@ public class BPMNProcessGenerator
     extends BPMNBaseGenerator
 {
     private ProcessMiningModel processModel = null;
+    private String fileName = null;
     private BpmnDiagram diagram = null;
     private BpmnPlane plane = null;
     private Process process = null;
@@ -54,6 +57,17 @@ public class BPMNProcessGenerator
         saveProcess();
 
         return true;
+    }
+
+    public String getBPMNFileName()
+    {
+        if (fileName == null) {
+            Date date = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+            fileName = TARGET_FOLDER_NAME + getProcessModel().getName() + "_" + getProcessModel().getProjectId() + " - " + dateFormat.format(date) + ".bpmn";
+        }
+
+        return fileName;
     }
 
     private void createProcess()
@@ -236,7 +250,7 @@ public class BPMNProcessGenerator
     {
         try {
             Bpmn.validateModel(getModelInstance());
-            File file = new File(TARGET_FOLDER_NAME + getProcessModel().getName() + "_" + getProcessModel().getProjectId() + ".bpmn");
+            File file = new File(getBPMNFileName());
             Bpmn.writeModelToFile(file, getModelInstance());
         }
         catch (ModelValidationException mve) {
@@ -248,5 +262,5 @@ public class BPMNProcessGenerator
     private final static double Y_START = 100;
     private final static int X_INCREMENT = 200;
     private final static int Y_INCREMENT = 100;
-    private static final String TARGET_FOLDER_NAME = "/Users/eduardo.chiocconi/Downloads/";
+    private static final String TARGET_FOLDER_NAME = "/tmp/ProcessMiningBPMNGenerator";
 }
