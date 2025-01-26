@@ -16,7 +16,6 @@ public class ProcessMiningModelVersion
     private int medianDuration = -1;
     private int stdDeviation = -1;
 
-
     public ProcessMiningModelVersion(ProcessMiningModelVersionPK pk)
     {
         super(pk);
