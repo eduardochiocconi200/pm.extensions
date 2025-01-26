@@ -1,6 +1,9 @@
 package com.servicenow.processmining.extensions.pm.model;
 
+import java.io.Serializable;
+
 public class ProcessMiningModelFilter
+    implements Serializable
 {
     private String id = null;
     private String name = null;
@@ -71,7 +74,12 @@ public class ProcessMiningModelFilter
 
     public String getBreakdownConditionJSON()
     {
-        throw new UnsupportedOperationException("Unimplemented method 'getBreakdownConditionJSON'");
+        String json = "";
+        if (this.filterBreakdown != null) {
+            json = this.filterBreakdown.getFilterBreakdownJSON();
+        }
+
+        return json;
     }
 
     public void setFilterTransitions(ProcessMiningModelFilterTransitions transitionsFilter)
@@ -86,7 +94,12 @@ public class ProcessMiningModelFilter
 
     public String getFilterTransitionsJSON()
     {
-      throw new UnsupportedOperationException("Unimplemented method 'getFilterTransitionsJSON'");
+        String json = "";
+        if (this.filterTransitions != null) {
+            json = this.filterTransitions.getFilterTransitionsJSON();
+        }
+
+        return json;
     }
 
     public void setCaseFrequency(final int freq)
@@ -167,5 +180,17 @@ public class ProcessMiningModelFilter
     public int getStdDeviation()
     {
         return this.stdDeviation;
+    }
+
+    public String toString()
+    {
+        StringBuffer sb = new StringBuffer();
+
+        sb.append("[ Id: (" + id + "), Name: (" + name + "), caseFrequency: (" + caseFrequency + "), variantCount: (" + variantCount + "), totalDuration: (" + totalDuration + "),");
+        sb.append(" MaxDuration: (" + maxDuration + "), MinDuration: (" + minDuration + "), AvgDuration: (" + avgDuration + "), medianDuration: (" + medianDuration + "), stdDev: (" + stdDeviation + "),\n");
+        sb.append(" Filter Breakdown: (" + filterBreakdown + "),\n");
+        sb.append(" Filter Transitions: (" + filterTransitions + ")]\n");
+
+        return sb.toString();
     }
 }
