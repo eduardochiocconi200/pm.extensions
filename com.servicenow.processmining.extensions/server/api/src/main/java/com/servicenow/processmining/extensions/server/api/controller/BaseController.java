@@ -1,16 +1,11 @@
 package com.servicenow.processmining.extensions.server.api.controller;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 import com.servicenow.processmining.extensions.sn.dao.PlatformVersionDAOREST;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 
 public class BaseController
 {
