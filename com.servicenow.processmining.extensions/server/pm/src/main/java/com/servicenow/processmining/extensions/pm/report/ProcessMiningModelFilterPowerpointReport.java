@@ -106,7 +106,7 @@ public class ProcessMiningModelFilterPowerpointReport
         if (fileName == null) {
             Date date = new Date();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-            fileName = "/tmp/PM_POV_Filter" + " - " + dateFormat.format(date) + ".pptx";
+            fileName = "/tmp/ProcessMiningPPTGenerator" + "-" + getModel().getName() + "-" + dateFormat.format(date) + ".pptx";
         }
 
         return fileName;
