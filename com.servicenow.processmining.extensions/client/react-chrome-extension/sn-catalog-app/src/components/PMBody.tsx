@@ -3,6 +3,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import axios from "axios";
+import ValueStream from "./ValueStream";
 
 interface FilterType {
   id: string,
@@ -79,10 +80,8 @@ function PMProjectBody()
                 + currentdate.getHours() + "-"
                 + currentdate.getMinutes() + "-"
                 + currentdate.getSeconds();
-        tempLink.setAttribute(
-          "download",
-          filter + " Analysis - " + datetime + ".pptx"
-        ); // Set the desired filename for the downloaded file
+        // Set the desired filename for the downloaded file.
+        tempLink.setAttribute("download", filter + " Analysis - " + datetime + ".pptx");
 
         // Append the <a> element to the body and click it to trigger the download
         document.body.appendChild(tempLink);
@@ -196,7 +195,7 @@ function PMProjectBody()
           </select>
         </div>
         <div style={{marginTop: '20px'}}></div>
-        {modelFilters.length > 0 && <h4>Process Mining Project Details</h4>}
+        {modelFilters.length > 0 && <h4>Process Mining Project Summary Details</h4>}
         <div id="mainProcessStats">
         {modelFilters.length > 0 && modelFilters.slice(0,1).map((value) => (
             <ListGroup>
@@ -211,34 +210,53 @@ function PMProjectBody()
         ))}
         </div>
         <div style={{marginTop: '20px'}}></div>
-        {modelFilters.length > 0 && <h4>Process Mining Project Filters</h4>}
-        <div style={{marginTop: '15px'}}>
-          <div className="accordion" id="accordionFilters">
-            {modelFilters.length > 0 && modelFilters.slice(0).map((value, index) => (
-            <Accordion>
-              <Accordion.Item eventKey={"" + index + ""}>
-                <Accordion.Header>Filter Name: {(value as FilterType).name}</Accordion.Header>
+        {modelFilters.length > 0 && selectedModel != "" && <h4>Analysis</h4>}
+        {modelFilters.length > 0 && selectedModel != "" && <div style={{marginTop: '15px'}}>
+          <div className="accordion" id="accordionStream">
+          <Accordion>
+              <Accordion.Item eventKey={"1"}>
+                <Accordion.Header>Value Stream Analysis</Accordion.Header>
                 <Accordion.Body>
-                  <b>Name:</b> {(value as FilterType).name}<br></br>
-                  <b>Total Records: </b> {(value as FilterType).caseFrequency}<br></br>
-                  <b>Routes: </b> {(value as FilterType).variantCount}<br></br>
-                  <b>Average Cycle Time: </b>{getTimeInMinutes((value as FilterType).avgDuration) + " minutes (" + getTimeInHours((value as FilterType).avgDuration) + " hours)"}<br></br>
-                  <b>Median Cycle Time: </b>{getTimeInMinutes((value as FilterType).medianDuration) + " minutes (" + getTimeInHours((value as FilterType).medianDuration) + " hours)"}<br></br>
-                  <b>Condition:</b> {(value as FilterType).condition}
-                  <br></br><br></br>
-                  <div id="Download Assets">
-                    <Button onClick={ ()=> { requestPowerPointDeckForFilter(selectedModel, (value as FilterType).name)}} variant="primary">Download Filter Analysis PPT</Button>
-                    {' '}
-                    <Button onClick={ ()=> { requestExcelCycletimeForFilter(selectedModel, (value as FilterType).name)}} variant="primary">Download Cycle Time Excel</Button>
-                    {' '}
-                    <Button onClick={ ()=> { requestBPMNDiagramsForFilter(selectedModel, (value as FilterType).name)}} variant="primary">Download Variant BPMNs</Button>
+                  <ValueStream model={selectedModel}></ValueStream>
+                </Accordion.Body>
+              </Accordion.Item>
+          </Accordion>
+          </div>
+          <div className="accordion" id="accordionFilters">
+          <Accordion>
+              <Accordion.Item eventKey={"1"}>
+                <Accordion.Header>Filters Analysis</Accordion.Header>
+                <Accordion.Body>
+                  <div className="accordion" id="accordionFilters">
+                    {modelFilters.length > 0 && modelFilters.slice(0).map((value, index) => (
+                    <Accordion>
+                      <Accordion.Item eventKey={"" + index + ""}>
+                        <Accordion.Header>Filter Name: {(value as FilterType).name}</Accordion.Header>
+                        <Accordion.Body>
+                          <b>Name:</b> {(value as FilterType).name}<br></br>
+                          <b>Total Records: </b> {(value as FilterType).caseFrequency}<br></br>
+                          <b>Routes: </b> {(value as FilterType).variantCount}<br></br>
+                          <b>Average Cycle Time: </b>{getTimeInMinutes((value as FilterType).avgDuration) + " minutes (" + getTimeInHours((value as FilterType).avgDuration) + " hours)"}<br></br>
+                          <b>Median Cycle Time: </b>{getTimeInMinutes((value as FilterType).medianDuration) + " minutes (" + getTimeInHours((value as FilterType).medianDuration) + " hours)"}<br></br>
+                          <b>Condition:</b> {(value as FilterType).condition}
+                          <br></br><br></br>
+                          <div id="Download Assets">
+                            <Button onClick={ ()=> { requestPowerPointDeckForFilter(selectedModel, (value as FilterType).name)}} variant="primary">Download Filter Analysis PPT</Button>
+                            {' '}
+                            <Button onClick={ ()=> { requestExcelCycletimeForFilter(selectedModel, (value as FilterType).name)}} variant="primary">Download Cycle Time Excel</Button>
+                            {' '}
+                            <Button onClick={ ()=> { requestBPMNDiagramsForFilter(selectedModel, (value as FilterType).name)}} variant="primary">Download Variant BPMNs</Button>
+                          </div>
+                        </Accordion.Body>
+                      </Accordion.Item>
+                    </Accordion>
+                    ))}
                   </div>
                 </Accordion.Body>
               </Accordion.Item>
-            </Accordion>
-            ))}
+          </Accordion>
           </div>
-        </div>
+        </div>}
       </div>
       <div style={{marginTop: '20px'}}></div>
     </>
