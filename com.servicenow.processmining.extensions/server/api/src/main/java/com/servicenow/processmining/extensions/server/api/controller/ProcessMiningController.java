@@ -1,7 +1,8 @@
 package com.servicenow.processmining.extensions.server.api.controller;
 
+import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStream;
+import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStreamPhase;
 import com.servicenow.processmining.extensions.pm.bpmn.BPMNProcessGenerator;
-import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModeValueStreamDAOREST;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelFilterDAOREST;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrieval;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrievalFactory;
@@ -34,6 +35,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -283,8 +285,15 @@ public class ProcessMiningController
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/valuestream");
 		ProcessMiningModelValueStream vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK(modelId));
 		try {
-			ProcessMiningModeValueStreamDAOREST pmmvsDAO = new ProcessMiningModeValueStreamDAOREST(getInstance());
-			vStream = pmmvsDAO.findAllByProcessModel(modelId, true).get(0);
+			// ProcessMiningModeValueStreamDAOREST pmmvsDAO = new ProcessMiningModeValueStreamDAOREST(getInstance());
+			// vStream = pmmvsDAO.findAllByProcessModel(modelId, true).get(0);
+			vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK("VS1"));
+			ValueStream valueStream = new ValueStream();
+			ValueStreamPhase phase1 = new ValueStreamPhase("Phase 0");
+			ValueStreamPhase phase2 = new ValueStreamPhase("Phase 1");
+			valueStream.getPhases().add(phase1);
+			valueStream.getPhases().add(phase2);
+			vStream.setValueStream(valueStream);
 		}
 		catch (Throwable t) {
 			t.printStackTrace();
@@ -292,6 +301,24 @@ public class ProcessMiningController
 		}
 
 		logger.info("Exit ProcessMiningController.GET(/models/" + modelId + "/valuestream");
+		return vStream;
+	}
+
+	@DeleteMapping("/models/{modelId}/valuestream")
+	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
+	public ProcessMiningModelValueStream deleteModelVersionValueStream(@PathVariable String modelId)
+	{
+		logger.info("Enter ProcessMiningController.DELETE(/models/" + modelId + "/valuestream");
+		ProcessMiningModelValueStream vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK(modelId));
+		try {
+			vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK("VS1"));
+		}
+		catch (Throwable t) {
+			t.printStackTrace();
+			throw t;
+		}
+
+		logger.info("Exit ProcessMiningController.DELETE(/models/" + modelId + "/valuestream");
 		return vStream;
 	}
 
