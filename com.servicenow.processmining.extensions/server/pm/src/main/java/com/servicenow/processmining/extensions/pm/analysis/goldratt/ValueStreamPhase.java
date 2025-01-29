@@ -8,7 +8,16 @@ public class ValueStreamPhase
     private ArrayList<String> nodes = null;
     private ValueStreamPhaseStatistics statistics = null;
 
+    public ValueStreamPhase()
+    {
+    }
+
     public ValueStreamPhase(final String name)
+    {
+        this.name = name;
+    }
+
+    public void setName(final String name)
     {
         this.name = name;
     }
