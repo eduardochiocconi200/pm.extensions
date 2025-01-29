@@ -8,6 +8,10 @@ public class ProcessMiningModelValueStream
 {
     private ValueStream valueStream = null;
 
+    public ProcessMiningModelValueStream()
+    {
+    }
+
     public ProcessMiningModelValueStream(ProcessMiningModelValueStreamPK pk)
     {
         super(pk);
