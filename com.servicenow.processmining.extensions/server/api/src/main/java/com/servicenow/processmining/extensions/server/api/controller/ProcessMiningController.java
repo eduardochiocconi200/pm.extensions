@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.TreeSet;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,12 +39,16 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ProcessMiningController
 	extends BaseController
 {
+	private HashMap<String, ProcessMiningModelValueStream> valueStreams = null;
+
 	@GetMapping("/login/{instance}/{user}/{password}")
 	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
 	public String getLogin(@PathVariable String instance, @PathVariable String user, @PathVariable String password)
@@ -110,7 +115,7 @@ public class ProcessMiningController
 
 	@GetMapping("/models/{modelId}")
 	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
-	public ProcessMiningModelVersion processModelVersion(@PathVariable String modelId)
+	public ProcessMiningModelVersion getProcessModelVersion(@PathVariable String modelId)
 	{
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + ")");
 		ProcessMiningModelVersionPK pk = new ProcessMiningModelVersionPK(modelId);
@@ -123,7 +128,7 @@ public class ProcessMiningController
 
 	@GetMapping("/models/{modelId}/filters")
 	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
-	public List<ProcessMiningModelVersionFilter> processModelVersionFilters(@PathVariable String modelId)
+	public List<ProcessMiningModelVersionFilter> getProcessModelVersionFilters(@PathVariable String modelId)
 	{
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/filters");
 		List<ProcessMiningModelVersionFilter> filters = new ArrayList<ProcessMiningModelVersionFilter>();
@@ -142,7 +147,7 @@ public class ProcessMiningController
 
 	@GetMapping("/models/{modelId}/filters/{filterName}")
 	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
-	public ProcessMiningModelVersionFilter processModelVersionFilter(@PathVariable String modelId, @PathVariable String filterName)
+	public ProcessMiningModelVersionFilter getProcessModelVersionFilter(@PathVariable String modelId, @PathVariable String filterName)
 	{
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + ")");
 		ProcessMiningModelVersionFilterPK pk = new ProcessMiningModelVersionFilterPK("1");
@@ -157,7 +162,7 @@ public class ProcessMiningController
 
 	@GetMapping("/models/{modelId}/filters/{filterName}/ppt")
 	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
-	public ResponseEntity<Resource> processModelVersionFilterPowerPoint(@PathVariable String modelId, @PathVariable String filterName)
+	public ResponseEntity<Resource> getProcessModelVersionFilterPowerPoint(@PathVariable String modelId, @PathVariable String filterName)
 	{
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/ppt)");
 		ResponseEntity<Resource> response = null;
@@ -198,7 +203,7 @@ public class ProcessMiningController
 
 	@GetMapping("/models/{modelId}/filters/{filterName}/xls")
 	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
-	public ResponseEntity<Resource> processModelVersionFilterExcel(@PathVariable String modelId, @PathVariable String filterName)
+	public ResponseEntity<Resource> getProcessModelVersionFilterExcel(@PathVariable String modelId, @PathVariable String filterName)
 	{
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/xls)");
 		ResponseEntity<Resource> response = null;
@@ -239,7 +244,7 @@ public class ProcessMiningController
 
 	@GetMapping("/models/{modelId}/filters/{filterName}/bpmn")
 	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
-	public ResponseEntity<Resource> processModelModelFilterBPMN(@PathVariable String modelId, @PathVariable String filterName)
+	public ResponseEntity<Resource> getProcessModelModelFilterBPMN(@PathVariable String modelId, @PathVariable String filterName)
 		throws IOException
 	{
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/bpmn)");
@@ -278,30 +283,49 @@ public class ProcessMiningController
 		return response;
 	}
 
+	private HashMap<String, ProcessMiningModelValueStream> getValueStreams()
+	{
+		if (this.valueStreams == null) {
+			this.valueStreams = new HashMap<String, ProcessMiningModelValueStream>();
+		}
+
+		return this.valueStreams;
+	}
+
 	@GetMapping("/models/{modelId}/valuestream")
 	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
-	public ProcessMiningModelValueStream processModelVersionValueStream(@PathVariable String modelId)
+	public ProcessMiningModelValueStream getProcessModelVersionValueStream(@PathVariable String modelId)
 	{
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/valuestream");
-		ProcessMiningModelValueStream vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK(modelId));
-		try {
-			// ProcessMiningModeValueStreamDAOREST pmmvsDAO = new ProcessMiningModeValueStreamDAOREST(getInstance());
-			// vStream = pmmvsDAO.findAllByProcessModel(modelId, true).get(0);
-			vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK("VS1"));
+		ProcessMiningModelValueStream vStream = getValueStreams().get(modelId);
+		if (vStream == null) {
+			vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK(modelId));
 			ValueStream valueStream = new ValueStream();
-			ValueStreamPhase phase1 = new ValueStreamPhase("Phase 0");
-			ValueStreamPhase phase2 = new ValueStreamPhase("Phase 1");
+			ValueStreamPhase phase1 = new ValueStreamPhase("Phase 1");
+			phase1.getNodes().add("New");
+			phase1.getNodes().add("Assigned");
 			valueStream.getPhases().add(phase1);
-			valueStream.getPhases().add(phase2);
 			vStream.setValueStream(valueStream);
-		}
-		catch (Throwable t) {
-			t.printStackTrace();
-			throw t;
+			getValueStreams().put(modelId, vStream);
 		}
 
 		logger.info("Exit ProcessMiningController.GET(/models/" + modelId + "/valuestream");
 		return vStream;
+	}
+
+	@PutMapping("/models/{modelId}/valuestream")
+	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
+	public ResponseEntity<ProcessMiningModelValueStream> putModelVersionValueStream(@RequestBody ProcessMiningModelValueStream valueStream, @PathVariable String modelId)
+	{
+		logger.info("Enter ProcessMiningController.PUT(/models/" + modelId + "/valuestream");
+		ProcessMiningModelValueStream vStream = getValueStreams().get(modelId);
+		if (vStream != null) {
+			getValueStreams().remove(modelId);
+		}
+		getValueStreams().put(modelId, vStream);
+
+		logger.info("Exit ProcessMiningController.PUT(/models/" + modelId + "/valuestream");
+		return ResponseEntity.ok(vStream);
 	}
 
 	@DeleteMapping("/models/{modelId}/valuestream")
@@ -309,18 +333,15 @@ public class ProcessMiningController
 	public ProcessMiningModelValueStream deleteModelVersionValueStream(@PathVariable String modelId)
 	{
 		logger.info("Enter ProcessMiningController.DELETE(/models/" + modelId + "/valuestream");
-		ProcessMiningModelValueStream vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK(modelId));
-		try {
-			vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK("VS1"));
-		}
-		catch (Throwable t) {
-			t.printStackTrace();
-			throw t;
+		ProcessMiningModelValueStream vStream = getValueStreams().get(modelId);
+		if (vStream != null) {
+			getValueStreams().remove(modelId);
 		}
 
 		logger.info("Exit ProcessMiningController.DELETE(/models/" + modelId + "/valuestream");
 		return vStream;
 	}
+
 
 	private static final Logger logger = LoggerFactory.getLogger(ProcessMiningController.class);
 }
