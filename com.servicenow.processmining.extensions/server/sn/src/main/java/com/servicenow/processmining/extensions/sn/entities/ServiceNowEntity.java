@@ -7,7 +7,16 @@ public abstract class ServiceNowEntity
 {
     private PrimaryKey key = null;
 
+    public ServiceNowEntity()
+    {
+    }
+
     public ServiceNowEntity(final PrimaryKey pk)
+    {
+        this.key = pk;
+    }
+
+    public void setPK(final PrimaryKey pk)
     {
         this.key = pk;
     }
