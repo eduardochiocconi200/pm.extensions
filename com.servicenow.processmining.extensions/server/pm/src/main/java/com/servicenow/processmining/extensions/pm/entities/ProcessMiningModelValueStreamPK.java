@@ -7,10 +7,20 @@ public class ProcessMiningModelValueStreamPK
 {
     private String sysId = null;
 
+    public ProcessMiningModelValueStreamPK()
+    {
+        super();
+    }
+
     public ProcessMiningModelValueStreamPK(final String pk)
     {
         super();
         sysId = pk;
+    }
+
+    public void setSysId(final String sysId)
+    {
+        this.sysId = sysId;
     }
 
     public String getSysId()

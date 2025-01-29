@@ -7,10 +7,20 @@ public class ProcessMiningModelVersionFilterPK
 {
     private String sysId = null;
 
+    public ProcessMiningModelVersionFilterPK()
+    {
+        super();
+    }
+
     public ProcessMiningModelVersionFilterPK(final String pk)
     {
         super();
         sysId = pk;
+    }
+
+    public void setSysId(final String sysId)
+    {
+        this.sysId = sysId;
     }
 
     public String getSysId()
