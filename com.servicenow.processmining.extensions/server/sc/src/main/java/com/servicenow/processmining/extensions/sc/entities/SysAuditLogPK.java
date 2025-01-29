@@ -9,6 +9,12 @@ public class SysAuditLogPK
     private String fieldName = null;
     private int resultSetSize = DEFAULT_RESULT_SET_SIZE;
 
+    public SysAuditLogPK()
+    {
+        super();
+        this.resultSetSize = DEFAULT_RESULT_SET_SIZE;
+    }
+
     public SysAuditLogPK(final String tableName)
     {
         super();
@@ -39,14 +45,29 @@ public class SysAuditLogPK
         this.resultSetSize = resultSetSize;
     }
 
+    public void setTableName(final String tableName)
+    {
+        this.tableName = tableName;
+    }
+
     public String getTableName()
     {
         return this.tableName;
     }
 
+    public void setFieldName(final String fieldName)
+    {
+        this.fieldName = fieldName;
+    }
+
     public String getFieldName()
     {
         return this.fieldName;
+    }
+
+    public void setResultSetSize(final int size)
+    {
+        this.resultSetSize = size;
     }
 
     public int getResultSetSize()

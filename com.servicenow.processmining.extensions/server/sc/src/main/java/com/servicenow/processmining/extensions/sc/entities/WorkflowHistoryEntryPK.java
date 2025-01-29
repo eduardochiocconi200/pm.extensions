@@ -7,10 +7,20 @@ public class WorkflowHistoryEntryPK
 {
     private String sysId = null;
 
+    public WorkflowHistoryEntryPK()
+    {
+        super();
+    }
+
     public WorkflowHistoryEntryPK(final String pk)
     {
         super();
         sysId = pk;
+    }
+
+    public void setSysId(final String sysId)
+    {
+        this.sysId = sysId;
     }
 
     public String getSysId()

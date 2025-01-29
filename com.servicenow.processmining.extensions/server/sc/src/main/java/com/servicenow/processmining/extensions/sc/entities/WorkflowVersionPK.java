@@ -7,10 +7,20 @@ public class WorkflowVersionPK
 {
     private String sysId = null;
 
+    public WorkflowVersionPK()
+    {
+        super();
+    }
+
     public WorkflowVersionPK(final String pk)
     {
         super();
         sysId = pk;
+    }
+
+    public void setSysId(final String sysId)
+    {
+        this.sysId = sysId;
     }
 
     public String getSysId()

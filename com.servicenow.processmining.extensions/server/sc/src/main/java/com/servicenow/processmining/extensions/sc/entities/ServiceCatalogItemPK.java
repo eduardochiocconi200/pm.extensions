@@ -7,10 +7,20 @@ public class ServiceCatalogItemPK
 {
     private String sysName = null;
 
+    public ServiceCatalogItemPK()
+    {
+        super();
+    }
+
     public ServiceCatalogItemPK(final String pk)
     {
         super();
         sysName = pk;
+    }
+
+    public void setSysName(final String sysName)
+    {
+        this.sysName = sysName;
     }
 
     public String getSysName()

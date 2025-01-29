@@ -7,10 +7,20 @@ public class SysAuditEntryPK
 {
     private String sysId = null;
 
+    public SysAuditEntryPK()
+    {
+        super();
+    }
+
     public SysAuditEntryPK(final String pk)
     {
         super();
         this.sysId = pk;
+    }
+
+    public void setSysId(final String sysId)
+    {
+        this.sysId = sysId;
     }
 
     public String getSysId()

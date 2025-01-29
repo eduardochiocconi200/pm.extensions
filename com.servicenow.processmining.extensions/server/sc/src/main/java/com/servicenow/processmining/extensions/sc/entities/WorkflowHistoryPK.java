@@ -7,9 +7,19 @@ public class WorkflowHistoryPK
 {
     private String workflowVersionId = null;
 
+    public WorkflowHistoryPK()
+    {
+        super();
+    }
+
     public WorkflowHistoryPK(final String workflowVersionId)
     {
         super();
+        this.workflowVersionId = workflowVersionId;
+    }
+
+    public void setWorkflowVersionId(final String workflowVersionId)
+    {
         this.workflowVersionId = workflowVersionId;
     }
 

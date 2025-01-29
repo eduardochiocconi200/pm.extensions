@@ -7,10 +7,20 @@ public class FlowVersionPK
 {
     private String sysId = null;
 
+    public FlowVersionPK()
+    {
+        super();
+    }
+
     public FlowVersionPK(final String pk)
     {
         super();
         sysId = pk;
+    }
+
+    public void setSysId(final String sysId)
+    {
+        this.sysId = sysId;
     }
 
     public String getSysId()
