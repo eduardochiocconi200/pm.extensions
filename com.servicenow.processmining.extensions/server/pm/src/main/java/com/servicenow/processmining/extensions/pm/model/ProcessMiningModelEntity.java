@@ -1,6 +1,9 @@
 package com.servicenow.processmining.extensions.pm.model;
 
+import java.io.Serializable;
+
 public class ProcessMiningModelEntity
+    implements Serializable
 {
     private String tableId = null; // Entity Id
     private String tableName = null;

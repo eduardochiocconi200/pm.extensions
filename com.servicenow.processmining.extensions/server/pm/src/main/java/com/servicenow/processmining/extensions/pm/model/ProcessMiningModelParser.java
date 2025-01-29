@@ -451,7 +451,7 @@ public class ProcessMiningModelParser
                                                 // Load Variant Nodes.
                                                 JSONArray nodesArray = modelObj.getJSONArray("nodes");
                                                 ArrayList<ProcessMiningModelNode> nodes = parseNodes(nodesArray);
-                                                pmmv.setNodes(nodes);
+                                                pmmv.setNodesFromArray(nodes);
 
                                                 // Load Variant Edges.
                                                 JSONArray edgesArray = modelObj.getJSONArray("edges");
@@ -468,7 +468,7 @@ public class ProcessMiningModelParser
                                             // Load Variant Nodes.
                                             JSONArray nodesArray = variantObj.getJSONArray("nodes");
                                             ArrayList<ProcessMiningModelNode> nodes = parseNodesFromVariantNodeSequence(nodesArray);
-                                            pmmv.setNodes(nodes);
+                                            pmmv.setNodesFromArray(nodes);
 
                                             JSONArray caseIdsArray = variantObj.getJSONArray("caseIds");
                                             ArrayList<String> caseIds = parseCaseIdsFromVariantNodeSequence(caseIdsArray);

@@ -192,7 +192,7 @@ public class ComplianceDetector
         pmmv.setAvgDuration(filter.getAvgDuration());
         pmmv.setMedianDuration(filter.getMedianDuration());
         pmmv.setStdDeviation(filter.getStdDeviation());
-        pmmv.setNodes(nodes);
+        pmmv.setNodesFromArray(nodes);
         pmmv.addTransitions(transitions);
 
         return pmmv;

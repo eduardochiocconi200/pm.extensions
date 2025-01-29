@@ -1,9 +1,11 @@
 package com.servicenow.processmining.extensions.pm.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProcessMiningModelVariant
+    implements Serializable
 {
     private String id = null;
     private String entityId = null;
@@ -108,7 +110,7 @@ public class ProcessMiningModelVariant
         return translatedRoutePath;
     }
 
-    public void setNodes(final ArrayList<ProcessMiningModelNode> nodes)
+    public void setNodesFromArray(final ArrayList<ProcessMiningModelNode> nodes)
     {
         for (ProcessMiningModelNode node : nodes) {
             getNodes().put(node.getId(), node);

@@ -3,11 +3,13 @@ package com.servicenow.processmining.extensions.pm.model;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceBreakdownFinding;
 import com.servicenow.processmining.extensions.pm.report.data.DataSourceFindingContent;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.TreeMap;
 
-public class ProcessMiningModelBreakdown 
+public class ProcessMiningModelBreakdown
+    implements Serializable
 {
     private String entityId = null;
     private String field = null;

@@ -1,6 +1,9 @@
 package com.servicenow.processmining.extensions.pm.model;
 
+import java.io.Serializable;
+
 public class ProcessMiningModelBreakdownStat
+    implements Serializable
 {
     private String label = null;
     private String value = null;

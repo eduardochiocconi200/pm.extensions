@@ -1,6 +1,9 @@
 package com.servicenow.processmining.extensions.pm.model;
 
+import java.io.Serializable;
+
 public class ProcessMiningModelTransition
+    implements Serializable
 {
     private String from = null;
     private String fromName = null;

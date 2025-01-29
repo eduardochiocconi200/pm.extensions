@@ -1,6 +1,9 @@
 package com.servicenow.processmining.extensions.pm.model;
 
+import java.io.Serializable;
+
 public class ProcessMiningModelAggregate
+    implements Serializable
 {
     private int caseCount = -1;
     private int variantCount = -1;
