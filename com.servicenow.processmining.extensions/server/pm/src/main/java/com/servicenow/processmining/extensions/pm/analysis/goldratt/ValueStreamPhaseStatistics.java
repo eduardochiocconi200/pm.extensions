@@ -11,7 +11,12 @@ public class ValueStreamPhaseStatistics
     {
     }
 
-    public ArrayList<ValueStreamPhaseMeasure> getMeasure()
+    public void setMeasures(final ArrayList<ValueStreamPhaseMeasure> measures)
+    {
+        this.measures = measures;
+    }
+
+    public ArrayList<ValueStreamPhaseMeasure> getMeasures()
     {
         if  (this.measures == null) {
             this.measures = new ArrayList<ValueStreamPhaseMeasure>();
@@ -30,25 +35,30 @@ public class ValueStreamPhaseStatistics
         long min = 0;
         long max = 0;
 
-        for (ValueStreamPhaseMeasure m : getMeasure()) {
+        for (ValueStreamPhaseMeasure m : getMeasures()) {
             frequency += m.getFrequency();
-            touchpoints += m.getTouchPoints();
-            for (String key : m.getTouchPointsPath().keySet()) {
+            touchpoints += m.getTouchpoints();
+            for (String key : m.getTouchpointsPath().keySet()) {
                 touchpointPaths.add(key);
             }
-            avg += m.getAverage();
-            mean += m.getMean();
-            min = m.getMin() < min ? m.getMin() : min;
-            max = m.getMax() > max ? m.getMax() : max;
+            avg += m.getAverageTime();
+            mean += m.getMeanTime();
+            min = m.getMinTime() < min ? m.getMinTime() : min;
+            max = m.getMaxTime() > max ? m.getMaxTime() : max;
         }
 
         this.summary = new ValueStreamPhaseMeasure("summary", frequency, avg, mean, min, max);
-        this.summary.setTouchPoints(touchpoints);
+        this.summary.setTouchpoints(touchpoints);
         for (String key : touchpointPaths) {
-            this.summary.addTouchPointsPath(key);
+            this.summary.addTouchpointsPath(key);
         }
 
         return true;
+    }
+
+    public void setSummary(final ValueStreamPhaseMeasure summary)
+    {
+        this.summary = summary;
     }
 
     public ValueStreamPhaseMeasure getSummary()
