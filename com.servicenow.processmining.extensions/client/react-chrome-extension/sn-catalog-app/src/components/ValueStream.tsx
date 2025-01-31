@@ -2,26 +2,48 @@ import { useEffect, useState } from "react";
 import { Button, CardGroup, Card, Col, Container, Row } from 'react-bootstrap';
 import axios from "axios";
 
-interface ValueStreamType {
+interface VStreamType {
+  valueStream : {
+    model: string,
+    phases: ValueStreamPhaseType[]
+  },
+  pk : {
+    sys: string
+  }
+}
+
+interface ValueStreamPhaseType {
   name: string,
   nodes: string[],
   statistics: {
-    summary: string,
-    measures: string[]
+    summary: ValueStreamPhaseMeasureType,
+    measures: ValueStreamPhaseMeasureType[]
   }
+}
+
+interface ValueStreamPhaseMeasureType {
+  variant: string,
+  frequency: number,
+  touchpoints: number,
+  averageTime: number,
+  meanTime: number,
+  minTime: number,
+  maxTime: number
 }
 
 function ValueStream(props: { model: string; }) {
   const [selectedPhase, setSelectedPhase] = useState<string>('');
-  const [phases, setPhases] = useState<ValueStreamType[]>([]);
+  const [vStream, setVStream] = useState<VStreamType>();
+  const [phases, setPhases] = useState<ValueStreamPhaseType[]>([]);
 
   function getValueStream() {
     const url = 'http://localhost:8080/models/' + props.model + '/valuestream';
     setPhases([]);
-    axios.get(url, { headers: { "Access-Control-Allow-Origin" : "*"} })
+    axios.get(url, { headers: { "Access-Control-Allow-Origin" : "*" } })
       .then(response => response.data)
       .then((data) => {
         console.log('Retrieved Value Stream for model: ' + props.model);
+        setVStream(data);
         const phases = data.valueStream.phases;
         setPhases(phases);
       })
@@ -32,7 +54,8 @@ function ValueStream(props: { model: string; }) {
 
   const saveValueStream = (model: string) => {
     const url = 'http://localhost:8080/models/' + model + '/valuestream';
-    axios.put(url, { responseType: "blob", headers: { "Access-Control-Allow-Origin" : "*"} })
+    vStream.valueStream.phases = phases;
+    axios.put(url, vStream, { headers: { 'Content-Type': 'application/json', "Access-Control-Allow-Origin" : "*" } })
       .then(response => response.data)
       .then((data) => {
         console.log('Saving Value Stream: ' + data + '.');
@@ -58,7 +81,7 @@ function ValueStream(props: { model: string; }) {
 
   const runValueStreamAnalysis = (model: string) => {
     const url = 'http://localhost:8080/models/' + model + '/valuestream/run';
-    axios.put(url, { responseType: "blob", headers: { "Access-Control-Allow-Origin" : "*"} })
+    axios.put(url, { responseType: "blob", headers: { "Access-Control-Allow-Origin" : "*" } })
       .then(response => response.data)
       .then((data) => {
         console.log('Run Value Stream Analysis: ' + data + '.');
@@ -71,7 +94,7 @@ function ValueStream(props: { model: string; }) {
   const addPhase = () => {
     console.log("Adding Phase");
     const newPhases = Array.from(phases);
-    newPhases.push({ "name" : "Phase " + (phases.length+1), "nodes" : [], statistics : { "summary" : "Summary", "measures" : [] } });
+    newPhases.push({ "name" : "Phase " + (phases.length+1), "nodes" : [], statistics : { "summary" : null, "measures" : [] } });
     setPhases(newPhases);
     console.log(phases.length);
   };
@@ -97,8 +120,8 @@ function ValueStream(props: { model: string; }) {
                 <Card.Img variant="left" src="src/images/chevron.png"/>
                 <Card.ImgOverlay>
                 <Card.Body style={{ textAlign: 'center' }}>
-                  <Card.Title style={{ fontSize: 18 }}>{(value as ValueStreamType).name}</Card.Title>
-                  <Card.Text style={{ fontSize: 12 }}>Avg: {(value as ValueStreamType).name}<br></br>Click for details</Card.Text>
+                  <Card.Title style={{ fontSize: 18 }}>{(value as ValueStreamPhaseType).name}</Card.Title>
+                  <Card.Text style={{ fontSize: 12 }}>Avg: {(value as ValueStreamPhaseType).name}<br></br>Click for details</Card.Text>
                 </Card.Body>
                 </Card.ImgOverlay>
               </Card>
