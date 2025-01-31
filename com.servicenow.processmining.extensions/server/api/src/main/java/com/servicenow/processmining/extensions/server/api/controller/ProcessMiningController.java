@@ -2,6 +2,7 @@ package com.servicenow.processmining.extensions.server.api.controller;
 
 import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStream;
 import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStreamPhase;
+import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStreamPhaseMeasure;
 import com.servicenow.processmining.extensions.pm.bpmn.BPMNProcessGenerator;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelFilterDAOREST;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrieval;
@@ -304,6 +305,9 @@ public class ProcessMiningController
 			ValueStreamPhase phase1 = new ValueStreamPhase("Phase 1");
 			phase1.getNodes().add("New");
 			phase1.getNodes().add("Assigned");
+			ValueStreamPhaseMeasure m = new ValueStreamPhaseMeasure("v1", 1, 2, 3, 4, 5);
+			phase1.getStatistics().getMeasures().add(m);
+			phase1.getStatistics().computeSummary();
 			valueStream.getPhases().add(phase1);
 			vStream.setValueStream(valueStream);
 			getValueStreams().put(modelId, vStream);
@@ -322,7 +326,8 @@ public class ProcessMiningController
 		if (vStream != null) {
 			getValueStreams().remove(modelId);
 		}
-		getValueStreams().put(modelId, vStream);
+		System.out.println("VALUE STREAM: (" + valueStream.getValueStream() + ")");
+		getValueStreams().put(modelId, valueStream);
 
 		logger.info("Exit ProcessMiningController.PUT(/models/" + modelId + "/valuestream");
 		return ResponseEntity.ok(vStream);
