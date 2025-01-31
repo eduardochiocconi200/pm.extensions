@@ -7,11 +7,15 @@ public class ValueStreamPhaseMeasure
     private String variant = null;
     private int frequency = -1;
     private int touchpoints = -1;
-    private HashMap<String, Integer> touchpointsPath = null;
+    private transient HashMap<String, Integer> touchpointsPath = null;
     private long averageTime = -1;
     private long meanTime = -1;
     private long minTime = -1;
     private long maxTime = -1;
+
+    public ValueStreamPhaseMeasure()
+    {
+    }
 
     public ValueStreamPhaseMeasure(final String variant, final int frequency, final long average, final long mean, final long min, final long max)
     {
@@ -24,9 +28,19 @@ public class ValueStreamPhaseMeasure
         this.maxTime = max;
     }
 
-    public String getVariantName()
+    public void setVariant(final String variant)
+    {
+        this.variant = variant;
+    }
+
+    public String getVariant()
     {
         return this.variant;
+    }
+
+    public void setFrequency(final int frequency)
+    {
+        this.frequency = frequency;
     }
 
     public int getFrequency()
@@ -34,29 +48,30 @@ public class ValueStreamPhaseMeasure
         return this.frequency;
     }
 
-    public int getTouchPoints()
+    public int getTouchpoints()
     {
         return this.touchpoints;
     }
 
-    public void setTouchPoints(int touchpoints)
+
+    public void setTouchpoints(int touchpoints)
     {
         this.touchpoints = touchpoints;
     }
 
-    public void addTouchPointsPath(String phasePath)
+    public void addTouchpointsPath(String phasePath)
     {
-        if (getTouchPointsPath().get(phasePath) == null) {
-            getTouchPointsPath().put(phasePath, 1);
+        if (getTouchpointsPath().get(phasePath) == null) {
+            getTouchpointsPath().put(phasePath, 1);
         }
         else {
-            int times = getTouchPointsPath().get(phasePath);
-            getTouchPointsPath().remove(phasePath);
-            getTouchPointsPath().put(phasePath, times+1);
+            int times = getTouchpointsPath().get(phasePath);
+            getTouchpointsPath().remove(phasePath);
+            getTouchpointsPath().put(phasePath, times+1);
         }
     }
 
-    public HashMap<String, Integer> getTouchPointsPath()
+    public HashMap<String, Integer> getTouchpointsPath()
     {
         if (this.touchpointsPath == null) {
             this.touchpointsPath = new HashMap<String, Integer>();
@@ -65,22 +80,41 @@ public class ValueStreamPhaseMeasure
         return this.touchpointsPath;
     }
 
-    public long getAverage()
+    public void setAverageTime(final long avg)
+    {
+        this.averageTime = avg;
+    }
+
+    public long getAverageTime()
     {
         return this.averageTime;
     }
 
-    public long getMean()
+    public void setMeanTime(final long mean)
+    {
+        this.meanTime = mean;
+    }
+
+    public long getMeanTime()
     {
         return this.meanTime;
     }
 
-    public long getMin()
+    public void setMinTime(final long min)
+    {
+        this.minTime = min;
+    }
+
+    public long getMinTime()
     {
         return this.minTime;
     }
 
-    public long getMax()
+    public void setMaxTime(final long max)
+    {
+        this.maxTime = max;
+    }
+    public long getMaxTime()
     {
         return this.maxTime;
     }
@@ -90,18 +124,18 @@ public class ValueStreamPhaseMeasure
         StringBuffer sb = new StringBuffer();
 
         sb.append("Freq: (" + getFrequency() + "), ");
-        sb.append("Touch Points: (" + getTouchPoints() + "), ");
-        sb.append("Avg: (" + getAverage() + "), ");
-        sb.append("Mean: (" + getMean() + "), ");
-        sb.append("Min: (" + getMin() + "), ");
-        sb.append("Max: (" + getMax() + ")\n");
+        sb.append("Touch Points: (" + getTouchpoints() + "), ");
+        sb.append("Avg: (" + getAverageTime() + "), ");
+        sb.append("Mean: (" + getMeanTime() + "), ");
+        sb.append("Min: (" + getMinTime() + "), ");
+        sb.append("Max: (" + getMaxTime() + ")\n");
         sb.append("Phase paths:\n");
         boolean processedFirst = false;
-        for (String key : getTouchPointsPath().keySet()) {
+        for (String key : getTouchpointsPath().keySet()) {
             if (processedFirst) {
                 sb.append("\n");
             }
-            sb.append(" - " + key + " x " + getTouchPointsPath().get(key) + " times.");
+            sb.append(" - " + key + " x " + getTouchpointsPath().get(key) + " times.");
             processedFirst = true;
         }
 
