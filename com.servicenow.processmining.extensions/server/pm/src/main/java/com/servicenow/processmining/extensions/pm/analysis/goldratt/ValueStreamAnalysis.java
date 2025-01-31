@@ -76,9 +76,9 @@ public class ValueStreamAnalysis
                         System.out.println("Phase (" + currentPhase + ") => (" + getModel().getNodes().get(from).getName() + ")->(" + getModel().getNodes().get(to).getName()+ "). Avg: (" + transition.getAvgDuration() + "), Mean: (" + transition.getMedianDeviation() + "), Min: (" + transition.getMinDuration() + "), Max: (" + transition.getMaxDuration() + ")");
                     }
                     ValueStreamPhaseMeasure measure = new ValueStreamPhaseMeasure(variant.getId(), variant.getFrequency(), phaseAvgTime, 0, 0, 0);
-                    measure.setTouchPoints(touchPoints);
-                    measure.addTouchPointsPath(phasePath);
-                    getValueStream().getPhases().get(currentPhase-1).getStatistics().getMeasure().add(measure);
+                    measure.setTouchpoints(touchPoints);
+                    measure.addTouchpointsPath(phasePath);
+                    getValueStream().getPhases().get(currentPhase-1).getStatistics().getMeasures().add(measure);
                     i = lastCurrentPhaseIndex;
                     currentPhase++;
                 }
