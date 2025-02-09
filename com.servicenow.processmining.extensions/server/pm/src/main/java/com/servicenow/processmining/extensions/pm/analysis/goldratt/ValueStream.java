@@ -3,12 +3,15 @@ package com.servicenow.processmining.extensions.pm.analysis.goldratt;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariant;
 
 public class ValueStream
 {
+    @JsonIgnore
     private ProcessMiningModel model = null;
+    private ArrayList<String> nodes = null;
     private ArrayList<ValueStreamPhase> phases = null;
     private HashMap<String, Integer> nodesToPhaseMap = null;
     
@@ -29,6 +32,20 @@ public class ValueStream
     public ProcessMiningModel getModel()
     {
         return this.model;
+    }
+
+    public void setNodes(final ArrayList<String> nodes)
+    {
+        this.nodes = nodes;
+    }
+
+    public ArrayList<String> getNodes()
+    {
+        if (this.nodes == null) {
+            this.nodes = new ArrayList<String>();
+        }
+
+        return this.nodes;
     }
 
     public ArrayList<ValueStreamPhase> getPhases()
@@ -55,7 +72,7 @@ public class ValueStream
         }
 
         if (this.nodesToPhaseMap.size() != getModel().getNodes().size()) {
-            throw new RuntimeException("Not all nodes in the Process Model are mapped to the Value Stream. Please make sure all nodes are mapped to a phase.");
+            throw new RuntimeException("Not all nodes in the Process Model (" + this.nodesToPhaseMap.size() + ") are mapped to the Value Stream (" + getModel().getNodes().size() + "). Please make sure all nodes are mapped to a phase.");
         }
 
         return this.nodesToPhaseMap;
@@ -78,7 +95,7 @@ public class ValueStream
         StringBuffer sb = new StringBuffer();
         sb.append("Phases: \n");
         for (ValueStreamPhase vsp : getPhases()) {
-            sb.append("Phase [" + vsp.getName() + "] = (");
+            sb.append("Phase [" + vsp.getName() + "]\n - Nodes: (");
             boolean processedFirst = false;
             for (String node : vsp.getNodes()) {
                 if (processedFirst) {
@@ -87,7 +104,19 @@ public class ValueStream
                 sb.append(node);
                 processedFirst = true;
             }
-            sb.append(")\n");
+            sb.append("),\n");
+            sb.append(" - Statistics:\n");
+            sb.append("   - Summary: " + vsp.getStatistics().getSummary() + "\n");
+            sb.append("   - Measurements:\n");
+            processedFirst = false;
+            for (ValueStreamPhaseMeasure m : vsp.getStatistics().getMeasures()) {
+                if (processedFirst) {
+                    sb.append(", ");
+                }
+                sb.append("     - " + m);
+                processedFirst = true;
+            }
+            sb.append("\n");
         }
 
         return sb.toString();
