@@ -1,8 +1,7 @@
 package com.servicenow.processmining.extensions.server.api.controller;
 
 import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStream;
-import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStreamPhase;
-import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStreamPhaseMeasure;
+import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStreamAnalysis;
 import com.servicenow.processmining.extensions.pm.bpmn.BPMNProcessGenerator;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelFilterDAOREST;
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrieval;
@@ -14,6 +13,8 @@ import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVal
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelValueStreamPK;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersion;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersionPK;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelNode;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVersionByNameAndDateComparator;
 import com.servicenow.processmining.extensions.pm.report.ProcessMiningModelExcelReport;
@@ -49,6 +50,7 @@ public class ProcessMiningController
 	extends BaseController
 {
 	private HashMap<String, ProcessMiningModelValueStream> valueStreams = null;
+	private HashMap<String, ProcessMiningModel> models = null;
 
 	@GetMapping("/login/{instance}/{user}/{password}")
 	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
@@ -114,6 +116,15 @@ public class ProcessMiningController
 		return list;
 	}
 
+	private HashMap<String, ProcessMiningModel> getProcessMiningModels()
+	{
+		if (this.models == null) {
+			this.models = new HashMap<String, ProcessMiningModel>();
+		}
+
+		return this.models;
+	}
+
 	@GetMapping("/models/{modelId}")
 	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
 	public ProcessMiningModelVersion getProcessModelVersion(@PathVariable String modelId)
@@ -168,7 +179,8 @@ public class ProcessMiningController
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/ppt)");
 		ResponseEntity<Resource> response = null;
 		String fileName = null;
-		try {
+		ProcessMiningModel model = getProcessMiningModels().get(modelId);
+		if (model == null) {
 			ProcessMiningModelParser parser = null;
 			ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
 			if (pmmr.runEmptyFilter()) {
@@ -176,26 +188,23 @@ public class ProcessMiningController
 				if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
 					logger.error("Could not parse filter payload successfully!");
 				}
-				else {
-					ProcessMiningModelFilterPowerpointReport report = new ProcessMiningModelFilterPowerpointReport(parser.getProcessMiningModel());
-					if (!report.createReport()) {
-						logger.error("Could not create PPT report successfully!");
-					}
-					else {
-						fileName = report.getReportFileName();
-						FileSystemResource resource = new FileSystemResource(fileName);
-						MediaType mediaType = MediaTypeFactory.getMediaType(resource).orElse(MediaType.APPLICATION_OCTET_STREAM);
-						HttpHeaders headers = new HttpHeaders();
-						headers.setContentType(mediaType);
-						ContentDisposition disposition = ContentDisposition.attachment().filename(resource.getFilename()).build();
-						headers.setContentDisposition(disposition);
-						response = new ResponseEntity<>(resource, headers, HttpStatus.OK);
-					}
-				}
+				model = parser.getProcessMiningModel();
 			}
 		}
-		catch (Throwable t) {
-			t.printStackTrace();
+
+		ProcessMiningModelFilterPowerpointReport report = new ProcessMiningModelFilterPowerpointReport(model);
+		if (!report.createReport()) {
+			logger.error("Could not create PPT report successfully!");
+		}
+		else {
+			fileName = report.getReportFileName();
+			FileSystemResource resource = new FileSystemResource(fileName);
+			MediaType mediaType = MediaTypeFactory.getMediaType(resource).orElse(MediaType.APPLICATION_OCTET_STREAM);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(mediaType);
+			ContentDisposition disposition = ContentDisposition.attachment().filename(resource.getFilename()).build();
+			headers.setContentDisposition(disposition);
+			response = new ResponseEntity<>(resource, headers, HttpStatus.OK);
 		}
 
 		logger.info("Exit ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/ppt)");
@@ -209,7 +218,8 @@ public class ProcessMiningController
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/xls)");
 		ResponseEntity<Resource> response = null;
 		String fileName = null;
-		try {
+		ProcessMiningModel model = getProcessMiningModels().get(modelId);
+		if (model == null) {
 			ProcessMiningModelParser parser = null;
 			ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
 			if (pmmr.runEmptyFilter()) {
@@ -217,26 +227,23 @@ public class ProcessMiningController
 				if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
 					logger.error("Could not parse filter payload successfully!");
 				}
-				else {
-					ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(parser.getProcessMiningModel());
-					if (!report.createReport()) {
-						logger.error("Could not create XLS report successfully!");
-					}
-					else {
-						fileName = report.getReportFileName();
-						FileSystemResource resource = new FileSystemResource(fileName);
-						MediaType mediaType = MediaTypeFactory.getMediaType(resource).orElse(MediaType.APPLICATION_OCTET_STREAM);
-						HttpHeaders headers = new HttpHeaders();
-						headers.setContentType(mediaType);
-						ContentDisposition disposition = ContentDisposition.attachment().filename(resource.getFilename()).build();
-						headers.setContentDisposition(disposition);
-						response = new ResponseEntity<>(resource, headers, HttpStatus.OK);
-					}
-				}
+				model = parser.getProcessMiningModel();
 			}
 		}
-		catch (Throwable t) {
-			t.printStackTrace();
+
+		ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(model);
+		if (!report.createReport()) {
+			logger.error("Could not create XLS report successfully!");
+		}
+		else {
+			fileName = report.getReportFileName();
+			FileSystemResource resource = new FileSystemResource(fileName);
+			MediaType mediaType = MediaTypeFactory.getMediaType(resource).orElse(MediaType.APPLICATION_OCTET_STREAM);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(mediaType);
+			ContentDisposition disposition = ContentDisposition.attachment().filename(resource.getFilename()).build();
+			headers.setContentDisposition(disposition);
+			response = new ResponseEntity<>(resource, headers, HttpStatus.OK);
 		}
 
 		logger.info("Exit ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/xls)");
@@ -251,7 +258,8 @@ public class ProcessMiningController
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/bpmn)");
 		ResponseEntity<Resource> response = null;
 		String fileName = null;
-		try {
+		ProcessMiningModel model = getProcessMiningModels().get(modelId);
+		if (model == null) {
 			ProcessMiningModelParser parser = null;
 			ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
 			if (pmmr.runEmptyFilter()) {
@@ -259,25 +267,22 @@ public class ProcessMiningController
 				if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
 					logger.error("Could not parse filter payload successfully!");
 				}
-				else {
-					if (parser.getProcessMiningModel().getAggregate().getCaseCount() > 0) {
-						BPMNProcessGenerator generator = new BPMNProcessGenerator(parser.getProcessMiningModel());
-						if (generator.createBPMNProcessFile()) {
-							fileName = generator.getBPMNFileName();
-							FileSystemResource resource = new FileSystemResource(fileName);
-							MediaType mediaType = MediaTypeFactory.getMediaType(resource).orElse(MediaType.APPLICATION_OCTET_STREAM);
-							HttpHeaders headers = new HttpHeaders();
-							headers.setContentType(mediaType);
-							ContentDisposition disposition = ContentDisposition.attachment().filename(resource.getFilename()).build();
-							headers.setContentDisposition(disposition);
-							response = new ResponseEntity<>(resource, headers, HttpStatus.OK);
-						}
-					}
-				}
+				model = parser.getProcessMiningModel();
 			}
 		}
-		catch (Throwable t) {
-			t.printStackTrace();
+
+		if (model != null && model.getAggregate().getCaseCount() > 0) {
+			BPMNProcessGenerator generator = new BPMNProcessGenerator(model);
+			if (generator.createBPMNProcessFile()) {
+				fileName = generator.getBPMNFileName();
+				FileSystemResource resource = new FileSystemResource(fileName);
+				MediaType mediaType = MediaTypeFactory.getMediaType(resource).orElse(MediaType.APPLICATION_OCTET_STREAM);
+				HttpHeaders headers = new HttpHeaders();
+				headers.setContentType(mediaType);
+				ContentDisposition disposition = ContentDisposition.attachment().filename(resource.getFilename()).build();
+				headers.setContentDisposition(disposition);
+				response = new ResponseEntity<>(resource, headers, HttpStatus.OK);
+			}
 		}
 
 		logger.info("Exit ProcessMiningController.GET(/models/" + modelId + "/filters/" + filterName + "/bpmn)");
@@ -300,17 +305,30 @@ public class ProcessMiningController
 		logger.info("Enter ProcessMiningController.GET(/models/" + modelId + "/valuestream");
 		ProcessMiningModelValueStream vStream = getValueStreams().get(modelId);
 		if (vStream == null) {
-			vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK(modelId));
-			ValueStream valueStream = new ValueStream();
-			ValueStreamPhase phase1 = new ValueStreamPhase("Phase 1");
-			phase1.getNodes().add("New");
-			phase1.getNodes().add("Assigned");
-			ValueStreamPhaseMeasure m = new ValueStreamPhaseMeasure("v1", 1, 2, 3, 4, 5);
-			phase1.getStatistics().getMeasures().add(m);
-			phase1.getStatistics().computeSummary();
-			valueStream.getPhases().add(phase1);
-			vStream.setValueStream(valueStream);
-			getValueStreams().put(modelId, vStream);
+			ProcessMiningModel model = getProcessMiningModels().get(modelId);
+			if (model == null) {
+				ProcessMiningModelParser parser = null;
+				ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
+				if (pmmr.runEmptyFilter()) {
+					parser = new ProcessMiningModelParser(modelId);
+					if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
+						logger.error("Could not parse filter payload successfully!");
+					}
+					model = parser.getProcessMiningModel();
+				}
+			}
+
+			if (model != null) {
+				vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK(modelId));
+				ValueStream valueStream = new ValueStream();
+				ArrayList<String> nodes = new ArrayList<String>();
+				for (ProcessMiningModelNode node : model.getNodes().values()) {
+					nodes.add(node.getName());
+				}
+				valueStream.setNodes(nodes);
+				vStream.setValueStream(valueStream);
+				getValueStreams().put(modelId, vStream);
+			}
 		}
 
 		logger.info("Exit ProcessMiningController.GET(/models/" + modelId + "/valuestream");
@@ -347,6 +365,47 @@ public class ProcessMiningController
 		return vStream;
 	}
 
+	@PutMapping("/models/{modelId}/valuestream/run")
+	@CrossOrigin(origins = CROSS_ORIGIN_DOMAIN)
+	public ResponseEntity<ProcessMiningModelValueStream> putModelVersionValueStreamRun(@RequestBody ProcessMiningModelValueStream valueStream, @PathVariable String modelId)
+	{
+		logger.info("Enter ProcessMiningController.PUT(/models/" + modelId + "/valuestream/run");
+		ProcessMiningModelValueStream vStream = getValueStreams().get(modelId);
+		if (vStream == null) {
+			throw new RuntimeException("Did not find ValueStream. Please Create Value Stream First before running analysis.");
+		}
+		else {
+			ProcessMiningModel model = getProcessMiningModels().get(modelId);
+			if (model == null) {
+				ProcessMiningModelParser parser = null;
+				ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
+				if (pmmr.runEmptyFilter()) {
+					parser = new ProcessMiningModelParser(modelId);
+					if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
+						logger.error("Could not parse filter payload successfully!");
+					}
+					model = parser.getProcessMiningModel();
+				}
+			}
+
+			if (model != null) {
+				ValueStreamAnalysis vsa = new ValueStreamAnalysis(getInstance(), model, vStream.getValueStream());
+				if (!vsa.run()) {
+					logger.error("Could not run value stream analysis successfully!");
+				}
+				else {
+					vStream = new ProcessMiningModelValueStream(new ProcessMiningModelValueStreamPK(modelId));
+					vStream.setValueStream(vsa.getValueStream());
+					getValueStreams().put(modelId, vStream);
+				}
+			}
+		}
+
+		getValueStreams().put(modelId, valueStream);
+
+		logger.info("Exit ProcessMiningController.PUT(/models/" + modelId + "/valuestream/run");
+		return ResponseEntity.ok(vStream);
+	}
 
 	private static final Logger logger = LoggerFactory.getLogger(ProcessMiningController.class);
 }
