@@ -1,7 +1,7 @@
 import LogoutButton from "./LogoutButton";
 import HeaderWelcome from "./HeaderWelcome";
 
-function Header() {    
+function Header() {
     return (
         <>
           <div className='rowC'>
