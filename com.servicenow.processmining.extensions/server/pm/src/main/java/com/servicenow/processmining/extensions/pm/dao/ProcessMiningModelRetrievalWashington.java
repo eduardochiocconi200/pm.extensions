@@ -49,7 +49,7 @@ public class ProcessMiningModelRetrievalWashington
         "\t\t\"versionId\": \"" + getProcessModelVersionId() + "\",\n" +
         "\t\t\"filterSets\": {\n" +
         "\t\t\t\"dataFilter\": [],\n";
-        if (filter.getBreakdownCondition() != null) {
+        if (filter.getFilterBreakdown() != null) {
             variables += "\t\t\t\"breakdowns\": [\n" +
             "\t\t\t\t{\n" +
             "\t\t\t\t\t\"entityId\": \"" + entityId + "\",\n" +

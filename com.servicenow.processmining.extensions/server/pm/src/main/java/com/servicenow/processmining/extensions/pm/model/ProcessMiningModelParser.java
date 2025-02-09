@@ -192,7 +192,7 @@ public class ProcessMiningModelParser
                                         JSONArray breakdowns = filterObj.getJSONArray("breakdowns");
                                         if (breakdowns != null && breakdowns.length() > 0) {
                                             ProcessMiningModelFilterBreakdown filterBreakdown = new ProcessMiningModelFilterBreakdown();
-                                            filter.setBreakdownCondition(filterBreakdown);
+                                            filter.setFilterBreakdown(filterBreakdown);
                                             for (int j=0; j < breakdowns.length(); j++) {
                                                 JSONObject breakdownObj = (JSONObject) breakdowns.get(j);
                                                 String filterEntityId = breakdownObj.getString("entityId");

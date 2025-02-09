@@ -28,15 +28,6 @@ public class ProcessMiningModelFilterBreakdown
         this.conditions = conditions;
     }
 
-    public boolean addCondition(final ProcessMiningModelFilterBreakdownCondition condition)
-    {
-        if (conditions == null) {
-            conditions = new ArrayList<ProcessMiningModelFilterBreakdownCondition>();
-        }
-
-        return getConditions().add(condition);
-    }
-
     public ArrayList<ProcessMiningModelFilterBreakdownCondition> getConditions()
     {
         if (conditions == null) {
@@ -44,6 +35,11 @@ public class ProcessMiningModelFilterBreakdown
         }
 
         return this.conditions;
+    }
+
+    public boolean addCondition(final ProcessMiningModelFilterBreakdownCondition condition)
+    {
+        return getConditions().add(condition);
     }
 
     public String getFilterBreakdownJSON()

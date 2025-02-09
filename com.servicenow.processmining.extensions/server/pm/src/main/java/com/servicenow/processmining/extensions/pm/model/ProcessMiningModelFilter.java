@@ -42,12 +42,12 @@ public class ProcessMiningModelFilter
         return this.name;
     }
 
-    public void setBreakdownCondition(final ProcessMiningModelFilterBreakdown condition)
+    public void setFilterBreakdown(final ProcessMiningModelFilterBreakdown condition)
     {
         this.filterBreakdown = condition;
     }
 
-    public ProcessMiningModelFilterBreakdown getBreakdownCondition()
+    public ProcessMiningModelFilterBreakdown getFilterBreakdown()
     {
         return this.filterBreakdown;
     }
@@ -56,8 +56,8 @@ public class ProcessMiningModelFilter
     {
         StringBuffer sb = new StringBuffer();
         boolean processedFirst = false;
-        if (getBreakdownCondition().getConditions() != null) {
-            for (ProcessMiningModelFilterBreakdownCondition bd : getBreakdownCondition().getConditions()) {
+        if (getFilterBreakdown().getConditions() != null) {
+            for (ProcessMiningModelFilterBreakdownCondition bd : getFilterBreakdown().getConditions()) {
                 if (processedFirst) {
                     sb.append(" AND ");
                 }
