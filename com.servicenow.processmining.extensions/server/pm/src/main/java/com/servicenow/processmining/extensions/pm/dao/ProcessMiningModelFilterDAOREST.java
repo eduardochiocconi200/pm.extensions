@@ -161,7 +161,7 @@ public class ProcessMiningModelFilterDAOREST
 					ProcessMiningModelVersionFilterPK pk = new ProcessMiningModelVersionFilterPK(filter.getId());
 					ProcessMiningModelVersionFilter f = new ProcessMiningModelVersionFilter(pk);
 					f.setName(filter.getName());
-					f.setBreakdownFilter(filter.getBreakdownCondition());
+					f.setBreakdownFilter(filter.getFilterBreakdown());
 					f.setTransitionsFilter(filter.getFilterTransitions());
 					f.setCaseFrequency(filter.getCaseFrequency());
 					f.setAvgDuration(filter.getAvgDuration());
