@@ -62,7 +62,7 @@ public class DemoModelCases
     private String dateToString(final DateTime dt)
     {
         if (dt.isAfterNow()) {
-            throw new RuntimeException("It is not possible to create a Date (" + dt + ") in the future and after NOW (" + DateTime.now() + ")");
+            throw new RuntimeException("ERROR: It is not possible to create a Date (" + dt + ") in the future and after NOW (" + DateTime.now() + ")");
         }
 
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
@@ -110,10 +110,15 @@ public class DemoModelCases
 		response = snrs.executePutRequest(url, payload);
 		if (response == null || response != null && response.equals("")) {
 			if (snrs.getErrorStatusCode() == 400) {
-				String errorMessage = "The '/api/snc/fixaudittrail/{table}/{id}" + this.caseSysId + "' REST Scripted endpoint does not exist and it must be created. Check the documentation to create it and try again.";
+				String errorMessage = "ERROR: The '/api/snc/fixaudittrail/{table}/{id}" + this.caseSysId + "' REST Scripted endpoint does not exist and it must be created. Check the documentation to create it and try again.";
 				logger.error(errorMessage);
 				System.err.println(errorMessage);
 			}
+            else if (snrs.getErrorStatusCode() == 405) {
+				String errorMessage = "ERROR: The '/api/snc/fixaudittrail/{table}/{id}" + this.caseSysId + "' REST Scripted endpoint exists, but you need to  make sure it is defined as a 'put' method. Update the Scripted REST API endpoint definition and try again.";
+				logger.error(errorMessage);
+				System.err.println(errorMessage);
+            }
 
 			return false;
 		}
