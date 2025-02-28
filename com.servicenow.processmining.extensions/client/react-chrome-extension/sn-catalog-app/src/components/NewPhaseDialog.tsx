@@ -22,7 +22,7 @@ function NewPhaseDialog({ showDialog, onValueChange })
                 </Modal.Header>
                 <Modal.Body>
                     <InputGroup className="mb-3">
-                        <Form.Control onChange={handleChange} placeholder="Enter Phase Name" aria-label="Phase" aria-describedby="basic-addon1"/>
+                        <Form.Control autoFocus onChange={handleChange} placeholder="Enter Phase Name" aria-label="Phase" aria-describedby="basic-addon1"/>
                     </InputGroup>
                 </Modal.Body>
                 <Modal.Footer>
