@@ -44,7 +44,7 @@ public class DemoModelCases
         for (DemoModelPath path : getModel().getPaths()) {
             DateTime pathFirstStartTime = DateTime.now().minusSeconds((int)path.getTotalDuration());
             DateTime start = DateTime.now();
-            System.out.println("Creating [" + path.getCount() + "] [" + path.getTable() + "] records (A '.' will be incrementally printed below for each created record. Be patient!)");
+            System.out.println("Creating [" + path.getCount() + "] [" + path.getTable() + "] records for path defined in Tab: [" + path.getPathName() + "]. (A '.' will be printed for each created record. Be patient!)");
             for (int count=0; count < path.getCount(); count++) {
                 if (!createCase(path, pathFirstStartTime)) {
                     return false;
@@ -181,7 +181,7 @@ public class DemoModelCases
             else {
                 recordUpdateTS = recordUpdateTS.plusSeconds(updateTime.intValue() - previousUpdateTS.intValue());
             }
-            if (!processUpdateRecordBatch(path, recordUpdateTS, updateBatches.get(updateTime))) {
+            if (!processUpdateRecordBatch(path, updateTime, recordUpdateTS, updateBatches.get(updateTime))) {
                 return false;
             }
             previousUpdateTS = updateTime;
@@ -190,15 +190,18 @@ public class DemoModelCases
         return true;
     }
 
-    private boolean processUpdateRecordBatch(final DemoModelPath path, final DateTime createdOn, HashMap<String, String> updateValues)
+    private boolean processUpdateRecordBatch(final DemoModelPath path, final Double updateTime, final DateTime createdOn, HashMap<String, String> updateValues)
     {
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-		String url = "https://" + getInstance().getInstance() + "/api/now/table/" + path.getTable() + "/" + this.caseSysId;
-		String payload = createPayload(updateValues);
-		String response = snrs.executePutRequest(url, payload);
-		if (response == null || response != null && response.equals("")) {
-			return false;
-		}
+	String url = "https://" + getInstance().getInstance() + "/api/now/table/" + path.getTable() + "/" + this.caseSysId;
+	String payload = createPayload(updateValues);
+	String response = snrs.executePutRequest(url, payload);
+	if (response == null || response != null && response.equals("")) {
+		System.err.println("ERROR: Could not update the (" + path.getTable() + ") record with timestamp: (" + updateTime + ") and values: (" + updateValues + ") referenced in Tab: (" + path.getPathName() + ").");
+		System.err.println("Make sure all needed attributes and values in your spreadsheet for the time (" + updateTime + "), and values (" + updateValues + ") provided are correct.");
+		System.err.println("This way, the update transaction can be completed successfully.");
+		return false;
+	}
 
         return fixAuditTrail(path, createdOn);
     }
