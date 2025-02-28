@@ -91,33 +91,33 @@ public class DemoModelImport
     private boolean checkArgumentValues()
     {
         if (dataFile == null) {
-            System.err.println("The -f argument and value need to be specified and is missing. Check usage details below.");
+            System.err.println("ERROR: The -f argument and value need to be specified and is missing. Check usage details below.");
             System.err.println(usage());
             return false;
         }
         else {
             File f = new File(dataFile);
             if (!f.exists()) {
-                System.err.println("The file [" + dataFile + "] cannot be found. Make sure the file exists in the specified location.");
+                System.err.println("ERROR: The file [" + dataFile + "] cannot be found. Make sure the file exists in the specified location.\n");
                 System.err.println(usage());
                 return false;    
             }
         }
 
         if (instance == null) {
-            System.err.println("The -i argument and value need to be specified and is missing. Check usage details below.");            
+            System.err.println("ERROR: The -i argument and value need to be specified and is missing. Check usage details below.");
             System.err.println(usage());
             return false;
         }
 
         if (user == null) {
-            System.err.println("The -u argument and value need to be specified and is missing. Check usage details below.");            
+            System.err.println("ERROR The -u argument and value need to be specified and is missing. Check usage details below.");
             System.err.println(usage());
             return false;
         }
 
         if (password == null) {
-            System.err.println("The -p argument and value need to be specified and is missing. Check usage details below.");                        
+            System.err.println("ERROR The -p argument and value need to be specified and is missing. Check usage details below.");
             System.err.println(usage());
             return false;
         }
