@@ -6,17 +6,24 @@ import java.util.TreeMap;
 
 public class DemoModelPath
 {
+    private String pathName = null;
     private double totalDuration = 0.0;
     private int count = 0;
     private double creationDelta = 0.0;
     private String table = null;
     private ArrayList<DemoModelPathEntry> entries = null;
 
-    public DemoModelPath(final int count, final double creationDelta, final String table)
+    public DemoModelPath(final String pathName, final int count, final double creationDelta, final String table)
     {
+        this.pathName = pathName;
         this.count = count;
         this.creationDelta = creationDelta;
         this.table = table;
+    }
+
+    public String getPathName()
+    {
+        return this.pathName;
     }
 
     public int getCount()
