@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, CardGroup, Card, Col, Container, Form, InputGroup, Modal, Row } from 'react-bootstrap';
-import NewPhaseDialog from "./NewPhaseDialog";
+import { Button, CardGroup, Card, Col, Container, Row } from 'react-bootstrap';
 import axios from "axios";
+
+import NewPhaseDialog from "./NewPhaseDialog";
+import PhaseDetails from "./PhaseDetails";
+import ActivityToPhaseMapping from "./ActivityToPhaseMapping";
 
 interface VStreamType {
   valueStream : {
@@ -34,12 +37,12 @@ interface ValueStreamPhaseMeasureType {
 }
 
 function ValueStream(props: { model: string; }) {
-  const [selectedPhase, setSelectedPhase] = useState<string>('');
   const [vStream, setVStream] = useState<VStreamType>();
   const [phases, setPhases] = useState<ValueStreamPhaseType[]>([]);
+  const [selectedPhase, setSelectedPhase] = useState<ValueStreamPhaseType>();
   const [showPhaseMapping, setShowPhaseMapping] = useState(false);
   const [showNewPhaseDialog, setShowNewPhaseDialog] = useState(false);
-  const [activityToPhasesMapping, setActivityToPhasesMapping] = useState(new Map());
+  const [activityToPhasesMapping, setActivityToPhasesMapping] = useState(new Map<string,ValueStreamPhaseType|null>());
 
   const phaseChanged = (event) => {
     const activity = event.target.id;
@@ -50,31 +53,35 @@ function ValueStream(props: { model: string; }) {
     setActivityToPhasesMapping(newMap);
   }
 
-  // We ignore any settings and do not sync with the Value Phase object.
-  const handleClosePhaseMapping = () => {
-    setShowPhaseMapping(false);
-    console.log('Will disregard all mappings and will not synchronize with Value Stream.');
-  }
-
-  // We traverse the set mappings and synchronize with the Value Phase object.
-  const handleSavePhaseMapping = () => {
-    setShowPhaseMapping(false);
-    console.log('Will synchronize with Value Stream.');
-    for (const p of phases) {
-      p.nodes = [];
+  const handleShowPhaseMapping = (show : boolean, save: boolean) => {
+    setShowPhaseMapping(show);
+    if (save) {
+      console.log('Will synchronize with Value Stream.');
+      if (phases !== null) {
+        console.log(phases);
+        for (const p of phases) {
+          console.log(p);
+          p.nodes = [];
+        }
+        for (const [key, value] of activityToPhasesMapping.entries()) {
+          if (value !== null) {
+            console.log('Key: (' + key);
+            console.log('Value: (' + value);
+            for (const p in phases) {
+              if (p.name === value) {
+                p.nodes.push(key);
+              }
+            }
+          }
+        }    
+      }
     }
-    for (const [key, value] of activityToPhasesMapping.entries()) {
-      const ph = phases.find(p => p.name === value);
-      ph!.nodes.push(key);
-    }
-  }
-
-  const handleShowPhaseMapping = () => {
-    setShowPhaseMapping(true);
   }
 
   const handleNewPhaseName = (value : string) => {
-    addPhase(value);
+    if (value !== null && value != "") {
+      addPhase(value);
+    }
     setShowNewPhaseDialog(false);
   }
 
@@ -89,7 +96,7 @@ function ValueStream(props: { model: string; }) {
   const showPhaseDetails = (phase: string) => {
     console.log('Current: ' + selectedPhase + ', New: ' + phase);
     console.log(phases);
-    setSelectedPhase(phase);
+    setSelectedPhase(phases.find(ph => ph.name === phase));
   };
 
   const displayNewPhaseDialog = () => {
@@ -112,7 +119,7 @@ function ValueStream(props: { model: string; }) {
         }
         for (const p of phases) {
           for (const n of p.nodes) {
-            activityToPhasesMapping.set(n, p.name);
+            activityToPhasesMapping.set(n, p);
           }
         }    
       })
@@ -141,7 +148,7 @@ function ValueStream(props: { model: string; }) {
       .then((data) => {
         console.log('Resetting Value Stream: ' + data + '.');
         setPhases([]);
-        setSelectedPhase('');
+        setSelectedPhase(undefined);
       })
       .catch((err) => {
         console.log("AXIOS ERROR: ", err)
@@ -171,12 +178,12 @@ function ValueStream(props: { model: string; }) {
           {phases.length > 0 && phases.map((value, index) => (
           <Row>
             <Col md="12">
-              <Card border="light" onClick={ () => showPhaseDetails('phase' + index) } style={{ cursor: "pointer" }}>
+              <Card border="light" key={index} onClick={ () => showPhaseDetails(value.name) } style={{ cursor: "pointer" }}>
                 <Card.Img variant="left" src="src/images/chevron.png"/>
                 <Card.ImgOverlay>
                 <Card.Body style={{ textAlign: 'center' }}>
                   <Card.Title style={{ fontSize: 18 }}>{(value as ValueStreamPhaseType).name}</Card.Title>
-                  <Card.Text style={{ fontSize: 12 }}>Avg: {(value as ValueStreamPhaseType).name}<br></br>Click for details</Card.Text>
+                  <Card.Text style={{ fontSize: 12 }}>Avg: {(value as ValueStreamPhaseType).statistics.summary != null ? (value as ValueStreamPhaseType).statistics.summary.averageTime : '-'}<br></br>Click for details</Card.Text>
                 </Card.Body>
                 </Card.ImgOverlay>
               </Card>
@@ -198,30 +205,10 @@ function ValueStream(props: { model: string; }) {
           </Row>
         </CardGroup>
         { showNewPhaseDialog && <NewPhaseDialog showDialog={showNewPhaseDialog} onValueChange={handleNewPhaseName}></NewPhaseDialog>}
-        { selectedPhase != "" &&  <Container style={{ margin: '25px'}}>
-          <Card border="light">
-            <Card.Body>
-              <Card.Text style={{fontSize: 14}}><b>{selectedPhase} Details:</b><br></br>
-                <Container>
-                  <Row>
-                  <Col sm="2">
-                    - Nodes:<br></br> <Button size="sm">Add Node</Button>
-                  </Col>
-                  <Col sm="10">
-                    - Reword: SCORE.<br></br>
-                    - Savings: SCORE.<br></br>
-                    - ROI: SCORE.<br></br>
-                    fsdfsdfsd sdfasf sdfsdf sfsfds sdfsdf
-                  </Col>
-                  </Row>
-                </Container>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Container>}
+        { selectedPhase != undefined && <PhaseDetails phase={selectedPhase}></PhaseDetails>}
         <div style={{marginTop: '20px'}}></div>
         <div id="Actions Assets">
-          <Button onClick={ ()=> { handleShowPhaseMapping() }} variant="primary">Configure Value Stream</Button>
+          <Button onClick={ ()=> { handleShowPhaseMapping(true, false) }} variant="primary">Configure Value Stream</Button>
           {' '}
           <Button onClick={ ()=> { saveValueStream(props.model)}} variant="primary">Save Value Stream</Button>
           {' '}
@@ -230,42 +217,7 @@ function ValueStream(props: { model: string; }) {
           <Button onClick={ ()=> { runValueStreamAnalysis(props.model)}} variant="primary">Run Analysis</Button>
         </div>
         <div>
-          <Modal show={showPhaseMapping} onHide={handleShowPhaseMapping} backdrop="static" keyboard={false}
-            size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
-          <Modal.Header closeButton>
-            <Modal.Title>This is where you map each process map activity with a phase in the value stream.</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Container>
-              <Row>
-                <Col><b>Activity</b></Col>
-                <Col><b>Associated Phase</b></Col>
-              </Row>
-              <div style={{marginTop: '20px'}}></div>
-              <Row>
-                <Form>
-                  {Array.from(activityToPhasesMapping.entries()).map(([key, value]) => (
-                    <Form.Group key={key} as={Row} className="mb-3" controlId={key}>
-                      <Form.Label column sm={2}>{key}:</Form.Label>
-                      <Col sm={10}>
-                        <Form.Select id={key} defaultValue={value} onChange={phaseChanged}>
-                          <option>Select one of the available value stream phase(s)</option>
-                          {phases.map((phase) => (
-                            <option value={phase.name}>{phase.name}</option>
-                          ))}
-                        </Form.Select>
-                      </Col>
-                    </Form.Group>
-                  ))}
-                </Form>
-              </Row>
-            </Container>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClosePhaseMapping}>Close</Button>
-            <Button variant="primary" onClick={handleSavePhaseMapping}>Update Phase Mapping(s)</Button>
-          </Modal.Footer>
-        </Modal>
+          {showPhaseMapping && <ActivityToPhaseMapping showPhaseMapping={showPhaseMapping} handleShowPhaseMapping={handleShowPhaseMapping} phaseChanged={phaseChanged} phases={phases} activityToPhasesMapping={activityToPhasesMapping}></ActivityToPhaseMapping>}
         </div>
       </Container>
     </>
