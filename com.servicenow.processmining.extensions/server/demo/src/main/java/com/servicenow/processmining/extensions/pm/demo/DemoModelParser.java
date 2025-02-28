@@ -64,14 +64,15 @@ public class DemoModelParser
 
     private DemoModelPath parsePathSheet(final XSSFSheet sheet)
     {
+        String sheetName = sheet.getSheetName();
         int count = Integer.valueOf(sheet.getRow(0).getCell(1).getRawValue()).intValue();
         double creationDelta = getCellValueAsDouble(sheet.getRow(1).getCell(1));
         String table = getCellValueAsString(sheet.getRow(2).getCell(1));
-        DemoModelPath path = new DemoModelPath(count, creationDelta, table);
+        DemoModelPath path = new DemoModelPath(sheetName, count, creationDelta, table);
         int i=5;
         boolean hasRows = true;
         do {
-            if (sheet.getRow(i) == null) {
+            if (sheet.getRow(i) == null || (sheet.getRow(i) != null && sheet.getRow(i).getCell(0) == null)) {
                 hasRows = false;
             }
             else {
