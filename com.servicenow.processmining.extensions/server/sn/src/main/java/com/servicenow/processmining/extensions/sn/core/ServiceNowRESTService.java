@@ -1,6 +1,8 @@
 package com.servicenow.processmining.extensions.sn.core;
 
+import java.io.EOFException;
 import java.io.IOException;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Base64;
 
@@ -67,35 +69,23 @@ public class ServiceNowRESTService
         boolean retry = false;
         try (CloseableHttpClient httpclient = HttpClients.custom().build()) {
             do {
-                if (retryCount > 0) { System.out.println("SSL H E A 1"); }
                 try {
-                    if (retryCount > 0) { System.out.println("SSL H E A 2"); }                    
                     HttpUriRequestBase request = null;
                     if (isPost) {
-                        if (retryCount > 0) { System.out.println("SSL H E A 3"); }
                         request = getPostRequest(url);
-                        if (retryCount > 0) { System.out.println("SSL H E A 4"); }
                     }
                     else {
-                        if (retryCount > 0) { System.out.println("SSL H E A 5"); }
                         request = getPutRequest(url);
-                        if (retryCount > 0) { System.out.println("SSL H E A 6"); }
                     }
-                    if (retryCount > 0) { System.out.println("SSL H E A 7"); }
                     StringEntity signingPayload = new StringEntity(payload);
-                    if (retryCount > 0) { System.out.println("SSL H E A 8"); }
                     request.setEntity(signingPayload);
-                    if (retryCount > 0) { System.out.println("SSL H E A 9"); }
                     HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
-                    if (retryCount > 0) { System.out.println("SSL H E A 10"); }
                     response = httpclient.execute(request, responseHandler);
-                    if (retryCount > 0) { System.out.println("SSL H E A 11"); }
+                    retry = false;
                 } catch (HttpResponseException e) {
                     errorStatusCode = e.getStatusCode();
                     if (e.getStatusCode() == 403) {
-                        this.errorMessage = "The current user: (" + getInstance().getUser()
-                                + ") is not authorized to access the resource: (" + url
-                                + "). Properly entitle this user to have READ access and try again.";
+                        this.errorMessage = "The current user: (" + getInstance().getUser() + ") is not authorized to access the resource: (" + url + "). Properly entitle this user to have READ access and try again.";
                     }
                     else {
                         this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
@@ -109,32 +99,23 @@ public class ServiceNowRESTService
                     logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
                     return null;
                 } catch (IOException e) {
-                    e.printStackTrace();
-System.out.println("SSL H E 0");
-                    if (e instanceof SSLHandshakeException) {
-System.out.println("SSL H E 1");
+                    if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException) {
                         try {
-System.out.println("SSL H E 2");
                             Thread.sleep(1000);
-System.out.println("SSL H E 3");
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();
-System.out.println("SSL H E 4");
                         }
-System.out.println("SSL H E 5");
                         retry = true;
                         if (retryCount > 2) {
-System.out.println("SSL H E 6");
                             retry = false;
                         }
                         retryCount++;
-System.out.println("SSL H E 7: retry: (" + retry + "), retryCount: (" + retryCount + ")");
                     }
                     else {
+                        e.printStackTrace();
                         logger.debug("Exit ServiceNowRESTService.executePostRequest(" + url + ") != null");
                         return null;
                     }
-System.out.println("SSL H E 8");
                 }
             } while (retry);
         } catch (IOException e) {
@@ -176,12 +157,11 @@ System.out.println("SSL H E 8");
                 HttpGet getRequest = getGetRequest(url);
                 HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
                 response = httpclient.execute(getRequest, responseHandler);
+                retry = false;
             } catch (HttpResponseException e) {
                 errorStatusCode = e.getStatusCode();
                 if (e.getStatusCode() == 403) {
-                    this.errorMessage = "The current user: (" + getInstance().getUser()
-                            + ") is not authorized to access the resource: (" + url
-                            + "). Properly entitle this user to have READ access and try again.";
+                    this.errorMessage = "The current user: (" + getInstance().getUser() + ") is not authorized to access the resource: (" + url + "). Properly entitle this user to have READ access and try again.";
                 }
                 else {
                     this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
@@ -196,8 +176,7 @@ System.out.println("SSL H E 8");
                 logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
                 return null;
             } catch (IOException e) {
-                e.printStackTrace();
-                if (e instanceof SSLHandshakeException) {
+                if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException) {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e1) {
@@ -210,7 +189,8 @@ System.out.println("SSL H E 8");
                     retryCount++;
                 }
                 else {
-                    logger.debug("Exit ServiceNowRESTService.executePostRequest(" + url + ") != null");
+                    e.printStackTrace();
+                    logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") != null");
                     return null;
                 }
             }
@@ -242,12 +222,11 @@ System.out.println("SSL H E 8");
                     HttpDelete deleteRequest = getDeleteRequest(url);
                     HttpClientResponseHandler<String> responseHandler = new BasicHttpClientResponseHandler();
                     response = httpclient.execute(deleteRequest, responseHandler);
+                    retry = false;
                 } catch (HttpResponseException e) {
                     errorStatusCode = e.getStatusCode();
                     if (e.getStatusCode() == 403) {
-                        this.errorMessage = "The current user: (" + getInstance().getUser()
-                                + ") is not authorized to access the resource: (" + url
-                                + "). Properly entitle this user to have READ access and try again.";
+                        this.errorMessage = "The current user: (" + getInstance().getUser() + ") is not authorized to access the resource: (" + url + "). Properly entitle this user to have READ access and try again.";
                     }
                     else {
                         this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
@@ -261,8 +240,7 @@ System.out.println("SSL H E 8");
                     logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
                     return null;
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    if (e instanceof SSLHandshakeException) {
+                    if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException) {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e1) {
@@ -275,7 +253,8 @@ System.out.println("SSL H E 8");
                         retryCount++;
                     }
                     else {
-                        logger.debug("Exit ServiceNowRESTService.executePostRequest(" + url + ") != null");
+                        e.printStackTrace();
+                        logger.debug("Exit ServiceNowRESTService.executeDeleteRequest(" + url + ") != null");
                         return null;
                     }
                 }
