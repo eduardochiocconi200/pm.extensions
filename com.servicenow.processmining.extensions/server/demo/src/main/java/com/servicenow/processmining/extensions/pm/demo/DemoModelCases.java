@@ -42,17 +42,17 @@ public class DemoModelCases
     public boolean create()
     {
         for (DemoModelPath path : getModel().getPaths()) {
+            DateTime startCreationOfRecords = DateTime.now();
             DateTime pathFirstStartTime = DateTime.now().minusSeconds((int)path.getTotalDuration());
-            DateTime start = DateTime.now();
             System.out.println("Creating [" + path.getCount() + "] [" + path.getTable() + "] records for path defined in Tab: [" + path.getPathName() + "]. (A '.' will be printed for each created record. Be patient!)");
             for (int count=0; count < path.getCount(); count++) {
                 if (!createCase(path, pathFirstStartTime)) {
                     return false;
                 }
                 System.out.print(".");
-                pathFirstStartTime.minusSeconds((int)path.getCreationDelta());
+                pathFirstStartTime = pathFirstStartTime.minusSeconds((int)path.getCreationDelta());
             }
-            double elapsedTime = DateTime.now().minus(start.getMillis()).getMillis() / 1000.0 / 60.0;
+            double elapsedTime = DateTime.now().minus(startCreationOfRecords.getMillis()).getMillis() / 1000.0 / 60.0;
             System.out.println("\nCreated (" + path.getCount() + ") " + path.getTable() + " records along with its audit log records in (" + elapsedTime + ") mins.");
         }
 
@@ -186,7 +186,7 @@ public class DemoModelCases
             else {
                 recordUpdateTS = recordUpdateTS.plusSeconds(updateTime.intValue() - previousUpdateTS.intValue());
             }
-            if (!processUpdateRecordBatch(path, updateTime, recordUpdateTS, updateBatches.get(updateTime))) {
+            if (!processUpdateRecordBatch(path, previousUpdateTS, updateTime, recordUpdateTS, updateBatches.get(updateTime))) {
                 return false;
             }
             previousUpdateTS = updateTime;
@@ -195,20 +195,30 @@ public class DemoModelCases
         return true;
     }
 
-    private boolean processUpdateRecordBatch(final DemoModelPath path, final Double updateTime, final DateTime createdOn, HashMap<String, String> updateValues)
+    private boolean processUpdateRecordBatch(final DemoModelPath path, final Double previousUpdateTime, final Double updateTime, final DateTime createdOn, HashMap<String, String> updateValues)
     {
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-	String url = "https://" + getInstance().getInstance() + "/api/now/table/" + path.getTable() + "/" + this.caseSysId;
-	String payload = createPayload(updateValues);
-	String response = snrs.executePutRequest(url, payload);
-	if (response == null || response != null && response.equals("")) {
-		System.err.println("ERROR: Could not update the (" + path.getTable() + ") record with timestamp: (" + updateTime + ") and values: (" + updateValues + ") referenced in Tab: (" + path.getPathName() + ").");
-		System.err.println("Make sure all needed attributes and values in your spreadsheet for the time (" + updateTime + "), and values (" + updateValues + ") provided are correct.");
-		System.err.println("This way, the update transaction can be completed successfully.");
-		return false;
-	}
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/" + path.getTable() + "/" + this.caseSysId;
+        String payload = createPayload(updateValues);
+        String response = snrs.executePutRequest(url, payload);
+        if (response == null || response != null && response.equals("")) {
+            System.err.println("ERROR: Could not update the (" + path.getTable() + ") record with timestamp: (" + updateTime + ") and values: (" + updateValues + ") referenced in Tab: (" + path.getPathName() + ").");
+            System.err.println("Make sure all needed attributes and values in your spreadsheet for the time (" + updateTime + "), and values (" + updateValues + ") provided are correct.");
+            System.err.println("This way, the update transaction can be completed successfully.");
+            return false;
+        }
 
-        return fixAuditTrail(path, createdOn);
+        // Let's add a random deviation to the createdOn to avoid all data being equally sparsed.
+        Random random = new Random();
+        Double lowerEnd = previousUpdateTime == null ? 0.0 : previousUpdateTime;
+        int seconds = (int) random.nextDouble((updateTime-lowerEnd)*0.05);
+        seconds = (seconds % 2 == 0) ? seconds : (seconds * -1);
+        DateTime adjustedTime = createdOn.plusSeconds(seconds);
+        if (adjustedTime.isAfterNow()) {
+            adjustedTime = DateTime.now();
+        }
+
+        return fixAuditTrail(path, adjustedTime);
     }
 
     private boolean fixAuditTrail(final DemoModelPath path, final DateTime createdOn)
@@ -221,7 +231,7 @@ public class DemoModelCases
             if (entry.getReason().equals("")) {
                 // Fix creation time ...
                 entry.setSysCreatedOn(dateToString(createdOn));
-                entry.setReason("itsm_pm_eval");
+                entry.setReason("pm_eval");
                 String payload = getUpdatedSysAuditPayload(entry);
                 SysAuditEntryPK pk = ((SysAuditEntryPK) entry.getPK());
                 ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
