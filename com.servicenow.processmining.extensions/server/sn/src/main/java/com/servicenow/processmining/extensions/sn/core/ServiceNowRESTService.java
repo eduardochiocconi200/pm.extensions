@@ -8,6 +8,7 @@ import java.util.Base64;
 
 import javax.net.ssl.SSLHandshakeException;
 
+import org.apache.hc.client5.http.ConnectTimeoutException;
 import org.apache.hc.client5.http.HttpResponseException;
 import org.apache.hc.client5.http.classic.methods.HttpDelete;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
@@ -99,7 +100,7 @@ public class ServiceNowRESTService
                     logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
                     return null;
                 } catch (IOException e) {
-                    if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException) {
+                    if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException || e instanceof ConnectTimeoutException) {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e1) {
@@ -176,7 +177,7 @@ public class ServiceNowRESTService
                 logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
                 return null;
             } catch (IOException e) {
-                if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException) {
+                if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException || e instanceof ConnectTimeoutException) {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e1) {
@@ -240,7 +241,7 @@ public class ServiceNowRESTService
                     logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
                     return null;
                 } catch (IOException e) {
-                    if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException) {
+                    if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException || e instanceof ConnectTimeoutException) {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e1) {
