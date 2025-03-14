@@ -9,6 +9,8 @@ import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 
 import com.servicenow.processmining.extensions.sn.core.ServiceNowRESTService;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -211,7 +213,8 @@ public class DemoModelCases
         // Let's add a random deviation to the createdOn to avoid all data being equally sparsed.
         Random random = new Random();
         Double lowerEnd = previousUpdateTime == null ? 0.0 : previousUpdateTime;
-        int seconds = (int) random.nextDouble((updateTime-lowerEnd)*0.05);
+        // We will create a randomness of 5 mins (600 seconds) + o - the next time.
+        int seconds = (int) random.nextDouble(600);
         seconds = (seconds % 2 == 0) ? seconds : (seconds * -1);
         DateTime adjustedTime = createdOn.plusSeconds(seconds);
         if (adjustedTime.isAfterNow()) {
@@ -226,7 +229,7 @@ public class DemoModelCases
         SysAuditLogDAOREST wfDAO = new SysAuditLogDAOREST(getInstance());
         ArrayList<String> ids = new ArrayList<String>();
         ids.add(caseSysId);
-        SysAuditLog sysAuditLog = wfDAO.findByIds(new SysAuditLogPK(path.getTable()), ids);
+        SysAuditLog sysAuditLog = wfDAO.findByIds(new SysAuditLogPK(path.getTable()), ids, "reasonISEMPTY");
         for (SysAuditEntry entry : sysAuditLog.getLog()) {
             if (entry.getReason().equals("")) {
                 // Fix creation time ...
@@ -240,10 +243,57 @@ public class DemoModelCases
                 if (response == null || response != null && response.equals("")) {
                     return false;
                 }
+
+                // If it is the work_notes or comments attribute, we also need to update the record in the sys_journal_field table
+                if (entry.getFieldName().equals("work_notes")) {
+                    snrs = new ServiceNowRESTService(getInstance());
+                    String sysJournalFieldQueryUrl = "https://" + getInstance().getInstance() + "/api/now/table/sys_journal_field?sysparm_query=table=incident" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element=work_notes" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element_id=" + entry.getDocumentKey() + URLEncoder.encode("^", StandardCharsets.UTF_8) + "ORDERBYDESCsys_created_on";
+                    response = snrs.executeGetRequest(sysJournalFieldQueryUrl);
+                    if (response == null || response != null && response.equals("")) {
+                        return false;
+                    }
+
+                    String sysJournalFieldPayload = getUpdatedSysJournalFieldPayload(response, dateToString(createdOn));
+                    String sysJournalFieldKey = getSysJournalFieldKey(response);
+                    pk = ((SysAuditEntryPK) entry.getPK());
+                    snrs = new ServiceNowRESTService(getInstance());
+                    String sysJournalFieldUrl = "https://" + getInstance().getInstance() + "/api/snc/fixaudittrail/sys_journal_field/" + sysJournalFieldKey;
+                    response = snrs.executePutRequest(sysJournalFieldUrl, sysJournalFieldPayload);
+                    if (response == null || response != null && response.equals("")) {
+                        return false;
+                    }
+                }
             }
         }
 
         return true;
+    }
+
+    private String getSysJournalFieldKey(final String response)
+    {
+        String updatePayload = "";
+        JSONObject responseJSON = new JSONObject(response);
+        if (responseJSON.has("result")) {
+            JSONObject resultJSON = responseJSON.getJSONArray("result").getJSONObject(0);
+            if (resultJSON.has("sys_id")) {
+                return resultJSON.getString("sys_id");
+            }
+        }
+
+        return updatePayload;
+    }
+
+    private String getUpdatedSysJournalFieldPayload(final String response, final String createdOn)
+    {
+        JSONObject responseJSON = new JSONObject(response);
+        if (responseJSON.has("result")) {
+            JSONObject resultJSON = responseJSON.getJSONArray("result").getJSONObject(0);
+            if (resultJSON.has("sys_id")) {
+                return "{ \"sys_created_on\" : \"" + createdOn + "\" }";
+            }
+        }
+
+        return null;
     }
 
     private String getUpdatedSysAuditPayload(final SysAuditEntry entry)
