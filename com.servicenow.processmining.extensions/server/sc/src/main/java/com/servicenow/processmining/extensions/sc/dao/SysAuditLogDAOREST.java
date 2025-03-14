@@ -142,6 +142,11 @@ public class SysAuditLogDAOREST
 
 	public SysAuditLog findByIds(final SysAuditLogPK id, final ArrayList<String> ids)
 	{
+		return findByIds(id, ids, null);
+	}
+
+	public SysAuditLog findByIds(final SysAuditLogPK id, final ArrayList<String> ids, final String condition)
+	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
 		int baseOffset = 0;
 		boolean continueRetrieving = true;
@@ -152,7 +157,13 @@ public class SysAuditLogDAOREST
 			long startTime = System.currentTimeMillis();
 			String instancesInSysLog = getNextBatch(baseOffset, ids);
 			String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit?";
-			url += "sysparm_query=documentkeyIN" + instancesInSysLog + "&";
+			url += "sysparm_query=documentkeyIN" + instancesInSysLog;
+			if (condition != null) {
+				url += URLEncoder.encode("^", StandardCharsets.UTF_8) + condition + "&";
+			}
+			else {
+				url += "&";
+			}
 			url += "sysparm_fields=sys_id,documentkey,tablename,fieldname,oldvalue,newvalue,reason,sys_created_on,sys_created_by";
 			String response = snrs.executeGetRequest(url);
 			if (response == null || response != null && response.equals("")) {
