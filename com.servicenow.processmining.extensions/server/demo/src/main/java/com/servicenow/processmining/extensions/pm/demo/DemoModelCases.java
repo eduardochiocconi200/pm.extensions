@@ -20,6 +20,7 @@ import java.util.TreeMap;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,6 +47,7 @@ public class DemoModelCases
         for (DemoModelPath path : getModel().getPaths()) {
             DateTime startCreationOfRecords = DateTime.now();
             DateTime pathFirstStartTime = DateTime.now().minusSeconds((int)path.getTotalDuration());
+            loadChoiceValues(path);
             System.out.println("Creating [" + path.getCount() + "] [" + path.getTable() + "] records for path defined in Tab: [" + path.getPathName() + "]. (A '.' will be printed for each created record. Be patient!)");
             for (int count=0; count < path.getCount(); count++) {
                 if (!createCase(path, pathFirstStartTime)) {
@@ -93,7 +95,7 @@ public class DemoModelCases
         HashMap<String, String> values = path.getInitialValues();
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
 		String url = "https://" + getInstance().getInstance() + "/api/now/table/" + path.getTable();
-		String payload = createPayload(values);
+		String payload = createPayload(path, values);
 		String response = snrs.executePostRequest(url, payload);
 		if (response == null || response != null && response.equals("")) {
 			return false;
@@ -108,7 +110,7 @@ public class DemoModelCases
         creationUpdateValues.put("sys_created_by", "maint");
 
         url = "https://" + getInstance().getInstance() + "/api/snc/fixaudittrail/" + path.getTable() + "/" + this.caseSysId;
-		payload = createPayload(creationUpdateValues);
+		payload = createPayload(path, creationUpdateValues);
 		response = snrs.executePutRequest(url, payload);
 		if (response == null || response != null && response.equals("")) {
 			if (snrs.getErrorStatusCode() == 400) {
@@ -141,7 +143,7 @@ public class DemoModelCases
         return null;
     }
 
-    private String createPayload(final HashMap<String, String> values)
+    private String createPayload(final DemoModelPath path, final HashMap<String, String> values)
     {
         boolean processedFirstEntry = false;
         String payload = "{";
@@ -150,12 +152,63 @@ public class DemoModelCases
                 payload += ",";
             }
             String value = getValue(values.get(key));
+            if (isKeyChoiceAttribute(key)) {
+                if (!getModel().getChoiceValues(path.getTable(), key).contains(value)) {
+                    createChoiceValue(path.getTable(), key, value);
+                }
+            }
             payload += "\"" + key + "\":\"" + value + "\"";
             processedFirstEntry = true;
         }
         payload += "}";
 
         return payload;
+    }
+
+    private boolean isKeyChoiceAttribute(String key)
+    {
+        if (key != null && key.equals("state")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean loadChoiceValues(final DemoModelPath model)
+    {
+        String tableName = model.getTable();
+        String attributeName = "state";
+        if (getModel().getChoiceValues(tableName, attributeName).size() == 0) {
+            ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
+            String sysChoiceQueryUrl = "https://" + getInstance().getInstance() + "/api/now/table/sys_choice?sysparm_fields=name,element,label&sysparm_query=name=" + tableName + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element=" + attributeName + URLEncoder.encode("^", StandardCharsets.UTF_8) + "language=en" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "ORDERBYDESCsys_created_on";
+            String response = snrs.executeGetRequest(sysChoiceQueryUrl);
+            if (response == null || response != null && response.equals("")) {
+                return false;
+            }
+
+            JSONObject choiceValuesResult = new JSONObject(response);
+            JSONArray choiceValues = choiceValuesResult.optJSONArray("result");
+            for (int i=0; i < choiceValues.length(); i++) {
+                JSONObject choiceElement = choiceValues.getJSONObject(i);
+                String label = choiceElement.getString("label");
+                getModel().getChoiceValues(tableName, attributeName).add(label);
+            }
+        }
+
+        return true;
+    }
+
+    private boolean createChoiceValue(final String table, final String attribute, final String value)
+    {
+        ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
+        String sysChoicePostUrl = "https://" + getInstance().getInstance() + "/api/now/table/sys_choice";
+        String payload = "{ \"name\" : \"" + table + "\", \"element\" : \"" + attribute + "\", \"language\" : \"en\", \"value\" : \"" + value + "\", \"label\" : \"" + value + "\" }";
+        String response = snrs.executePostRequest(sysChoicePostUrl, payload);
+        if (response == null || response != null && response.equals("")) {
+            return false;
+        }
+
+        return true;
     }
 
     private String getValue(final String value)
@@ -201,7 +254,7 @@ public class DemoModelCases
     {
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
         String url = "https://" + getInstance().getInstance() + "/api/now/table/" + path.getTable() + "/" + this.caseSysId;
-        String payload = createPayload(updateValues);
+        String payload = createPayload(path, updateValues);
         String response = snrs.executePutRequest(url, payload);
         if (response == null || response != null && response.equals("")) {
             System.err.println("ERROR: Could not update the (" + path.getTable() + ") record with timestamp: (" + updateTime + ") and values: (" + updateValues + ") referenced in Tab: (" + path.getPathName() + ").");
@@ -292,15 +345,20 @@ public class DemoModelCases
 
     private String getUpdatedSysJournalFieldPayload(final String response, final String createdOn)
     {
+        String payload = null;
         JSONObject responseJSON = new JSONObject(response);
         if (responseJSON.has("result")) {
             JSONObject resultJSON = responseJSON.getJSONArray("result").getJSONObject(0);
             if (resultJSON.has("sys_id")) {
-                return "{ \"sys_created_on\" : \"" + createdOn + "\" }";
+                String editedWorkNote = resultJSON.getString("value") + " Note for instance: " + resultJSON.getString("element_id");
+                payload = "{ ";
+                payload += "\"value\" : \"" + editedWorkNote + "\", ";
+                payload += "\"sys_created_on\" : \"" + createdOn + "\"";
+                payload += " }";
             }
         }
 
-        return null;
+        return payload;
     }
 
     private String getUpdatedSysAuditPayload(final SysAuditEntry entry)
