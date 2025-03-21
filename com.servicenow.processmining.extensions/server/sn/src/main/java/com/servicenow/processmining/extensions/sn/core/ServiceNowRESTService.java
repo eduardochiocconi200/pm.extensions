@@ -3,6 +3,7 @@ package com.servicenow.processmining.extensions.sn.core;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Base64;
 
@@ -100,14 +101,14 @@ public class ServiceNowRESTService
                     logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
                     return null;
                 } catch (IOException e) {
-                    if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException || e instanceof ConnectTimeoutException) {
+                    if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof SocketTimeoutException || e instanceof EOFException || e instanceof ConnectTimeoutException) {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();
                         }
                         retry = true;
-                        if (retryCount > 2) {
+                        if (retryCount > MAX_RETRY_TIMES) {
                             retry = false;
                         }
                         retryCount++;
@@ -177,14 +178,14 @@ public class ServiceNowRESTService
                 logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
                 return null;
             } catch (IOException e) {
-                if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException || e instanceof ConnectTimeoutException) {
+                if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof SocketTimeoutException || e instanceof EOFException || e instanceof ConnectTimeoutException) {
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }
                     retry = true;
-                    if (retryCount > 2) {
+                    if (retryCount > MAX_RETRY_TIMES) {
                         retry = false;
                     }
                     retryCount++;
@@ -241,14 +242,14 @@ public class ServiceNowRESTService
                     logger.debug("Exit ServiceNowRESTService.executeGetRequest(" + url + ") = null (2)");
                     return null;
                 } catch (IOException e) {
-                    if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof EOFException || e instanceof ConnectTimeoutException) {
+                    if (e instanceof SSLHandshakeException || e instanceof SocketException || e instanceof SocketTimeoutException || e instanceof EOFException || e instanceof ConnectTimeoutException) {
                         try {
                             Thread.sleep(1000);
                         } catch (InterruptedException e1) {
                             e1.printStackTrace();
                         }
                         retry = true;
-                        if (retryCount > 2) {
+                        if (retryCount > MAX_RETRY_TIMES) {
                             retry = false;
                         }
                         retryCount++;
@@ -286,5 +287,6 @@ public class ServiceNowRESTService
         request.addHeader("Authorization", "Basic " + Base64.getEncoder().encodeToString(auth.getBytes()));
     }
 
+    private static final int MAX_RETRY_TIMES = 3;
     private final static Logger logger = LoggerFactory.getLogger(ServiceNowRESTService.class);
 }
