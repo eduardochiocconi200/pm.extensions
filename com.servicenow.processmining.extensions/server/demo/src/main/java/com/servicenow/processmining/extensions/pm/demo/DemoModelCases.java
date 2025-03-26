@@ -154,7 +154,9 @@ public class DemoModelCases
             String value = getValue(values.get(key));
             if (isKeyChoiceAttribute(key)) {
                 if (!getModel().getChoiceValues(path.getTable(), key).contains(value)) {
+                    System.err.println("The choice value: (" + value + ") does not exist. Valid values: (" + getModel().getChoiceValues(path.getTable(), key) + "). This value will be automatically added to the sys_choice configuration table.");
                     createChoiceValue(path.getTable(), key, value);
+                    getModel().getChoiceValues(path.getTable(), key).add(value);
                 }
             }
             payload += "\"" + key + "\":\"" + value + "\"";
