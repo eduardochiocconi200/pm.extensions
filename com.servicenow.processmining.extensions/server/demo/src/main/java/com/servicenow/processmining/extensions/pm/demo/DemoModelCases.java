@@ -154,7 +154,7 @@ public class DemoModelCases
             String value = getValue(values.get(key));
             if (isKeyChoiceAttribute(key)) {
                 if (!getModel().getChoiceValues(path.getTable(), key).contains(value)) {
-                    System.err.println("The choice value: (" + value + ") does not exist. Valid values: (" + getModel().getChoiceValues(path.getTable(), key) + ").");
+                    System.err.println("The choice value: (" + value + ") does not exist for attribute: (" + key + ") in table: (" + path.getTable() + "). Valid [" + key + "] values: (" + getModel().getChoiceValues(path.getTable(), key) + ").");
                     System.err.println("Values are case sensitive. Please fix this in the appropriate place in Tab: (" + path.getPathName() + ") in your input Excel spreadsheet.");
                     System.exit(-1);
                     // createChoiceValue(path.getTable(), key, value);
