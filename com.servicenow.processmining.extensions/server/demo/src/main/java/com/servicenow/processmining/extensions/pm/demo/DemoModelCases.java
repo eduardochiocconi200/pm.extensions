@@ -154,9 +154,11 @@ public class DemoModelCases
             String value = getValue(values.get(key));
             if (isKeyChoiceAttribute(key)) {
                 if (!getModel().getChoiceValues(path.getTable(), key).contains(value)) {
-                    System.err.println("The choice value: (" + value + ") does not exist. Valid values: (" + getModel().getChoiceValues(path.getTable(), key) + "). This value will be automatically added to the sys_choice configuration table.");
-                    createChoiceValue(path.getTable(), key, value);
-                    getModel().getChoiceValues(path.getTable(), key).add(value);
+                    System.err.println("The choice value: (" + value + ") does not exist. Valid values: (" + getModel().getChoiceValues(path.getTable(), key) + ").");
+                    System.err.println("Values are case sensitive. Please fix this in the appropriate place in Tab: (" + path.getPathName() + ") in your input Excel spreadsheet.");
+                    System.exit(-1);
+                    // createChoiceValue(path.getTable(), key, value);
+                    // getModel().getChoiceValues(path.getTable(), key).add(value);
                 }
             }
             payload += "\"" + key + "\":\"" + value + "\"";
@@ -200,6 +202,7 @@ public class DemoModelCases
         return true;
     }
 
+    @SuppressWarnings("unused")
     private boolean createChoiceValue(final String table, final String attribute, final String value)
     {
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
