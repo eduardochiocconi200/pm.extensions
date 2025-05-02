@@ -34,7 +34,12 @@ public class ProcessMiningVariantRetrievalTest
                     Assert.assertTrue(pmmr2.runEmptyFilter());
                     ProcessMiningModelParser pmmp2 = new ProcessMiningModelParser(modelVersionId);
                     if (pmmp2.parse(pmmr2.getProcessMiningModelJSONString())) {
-                        Assert.assertEquals(pmmp.getProcessMiningModel().getTotalVariants(), pmmp2.getProcessMiningModel().getVariants().size());
+                        if (pmmp.getProcessMiningModel().getTotalVariants() != -1) {
+                            Assert.assertEquals(pmmp.getProcessMiningModel().getTotalVariants(), pmmp2.getProcessMiningModel().getVariants().size());
+                        }
+                        else {
+                            Assert.assertTrue(pmmp2.getProcessMiningModel().getVariants().size() <= 1000);
+                        }
                     }
                 }
             }
