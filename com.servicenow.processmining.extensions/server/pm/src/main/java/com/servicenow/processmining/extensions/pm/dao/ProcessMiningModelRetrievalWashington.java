@@ -16,7 +16,7 @@ public class ProcessMiningModelRetrievalWashington
 
     protected String getEmptyFilterPayload()
     {
-        logger.debug("Enter ProcessMiningModelRetrievalVancouver.getEmptyFilterPayload()");
+        logger.debug("Enter ProcessMiningModelRetrievalWashington.getEmptyFilterPayload()");
         String variables = "{\n" +
         "\t\t\"versionId\": \"" + getProcessModelVersionId() + "\",\n" +
         "\t\t\"filterSets\": {\n" +
@@ -38,13 +38,13 @@ public class ProcessMiningModelRetrievalWashington
         payload += "}";
 
         logger.debug("payload: (" + payload + ")");
-        logger.debug("Exit ProcessMiningModelRetrievalVancouver.getEmptyFilterPayload()");
+        logger.debug("Exit ProcessMiningModelRetrievalWashington.getEmptyFilterPayload()");
         return payload;
     }
 
     protected String getFilterPayload(final String entityId, final ProcessMiningModelFilter filter)
     {
-        logger.debug("Enter ProcessMiningModelRetrievalVancouver.getBreakdownsFilterPayload()");
+        logger.debug("Enter ProcessMiningModelRetrievalWashington.getBreakdownsFilterPayload()");
         String variables = "{\n" +
         "\t\t\"versionId\": \"" + getProcessModelVersionId() + "\",\n" +
         "\t\t\"filterSets\": {\n" +
@@ -80,7 +80,7 @@ public class ProcessMiningModelRetrievalWashington
         payload += "}";
 
         logger.debug("payload: (" + payload + ")");
-        logger.debug("Exit ProcessMiningModelRetrievalVancouver.getBreakdownsFilterPayload()");
+        logger.debug("Exit ProcessMiningModelRetrievalWashington.getBreakdownsFilterPayload()");
        return payload;
     }
 
