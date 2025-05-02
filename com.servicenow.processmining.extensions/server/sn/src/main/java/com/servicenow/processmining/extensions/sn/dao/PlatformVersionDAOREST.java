@@ -43,6 +43,12 @@ public class PlatformVersionDAOREST
 		else if (response.indexOf("utah") > 0) {
 			version = ServiceNowInstance.UTAH;
 		}
+		else if (response.indexOf("xanadu") > 0) {
+			version = ServiceNowInstance.XANADU;
+		}
+		else if (response.indexOf("yokohama") > 0) {
+			version = ServiceNowInstance.YOKOHAMA;
+		}
 		else {
 			version = ServiceNowInstance.UNKNOWN;
 		}
