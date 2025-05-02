@@ -60,6 +60,9 @@ public class ProcessMiningModelFilterTest
                     Assert.assertTrue(false);
                 }
             }
+            else {
+                Assert.assertTrue(false);
+            }
         }
     }
 
