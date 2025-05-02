@@ -417,72 +417,11 @@ public class ProcessMiningModelParser
                 if (queryObj.has("scheduleModel")) {
                     JSONObject scheduleModelObj = (JSONObject) queryObj.getJSONObject("scheduleModel");
                     if (scheduleModelObj.has("variantResult")) {
-                        JSONArray variantResultObj = (JSONArray) scheduleModelObj.getJSONArray("variantResult");
-                        if (variantResultObj != null) {
-                            for (int i=0; i < variantResultObj.length(); i++) {
-                                JSONObject vObj = (JSONObject) variantResultObj.get(i);
-                                int totalVariants = vObj.has("totalVariants") ? vObj.getInt("totalVariants") : 0;
-                                pmm.setTotalVariants(totalVariants);
-                                if (vObj != null) {
-                                    JSONArray variantsObj = (JSONArray) vObj.getJSONArray("variants");
-                                    for (int j=0; j < variantsObj.length(); j++) {
-                                        JSONObject variantObj = (JSONObject) variantsObj.get(j);
-                                        ProcessMiningModelVariant pmmv = new ProcessMiningModelVariant(variantObj.getString("id"));
-                                        pmmv.setEntityId(variantObj.getString("entityId"));
-                                        JSONArray nodesObj = (JSONArray) variantObj.getJSONArray("nodes");
-                                        if (nodesObj != null) {
-                                            for (int k=0; k < nodesObj.length(); k++) {
-                                                pmmv.addNodeToPath(nodesObj.get(k).toString());
-                                            }
-                                        }
-                                        pmmv.setNodeCount(variantObj.getInt("nodeCount"));
-                                        pmmv.setFrequency(variantObj.getInt("frequency"));
-                                        pmmv.setTotalDuration(variantObj.getInt("totalDuration"));
-                                        pmmv.setMaxDuration(variantObj.getInt("maxDuration"));
-                                        pmmv.setMinDuration(variantObj.getInt("minDuration"));
-                                        pmmv.setAvgDuration(variantObj.getInt("avgDuration"));
-                                        pmmv.setMedianDuration(variantObj.getInt("medianDuration"));
-                                        pmmv.setStdDeviation(variantObj.getInt("stdDeviation"));
-                                        pmm.addVariant(pmmv);
-
-                                        if (variantObj.has("model") && !variantObj.isNull("model")) {
-                                            JSONObject modelObj = variantObj.getJSONObject("model");
-                                            if (modelObj != null) {
-                                                // Load Variant Nodes.
-                                                JSONArray nodesArray = modelObj.getJSONArray("nodes");
-                                                ArrayList<ProcessMiningModelNode> nodes = parseNodes(nodesArray);
-                                                pmmv.setNodesFromArray(nodes);
-
-                                                // Load Variant Edges.
-                                                JSONArray edgesArray = modelObj.getJSONArray("edges");
-                                                ArrayList<ProcessMiningModelTransition> transitions = parseTransitions(edgesArray);
-                                                pmmv.addTransitions(transitions);
-
-                                                JSONArray caseIdsArray = variantObj.getJSONArray("caseIds");
-                                                ArrayList<String> caseIds = parseCaseIdsFromVariantNodeSequence(caseIdsArray);
-                                                pmmv.setCaseIds(caseIds);
-                                            }
-                                        }
-                                        // If there is no model, the edges are described by the sequence of nodes...
-                                        else {
-                                            // Load Variant Nodes.
-                                            JSONArray nodesArray = variantObj.getJSONArray("nodes");
-                                            ArrayList<ProcessMiningModelNode> nodes = parseNodesFromVariantNodeSequence(nodesArray);
-                                            pmmv.setNodesFromArray(nodes);
-
-                                            JSONArray caseIdsArray = variantObj.getJSONArray("caseIds");
-                                            ArrayList<String> caseIds = parseCaseIdsFromVariantNodeSequence(caseIdsArray);
-                                            pmmv.setCaseIds(caseIds);
-
-                                            // Load Variant Edges.
-                                            ArrayList<ProcessMiningModelTransition> transitions = parseTransitionsFromVariantNodeSequence(nodesArray);
-                                            pmmv.addTransitions(transitions);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        parseVariantResult(scheduleModelObj);
                     }
+                }
+                else if (queryObj.has("variantResult")) {
+                    parseVariantResult(queryObj);
                 }
             }
         }
@@ -490,6 +429,75 @@ public class ProcessMiningModelParser
         logger.debug("Parsed: (" + pmm.getVariants().size() + ") variants.");
         for (ProcessMiningModelVariant variant : pmm.getVariants().values()) { 
             logger.debug(variant.toString());
+        }
+    }
+
+    private void parseVariantResult(final JSONObject obj)
+    {
+        JSONArray variantResultObj = (JSONArray) obj.getJSONArray("variantResult");
+        if (variantResultObj != null) {
+            for (int i=0; i < variantResultObj.length(); i++) {
+                JSONObject vObj = (JSONObject) variantResultObj.get(i);
+                int totalVariants = vObj.has("totalVariants") ? vObj.getInt("totalVariants") : 0;
+                pmm.setTotalVariants(totalVariants);
+                if (vObj != null) {
+                    JSONArray variantsObj = (JSONArray) vObj.getJSONArray("variants");
+                    for (int j=0; j < variantsObj.length(); j++) {
+                        JSONObject variantObj = (JSONObject) variantsObj.get(j);
+                        ProcessMiningModelVariant pmmv = new ProcessMiningModelVariant(variantObj.getString("id"));
+                        pmmv.setEntityId(variantObj.getString("entityId"));
+                        JSONArray nodesObj = (JSONArray) variantObj.getJSONArray("nodes");
+                        if (nodesObj != null) {
+                            for (int k=0; k < nodesObj.length(); k++) {
+                                pmmv.addNodeToPath(nodesObj.get(k).toString());
+                            }
+                        }
+                        pmmv.setNodeCount(variantObj.getInt("nodeCount"));
+                        pmmv.setFrequency(variantObj.getInt("frequency"));
+                        pmmv.setTotalDuration(variantObj.getInt("totalDuration"));
+                        pmmv.setMaxDuration(variantObj.getInt("maxDuration"));
+                        pmmv.setMinDuration(variantObj.getInt("minDuration"));
+                        pmmv.setAvgDuration(variantObj.getInt("avgDuration"));
+                        pmmv.setMedianDuration(variantObj.getInt("medianDuration"));
+                        pmmv.setStdDeviation(variantObj.getInt("stdDeviation"));
+                        pmm.addVariant(pmmv);
+
+                        if (variantObj.has("model") && !variantObj.isNull("model")) {
+                            JSONObject modelObj = variantObj.getJSONObject("model");
+                            if (modelObj != null) {
+                                // Load Variant Nodes.
+                                JSONArray nodesArray = modelObj.getJSONArray("nodes");
+                                ArrayList<ProcessMiningModelNode> nodes = parseNodes(nodesArray);
+                                pmmv.setNodesFromArray(nodes);
+
+                                // Load Variant Edges.
+                                JSONArray edgesArray = modelObj.getJSONArray("edges");
+                                ArrayList<ProcessMiningModelTransition> transitions = parseTransitions(edgesArray);
+                                pmmv.addTransitions(transitions);
+
+                                JSONArray caseIdsArray = variantObj.getJSONArray("caseIds");
+                                ArrayList<String> caseIds = parseCaseIdsFromVariantNodeSequence(caseIdsArray);
+                                pmmv.setCaseIds(caseIds);
+                            }
+                        }
+                        // If there is no model, the edges are described by the sequence of nodes...
+                        else {
+                            // Load Variant Nodes.
+                            JSONArray nodesArray = variantObj.getJSONArray("nodes");
+                            ArrayList<ProcessMiningModelNode> nodes = parseNodesFromVariantNodeSequence(nodesArray);
+                            pmmv.setNodesFromArray(nodes);
+
+                            JSONArray caseIdsArray = variantObj.getJSONArray("caseIds");
+                            ArrayList<String> caseIds = parseCaseIdsFromVariantNodeSequence(caseIdsArray);
+                            pmmv.setCaseIds(caseIds);
+
+                            // Load Variant Edges.
+                            ArrayList<ProcessMiningModelTransition> transitions = parseTransitionsFromVariantNodeSequence(nodesArray);
+                            pmmv.addTransitions(transitions);
+                        }
+                    }
+                }
+            }
         }
     }
 
