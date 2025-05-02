@@ -23,7 +23,15 @@ public class ProcessMiningModelRetrievalFactory
 		checkPlatformVersion(snInstance);
 
 		String snVersion = snInstance.getSNVersion();
-		if (snVersion.equals(ServiceNowInstance.WASHINGTON)) {
+		if (snVersion.equals(ServiceNowInstance.YOKOHAMA)) {
+			logger.debug("Creating Yokohama Filter Retriever");
+			return new ProcessMiningModelRetrievalYokohama(snInstance, modelVersionId);
+		}
+		else if (snVersion.equals(ServiceNowInstance.XANADU)) {
+			logger.debug("Creating Xanadu Filter Retriever");
+			return new ProcessMiningModelRetrievalXanadu(snInstance, modelVersionId);
+		}
+		else if (snVersion.equals(ServiceNowInstance.WASHINGTON)) {
 			logger.debug("Creating Washington Filter Retriever");
 			return new ProcessMiningModelRetrievalWashington(snInstance, modelVersionId);
 		}
@@ -45,7 +53,15 @@ public class ProcessMiningModelRetrievalFactory
 		checkPlatformVersion(snInstance);
 
 		String snVersion = snInstance.getSNVersion();
-		if (snVersion.equals(ServiceNowInstance.WASHINGTON) || snVersion.equals(ServiceNowInstance.XANADU)) {
+		if (snVersion.equals(ServiceNowInstance.YOKOHAMA)) {
+			logger.debug("Creating Yokohama Filter Retriever");
+			return new ProcessMiningVariantRetrievalYokohama(snInstance, modelVersionId, entityId, numberOfVariants);
+		}
+		else if (snVersion.equals(ServiceNowInstance.XANADU)) {
+			logger.debug("Creating Xanadu Filter Retriever");
+			return new ProcessMiningVariantRetrievalXanadu(snInstance, modelVersionId, entityId, numberOfVariants);
+		}
+		else if (snVersion.equals(ServiceNowInstance.WASHINGTON)) {
 			logger.debug("Creating Washington/Xanadu Filter Retriever");
 			return new ProcessMiningVariantRetrievalWashington(snInstance, modelVersionId, entityId, numberOfVariants);
 		}
