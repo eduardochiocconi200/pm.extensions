@@ -23,9 +23,9 @@ public class SysAuditLogDAOTest
     {
         ServiceNowInstance instance = new ServiceNowInstance(snInstance, snUser, snPassword);
         SysAuditLogDAOREST wfDAO = new SysAuditLogDAOREST(instance);
-        SysAuditLog sysAuditLog = wfDAO.findById(new SysAuditLogPK("incident", 100));
+        SysAuditLog sysAuditLog = wfDAO.findById(new SysAuditLogPK("incident", 10));
         Assert.assertNotNull(sysAuditLog);
-        Assert.assertTrue(sysAuditLog.getLog().size() > 0 && sysAuditLog.getLog().size() <= 100);
+        Assert.assertTrue(sysAuditLog.getLog().size() > 0 && sysAuditLog.getLog().size() <= 10);
         logger.debug("Retrieved: (" + sysAuditLog.getLog().size() + ") history entries.");
     }
 
@@ -34,11 +34,11 @@ public class SysAuditLogDAOTest
         ServiceNowInstance instance = new ServiceNowInstance(snInstance, snUser, snPassword);
         SysAuditLogDAOREST wfDAO = new SysAuditLogDAOREST(instance);
         long startTime = System.currentTimeMillis();
-        SysAuditLog sysAuditLog = wfDAO.findById(new SysAuditLogPK("incident", "state", 100));
+        SysAuditLog sysAuditLog = wfDAO.findById(new SysAuditLogPK("incident", "state", 10));
         long endTime = System.currentTimeMillis();
         logger.info("Long query completed in: (" + (endTime-startTime) + ") milliseconds.");
         Assert.assertNotNull(sysAuditLog);
-        Assert.assertTrue(sysAuditLog.getLog().size() > 0 && sysAuditLog.getLog().size() <= 100);
+        Assert.assertTrue(sysAuditLog.getLog().size() > 0 && sysAuditLog.getLog().size() <= 10);
         logger.debug("Retrieved: (" + sysAuditLog.getLog().size() + ") history entries.");
     }
 
