@@ -7,17 +7,20 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DemoModelParser
 {
     private String modelFileLocation = null;
+    private String dataIdentifier = null;
     private DemoModel model = null;
 
-    public DemoModelParser(final String modelFileLocation)
+    public DemoModelParser(final String modelFileLocation, final String dataIdentifier)
     {
         this.modelFileLocation = modelFileLocation;
+        this.dataIdentifier = dataIdentifier;
     }
 
     public String getModelFileLocation()
@@ -25,10 +28,15 @@ public class DemoModelParser
         return this.modelFileLocation;
     }
 
+    public String getDataIdentifier()
+    {
+        return this.dataIdentifier;
+    }
+
     public DemoModel getModel()
     {
         if (model == null) {
-            this.model = new DemoModel();
+            this.model = new DemoModel(dataIdentifier);
         }
 
         return this.model;
