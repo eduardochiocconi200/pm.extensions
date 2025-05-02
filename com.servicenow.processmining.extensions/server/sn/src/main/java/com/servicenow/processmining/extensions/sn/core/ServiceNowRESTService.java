@@ -86,8 +86,8 @@ public class ServiceNowRESTService
                     retry = false;
                 } catch (HttpResponseException e) {
                     errorStatusCode = e.getStatusCode();
-                    if (e.getStatusCode() == 403) {
-                        this.errorMessage = "The current user: (" + getInstance().getUser() + ") is not authorized to access the resource: (" + url + "). Properly entitle this user to have READ access and try again.";
+                    if (errorStatusCode == 401 || errorStatusCode == 403) {
+                        this.errorMessage = "The current user: (" + getInstance().getUser() + ") is not authorized to access the resource: (" + url + "). Properly authorize this user to have READ access and try again. Make sure credentials are valid and correct!";
                     }
                     else {
                         this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
@@ -162,8 +162,8 @@ public class ServiceNowRESTService
                 retry = false;
             } catch (HttpResponseException e) {
                 errorStatusCode = e.getStatusCode();
-                if (e.getStatusCode() == 403) {
-                    this.errorMessage = "The current user: (" + getInstance().getUser() + ") is not authorized to access the resource: (" + url + "). Properly entitle this user to have READ access and try again.";
+                if (errorStatusCode == 401 || errorStatusCode == 403) {
+                    this.errorMessage = "The current user: (" + getInstance().getUser() + ") is not authorized to access the resource: (" + url + "). Properly authorize this user to have READ access and try again. Make sure credentials are valid and correct!";
                 }
                 else {
                     this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
@@ -227,8 +227,8 @@ public class ServiceNowRESTService
                     retry = false;
                 } catch (HttpResponseException e) {
                     errorStatusCode = e.getStatusCode();
-                    if (e.getStatusCode() == 403) {
-                        this.errorMessage = "The current user: (" + getInstance().getUser() + ") is not authorized to access the resource: (" + url + "). Properly entitle this user to have READ access and try again.";
+                    if (errorStatusCode == 401 || errorStatusCode == 403) {
+                        this.errorMessage = "The current user: (" + getInstance().getUser() + ") is not authorized to access the resource: (" + url + "). Properly authorize this user to have READ access and try again. Make sure credentials are valid and correct!";
                     }
                     else {
                         this.errorMessage = "The current user: (" + getInstance().getUser() + ") could not execute REST request. Error Status Code: (" + errorStatusCode + ")";
