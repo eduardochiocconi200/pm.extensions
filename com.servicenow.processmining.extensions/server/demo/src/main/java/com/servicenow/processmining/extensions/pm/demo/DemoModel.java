@@ -5,11 +5,18 @@ import java.util.HashMap;
 
 public class DemoModel
 {
+    private String dataIdentifier = null;
     private ArrayList<DemoModelPath> paths = null;
     private HashMap<String, ArrayList<String>> choiceValues = new HashMap<String, ArrayList<String>>();
 
-    public DemoModel()
+    public DemoModel(final String dataIdentifier)
     {
+        this.dataIdentifier = dataIdentifier;
+    }
+
+    public String getDataIdentifier()
+    {
+        return this.dataIdentifier;
     }
 
     public boolean addPath(final DemoModelPath path)
