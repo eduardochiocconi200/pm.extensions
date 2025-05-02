@@ -7,6 +7,7 @@ import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 public class DemoModelImport
 {
     String args[] = null;
+    String dataIdentifier = null;
     String dataFile = null;
     String user = null;
     String password = null;
@@ -30,7 +31,7 @@ public class DemoModelImport
             System.exit(-1);
         }
 
-        DemoModelParser parser = new DemoModelParser(dataFile);
+        DemoModelParser parser = new DemoModelParser(dataFile, dataIdentifier);
         if (!parser.parse()) {
             System.err.println("Could not parse demo data input XLS file: (" + dataFile + ")");
             System.exit(-2);
@@ -64,6 +65,9 @@ public class DemoModelImport
             else if (args[i-1].equals("-p")) {
                 password = args[i];
             }
+            else if (args[i-1].equals("-d")) {
+                dataIdentifier = args[i];
+            }
             else {
                 System.err.println(usage());
                 return false;
@@ -81,9 +85,10 @@ public class DemoModelImport
         sb.append(" -f [specified the file location, that contains the details to create case instances along with their specific path updates.]\n");
         sb.append(" -i [specifies the instance name where the cases will be created (ie: processminingec1demo.service-now.com). Include domain suffix (ie: instance.service-now.com).]\n");
         sb.append(" -u [specifies the user in the instance specified in the -i parameter, that will own the created cases. Specify a user with enough permissions.]\n");
-        sb.append(" -p [specifies the password for the user specified in the -u parameter.]\n\n");
+        sb.append(" -p [specifies the password for the user specified in the -u parameter.]\n");
+        sb.append(" -d [specifies an id that will be available in all generated records so it is possible to track imported data.]\n\n");
         sb.append("For example:\n");
-        sb.append("# java -jar pm-demo-data-import.jar -f demo.xslx -i processminingec1demo.service-now.com -u admin -p password\n");
+        sb.append("# java -jar pm-demo-data-import.jar -f demo.xslx -i processminingec1demo.service-now.com -u admin -p password -d ITSM-Demo-Data\n");
 
         return sb.toString();
     }
