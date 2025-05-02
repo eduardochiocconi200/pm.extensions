@@ -47,7 +47,9 @@ public class DemoModelCases
         for (DemoModelPath path : getModel().getPaths()) {
             DateTime startCreationOfRecords = DateTime.now();
             DateTime pathFirstStartTime = DateTime.now().minusSeconds((int)path.getTotalDuration());
-            loadChoiceValues(path);
+            if (!loadChoiceValues(path)) {
+                return false;
+            }
             System.out.println("Creating [" + path.getCount() + "] [" + path.getTable() + "] records for path defined in Tab: [" + path.getPathName() + "]. (A '.' will be printed for each created record. Be patient!)");
             for (int count=0; count < path.getCount(); count++) {
                 if (!createCase(path, pathFirstStartTime)) {
@@ -157,9 +159,15 @@ public class DemoModelCases
                     System.err.println("The choice value: (" + value + ") does not exist for attribute: (" + key + ") in table: (" + path.getTable() + "). Valid [" + key + "] values: (" + getModel().getChoiceValues(path.getTable(), key) + ").");
                     System.err.println("Values are case sensitive. Please fix this in the appropriate place in Tab: (" + path.getPathName() + ") in your input Excel spreadsheet.");
                     System.exit(-1);
+                    // This code used to automatically create choice values if the values in the XLS did not match any existing choice value.
+                    // We disabled this as it is better to report an error and the data be fixed manually in the XLS.
                     // createChoiceValue(path.getTable(), key, value);
                     // getModel().getChoiceValues(path.getTable(), key).add(value);
                 }
+            }
+            // We need to check if we need to inject the data identifier if it exists
+            if (getModel().getDataIdentifier() != null) {
+                value = addDataIdentifier(key, value);
             }
             payload += "\"" + key + "\":\"" + value + "\"";
             processedFirstEntry = true;
@@ -167,6 +175,15 @@ public class DemoModelCases
         payload += "}";
 
         return payload;
+    }
+
+    private String addDataIdentifier(final String key, final String value)
+    {
+        if (key != null && (key.equals("description"))) {
+            return value + " - " + getModel().getDataIdentifier();
+        }
+
+        return value;
     }
 
     private boolean isKeyChoiceAttribute(String key)
@@ -187,6 +204,7 @@ public class DemoModelCases
             String sysChoiceQueryUrl = "https://" + getInstance().getInstance() + "/api/now/table/sys_choice?sysparm_fields=name,element,label&sysparm_query=name=" + tableName + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element=" + attributeName + URLEncoder.encode("^", StandardCharsets.UTF_8) + "language=en" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "ORDERBYDESCsys_created_on";
             String response = snrs.executeGetRequest(sysChoiceQueryUrl);
             if (response == null || response != null && response.equals("")) {
+                System.err.println("Could not load Choice values. Error: (" + snrs.getErrorMessage() + ") - Status Code: (" + snrs.getErrorStatusCode() + ")");
                 return false;
             }
 
@@ -291,7 +309,7 @@ public class DemoModelCases
             if (entry.getReason().equals("")) {
                 // Fix creation time ...
                 entry.setSysCreatedOn(dateToString(createdOn));
-                entry.setReason("pm_eval");
+                entry.setReason(getModel().getDataIdentifier() != null ? getModel().getDataIdentifier() : "pm_eval");
                 String payload = getUpdatedSysAuditPayload(entry);
                 SysAuditEntryPK pk = ((SysAuditEntryPK) entry.getPK());
                 ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
