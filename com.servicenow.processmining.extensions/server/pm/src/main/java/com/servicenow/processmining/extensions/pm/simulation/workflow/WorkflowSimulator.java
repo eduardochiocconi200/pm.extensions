@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 public class WorkflowSimulator
     extends Simulator
 {
-    private WorkflowInstanceSimulationState simulatorState = null;
+    private WorkflowSimulationState simulatorState = null;
     private int generationType = NO_GENERATION;
     private ProcessMiningModelVariant variant = null;
     private SimulationGenerator generator = null;
@@ -24,7 +24,7 @@ public class WorkflowSimulator
     public WorkflowSimulator(final ProcessMiningModel model, final ProcessMiningModelVariant processModelVariant, final String tableName, final String fieldName)
     {
         super();
-        this.simulatorState = new WorkflowInstanceSimulationState(model, this);
+        this.simulatorState = new WorkflowSimulationState(model, this);
         this.variant = processModelVariant;
         this.generationType = UNIFORM_INCREMENTAL_GENERATION;
         this.tableName = tableName;
@@ -34,14 +34,14 @@ public class WorkflowSimulator
     public WorkflowSimulator(final ProcessMiningModel model, final SysAuditLog log, final String tableName, final String fieldName)
     {
         super();
-        this.simulatorState = new WorkflowInstanceSimulationState(model, this);
+        this.simulatorState = new WorkflowSimulationState(model, this);
         this.sysAuditLog = log;
         this.generationType = REPLAY_GENERATION;
         this.tableName = tableName;
         this.fieldName = fieldName;
     }
 
-    public WorkflowInstanceSimulationState getSimulationState()
+    public WorkflowSimulationState getSimulationState()
     {
         return this.simulatorState;
     }
