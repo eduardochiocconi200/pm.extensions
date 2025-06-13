@@ -111,7 +111,7 @@ public abstract class WorkflowInstance
                         + "). Will need to enqueue WorkflowInstance.");
                 nextNodeCompletionTime = getSimulator().now() + message.getTime();
                 getSimulator().getSimulationState().enqueueWorkflowInstanceDueToNoCapacity(this, message, currentNode, nextNode, nextNodeCompletionTime);
-                getSimulator().getSimulationState().checkIfThereAreEnquedWorkflowInstances(executedNode);
+                getSimulator().getSimulationState().checkIfThereAreEnquedWorkflowInstances(getId(), executedNode);
             }
             else {
                 // We correct the message type as REGULAR and we also increment the usage, since
@@ -136,8 +136,8 @@ public abstract class WorkflowInstance
             if (nextNode == null) {
                 logger.debug("Time: (" + getSimulator().now() + ") - [" + message.getReferenceId()
                         + "] - Routing - WI Reached END of route.");
-                getSimulator().getSimulationState().decreaseUsage(currentNode);
-                getSimulator().getSimulationState().checkIfThereAreEnquedWorkflowInstances(executedNode);
+                getSimulator().getSimulationState().decreaseUsage(getId(), currentNode);
+                getSimulator().getSimulationState().checkIfThereAreEnquedWorkflowInstances(getId(), executedNode);
             }
             else {
                 logger.debug("Looking for transition: (" + currentNode + ", " + nextNode + ")");
@@ -161,7 +161,7 @@ public abstract class WorkflowInstance
                 }
                 getSimulator().getSimulationState().scheduleNextEvent(this, currentNode, nextNode,
                         nextNodeCompletionTime, messageType);
-                getSimulator().getSimulationState().checkIfThereAreEnquedWorkflowInstances(executedNode);
+                getSimulator().getSimulationState().checkIfThereAreEnquedWorkflowInstances(getId(), executedNode);
             }
         }
         logger.debug("Time: (" + getSimulator().now() + ") - [" + getId() + "] - route: - Current Path: (" + getCurrentPath()
@@ -208,22 +208,22 @@ public abstract class WorkflowInstance
 
     private void incrementCount()
     {
-        getSimulator().getSimulationState().incrementCount(getActivityState());
+        getSimulator().getSimulationState().incrementCount(getId(), getActivityState());
     }
 
     private void incrementUsage(final String nodeId)
     {
-        getSimulator().getSimulationState().increaseUsage(nodeId);
+        getSimulator().getSimulationState().increaseUsage(getId(), nodeId);
     }
 
     private void decrementCount()
     {
-        getSimulator().getSimulationState().decrementCount(getActivityState());
+        getSimulator().getSimulationState().decrementCount(getId(), getActivityState());
     }
 
     private void decrementUsage(final String nodeId)
     {
-        getSimulator().getSimulationState().decreaseUsage(nodeId);
+        getSimulator().getSimulationState().decreaseUsage(getId(), nodeId);
     }
 
     public static void printSummary(final Simulator simulator)
