@@ -23,6 +23,7 @@ public class ProcessMiningModeValueStreamDAOREST
 	public ProcessMiningModelValueStream findById(ProcessMiningModelValueStreamPK id)
 		throws ObjectNotFoundException
 	{
+		logger.error("Need to implement");
 		throw new RuntimeException("NEED TO IMPLEMENT");
 	}
 
@@ -30,12 +31,14 @@ public class ProcessMiningModeValueStreamDAOREST
 	public List<ProcessMiningModelValueStream> findAll()
 		throws ObjectNotFoundException
 	{
+		logger.error("Need to implement");
 		throw new RuntimeException("NEED TO IMPLEMENT");
 	}
 
 	public List<ProcessMiningModelValueStream> findAllByProcessModel(final String modelVersionId, final boolean includeMainProcess)
 		throws ObjectNotFoundException
 	{
+		logger.error("Need to implement");
 		throw new RuntimeException("NEED TO IMPLEMENT");
 	}
 
