@@ -14,7 +14,7 @@ public class Simulator
 
     public Simulator()
     {
-        statistics = new SimulationStatistics();
+        statistics = new SimulationStatistics(this);
         this.events = new ListQueue();
     }
 
