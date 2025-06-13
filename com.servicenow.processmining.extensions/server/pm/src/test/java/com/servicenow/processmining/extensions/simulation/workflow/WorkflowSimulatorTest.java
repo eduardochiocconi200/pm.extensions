@@ -1,5 +1,6 @@
 package com.servicenow.processmining.extensions.simulation.workflow;
 
+import com.servicenow.processmining.extensions.pm.simulation.roi.WorkflowSimulationComparison;
 import com.servicenow.processmining.extensions.pm.simulation.workflow.PrintSimulationState;
 import com.servicenow.processmining.extensions.pm.simulation.workflow.WorkflowInstance;
 import com.servicenow.processmining.extensions.pm.simulation.workflow.WorkflowSimulator;
@@ -68,14 +69,16 @@ public class WorkflowSimulatorTest
 
     startTime = System.currentTimeMillis();
     sample1 = new WorkflowSimulationSamplesTest1("100");
-    sim = new WorkflowSimulator(sample1.getModel(), sample1.getVariation(), sample1.getTableName(), sample1.getFieldName());
-    Assert.assertTrue(sim.validateEmptyQueues());
-    sim.run();
-    Assert.assertTrue(sim.validateEmptyQueues());
-    Assert.assertEquals(100, sim.getStatistics().getNumberOfCreatedInstances());
-    Assert.assertEquals(30000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    WorkflowSimulator sim2 = new WorkflowSimulator(sample1.getModel(), sample1.getVariation(), sample1.getTableName(), sample1.getFieldName());
+    Assert.assertTrue(sim2.validateEmptyQueues());
+    sim2.run();
+    Assert.assertTrue(sim2.validateEmptyQueues());
+    Assert.assertEquals(100, sim2.getStatistics().getNumberOfCreatedInstances());
+    Assert.assertEquals(30000.0, sim2.getStatistics().getTotalSimulationTime(), 0.0);
     endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
+    WorkflowSimulationComparison comparison = new WorkflowSimulationComparison(sim, sim2);
+    Assert.assertTrue(comparison.compare());
 
     startTime = System.currentTimeMillis();
     sample1 = new WorkflowSimulationSamplesTest1("1000");
