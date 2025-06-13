@@ -110,8 +110,8 @@ public class WorkflowSimulationSamplesTest8
         transitions = new HashMap<String, ProcessMiningModelTransition>();
 
         ProcessMiningModelTransition transition1 = new ProcessMiningModelTransition("1", "2");
-        transition1.setCaseFrequency(10);
-        transition1.setAbsoluteFrequency(10);
+        transition1.setCaseFrequency(Integer.valueOf(getNumberOfInstances()));
+        transition1.setAbsoluteFrequency(Integer.valueOf(getNumberOfInstances()));
         transition1.setMaxReps(1);
         transition1.setMinDuration(0);
         transition1.setMaxDuration(0);
@@ -121,8 +121,8 @@ public class WorkflowSimulationSamplesTest8
         transitions.put(transition1.getId(), transition1);
 
         ProcessMiningModelTransition transition2 = new ProcessMiningModelTransition("2", "3");
-        transition2.setCaseFrequency(10);
-        transition2.setAbsoluteFrequency(10);
+        transition2.setCaseFrequency(Integer.valueOf(getNumberOfInstances()));
+        transition2.setAbsoluteFrequency(Integer.valueOf(getNumberOfInstances()));
         transition2.setMaxReps(1);
         transition2.setMinDuration(100);
         transition2.setMaxDuration(200);
@@ -132,8 +132,8 @@ public class WorkflowSimulationSamplesTest8
         transitions.put(transition2.getId(), transition2);
 
         ProcessMiningModelTransition transition3 = new ProcessMiningModelTransition("3", "2");
-        transition3.setCaseFrequency(10);
-        transition3.setAbsoluteFrequency(10);
+        transition3.setCaseFrequency(Integer.valueOf(getNumberOfInstances()));
+        transition3.setAbsoluteFrequency(Integer.valueOf(getNumberOfInstances()));
         transition3.setMaxReps(1);
         transition3.setMinDuration(100);
         transition3.setMaxDuration(200);
@@ -143,8 +143,8 @@ public class WorkflowSimulationSamplesTest8
         transitions.put(transition3.getId(), transition3);
 
         ProcessMiningModelTransition transition4 = new ProcessMiningModelTransition("2", "4");
-        transition4.setCaseFrequency(10);
-        transition4.setAbsoluteFrequency(10);
+        transition4.setCaseFrequency(Integer.valueOf(getNumberOfInstances()));
+        transition4.setAbsoluteFrequency(Integer.valueOf(getNumberOfInstances()));
         transition4.setMaxReps(1);
         transition4.setMinDuration(100);
         transition4.setMaxDuration(500);
@@ -154,8 +154,8 @@ public class WorkflowSimulationSamplesTest8
         transitions.put(transition4.getId(), transition4);
 
         ProcessMiningModelTransition transition5 = new ProcessMiningModelTransition("4", "5");
-        transition5.setCaseFrequency(10);
-        transition5.setAbsoluteFrequency(10);
+        transition5.setCaseFrequency(Integer.valueOf(getNumberOfInstances()));
+        transition5.setAbsoluteFrequency(Integer.valueOf(getNumberOfInstances()));
         transition5.setMaxReps(1);
         transition5.setMinDuration(100);
         transition5.setMaxDuration(500);
