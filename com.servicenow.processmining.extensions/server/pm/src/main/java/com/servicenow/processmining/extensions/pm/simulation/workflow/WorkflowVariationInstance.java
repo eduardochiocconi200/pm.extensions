@@ -68,7 +68,7 @@ public class WorkflowVariationInstance
             }
 
             String startingNode = getProcessModelVariant().getStartingNodes().get(0);
-            getSimulator().getSimulationState().increaseUsage(startingNode);
+            getSimulator().getSimulationState().increaseUsage(getId(), startingNode);
             return startingNode;
         }
 
