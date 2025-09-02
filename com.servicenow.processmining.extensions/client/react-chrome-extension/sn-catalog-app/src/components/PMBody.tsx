@@ -42,7 +42,8 @@ function PMProjectBody()
         setModels(models);
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err)
+        console.log("AXIOS ERROR: ", err);
+        setFiltersErrorMessage('An error occurred getting BPMN diagrams: (' + err + ')!');
       })
   }
 
@@ -58,7 +59,8 @@ function PMProjectBody()
         setModelFilters(filters);
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err)
+        console.log("AXIOS ERROR: ", err);
+        setFiltersErrorMessage('An error occurred getting BPMN diagrams: (' + err + ')!');
       })
   }
 
@@ -92,7 +94,8 @@ function PMProjectBody()
         window.URL.revokeObjectURL(url);
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err)
+        console.log("AXIOS ERROR: ", err.response.data);
+        setFiltersErrorMessage('An error occurred getting Filter Analysis PPT: (' + err.response.data + ')!');
       })
   };
 
@@ -128,7 +131,8 @@ function PMProjectBody()
         window.URL.revokeObjectURL(url);
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err)
+        console.log("AXIOS ERROR: ", err);
+        setFiltersErrorMessage('An error occurred getting the Cycle Time Excel: (' + err + ')!');
       })
   };
 
@@ -164,7 +168,8 @@ function PMProjectBody()
         window.URL.revokeObjectURL(url);
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err)
+        console.log("AXIOS ERROR: ", err);
+        setFiltersErrorMessage('An error occurred getting BPMN diagrams: (' + err + ')!');
       })
   };
 
@@ -172,6 +177,8 @@ function PMProjectBody()
   const [selectedModel, setSelectedModel] = useState("");
   const [models, setModels] = useState([]);
   const [modelFilters, setModelFilters] = useState([]);
+  const [filtersErrorMessage, setFiltersErrorMessage] = useState('');
+
 
   // Function.
   const getMessage = () => {
@@ -253,6 +260,7 @@ function PMProjectBody()
                     ))}
                   </div>
                 </Accordion.Body>
+              {filtersErrorMessage && <p className="error">Error Message: {filtersErrorMessage}</p>}
               </Accordion.Item>
           </Accordion>
           </div>
