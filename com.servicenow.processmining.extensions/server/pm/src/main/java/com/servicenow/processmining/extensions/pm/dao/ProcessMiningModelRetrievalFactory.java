@@ -23,24 +23,28 @@ public class ProcessMiningModelRetrievalFactory
 		checkPlatformVersion(snInstance);
 
 		String snVersion = snInstance.getSNVersion();
-		if (snVersion.equals(ServiceNowInstance.YOKOHAMA)) {
-			logger.debug("Creating Yokohama Filter Retriever");
+		if (snVersion.equals(ServiceNowInstance.ZURICH)) {
+			logger.debug("Creating Zurich Retriever");
+			return new ProcessMiningModelRetrievalZurich(snInstance, modelVersionId);
+		}
+		else if (snVersion.equals(ServiceNowInstance.YOKOHAMA)) {
+			logger.debug("Creating Yokohama Retriever");
 			return new ProcessMiningModelRetrievalYokohama(snInstance, modelVersionId);
 		}
 		else if (snVersion.equals(ServiceNowInstance.XANADU)) {
-			logger.debug("Creating Xanadu Filter Retriever");
+			logger.debug("Creating Xanadu Retriever");
 			return new ProcessMiningModelRetrievalXanadu(snInstance, modelVersionId);
 		}
 		else if (snVersion.equals(ServiceNowInstance.WASHINGTON)) {
-			logger.debug("Creating Washington Filter Retriever");
+			logger.debug("Creating Washington Retriever");
 			return new ProcessMiningModelRetrievalWashington(snInstance, modelVersionId);
 		}
 		else if (snVersion.equals(ServiceNowInstance.VANCOUVER)) {
-			logger.debug("Creating Vancouver Filter Retriever");
+			logger.debug("Creating Vancouver Retriever");
 			return new ProcessMiningModelRetrievalVancouver(snInstance, modelVersionId);
 		}
 		else if (snVersion.equals(ServiceNowInstance.UTAH)) {
-			logger.debug("Creating Utah Filter Retriever");
+			logger.debug("Creating Utah Retriever");
 			return new ProcessMiningModelRetrievalUtah(snInstance, modelVersionId);
 		}
 		else {
@@ -53,7 +57,11 @@ public class ProcessMiningModelRetrievalFactory
 		checkPlatformVersion(snInstance);
 
 		String snVersion = snInstance.getSNVersion();
-		if (snVersion.equals(ServiceNowInstance.YOKOHAMA)) {
+		if (snVersion.equals(ServiceNowInstance.ZURICH)) {
+			logger.debug("Creating Yokohama Filter Retriever");
+			return new ProcessMiningVariantRetrievalZurich(snInstance, modelVersionId, entityId, numberOfVariants);
+		}
+		else if (snVersion.equals(ServiceNowInstance.YOKOHAMA)) {
 			logger.debug("Creating Yokohama Filter Retriever");
 			return new ProcessMiningVariantRetrievalYokohama(snInstance, modelVersionId, entityId, numberOfVariants);
 		}
