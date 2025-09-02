@@ -3,6 +3,7 @@ package com.servicenow.processmining.extensions.analysis;
 import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStreamAnalysis;
 import com.servicenow.processmining.extensions.pm.analysis.goldratt.ValueStreamParser;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParserFactory;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 import com.servicenow.processmining.extensions.sn.core.TestUtility;
@@ -23,7 +24,8 @@ public class ValueStreamParserTest
     private void test1()
     {
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload5-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("48f9d6f82b6e5a50c09efdac5e91bf3d");
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "fc3a14dd2b67a210c9a1f9b36e91bf0f");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         String valueStreamJSONString = new TestUtility().loadProcessMiningModel("/analysis/valueStream1.json");
