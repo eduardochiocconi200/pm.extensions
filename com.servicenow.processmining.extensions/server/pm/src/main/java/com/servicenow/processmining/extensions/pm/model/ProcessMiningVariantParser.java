@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ProcessMiningVariantParser
-    extends ProcessMiningModelParser
+    extends ProcessMiningModelParserGeneric
 {
     public ProcessMiningVariantParser(final String versionId)
     {
@@ -36,5 +36,5 @@ public class ProcessMiningVariantParser
         return parseResult;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(ProcessMiningModelParser.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProcessMiningModelParserGeneric.class);
 }
