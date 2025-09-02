@@ -4,11 +4,25 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParserFactory;
 import com.servicenow.processmining.extensions.pm.report.ProcessMiningModelExcelReport;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 import com.servicenow.processmining.extensions.sn.core.TestUtility;
 
 public class ProcessMiningModelExcelReportTest
 {
+    private ServiceNowInstance instance = null;
+
+    public ServiceNowInstance getInstance()
+    {
+        if (instance == null) {
+            instance = new ServiceNowInstance(ServiceNowTestCredentials.getInstanceName(), ServiceNowTestCredentials.getUserName(), ServiceNowTestCredentials.getPassword());
+        }
+
+        return instance;
+    }
+
     @Test
     public void test()
     {
@@ -32,7 +46,7 @@ public class ProcessMiningModelExcelReportTest
     private void test1()
     {
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload1-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(parser.getProcessMiningModel());
@@ -42,7 +56,7 @@ public class ProcessMiningModelExcelReportTest
     private void test2()
     {
         String processMiningModelJSONString = (new TestUtility()).loadProcessMiningModel("/model/payload2-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(parser.getProcessMiningModel());
@@ -52,7 +66,7 @@ public class ProcessMiningModelExcelReportTest
     private void test3()
     {
         String processMiningModelJSONString = (new TestUtility()).loadProcessMiningModel("/model/payload3-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(parser.getProcessMiningModel());
@@ -62,7 +76,7 @@ public class ProcessMiningModelExcelReportTest
     private void test4()
     {
         String processMiningModelJSONString = (new TestUtility()).loadProcessMiningModel("/model/payload3b-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(parser.getProcessMiningModel());
@@ -72,7 +86,7 @@ public class ProcessMiningModelExcelReportTest
     private void test5()
     {
         String processMiningModelJSONString = (new TestUtility()).loadProcessMiningModel("/model/payload4-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(parser.getProcessMiningModel());
@@ -82,7 +96,7 @@ public class ProcessMiningModelExcelReportTest
     private void test6()
     {
         String processMiningModelJSONString = (new TestUtility()).loadProcessMiningModel("/model/filterPayload1-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(parser.getProcessMiningModel());
@@ -92,7 +106,7 @@ public class ProcessMiningModelExcelReportTest
     private void test7()
     {
         String processMiningModelJSONString = (new TestUtility()).loadProcessMiningModel("/model/filterPayload2-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(parser.getProcessMiningModel());
@@ -102,7 +116,7 @@ public class ProcessMiningModelExcelReportTest
     private void test8()
     {
         String processMiningModelJSONString = (new TestUtility()).loadProcessMiningModel("/model/filterPayload3-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(parser.getProcessMiningModel());
@@ -112,7 +126,7 @@ public class ProcessMiningModelExcelReportTest
     private void test9()
     {
         String processMiningModelJSONString = (new TestUtility()).loadProcessMiningModel("/model/filterPayload4-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         ProcessMiningModelExcelReport report = new ProcessMiningModelExcelReport(parser.getProcessMiningModel());
