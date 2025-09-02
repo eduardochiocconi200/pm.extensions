@@ -313,7 +313,7 @@ public class SysAuditLogDAOREST
 	}
 
 	private static final int BATCH_SIZE = 2000;
-	private static final int IDS_BATCH_SIZE = 500;
+	private static final int IDS_BATCH_SIZE = 100;
 	private static final int MAX_RESULT_SET = 10000;
 
 	private static final Logger logger = LoggerFactory.getLogger(SysAuditLogDAOREST.class);
