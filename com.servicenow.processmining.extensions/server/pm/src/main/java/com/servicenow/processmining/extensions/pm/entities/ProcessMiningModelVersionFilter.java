@@ -17,14 +17,14 @@ public class ProcessMiningModelVersionFilter
     private String transitionsFilterCondition = null;
     private ProcessMiningModelFilterTransitions transitionsFilter = null;
     private String projectId = null;
-    private int caseFrequency = -1;
-    private int variantCount = -1;
-    private int totalDuration = -1;
-    private int maxDuration = -1;
-    private int minDuration = -1;
-    private int avgDuration = -1;
-    private int medianDuration = -1;
-    private int stdDeviation = -1;
+    private long caseFrequency = -1;
+    private long variantCount = -1;
+    private float totalDuration = -1;
+    private long maxDuration = -1;
+    private long minDuration = -1;
+    private long avgDuration = -1;
+    private long medianDuration = -1;
+    private long stdDeviation = -1;
 
     public ProcessMiningModelVersionFilter(ProcessMiningModelVersionFilterPK pk)
     {
@@ -51,82 +51,82 @@ public class ProcessMiningModelVersionFilter
         return this.projectId;
     }
 
-    public void setCaseFrequency(final int freq)
+    public void setCaseFrequency(final long freq)
     {
         this.caseFrequency = freq;
     }
 
-    public int getCaseFrequency()
+    public long getCaseFrequency()
     {
         return this.caseFrequency;
     }
 
-    public void setVariantCount(final int count)
+    public void setVariantCount(final long count)
     {
         this.variantCount = count;
     }
 
-    public int getVariantCount()
+    public long getVariantCount()
     {
         return this.variantCount;
     }
 
-    public void setTotalDuration(final int total)
+    public void setTotalDuration(final float total)
     {
         this.totalDuration = total;
     }
 
-    public int getTotalDuration()
+    public float getTotalDuration()
     {
         return this.totalDuration;
     }
 
-    public void setMaxDuration(final int maxDuration)
+    public void setMaxDuration(final long maxDuration)
     {
         this.maxDuration = maxDuration;
     }
 
-    public int getMaxDuration()
+    public long getMaxDuration()
     {
         return this.maxDuration;
     }
 
-    public void setMinDuration(final int minDuration)
+    public void setMinDuration(final long minDuration)
     {
         this.minDuration = minDuration;
     }
 
-    public int getMinDuration()
+    public long getMinDuration()
     {
         return this.minDuration;
     }
 
-    public void setAvgDuration(final int avgDuration)
+    public void setAvgDuration(final long avgDuration)
     {
         this.avgDuration = avgDuration;
     }
 
-    public int getAvgDuration()
+    public long getAvgDuration()
     {
         return this.avgDuration;
     }
 
-    public void setMedianDuration(final int medianDuration)
+    public void setMedianDuration(final long medianDuration)
     {
         this.medianDuration = medianDuration;
     }
 
-    public int getMedianDuration()
+    public long getMedianDuration()
     {
         return this.medianDuration;
     }
 
-    public void setStdDeviation(final int stdDeviation)
+    public void setStdDeviation(final long stdDeviation)
     {
         this.stdDeviation = stdDeviation;
     }
 
-    public int getStdDeviation()
+    public long getStdDeviation()
     {
         return this.stdDeviation;
     }
