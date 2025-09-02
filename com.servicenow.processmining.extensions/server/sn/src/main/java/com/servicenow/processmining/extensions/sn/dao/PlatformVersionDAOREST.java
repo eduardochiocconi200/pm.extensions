@@ -49,6 +49,9 @@ public class PlatformVersionDAOREST
 		else if (response.indexOf("yokohama") > 0) {
 			version = ServiceNowInstance.YOKOHAMA;
 		}
+		else if (response.indexOf("zurich") > 0) {
+			version = ServiceNowInstance.ZURICH;
+		}
 		else {
 			version = ServiceNowInstance.UNKNOWN;
 		}
