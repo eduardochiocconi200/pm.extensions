@@ -144,7 +144,7 @@ public abstract class BPMNBaseGenerator {
 
     protected SequenceFlow createSequenceFlow(Process process, FlowNode from, FlowNode to, BpmnPlane plane, double... waypoints)
     {
-        String identifier = from.getId() + "-" + to.getId();
+        String identifier = filterId(from.getId() + "-" + to.getId());
         SequenceFlow sequenceFlow = modelInstance.newInstance(SequenceFlow.class);
         sequenceFlow.setAttributeValue("id", identifier, true);
         process.addChildElement(sequenceFlow);
