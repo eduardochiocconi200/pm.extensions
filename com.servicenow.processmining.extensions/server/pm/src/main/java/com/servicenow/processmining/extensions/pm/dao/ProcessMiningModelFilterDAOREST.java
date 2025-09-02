@@ -4,6 +4,7 @@ import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVer
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersionFilterPK;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelFilter;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParserFactory;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowRESTService;
 import com.servicenow.processmining.extensions.sn.dao.GenericDAOREST;
@@ -134,7 +135,7 @@ public class ProcessMiningModelFilterDAOREST
 		List<ProcessMiningModelVersionFilter> modelFilters = new ArrayList<ProcessMiningModelVersionFilter>();
 		ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelVersionId);
 		if (pmmr.runEmptyFilter()) {
-			ProcessMiningModelParser pmmp = new ProcessMiningModelParser(modelVersionId);
+			ProcessMiningModelParser pmmp = ProcessMiningModelParserFactory.getParser(getInstance(), modelVersionId);
 			if (!pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
 				logger.error("Could not parse the Process Mining model: (" + modelVersionId + ").");
 				return modelFilters;
@@ -152,7 +153,8 @@ public class ProcessMiningModelFilterDAOREST
 					f.setMinDuration(pmmp.getProcessMiningModel().getAggregate().getMinCaseDuration());
 					f.setMedianDuration(pmmp.getProcessMiningModel().getAggregate().getMedianDuration());
 					f.setStdDeviation(pmmp.getProcessMiningModel().getAggregate().getStdDeviation());
-					f.setTotalDuration(pmmp.getProcessMiningModel().getAggregate().getAvgCaseDuration() * pmmp.getProcessMiningModel().getAggregate().getCaseCount());
+					float totalDuration = ((float)pmmp.getProcessMiningModel().getAggregate().getAvgCaseDuration() * (float)pmmp.getProcessMiningModel().getAggregate().getCaseCount());
+					f.setTotalDuration(totalDuration);
 					f.setVariantCount(pmmp.getProcessMiningModel().getAggregate().getVariantCount());
 					modelFilters.add(f);
 				}
