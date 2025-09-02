@@ -6,12 +6,15 @@ import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelNode;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelResources;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelTransition;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariant;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public abstract class WorkflowSimulationSamples
 {
+    private ServiceNowInstance instance = null;
     private String numberOfInstances = "";
     protected ProcessMiningModel model = null;
     protected ProcessMiningModelVariant pm = null;
@@ -27,6 +30,15 @@ public abstract class WorkflowSimulationSamples
     public String getNumberOfInstances()
     {
         return this.numberOfInstances;
+    }
+
+    public ServiceNowInstance getInstance()
+    {
+        if (instance == null) {
+            instance = new ServiceNowInstance(snInstance, snUser, snPassword);
+        }
+
+        return instance;
     }
 
     public ProcessMiningModel getModel()
@@ -116,4 +128,8 @@ public abstract class WorkflowSimulationSamples
 
         return resources;
     }
+
+    private static final String snInstance = ServiceNowTestCredentials.getInstanceName();
+    private static final String snUser = ServiceNowTestCredentials.getUserName();
+    private static final String snPassword = ServiceNowTestCredentials.getPassword();
 }
