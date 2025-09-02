@@ -1,5 +1,8 @@
 package com.servicenow.processmining.extensions.pm.bpmn;
 
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelTransition;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,9 +22,6 @@ import org.camunda.bpm.model.bpmn.instance.ExclusiveGateway;
 import org.camunda.bpm.model.bpmn.instance.bpmndi.BpmnDiagram;
 import org.camunda.bpm.model.bpmn.instance.bpmndi.BpmnPlane;
 import org.camunda.bpm.model.xml.ModelValidationException;
-
-import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
-import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelTransition;
 
 public class BPMNProcessGenerator
     extends BPMNBaseGenerator
