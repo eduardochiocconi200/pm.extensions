@@ -43,6 +43,7 @@ function ValueStream(props: { model: string; }) {
   const [showPhaseMapping, setShowPhaseMapping] = useState(false);
   const [showNewPhaseDialog, setShowNewPhaseDialog] = useState(false);
   const [activityToPhasesMapping, setActivityToPhasesMapping] = useState(new Map<string,ValueStreamPhaseType|null>());
+  const [valueStreamErrorMessage, setValueStreamErrorMessage] = useState('');
 
   const phaseChanged = (event) => {
     const activity = event.target.id;
@@ -63,18 +64,20 @@ function ValueStream(props: { model: string; }) {
           console.log(p);
           p.nodes = [];
         }
-        for (const [key, value] of activityToPhasesMapping.entries()) {
-          if (value !== null) {
-            console.log('Key: (' + key);
-            console.log('Value: (' + value);
-            for (const p in phases) {
-              if (p.name === value) {
-                p.nodes.push(key);
+        for (const [activityId, phaseId] of activityToPhasesMapping.entries()) {
+          if (phaseId !== null) {
+            console.log('Activity Id: (' + activityId + ")");
+            console.log('Phase Id: (' + phaseId + ")");
+            for (const ph of phases) {
+              console.log('phaseId: (' + phaseId + ") = (" + phaseId.name + ") : phaseId.name - ph.name: (" + ph.name + ")");
+              if (ph.name === phaseId) {
+                ph.nodes.push(activityId);
               }
             }
           }
-        }    
+        }
       }
+      console.log("Completed sync");
     }
   }
 
@@ -124,7 +127,8 @@ function ValueStream(props: { model: string; }) {
         }    
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err)
+        console.log("AXIOS ERROR: ", err);
+        setValueStreamErrorMessage('An error occurred getting Value Stream: (' + err + ')!');
       })
   }
 
@@ -137,7 +141,8 @@ function ValueStream(props: { model: string; }) {
         console.log('Saving Value Stream: ' + data + '.');
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err)
+        console.log("AXIOS ERROR: ", err);
+        setValueStreamErrorMessage('An error occurred saving Value Stream: (' + err + ')!');
       })
   };
 
@@ -151,7 +156,8 @@ function ValueStream(props: { model: string; }) {
         setSelectedPhase(undefined);
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err)
+        console.log("AXIOS ERROR: ", err);
+        setValueStreamErrorMessage('An error occurred resetting Value Stream: (' + err + ')!');
       })
   };
 
@@ -163,7 +169,8 @@ function ValueStream(props: { model: string; }) {
         console.log('Run Value Stream Analysis: ' + data + '.');
       })
       .catch((err) => {
-        console.log("AXIOS ERROR: ", err)
+        console.log("AXIOS ERROR: ", err);
+        setValueStreamErrorMessage('An error occurred running Value Stream Analysis: (' + err + ')!');
       })
   };
 
@@ -219,6 +226,7 @@ function ValueStream(props: { model: string; }) {
         <div>
           {showPhaseMapping && <ActivityToPhaseMapping showPhaseMapping={showPhaseMapping} handleShowPhaseMapping={handleShowPhaseMapping} phaseChanged={phaseChanged} phases={phases} activityToPhasesMapping={activityToPhasesMapping}></ActivityToPhaseMapping>}
         </div>
+        {valueStreamErrorMessage && <p className="error">Error Message: {valueStreamErrorMessage}</p>}
       </Container>
     </>
   );
