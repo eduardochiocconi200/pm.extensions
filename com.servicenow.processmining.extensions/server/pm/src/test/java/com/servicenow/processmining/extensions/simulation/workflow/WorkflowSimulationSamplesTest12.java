@@ -4,6 +4,7 @@ import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelEntity;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelNode;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParserFactory;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelResources;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelTransition;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariant;
@@ -58,7 +59,7 @@ public class WorkflowSimulationSamplesTest12
     {
         if (model == null) {
             String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload5-w.json");
-            ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+            ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
             Assert.assertTrue(parser.parse(processMiningModelJSONString));
             model = parser.getProcessMiningModel();
             attachResourcesToNodes();
