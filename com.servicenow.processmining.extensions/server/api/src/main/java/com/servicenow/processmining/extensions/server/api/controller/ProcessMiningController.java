@@ -16,6 +16,7 @@ import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVer
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelNode;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParserFactory;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVersionByNameAndDateComparator;
 import com.servicenow.processmining.extensions.pm.report.ProcessMiningModelExcelReport;
 import com.servicenow.processmining.extensions.pm.report.ProcessMiningModelFilterPowerpointReport;
@@ -184,7 +185,7 @@ public class ProcessMiningController
 			ProcessMiningModelParser parser = null;
 			ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
 			if (pmmr.runEmptyFilter()) {
-				parser = new ProcessMiningModelParser(modelId);
+				parser = ProcessMiningModelParserFactory.getParser(getInstance(), modelId);
 				if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
 					logger.error("Could not parse filter payload successfully!");
 				}
@@ -223,7 +224,7 @@ public class ProcessMiningController
 			ProcessMiningModelParser parser = null;
 			ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
 			if (pmmr.runEmptyFilter()) {
-				parser = new ProcessMiningModelParser(modelId);
+				parser = ProcessMiningModelParserFactory.getParser(getInstance(), modelId);
 				if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
 					logger.error("Could not parse filter payload successfully!");
 				}
@@ -263,7 +264,7 @@ public class ProcessMiningController
 			ProcessMiningModelParser parser = null;
 			ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
 			if (pmmr.runEmptyFilter()) {
-				parser = new ProcessMiningModelParser(modelId);
+				parser = ProcessMiningModelParserFactory.getParser(getInstance(), modelId);
 				if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
 					logger.error("Could not parse filter payload successfully!");
 				}
@@ -310,7 +311,7 @@ public class ProcessMiningController
 				ProcessMiningModelParser parser = null;
 				ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
 				if (pmmr.runEmptyFilter()) {
-					parser = new ProcessMiningModelParser(modelId);
+					parser = ProcessMiningModelParserFactory.getParser(getInstance(), modelId);
 					if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
 						logger.error("Could not parse filter payload successfully!");
 					}
@@ -380,7 +381,7 @@ public class ProcessMiningController
 				ProcessMiningModelParser parser = null;
 				ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelId);
 				if (pmmr.runEmptyFilter()) {
-					parser = new ProcessMiningModelParser(modelId);
+					parser = ProcessMiningModelParserFactory.getParser(getInstance(), modelId);
 					if (!parser.parse(pmmr.getProcessMiningModelJSONString())) {
 						logger.error("Could not parse filter payload successfully!");
 					}
