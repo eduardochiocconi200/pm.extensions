@@ -72,10 +72,26 @@ public class ValueStream
         }
 
         if (this.nodesToPhaseMap.size() != getModel().getNodes().size()) {
-            throw new RuntimeException("Not all nodes in the Process Model (" + this.nodesToPhaseMap.size() + ") are mapped to the Value Stream (" + getModel().getNodes().size() + "). Please make sure all nodes are mapped to a phase.");
+            if (this.nodesToPhaseMap.size() != getDistinctNodes()) {
+                throw new RuntimeException("Not all nodes in the Process Model (" + this.nodesToPhaseMap.size() + ") are mapped to the Value Stream (" + getModel().getNodes().size() + "). Please make sure all nodes are mapped to a phase.");
+            }
+        }
+        return this.nodesToPhaseMap;
+    }
+
+    // It is possible that the ProcessModel includes nodes with repeated labels.
+    // And we need to deduplicate this situation.
+    private int getDistinctNodes()
+    {
+        HashMap<String, String> nodes = new HashMap<String, String>();
+        for (String nodeId : getModel().getNodes().keySet()) {
+            String nodeName = getModel().getNodes().get(nodeId).getName();
+            if (nodes.get(nodeName) == null) {
+                nodes.put(nodeName, nodeName);
+            }
         }
 
-        return this.nodesToPhaseMap;
+        return nodes.size();
     }
 
     public int getVariantLastPhaseIndex(final ProcessMiningModelVariant variant, final int currentPhase)
@@ -86,7 +102,6 @@ public class ValueStream
                 return i;
             }
         }
-
         return -1;
     }
 
