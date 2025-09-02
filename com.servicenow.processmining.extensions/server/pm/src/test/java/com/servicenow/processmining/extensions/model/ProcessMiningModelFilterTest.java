@@ -7,6 +7,7 @@ import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelVersionD
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersionFilter;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersion;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParserFactory;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 
@@ -28,7 +29,7 @@ public class ProcessMiningModelFilterTest
         String modelVersionId = "ac0c7a1f93a80a506e79bb1e1dba10af";
         ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelVersionId);
         if (pmmr.runEmptyFilter()) {
-            ProcessMiningModelParser pmmp = new ProcessMiningModelParser(modelVersionId);
+            ProcessMiningModelParser pmmp = ProcessMiningModelParserFactory.getParser(getInstance(), modelVersionId);
             if (pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
                 logger.info("Retrieved and parsed Process Mining Model successfully!");
                 ProcessMiningModelFilterDAOREST pmmfDAO = new ProcessMiningModelFilterDAOREST(instance);
@@ -49,7 +50,7 @@ public class ProcessMiningModelFilterTest
             String modelVersionId = version.getPK().toString();
             ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelVersionId);
             if (pmmr.runEmptyFilter()) {
-                ProcessMiningModelParser pmmp = new ProcessMiningModelParser(modelVersionId);
+                ProcessMiningModelParser pmmp = ProcessMiningModelParserFactory.getParser(getInstance(), modelVersionId);
                 if (pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
                     logger.info("Retrieved and parsed Process Mining Model (" + pmmp.getProcessMiningModel().getName() + ") successfully!");
                     ProcessMiningModelFilterDAOREST pmmfDAO = new ProcessMiningModelFilterDAOREST(getInstance());
