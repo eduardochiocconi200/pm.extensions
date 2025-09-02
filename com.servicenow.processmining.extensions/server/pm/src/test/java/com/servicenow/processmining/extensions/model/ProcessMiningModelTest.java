@@ -5,6 +5,7 @@ import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrieva
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelVersionDAOREST;
 import com.servicenow.processmining.extensions.pm.entities.ProcessMiningModelVersion;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParserFactory;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 
@@ -24,7 +25,7 @@ public class ProcessMiningModelTest
         String modelVersionId = "ac0c7a1f93a80a506e79bb1e1dba10af";
         ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelVersionId);
         if (pmmr.runEmptyFilter()) {
-            ProcessMiningModelParser pmmp = new ProcessMiningModelParser(modelVersionId);
+            ProcessMiningModelParser pmmp = ProcessMiningModelParserFactory.getParser(getInstance(), modelVersionId);
             if (pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
                 logger.info("Retrieved and parsed Process Mining Model successfully!");
             }
@@ -36,10 +37,12 @@ public class ProcessMiningModelTest
     {
         ProcessMiningModelVersionDAOREST dao = new ProcessMiningModelVersionDAOREST(getInstance());
         for (ProcessMiningModelVersion version : dao.findAll()) {
+            // System.out.println("PROCESS: (" + version.getName() + ")\n, ID: (" + version.getProjectId() + ")");
             String modelVersionId = version.getPK().toString();
             ProcessMiningModelRetrieval pmmr = ProcessMiningModelRetrievalFactory.getProcessMiningRetrieval(getInstance(), modelVersionId);
             if (pmmr.runEmptyFilter()) {
-                ProcessMiningModelParser pmmp = new ProcessMiningModelParser(modelVersionId);
+                // System.out.println("QUERY RESULT: (" + pmmr.getProcessMiningModelJSONString() + ")");
+                ProcessMiningModelParser pmmp = ProcessMiningModelParserFactory.getParser(getInstance(), modelVersionId);
                 if (pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
                     logger.info("Retrieved and parsed Process Mining Model successfully for project: (" + version.getName() + ") - (" + version.getLastMinedTime() + ").");
                 }
@@ -51,15 +54,11 @@ public class ProcessMiningModelTest
     public ServiceNowInstance getInstance()
     {
         if (instance == null) {
-            instance = new ServiceNowInstance(snInstance, snUser, snPassword);
+            instance = new ServiceNowInstance(ServiceNowTestCredentials.getInstanceName(), ServiceNowTestCredentials.getUserName(), ServiceNowTestCredentials.getPassword());
         }
 
         return instance;
     }
-
-    private static final String snInstance = ServiceNowTestCredentials.getInstanceName();
-    private static final String snUser = ServiceNowTestCredentials.getUserName();
-    private static final String snPassword = ServiceNowTestCredentials.getPassword();
 
     private static final Logger logger = LoggerFactory.getLogger(ProcessMiningModelTest.class);
 }
