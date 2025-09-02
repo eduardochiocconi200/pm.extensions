@@ -197,7 +197,7 @@ public class ProcessMiningModelVersionDAOREST
 		return findById(id) != null;
 	}
 
-	private static final String PLATFORM_VERSIONS = "WASHINGTON,VANCOUVER,UTAH";
+	private static final String PLATFORM_VERSIONS = "ZURICH,YOKOHAMA,WASHINGTON,VANCOUVER,UTAH";
 	private static final int BATCH_SIZE = 10;
 
 	private static final Logger logger = LoggerFactory.getLogger(ProcessMiningModelVersionDAOREST.class);
