@@ -46,4 +46,6 @@ public class ServiceNowInstance
     public static final String WASHINGTON = "WASHINGTON";
     public static final String XANADU = "XANADU";
     public static final String YOKOHAMA = "YOKOHAMA";
+    public static final String ZURICH = "ZURICH";
+    public static final String LATEST = ZURICH;
 }
