@@ -4,9 +4,13 @@ import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrieva
 import com.servicenow.processmining.extensions.pm.dao.ProcessMiningModelRetrievalFactory;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModel;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParserFactory;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelTransition;
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelVariant;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ValueStreamAnalysis
 {
@@ -42,8 +46,7 @@ public class ValueStreamAnalysis
         if (retrieveAllVariants()) {
             for (ProcessMiningModelVariant variant : getModel().getVariants().values()) {
                 int currentPhase = 1;
-                System.out.println("");
-                System.out.println("Variant: (" + variant.getTranslatedRouteNodes("->") + ")");
+                logger.debug("\nVariant: (" + variant.getTranslatedRouteNodes("->") + ")");
                 for (int i=1; i < variant.getPath().size(); i++) {
                     int lastCurrentPhaseIndex = -1;
                     do {
@@ -73,7 +76,7 @@ public class ValueStreamAnalysis
                         ProcessMiningModelTransition transition = getModel().getTransition(from, to);
                         phaseAvgTime += transition.getAvgDuration();
                         touchPoints++;
-                        System.out.println("Phase (" + currentPhase + ") => (" + getModel().getNodes().get(from).getName() + ")->(" + getModel().getNodes().get(to).getName()+ "). Avg: (" + transition.getAvgDuration() + "), Mean: (" + transition.getMedianDeviation() + "), Min: (" + transition.getMinDuration() + "), Max: (" + transition.getMaxDuration() + ")");
+                        logger.debug("Phase (" + currentPhase + ") => (" + getModel().getNodes().get(from).getName() + ")->(" + getModel().getNodes().get(to).getName()+ "). Avg: (" + transition.getAvgDuration() + "), Mean: (" + transition.getMedianDeviation() + "), Min: (" + transition.getMinDuration() + "), Max: (" + transition.getMaxDuration() + ")");
                     }
                     ValueStreamPhaseMeasure measure = new ValueStreamPhaseMeasure(variant.getId(), variant.getFrequency(), phaseAvgTime, 0, 0, 0);
                     measure.setTouchpoints(touchPoints);
@@ -83,16 +86,18 @@ public class ValueStreamAnalysis
                     currentPhase++;
                 }
             }
+
             // Print ValueStream stats...
-            System.out.println("\nValue Stream Summary:");
+            logger.debug("\nValue Stream Summary:");
             for (ValueStreamPhase p : getValueStream().getPhases()) {
                 p.getStatistics().computeSummary();
                 ValueStreamPhaseMeasure m = p.getStatistics().getSummary();
-                System.out.println("*) Phase (" + p.getName() + ") Summary: " + m.toString());
+                logger.debug("*) Phase (" + p.getName() + ") Summary: " + m.toString());
             }
-            System.out.println("");
+            logger.debug("\n");
         }
         else {
+            logger.error("Could not retrieve all variants.");
             return false;
         }
 
@@ -106,7 +111,7 @@ public class ValueStreamAnalysis
         int numberOfVariants = getModel().getTotalVariants();
         ProcessMiningModelRetrieval vModel = ProcessMiningModelRetrievalFactory.getProcessMiningVariantRetrieval(getInstance(), modelVersionId, entityId, numberOfVariants);
         if (vModel.runEmptyFilter()) {
-            ProcessMiningModelParser vModelParser = new ProcessMiningModelParser(modelVersionId);
+            ProcessMiningModelParser vModelParser = ProcessMiningModelParserFactory.getParser(snInstance, modelVersionId);
             if (vModelParser.parse(vModel.getProcessMiningModelJSONString())) {
                 // Update the Variants attribute of the model with ALL retrieved variants (and not just the top ones) ...
                 getModel().getVariants().clear();
@@ -126,4 +131,6 @@ public class ValueStreamAnalysis
 
         return true;
     }
+
+    private static final Logger logger = LoggerFactory.getLogger(ValueStreamAnalysis.class);
 }
