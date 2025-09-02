@@ -8,7 +8,8 @@ import com.servicenow.processmining.extensions.pm.simulation.workflow.WorkflowSi
 import com.servicenow.processmining.extensions.sc.entities.SysAuditEntry;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLog;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLogPK;
-
+import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 import com.servicenow.processmining.extensions.sn.core.TestUtility;
 
 import org.junit.Assert;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 
 public class WorkflowSimulatorReplayTest
 {
+  private ServiceNowInstance instance = null;
   private AuditLogSerializer serializer = null;
 
   @Test
@@ -35,6 +37,15 @@ public class WorkflowSimulatorReplayTest
       test3();
       test4();
     }
+  }
+
+  private ServiceNowInstance getInstance()
+  {
+      if (instance == null) {
+          instance = new ServiceNowInstance(snInstance, snUser, snPassword);
+      }
+
+      return instance;
   }
 
   private void test1()
@@ -194,6 +205,10 @@ public class WorkflowSimulatorReplayTest
 
     return stateAuditLog;
   }
+
+  private static final String snInstance = ServiceNowTestCredentials.getInstanceName();
+  private static final String snUser = ServiceNowTestCredentials.getUserName();
+  private static final String snPassword = ServiceNowTestCredentials.getPassword();
 
   private static final Logger logger = LoggerFactory.getLogger(WorkflowSimulatorReplayTest.class);
 }
