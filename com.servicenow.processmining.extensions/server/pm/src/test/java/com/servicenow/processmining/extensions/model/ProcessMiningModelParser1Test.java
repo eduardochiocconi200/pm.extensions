@@ -1,7 +1,10 @@
 package com.servicenow.processmining.extensions.model;
 
 import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParser;
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelParserFactory;
 import com.servicenow.processmining.extensions.pm.report.ProcessMiningModelFilterDataSource;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 import com.servicenow.processmining.extensions.sn.core.TestUtility;
 
 import org.junit.Assert;
@@ -11,6 +14,8 @@ import org.slf4j.LoggerFactory;
 
 public class ProcessMiningModelParser1Test
 {
+    private ServiceNowInstance instance = null;
+
     @Test
     public void test()
     {
@@ -52,10 +57,20 @@ public class ProcessMiningModelParser1Test
         }
     }
 
+    public ServiceNowInstance getInstance()
+    {
+        if (instance == null) {
+            instance = new ServiceNowInstance(ServiceNowTestCredentials.getInstanceName(), ServiceNowTestCredentials.getUserName(), ServiceNowTestCredentials.getPassword());
+        }
+
+        return instance;
+    }
+
     public void test1()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload1-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(10, parser.getProcessMiningModel().getVariants().size());
         Assert.assertEquals(160, parser.getProcessMiningModel().getVariants().get("f4dbf4607130d4eedcbb2b977d7f6f42").getCaseIds().size());
@@ -77,8 +92,9 @@ public class ProcessMiningModelParser1Test
 
     public void test2()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload2-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         // Run Variation Analysis.
@@ -89,8 +105,9 @@ public class ProcessMiningModelParser1Test
 
     public void test3()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload3-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         // Run Variation Analysis.
@@ -101,8 +118,9 @@ public class ProcessMiningModelParser1Test
 
     public void test4()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload4-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         // Run Variation Analysis.
@@ -113,8 +131,9 @@ public class ProcessMiningModelParser1Test
 
     public void test5()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload3b-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
 
         // Run Variation Analysis.
@@ -125,8 +144,9 @@ public class ProcessMiningModelParser1Test
 
     public void test6()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload1-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(1, parser.getProcessMiningModel().getFilters().size());
 
@@ -138,8 +158,9 @@ public class ProcessMiningModelParser1Test
 
     public void test7()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload2-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(3, parser.getProcessMiningModel().getFilters().size());
 
@@ -151,8 +172,9 @@ public class ProcessMiningModelParser1Test
 
     public void test8()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload3-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(3, parser.getProcessMiningModel().getFilters().size());
 
@@ -164,8 +186,9 @@ public class ProcessMiningModelParser1Test
 
     public void test9()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload4-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(3, parser.getProcessMiningModel().getFilters().size());
 
@@ -177,8 +200,9 @@ public class ProcessMiningModelParser1Test
 
     public void test10()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayloadIncidentEmailChannel-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(3, parser.getProcessMiningModel().getFilters().size());
 
@@ -190,8 +214,9 @@ public class ProcessMiningModelParser1Test
 
     public void test11()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayloadIncidentP1PhoneChannel-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(3, parser.getProcessMiningModel().getFilters().size());
 
@@ -203,8 +228,9 @@ public class ProcessMiningModelParser1Test
 
     public void test12()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayloadIncidentPhoneChannel-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(3, parser.getProcessMiningModel().getFilters().size());
 
@@ -216,8 +242,9 @@ public class ProcessMiningModelParser1Test
 
     public void test13()
     {
+        getInstance().setSNVersion(ServiceNowInstance.UTAH);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload5-u-cirion.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(4, parser.getProcessMiningModel().getFilters().size());
 
@@ -229,8 +256,9 @@ public class ProcessMiningModelParser1Test
 
     public void test14()
     {
+        getInstance().setSNVersion(ServiceNowInstance.UTAH);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload6-u-cirion.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(3, parser.getProcessMiningModel().getFilters().size());
 
@@ -242,8 +270,9 @@ public class ProcessMiningModelParser1Test
 
     public void test15()
     {
+        getInstance().setSNVersion(ServiceNowInstance.VANCOUVER);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload7-v.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -255,8 +284,9 @@ public class ProcessMiningModelParser1Test
 
     public void test16()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload8-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -268,8 +298,9 @@ public class ProcessMiningModelParser1Test
 
     public void test17()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload5-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(4, parser.getProcessMiningModel().getFilters().size());
 
@@ -281,8 +312,9 @@ public class ProcessMiningModelParser1Test
 
     public void test18()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/filterPayload6-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(5, parser.getProcessMiningModel().getFilters().size());
 
@@ -294,8 +326,9 @@ public class ProcessMiningModelParser1Test
 
     public void test19()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload1-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -307,8 +340,9 @@ public class ProcessMiningModelParser1Test
 
     public void test20()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload2-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -320,8 +354,9 @@ public class ProcessMiningModelParser1Test
 
     public void test21()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload3-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -333,8 +368,9 @@ public class ProcessMiningModelParser1Test
 
     public void test22()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload4-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -346,8 +382,9 @@ public class ProcessMiningModelParser1Test
 
     public void test23()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload4-2-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -359,8 +396,9 @@ public class ProcessMiningModelParser1Test
 
     public void test24()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload5-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -372,8 +410,9 @@ public class ProcessMiningModelParser1Test
 
     public void test25()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload6-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -385,8 +424,9 @@ public class ProcessMiningModelParser1Test
 
     public void test26()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload7-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -398,8 +438,9 @@ public class ProcessMiningModelParser1Test
 
     public void test27()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload9-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -411,8 +452,9 @@ public class ProcessMiningModelParser1Test
 
     public void test28()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload10-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -424,8 +466,9 @@ public class ProcessMiningModelParser1Test
 
     public void test29()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload11-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(0, parser.getProcessMiningModel().getFilters().size());
 
@@ -437,8 +480,9 @@ public class ProcessMiningModelParser1Test
 
     public void test30()
     {
+        getInstance().setSNVersion(ServiceNowInstance.WASHINGTON);
         String processMiningModelJSONString = new TestUtility().loadProcessMiningModel("/model/payload12-w.json");
-        ProcessMiningModelParser parser = new ProcessMiningModelParser("abc");
+        ProcessMiningModelParser parser = ProcessMiningModelParserFactory.getParser(getInstance(), "abc");
         Assert.assertTrue(parser.parse(processMiningModelJSONString));
         Assert.assertEquals(3, parser.getProcessMiningModel().getFilters().size());
 
