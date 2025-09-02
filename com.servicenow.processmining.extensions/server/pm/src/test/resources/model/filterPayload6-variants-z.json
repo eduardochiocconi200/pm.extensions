@@ -1,0 +1,73 @@
+{
+    "data": {
+        "GlidePromin_Query": {
+            "variantResult": [
+                {
+                    "totalVariants": 1,
+                    "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                    "variants": [
+                        {
+                            "id": "34bb506ad7e45ee0b5178af4c4605c68",
+                            "statsId": "83d56252fb8308d62d823d0098dc2a62",
+                            "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                            "nodes": [
+                                "693491e42a6734d51c539588b18cc2bf",
+                                "42ec03079a2b58563f45de416f01de96",
+                                "99dc2f7773cdc820ad3b1ab671b0ba82",
+                                "6c083a6d1d2efe782534238153ee945c",
+                                "4d2f3fbd955de358c6050521719420bc",
+                                "6c083a6d1d2efe782534238153ee945c",
+                                "112f5a3df383f304146dfa1c6777a051",
+                                "5dd94911332c2e47dbfd208ff32b186a"
+                            ],
+                            "caseIds": [
+                                "85927865dba2ffcc12c0f5771d961954",
+                                "b54d0193dbb66340d34dffd51d961987",
+                                "41315143dbb8b700dac0f3231d961970",
+                                "0e1379afdbd3b3c0f764ff661d961917",
+                                "2344a6cadbcb3700463bff661d9619b6",
+                                "eb35d98ddb08b3803e38ff661d961992",
+                                "11d117c9db0a3fc4d8ccf5771d9619d1",
+                                "618a0df0dbd733409292ff661d961936",
+                                "746fd0c1db7d7f042f62ffd51d96191c",
+                                "836ac8f8db803780014fffd51d96195e",
+                                "59324c49db59238012c0f5771d96190c",
+                                "59260cdedb7bb340b554fde31d96192a",
+                                "55865d0cdb903f00d8ccf5771d9619b5",
+                                "6c62ebb2dba03b0040b0fde31d96199a",
+                                "3fd38e56db80f3001853ff661d96192d",
+                                "9a3e6304db347b407708f7351d9619c5",
+                                "acc606a7db97f7c0a3bdff661d9619c8",
+                                "f25ce9d1db48b3407c91ffd51d961903",
+                                "51647f89db97fb00d34dffd51d961934",
+                                "aba7e42fdbb4bf00dc03fde31d9619cf",
+                                "b07d0665db8f7380d0b9f1141d9619ff",
+                                "65d48aaedba0b30040b0fde31d96199b",
+                                "b0646b88db83bb001434f1331d961977",
+                                "98a98db9db737b00dc03fde31d961999",
+                                "c57b9e8edbad3740d34dffd51d9619b5",
+                                "ae6a7486dbf9fb0463a6f5771d961947",
+                                "e98f39fddb3f7b00293af1371d96191c",
+                                "0a1e8a16dbbe3700014fffd51d9619a7"
+                            ],
+                            "nodeCount": 8,
+                            "frequency": 28,
+                            "totalDuration": 24134798,
+                            "maxDuration": 7924376,
+                            "minDuration": 21612,
+                            "avgDuration": 861957,
+                            "trimmedAverage": 622646,
+                            "stdDeviation": 1809648,
+                            "medianDuration": 170713,
+                            "healthScore": 0,
+                            "totalTouchPoints": 0,
+                            "avgTouchPoints": 0.0,
+                            "totalIdleTime": -1,
+                            "avgIdleTime": -1
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

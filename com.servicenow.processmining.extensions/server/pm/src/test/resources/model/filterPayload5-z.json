@@ -1,0 +1,1425 @@
+{
+    "data": {
+        "GlidePromin_Query": {
+            "scheduleModel": {
+                "__typename": "GlidePromin_Model",
+                "nodes": [
+                    {
+                        "nodeStatsId": "1a931d2c33fbee509547d64a7e5c7ba2",
+                        "key": "6c083a6d1d2efe782534238153ee945c",
+                        "label": "In progress",
+                        "activityId": "6afbba0193a4b110ad66fa4e1dba100a",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": false,
+                        "fieldLabel": "State",
+                        "field": "state",
+                        "value": "2",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 287475808,
+                        "avgDuration": 201032,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "1e931d2c33fbee509547d64a7e5c7ba2",
+                        "key": "99dc2f7773cdc820ad3b1ab671b0ba82",
+                        "label": "Assigned",
+                        "activityId": "6afbba0193a4b110ad66fa4e1dba100a",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": false,
+                        "fieldLabel": "State",
+                        "field": "state",
+                        "value": "2001",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 96551256,
+                        "avgDuration": 67518,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "5a931d2c33fbee509547d64a7e5c7ba2",
+                        "key": "112f5a3df383f304146dfa1c6777a051",
+                        "label": "Resolved",
+                        "activityId": "6afbba0193a4b110ad66fa4e1dba100a",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": false,
+                        "fieldLabel": "State",
+                        "field": "state",
+                        "value": "6",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 603794048,
+                        "avgDuration": 422234,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "96931d2c33fbee509547d64a7e5c7ba2",
+                        "key": "42ec03079a2b58563f45de416f01de96",
+                        "label": "New",
+                        "activityId": "6afbba0193a4b110ad66fa4e1dba100a",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": false,
+                        "fieldLabel": "State",
+                        "field": "state",
+                        "value": "1",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 53430292,
+                        "avgDuration": 37364,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "9a931d2c33fbee509547d64a7e5c7ba2",
+                        "key": "5dd94911332c2e47dbfd208ff32b186a",
+                        "label": "Completed",
+                        "activityId": "3b5b3acd9364b110ad66fa4e1dba10cb__case",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": true,
+                        "fieldLabel": "Created activities",
+                        "field": "__case",
+                        "value": "completed",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 0,
+                        "avgDuration": 0,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "d6931d2c33fbee509547d64a7e5c7ba2",
+                        "key": "093ab556837423ff4ef868bcfd8bb289",
+                        "label": "Closed",
+                        "activityId": "6afbba0193a4b110ad66fa4e1dba100a",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": false,
+                        "fieldLabel": "State",
+                        "field": "state",
+                        "value": "7",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 0,
+                        "avgDuration": 0,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "da931d2c33fbee509547d64a7e5c7ba2",
+                        "key": "693491e42a6734d51c539588b18cc2bf",
+                        "label": "Created",
+                        "activityId": "3b5b3acd9364b110ad66fa4e1dba10cb__case",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": true,
+                        "isEnd": false,
+                        "fieldLabel": "Created activities",
+                        "field": "__case",
+                        "value": "created",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 0,
+                        "avgDuration": 0,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    }
+                ],
+                "edges": [
+                    {
+                        "id": "12931d2c33fbee509547d64a7e5c7ba3",
+                        "from": "6c083a6d1d2efe782534238153ee945c",
+                        "to": "112f5a3df383f304146dfa1c6777a051",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalDuration": 287475782,
+                        "maxDuration": 5208503,
+                        "minDuration": 5,
+                        "avgDuration": 201032,
+                        "trimmedAverage": 129785,
+                        "stdDeviation": 439478,
+                        "medianDuration": 28884,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "52931d2c33fbee509547d64a7e5c7ba3",
+                        "from": "99dc2f7773cdc820ad3b1ab671b0ba82",
+                        "to": "6c083a6d1d2efe782534238153ee945c",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalDuration": 96551256,
+                        "maxDuration": 4776155,
+                        "minDuration": 4,
+                        "avgDuration": 67518,
+                        "trimmedAverage": 28613,
+                        "stdDeviation": 273724,
+                        "medianDuration": 3986,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "5e931d2c33fbee509547d64a7e5c7ba2",
+                        "from": "093ab556837423ff4ef868bcfd8bb289",
+                        "to": "5dd94911332c2e47dbfd208ff32b186a",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalDuration": 0,
+                        "maxDuration": 0,
+                        "minDuration": 0,
+                        "avgDuration": 0,
+                        "trimmedAverage": 0,
+                        "stdDeviation": 0,
+                        "medianDuration": 0,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "92931d2c33fbee509547d64a7e5c7ba3",
+                        "from": "42ec03079a2b58563f45de416f01de96",
+                        "to": "99dc2f7773cdc820ad3b1ab671b0ba82",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalDuration": 53430292,
+                        "maxDuration": 3640312,
+                        "minDuration": 0,
+                        "avgDuration": 37363,
+                        "trimmedAverage": 23413,
+                        "stdDeviation": 126804,
+                        "medianDuration": 21101,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "9e931d2c33fbee509547d64a7e5c7ba2",
+                        "from": "112f5a3df383f304146dfa1c6777a051",
+                        "to": "093ab556837423ff4ef868bcfd8bb289",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalDuration": 603794072,
+                        "maxDuration": 1692896,
+                        "minDuration": 35,
+                        "avgDuration": 422233,
+                        "trimmedAverage": 427273,
+                        "stdDeviation": 311684,
+                        "medianDuration": 633939,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "de931d2c33fbee509547d64a7e5c7ba2",
+                        "from": "693491e42a6734d51c539588b18cc2bf",
+                        "to": "42ec03079a2b58563f45de416f01de96",
+                        "absoluteFreq": 1430,
+                        "caseFreq": 1430,
+                        "maxReps": 1,
+                        "totalDuration": 0,
+                        "maxDuration": 0,
+                        "minDuration": 0,
+                        "avgDuration": 0,
+                        "trimmedAverage": 0,
+                        "stdDeviation": 0,
+                        "medianDuration": 0,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    }
+                ],
+                "aggregates": [
+                    {
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "model": {
+                            "caseCount": 1430,
+                            "variantCount": 1,
+                            "minCaseDuration": 4382,
+                            "maxCaseDuration": 6211017,
+                            "avgCaseDuration": 728147,
+                            "trimmedAverage": 656121,
+                            "stdDeviation": 646654,
+                            "medianDuration": 689989,
+                            "uniqueParentRecords": 0,
+                            "totalTouchPoints": 0,
+                            "avgTouchPoints": 0.0,
+                            "avgIdleTime": 0
+                        },
+                        "node": {
+                            "absoluteFreq": {
+                                "min": 1430,
+                                "max": 1430
+                            },
+                            "caseFreq": {
+                                "min": 1430,
+                                "max": 1430
+                            },
+                            "maxReps": {
+                                "min": 1,
+                                "max": 1
+                            }
+                        },
+                        "edge": {
+                            "absoluteFreq": {
+                                "min": 1430,
+                                "max": 1430
+                            },
+                            "caseFreq": {
+                                "min": 1430,
+                                "max": 1430
+                            },
+                            "maxReps": {
+                                "min": 1,
+                                "max": 1
+                            },
+                            "minDuration": {
+                                "min": 0,
+                                "max": 35
+                            },
+                            "maxDuration": {
+                                "min": 0,
+                                "max": 5208503
+                            },
+                            "avgDuration": {
+                                "min": 0,
+                                "max": 422233
+                            },
+                            "totalDuration": {
+                                "min": 0,
+                                "max": 603794072
+                            },
+                            "trimmedAverage": {
+                                "min": 0,
+                                "max": 427273
+                            },
+                            "stdDeviation": {
+                                "min": 0,
+                                "max": 439478
+                            },
+                            "medianDuration": {
+                                "min": 0,
+                                "max": 633939
+                            }
+                        },
+                        "variant": {
+                            "nodeCount": {
+                                "min": 0,
+                                "max": 7
+                            },
+                            "caseFreq": {
+                                "min": 0,
+                                "max": 1430
+                            },
+                            "avgDuration": {
+                                "min": 0,
+                                "max": 728147
+                            },
+                            "healthScore": {
+                                "min": 0,
+                                "max": 0
+                            },
+                            "trimmedAverage": {
+                                "min": 0,
+                                "max": 656121
+                            },
+                            "stdDeviation": {
+                                "min": 0,
+                                "max": 646654
+                            },
+                            "medianDuration": {
+                                "min": 0,
+                                "max": 633939
+                            }
+                        }
+                    }
+                ],
+                "breakdowns": [
+                    {
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "breakdownStats": [
+                            {
+                                "field": "contact_type",
+                                "label": "Channel",
+                                "displayName": null,
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "Self-service",
+                                        "value": "self-service",
+                                        "caseCount": 956,
+                                        "variantCount": 1,
+                                        "avgDuration": 633341,
+                                        "trimmedAverage": 572702,
+                                        "stdDeviation": 572876,
+                                        "medianDuration": 672096,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Phone",
+                                        "value": "phone",
+                                        "caseCount": 75,
+                                        "variantCount": 1,
+                                        "avgDuration": 566268,
+                                        "trimmedAverage": 525313,
+                                        "stdDeviation": 430187,
+                                        "medianDuration": 672255,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Bot",
+                                        "value": "bot",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 689121,
+                                        "trimmedAverage": 689121,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 689121,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Slack",
+                                        "value": "slack",
+                                        "caseCount": 7,
+                                        "variantCount": 1,
+                                        "avgDuration": 783650,
+                                        "trimmedAverage": 783650,
+                                        "stdDeviation": 371222,
+                                        "medianDuration": 790374,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Walk-in",
+                                        "value": "walk-in",
+                                        "caseCount": 7,
+                                        "variantCount": 1,
+                                        "avgDuration": 602768,
+                                        "trimmedAverage": 602768,
+                                        "stdDeviation": 354613,
+                                        "medianDuration": 529342,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Tech Lounge",
+                                        "value": "tech_lounge",
+                                        "caseCount": 3,
+                                        "variantCount": 1,
+                                        "avgDuration": 615292,
+                                        "trimmedAverage": 615292,
+                                        "stdDeviation": 230595,
+                                        "medianDuration": 656050,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Portal",
+                                        "value": "portal",
+                                        "caseCount": 46,
+                                        "variantCount": 1,
+                                        "avgDuration": 534599,
+                                        "trimmedAverage": 529821,
+                                        "stdDeviation": 345875,
+                                        "medianDuration": 674995,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Email",
+                                        "value": "email",
+                                        "caseCount": 335,
+                                        "variantCount": 1,
+                                        "avgDuration": 1064104,
+                                        "trimmedAverage": 969507,
+                                        "stdDeviation": 798775,
+                                        "medianDuration": 838279,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "assignment_group",
+                                "label": "Assignment group",
+                                "displayName": "Assignment Group",
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "CX Support - APAC",
+                                        "value": "c468fa1088b6914071a26a5b6365a8c6",
+                                        "caseCount": 128,
+                                        "variantCount": 1,
+                                        "avgDuration": 638894,
+                                        "trimmedAverage": 535400,
+                                        "stdDeviation": 767091,
+                                        "medianDuration": 641810,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Support - Americas",
+                                        "value": "c5d6bedc8876914071a26a5b6365a8a3",
+                                        "caseCount": 746,
+                                        "variantCount": 1,
+                                        "avgDuration": 702967,
+                                        "trimmedAverage": 630263,
+                                        "stdDeviation": 648259,
+                                        "medianDuration": 679689,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX System Engineering",
+                                        "value": "fa32b1bb7b5f4140887e50a35b4d4d53",
+                                        "caseCount": 7,
+                                        "variantCount": 1,
+                                        "avgDuration": 1424612,
+                                        "trimmedAverage": 1424612,
+                                        "stdDeviation": 1138962,
+                                        "medianDuration": 971760,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Voice SRT",
+                                        "value": "95c8cee6dbd90b801853ff661d96194c",
+                                        "caseCount": 28,
+                                        "variantCount": 1,
+                                        "avgDuration": 783630,
+                                        "trimmedAverage": 706630,
+                                        "stdDeviation": 679430,
+                                        "medianDuration": 719853,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "SAP Administration",
+                                        "value": "90b2cb543776310066ac1f7543990ead",
+                                        "caseCount": 2,
+                                        "variantCount": 1,
+                                        "avgDuration": 673857,
+                                        "trimmedAverage": 673857,
+                                        "stdDeviation": 10155,
+                                        "medianDuration": 673857,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Systems SRT",
+                                        "value": "1848ce66dbd90b801853ff661d961907",
+                                        "caseCount": 128,
+                                        "variantCount": 1,
+                                        "avgDuration": 901967,
+                                        "trimmedAverage": 856155,
+                                        "stdDeviation": 503370,
+                                        "medianDuration": 727571,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Corp Security Sustaining",
+                                        "value": "8ae3221d4fa69a00681ff52c5210c782",
+                                        "caseCount": 7,
+                                        "variantCount": 1,
+                                        "avgDuration": 1145473,
+                                        "trimmedAverage": 1145473,
+                                        "stdDeviation": 1169956,
+                                        "medianDuration": 841181,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Support Service Desk Level 1",
+                                        "value": "912df9e3db823f88d34dffd51d9619b0",
+                                        "caseCount": 187,
+                                        "variantCount": 1,
+                                        "avgDuration": 509037,
+                                        "trimmedAverage": 482382,
+                                        "stdDeviation": 404311,
+                                        "medianDuration": 654972,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Administration",
+                                        "value": "8c27c33dcc76fc40772ed4b0de3c6b2c",
+                                        "caseCount": 17,
+                                        "variantCount": 1,
+                                        "avgDuration": 578381,
+                                        "trimmedAverage": 569194,
+                                        "stdDeviation": 347742,
+                                        "medianDuration": 661270,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "IT Client Systems Engineering",
+                                        "value": "8cf82da3db121c10ef473ec3e29619f1",
+                                        "caseCount": 10,
+                                        "variantCount": 1,
+                                        "avgDuration": 402459,
+                                        "trimmedAverage": 374817,
+                                        "stdDeviation": 347588,
+                                        "medianDuration": 237314,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Solana Tech Support",
+                                        "value": "b9c4802bd50cf100c602d97466d5a640",
+                                        "caseCount": 77,
+                                        "variantCount": 1,
+                                        "avgDuration": 1317597,
+                                        "trimmedAverage": 1251203,
+                                        "stdDeviation": 773997,
+                                        "medianDuration": 1209238,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Support - EMEA",
+                                        "value": "afc7b61088b6914071a26a5b6365a855",
+                                        "caseCount": 21,
+                                        "variantCount": 1,
+                                        "avgDuration": 543022,
+                                        "trimmedAverage": 537390,
+                                        "stdDeviation": 359329,
+                                        "medianDuration": 692814,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Network SRT",
+                                        "value": "36c6ceeedb990b801853ff661d96194c",
+                                        "caseCount": 40,
+                                        "variantCount": 1,
+                                        "avgDuration": 909826,
+                                        "trimmedAverage": 833435,
+                                        "stdDeviation": 549465,
+                                        "medianDuration": 762304,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Mobility - AMS",
+                                        "value": "1ae17c71fdf021004ece5acb9ca67060",
+                                        "caseCount": 19,
+                                        "variantCount": 1,
+                                        "avgDuration": 660087,
+                                        "trimmedAverage": 639883,
+                                        "stdDeviation": 434630,
+                                        "medianDuration": 563006,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Solana Collaboration",
+                                        "value": "1e46c3681bf2c810f26042e7cc4bcb24",
+                                        "caseCount": 13,
+                                        "variantCount": 1,
+                                        "avgDuration": 575917,
+                                        "trimmedAverage": 562726,
+                                        "stdDeviation": 476191,
+                                        "medianDuration": 746266,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "escalation",
+                                "label": "Escalation",
+                                "displayName": "Escalation",
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "Normal",
+                                        "value": "0",
+                                        "caseCount": 1429,
+                                        "variantCount": 1,
+                                        "avgDuration": 727707,
+                                        "trimmedAverage": 655916,
+                                        "stdDeviation": 646666,
+                                        "medianDuration": 689864,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Moderate",
+                                        "value": "1",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 1357125,
+                                        "trimmedAverage": 1357125,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 1357125,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "reassignment_count",
+                                "label": "Reassignment count",
+                                "displayName": null,
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "0",
+                                        "value": "0",
+                                        "caseCount": 896,
+                                        "variantCount": 1,
+                                        "avgDuration": 672569,
+                                        "trimmedAverage": 628373,
+                                        "stdDeviation": 514366,
+                                        "medianDuration": 697069,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "1",
+                                        "value": "1",
+                                        "caseCount": 403,
+                                        "variantCount": 1,
+                                        "avgDuration": 687758,
+                                        "trimmedAverage": 641221,
+                                        "stdDeviation": 538580,
+                                        "medianDuration": 674131,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "2",
+                                        "value": "2",
+                                        "caseCount": 93,
+                                        "variantCount": 1,
+                                        "avgDuration": 1159215,
+                                        "trimmedAverage": 1016301,
+                                        "stdDeviation": 1158186,
+                                        "medianDuration": 908922,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "3",
+                                        "value": "3",
+                                        "caseCount": 17,
+                                        "variantCount": 1,
+                                        "avgDuration": 1407744,
+                                        "trimmedAverage": 1179597,
+                                        "stdDeviation": 1571836,
+                                        "medianDuration": 866283,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "4",
+                                        "value": "4",
+                                        "caseCount": 6,
+                                        "variantCount": 1,
+                                        "avgDuration": 1708659,
+                                        "trimmedAverage": 1708659,
+                                        "stdDeviation": 1932187,
+                                        "medianDuration": 1163957,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "5",
+                                        "value": "5",
+                                        "caseCount": 9,
+                                        "variantCount": 1,
+                                        "avgDuration": 1039146,
+                                        "trimmedAverage": 1039146,
+                                        "stdDeviation": 567952,
+                                        "medianDuration": 885141,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "6",
+                                        "value": "6",
+                                        "caseCount": 5,
+                                        "variantCount": 1,
+                                        "avgDuration": 1951450,
+                                        "trimmedAverage": 1951450,
+                                        "stdDeviation": 2070804,
+                                        "medianDuration": 1196531,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "7",
+                                        "value": "7",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 361815,
+                                        "trimmedAverage": 361815,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 361815,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "priority",
+                                "label": "Priority",
+                                "displayName": null,
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "1 - Critical",
+                                        "value": "1",
+                                        "caseCount": 4,
+                                        "variantCount": 1,
+                                        "avgDuration": 420943,
+                                        "trimmedAverage": 420943,
+                                        "stdDeviation": 367730,
+                                        "medianDuration": 366023,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "2 - High",
+                                        "value": "2",
+                                        "caseCount": 5,
+                                        "variantCount": 1,
+                                        "avgDuration": 800396,
+                                        "trimmedAverage": 800396,
+                                        "stdDeviation": 358052,
+                                        "medianDuration": 1025811,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "3 - Moderate",
+                                        "value": "3",
+                                        "caseCount": 260,
+                                        "variantCount": 1,
+                                        "avgDuration": 587724,
+                                        "trimmedAverage": 531811,
+                                        "stdDeviation": 534685,
+                                        "medianDuration": 670875,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "4 - Low",
+                                        "value": "4",
+                                        "caseCount": 1161,
+                                        "variantCount": 1,
+                                        "avgDuration": 760342,
+                                        "trimmedAverage": 686765,
+                                        "stdDeviation": 666860,
+                                        "medianDuration": 705887,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "category",
+                                "label": "Category",
+                                "displayName": "Category",
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "SAP",
+                                        "value": "SAP",
+                                        "caseCount": 2,
+                                        "variantCount": 1,
+                                        "avgDuration": 673857,
+                                        "trimmedAverage": 673857,
+                                        "stdDeviation": 10155,
+                                        "medianDuration": 673857,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Software",
+                                        "value": "software",
+                                        "caseCount": 192,
+                                        "variantCount": 1,
+                                        "avgDuration": 566381,
+                                        "trimmedAverage": 509818,
+                                        "stdDeviation": 573028,
+                                        "medianDuration": 665647,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "IT Business Services",
+                                        "value": "IT Business Services",
+                                        "caseCount": 570,
+                                        "variantCount": 1,
+                                        "avgDuration": 634726,
+                                        "trimmedAverage": 584390,
+                                        "stdDeviation": 516393,
+                                        "medianDuration": 675931,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Conferencing Solutions",
+                                        "value": "Conferencing Solutions",
+                                        "caseCount": 72,
+                                        "variantCount": 1,
+                                        "avgDuration": 705993,
+                                        "trimmedAverage": 628770,
+                                        "stdDeviation": 660680,
+                                        "medianDuration": 678063,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Learning",
+                                        "value": "Learning",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 651307,
+                                        "trimmedAverage": 651307,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 651307,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Employee Organization",
+                                        "value": "Employee Organization",
+                                        "caseCount": 78,
+                                        "variantCount": 1,
+                                        "avgDuration": 816073,
+                                        "trimmedAverage": 782711,
+                                        "stdDeviation": 332452,
+                                        "medianDuration": 735700,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Call Center Support",
+                                        "value": "Call Center Support",
+                                        "caseCount": 6,
+                                        "variantCount": 1,
+                                        "avgDuration": 650160,
+                                        "trimmedAverage": 650160,
+                                        "stdDeviation": 492398,
+                                        "medianDuration": 518248,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Employee Portal",
+                                        "value": "Employee Portal",
+                                        "caseCount": 283,
+                                        "variantCount": 1,
+                                        "avgDuration": 1069623,
+                                        "trimmedAverage": 964619,
+                                        "stdDeviation": 870611,
+                                        "medianDuration": 841010,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Inquiry / Help",
+                                        "value": "inquiry",
+                                        "caseCount": 4,
+                                        "variantCount": 1,
+                                        "avgDuration": 437269,
+                                        "trimmedAverage": 437269,
+                                        "stdDeviation": 494683,
+                                        "medianDuration": 351889,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Customer Portal",
+                                        "value": "Customer Portal",
+                                        "caseCount": 14,
+                                        "variantCount": 1,
+                                        "avgDuration": 675993,
+                                        "trimmedAverage": 650024,
+                                        "stdDeviation": 528731,
+                                        "medianDuration": 700535,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Reporting/BI",
+                                        "value": "Reporting/BI",
+                                        "caseCount": 4,
+                                        "variantCount": 1,
+                                        "avgDuration": 844794,
+                                        "trimmedAverage": 844794,
+                                        "stdDeviation": 261036,
+                                        "medianDuration": 722750,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "My Hardware",
+                                        "value": "My Hardware",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 193357,
+                                        "trimmedAverage": 193357,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 193357,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Hardware",
+                                        "value": "hardware",
+                                        "caseCount": 203,
+                                        "variantCount": 1,
+                                        "avgDuration": 654373,
+                                        "trimmedAverage": 582326,
+                                        "stdDeviation": 623648,
+                                        "medianDuration": 661014,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "version": {
+                    "id": "fc3a14dd2b67a210c9a1f9b36e91bf0f",
+                    "automationDiscoveryReport": null,
+                    "lastMined": "2025-08-22 19:40:44",
+                    "filterSets": [
+                        {
+                            "id": "dddcdb182b7be610c9a1f9b36e91bfc7",
+                            "name": "Email Channel Filter",
+                            "filter": {
+                                "dataFilter": [],
+                                "breakdowns": [
+                                    {
+                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                        "breakdowns": [
+                                            {
+                                                "field": "contact_type",
+                                                "values": [
+                                                    "email"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "findingFilter": null,
+                                "adIntentFilter": null,
+                                "orderedFilters": []
+                            },
+                            "caseCount": 4135,
+                            "variantCount": 414,
+                            "totalDuration": 4024239890,
+                            "maxDuration": 25446248,
+                            "minDuration": 0,
+                            "avgDuration": 973214,
+                            "medianDuration": 724200,
+                            "stdDeviation": 1210273,
+                            "trimmedAverage": 816168
+                        },
+                        {
+                            "id": "c5c399a82bbf2a10c9a1f9b36e91bf19",
+                            "name": "Happy Path",
+                            "filter": {
+                                "dataFilter": [],
+                                "breakdowns": [],
+                                "findingFilter": null,
+                                "adIntentFilter": null,
+                                "orderedFilters": [
+                                    {
+                                        "type": "TRANSITION",
+                                        "repetitions": null,
+                                        "advancedTransitions": [
+                                            {
+                                                "advancedTransitions": [
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "__case",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "created"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "1"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "2001"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "2"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "6"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "ALWAYS",
+                                                        "values": [
+                                                            "7"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "__case",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "completed"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    }
+                                                ],
+                                                "transitionConstraints": []
+                                            }
+                                        ],
+                                        "variantFilter": null,
+                                        "viewFilter": null
+                                    }
+                                ]
+                            },
+                            "caseCount": 1430,
+                            "variantCount": 1,
+                            "totalDuration": 1041250210,
+                            "maxDuration": 6211017,
+                            "minDuration": 4382,
+                            "avgDuration": 728147,
+                            "medianDuration": 689989,
+                            "stdDeviation": 646654,
+                            "trimmedAverage": 656121
+                        },
+                        {
+                            "id": "e95d5b982b7be610c9a1f9b36e91bf9b",
+                            "name": "Phone Channel Filter",
+                            "filter": {
+                                "dataFilter": [],
+                                "breakdowns": [
+                                    {
+                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                        "breakdowns": [
+                                            {
+                                                "field": "contact_type",
+                                                "values": [
+                                                    "phone"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "findingFilter": null,
+                                "adIntentFilter": null,
+                                "orderedFilters": []
+                            },
+                            "caseCount": 2427,
+                            "variantCount": 341,
+                            "totalDuration": 1639775853,
+                            "maxDuration": 6900850,
+                            "minDuration": 0,
+                            "avgDuration": 675639,
+                            "medianDuration": 667675,
+                            "stdDeviation": 707752,
+                            "trimmedAverage": 587859
+                        },
+                        {
+                            "id": "cc5ed75c2b7be610c9a1f9b36e91bfce",
+                            "name": "Priority 1 Phone Channel Filter",
+                            "filter": {
+                                "dataFilter": [],
+                                "breakdowns": [
+                                    {
+                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                        "breakdowns": [
+                                            {
+                                                "field": "contact_type",
+                                                "values": [
+                                                    "phone"
+                                                ]
+                                            },
+                                            {
+                                                "field": "priority",
+                                                "values": [
+                                                    "1"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "findingFilter": null,
+                                "adIntentFilter": null,
+                                "orderedFilters": []
+                            },
+                            "caseCount": 1,
+                            "variantCount": 1,
+                            "totalDuration": 425851,
+                            "maxDuration": 425851,
+                            "minDuration": 425851,
+                            "avgDuration": 425851,
+                            "medianDuration": 425851,
+                            "stdDeviation": 0,
+                            "trimmedAverage": 425851
+                        }
+                    ],
+                    "projectDefinition": {
+                        "name": "Incident Analysis",
+                        "projectId": "7c3bb2cd9364b110ad66fa4e1dba104e",
+                        "paUuid": null,
+                        "domain": "global",
+                        "source": "MANUAL",
+                        "projectEntities": [
+                            {
+                                "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                "parentId": null,
+                                "name": "Incidents",
+                                "sourceType": {
+                                    "value": "TABLE"
+                                },
+                                "table": {
+                                    "name": "incident",
+                                    "label": "Incident"
+                                },
+                                "filter": {
+                                    "encodedQuery": "active=false^sys_created_by=po_demo_user^contact_type!=alert",
+                                    "displayValue": "Active = false .and. Created by = po_demo_user .and. Channel != Alert"
+                                },
+                                "activities": [
+                                    {
+                                        "id": "6afbba0193a4b110ad66fa4e1dba100a",
+                                        "field": "state",
+                                        "label": "State",
+                                        "displayName": null,
+                                        "isGrouped": false
+                                    }
+                                ],
+                                "activitiesOfInterest": []
+                            }
+                        ],
+                        "permissions": {
+                            "canMine": true,
+                            "canWrite": true,
+                            "canDelete": true,
+                            "canShare": true
+                        }
+                    },
+                    "miningStats": {
+                        "totalRecords": 22433
+                    },
+                    "versionEntityConfigs": [
+                        {
+                            "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                            "touchPointEnabled": false,
+                            "touchPointFields": [],
+                            "idleTimeEnabled": false,
+                            "controlFlowField": "state",
+                            "groupField": "assignment_group",
+                            "controlFlowValueMapping": []
+                        }
+                    ]
+                },
+                "findings": []
+            }
+        }
+    }
+}

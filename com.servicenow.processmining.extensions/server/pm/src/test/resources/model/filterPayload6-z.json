@@ -1,0 +1,1224 @@
+{
+    "data": {
+        "GlidePromin_Query": {
+            "scheduleModel": {
+                "__typename": "GlidePromin_Model",
+                "nodes": [
+                    {
+                        "nodeStatsId": "061d21e0333322909547d64a7e5c7b35",
+                        "key": "42ec03079a2b58563f45de416f01de96",
+                        "label": "New",
+                        "activityId": "6afbba0193a4b110ad66fa4e1dba100a",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": false,
+                        "fieldLabel": "State",
+                        "field": "state",
+                        "value": "1",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 663073,
+                        "avgDuration": 23681,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "0a1d21e0333322909547d64a7e5c7b35",
+                        "key": "693491e42a6734d51c539588b18cc2bf",
+                        "label": "Created",
+                        "activityId": "3b5b3acd9364b110ad66fa4e1dba10cb__case",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": true,
+                        "isEnd": false,
+                        "fieldLabel": "Created activities",
+                        "field": "__case",
+                        "value": "created",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 0,
+                        "avgDuration": 0,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "461d21e0333322909547d64a7e5c7b35",
+                        "key": "6c083a6d1d2efe782534238153ee945c",
+                        "label": "In progress",
+                        "activityId": "6afbba0193a4b110ad66fa4e1dba100a",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": false,
+                        "fieldLabel": "State",
+                        "field": "state",
+                        "value": "2",
+                        "absoluteFreq": 56,
+                        "caseFreq": 28,
+                        "maxReps": 2,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 18398654,
+                        "avgDuration": 328547,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "4a1d21e0333322909547d64a7e5c7b35",
+                        "key": "99dc2f7773cdc820ad3b1ab671b0ba82",
+                        "label": "Assigned",
+                        "activityId": "6afbba0193a4b110ad66fa4e1dba100a",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": false,
+                        "fieldLabel": "State",
+                        "field": "state",
+                        "value": "2001",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 2083436,
+                        "avgDuration": 74408,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "861d21e0333322909547d64a7e5c7b35",
+                        "key": "112f5a3df383f304146dfa1c6777a051",
+                        "label": "Resolved",
+                        "activityId": "6afbba0193a4b110ad66fa4e1dba100a",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": false,
+                        "fieldLabel": "State",
+                        "field": "state",
+                        "value": "6",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 0,
+                        "avgDuration": 0,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "8a1d21e0333322909547d64a7e5c7b35",
+                        "key": "4d2f3fbd955de358c6050521719420bc",
+                        "label": "Awaiting Caller Info",
+                        "activityId": "6afbba0193a4b110ad66fa4e1dba100a",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": false,
+                        "fieldLabel": "State",
+                        "field": "state",
+                        "value": "4001",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 2989635,
+                        "avgDuration": 106773,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    },
+                    {
+                        "nodeStatsId": "c61d21e0333322909547d64a7e5c7b35",
+                        "key": "5dd94911332c2e47dbfd208ff32b186a",
+                        "label": "Completed",
+                        "activityId": "3b5b3acd9364b110ad66fa4e1dba10cb__case",
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "isStart": false,
+                        "isEnd": true,
+                        "fieldLabel": "Created activities",
+                        "field": "__case",
+                        "value": "completed",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0,
+                        "totalDuration": 0,
+                        "avgDuration": 0,
+                        "totalIdleTime": -4,
+                        "avgIdleTime": -4
+                    }
+                ],
+                "edges": [
+                    {
+                        "id": "021d21e0333322909547d64a7e5c7b36",
+                        "from": "99dc2f7773cdc820ad3b1ab671b0ba82",
+                        "to": "6c083a6d1d2efe782534238153ee945c",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalDuration": 2083436,
+                        "maxDuration": 1033636,
+                        "minDuration": 7,
+                        "avgDuration": 74408,
+                        "trimmedAverage": 40376,
+                        "stdDeviation": 197919,
+                        "medianDuration": 6202,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "0e1d21e0333322909547d64a7e5c7b35",
+                        "from": "112f5a3df383f304146dfa1c6777a051",
+                        "to": "5dd94911332c2e47dbfd208ff32b186a",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalDuration": 0,
+                        "maxDuration": 0,
+                        "minDuration": 0,
+                        "avgDuration": 0,
+                        "trimmedAverage": 0,
+                        "stdDeviation": 0,
+                        "medianDuration": 0,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "421d21e0333322909547d64a7e5c7b36",
+                        "from": "42ec03079a2b58563f45de416f01de96",
+                        "to": "99dc2f7773cdc820ad3b1ab671b0ba82",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalDuration": 663073,
+                        "maxDuration": 76937,
+                        "minDuration": 0,
+                        "avgDuration": 23681,
+                        "trimmedAverage": 22543,
+                        "stdDeviation": 13769,
+                        "medianDuration": 22208,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "4e1d21e0333322909547d64a7e5c7b35",
+                        "from": "693491e42a6734d51c539588b18cc2bf",
+                        "to": "42ec03079a2b58563f45de416f01de96",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalDuration": 0,
+                        "maxDuration": 0,
+                        "minDuration": 0,
+                        "avgDuration": 0,
+                        "trimmedAverage": 0,
+                        "stdDeviation": 0,
+                        "medianDuration": 0,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "8e1d21e0333322909547d64a7e5c7b35",
+                        "from": "6c083a6d1d2efe782534238153ee945c",
+                        "to": "112f5a3df383f304146dfa1c6777a051",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalDuration": 12723328,
+                        "maxDuration": 6019277,
+                        "minDuration": 113,
+                        "avgDuration": 454404,
+                        "trimmedAverage": 257843,
+                        "stdDeviation": 1224599,
+                        "medianDuration": 39424,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "ca1d21e0333322909547d64a7e5c7b35",
+                        "from": "4d2f3fbd955de358c6050521719420bc",
+                        "to": "6c083a6d1d2efe782534238153ee945c",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalDuration": 2989635,
+                        "maxDuration": 390502,
+                        "minDuration": 278,
+                        "avgDuration": 106772,
+                        "trimmedAverage": 99955,
+                        "stdDeviation": 127374,
+                        "medianDuration": 44964,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    },
+                    {
+                        "id": "ce1d21e0333322909547d64a7e5c7b35",
+                        "from": "6c083a6d1d2efe782534238153ee945c",
+                        "to": "4d2f3fbd955de358c6050521719420bc",
+                        "absoluteFreq": 28,
+                        "caseFreq": 28,
+                        "maxReps": 1,
+                        "totalDuration": 5675326,
+                        "maxDuration": 3802987,
+                        "minDuration": 4,
+                        "avgDuration": 202690,
+                        "trimmedAverage": 72012,
+                        "stdDeviation": 725815,
+                        "medianDuration": 1208,
+                        "totalTouchPoints": 0,
+                        "avgTouchPoints": 0.0
+                    }
+                ],
+                "aggregates": [
+                    {
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "model": {
+                            "caseCount": 28,
+                            "variantCount": 1,
+                            "minCaseDuration": 21612,
+                            "maxCaseDuration": 7924376,
+                            "avgCaseDuration": 861957,
+                            "trimmedAverage": 622646,
+                            "stdDeviation": 1809648,
+                            "medianDuration": 170713,
+                            "uniqueParentRecords": 0,
+                            "totalTouchPoints": 0,
+                            "avgTouchPoints": 0.0,
+                            "avgIdleTime": 0
+                        },
+                        "node": {
+                            "absoluteFreq": {
+                                "min": 28,
+                                "max": 56
+                            },
+                            "caseFreq": {
+                                "min": 28,
+                                "max": 28
+                            },
+                            "maxReps": {
+                                "min": 1,
+                                "max": 2
+                            }
+                        },
+                        "edge": {
+                            "absoluteFreq": {
+                                "min": 28,
+                                "max": 28
+                            },
+                            "caseFreq": {
+                                "min": 28,
+                                "max": 28
+                            },
+                            "maxReps": {
+                                "min": 1,
+                                "max": 1
+                            },
+                            "minDuration": {
+                                "min": 0,
+                                "max": 278
+                            },
+                            "maxDuration": {
+                                "min": 0,
+                                "max": 6019277
+                            },
+                            "avgDuration": {
+                                "min": 0,
+                                "max": 454404
+                            },
+                            "totalDuration": {
+                                "min": 0,
+                                "max": 12723328
+                            },
+                            "trimmedAverage": {
+                                "min": 0,
+                                "max": 257843
+                            },
+                            "stdDeviation": {
+                                "min": 0,
+                                "max": 1224599
+                            },
+                            "medianDuration": {
+                                "min": 0,
+                                "max": 44964
+                            }
+                        },
+                        "variant": {
+                            "nodeCount": {
+                                "min": 0,
+                                "max": 8
+                            },
+                            "caseFreq": {
+                                "min": 0,
+                                "max": 28
+                            },
+                            "avgDuration": {
+                                "min": 0,
+                                "max": 861957
+                            },
+                            "healthScore": {
+                                "min": 0,
+                                "max": 0
+                            },
+                            "trimmedAverage": {
+                                "min": 0,
+                                "max": 622646
+                            },
+                            "stdDeviation": {
+                                "min": 0,
+                                "max": 1809648
+                            },
+                            "medianDuration": {
+                                "min": 0,
+                                "max": 44964
+                            }
+                        }
+                    }
+                ],
+                "breakdowns": [
+                    {
+                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                        "breakdownStats": [
+                            {
+                                "field": "contact_type",
+                                "label": "Channel",
+                                "displayName": null,
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "Self-service",
+                                        "value": "self-service",
+                                        "caseCount": 19,
+                                        "variantCount": 1,
+                                        "avgDuration": 1054166,
+                                        "trimmedAverage": 710774,
+                                        "stdDeviation": 2167302,
+                                        "medianDuration": 122543,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Portal",
+                                        "value": "portal",
+                                        "caseCount": 3,
+                                        "variantCount": 1,
+                                        "avgDuration": 554592,
+                                        "trimmedAverage": 554592,
+                                        "stdDeviation": 795952,
+                                        "medianDuration": 107735,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Email",
+                                        "value": "email",
+                                        "caseCount": 6,
+                                        "variantCount": 1,
+                                        "avgDuration": 406977,
+                                        "trimmedAverage": 406977,
+                                        "stdDeviation": 274312,
+                                        "medianDuration": 442851,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "assignment_group",
+                                "label": "Assignment group",
+                                "displayName": "Assignment Group",
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "Solana Tech Support",
+                                        "value": "b9c4802bd50cf100c602d97466d5a640",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 802521,
+                                        "trimmedAverage": 802521,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 802521,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Support - APAC",
+                                        "value": "c468fa1088b6914071a26a5b6365a8c6",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 978358,
+                                        "trimmedAverage": 978358,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 978358,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Support - Americas",
+                                        "value": "c5d6bedc8876914071a26a5b6365a8a3",
+                                        "caseCount": 15,
+                                        "variantCount": 1,
+                                        "avgDuration": 383227,
+                                        "trimmedAverage": 327172,
+                                        "stdDeviation": 401790,
+                                        "medianDuration": 176064,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Network SRT",
+                                        "value": "36c6ceeedb990b801853ff661d96194c",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 1502936,
+                                        "trimmedAverage": 1502936,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 1502936,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Systems SRT",
+                                        "value": "1848ce66dbd90b801853ff661d961907",
+                                        "caseCount": 2,
+                                        "variantCount": 1,
+                                        "avgDuration": 4022956,
+                                        "trimmedAverage": 4022956,
+                                        "stdDeviation": 5517440,
+                                        "medianDuration": 4022956,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Support Service Desk Level 1",
+                                        "value": "912df9e3db823f88d34dffd51d9619b0",
+                                        "caseCount": 6,
+                                        "variantCount": 1,
+                                        "avgDuration": 138124,
+                                        "trimmedAverage": 138124,
+                                        "stdDeviation": 150884,
+                                        "medianDuration": 95107,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Solana Collaboration",
+                                        "value": "1e46c3681bf2c810f26042e7cc4bcb24",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 6152718,
+                                        "trimmedAverage": 6152718,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 6152718,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "CX Administration",
+                                        "value": "8c27c33dcc76fc40772ed4b0de3c6b2c",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 75192,
+                                        "trimmedAverage": 75192,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 75192,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "escalation",
+                                "label": "Escalation",
+                                "displayName": "Escalation",
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "Normal",
+                                        "value": "0",
+                                        "caseCount": 28,
+                                        "variantCount": 1,
+                                        "avgDuration": 861957,
+                                        "trimmedAverage": 622646,
+                                        "stdDeviation": 1809648,
+                                        "medianDuration": 170713,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "reassignment_count",
+                                "label": "Reassignment count",
+                                "displayName": null,
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "0",
+                                        "value": "0",
+                                        "caseCount": 23,
+                                        "variantCount": 1,
+                                        "avgDuration": 635047,
+                                        "trimmedAverage": 317148,
+                                        "stdDeviation": 1627946,
+                                        "medianDuration": 122543,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "1",
+                                        "value": "1",
+                                        "caseCount": 2,
+                                        "variantCount": 1,
+                                        "avgDuration": 797550,
+                                        "trimmedAverage": 797550,
+                                        "stdDeviation": 956026,
+                                        "medianDuration": 797550,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "2",
+                                        "value": "2",
+                                        "caseCount": 2,
+                                        "variantCount": 1,
+                                        "avgDuration": 890439,
+                                        "trimmedAverage": 890439,
+                                        "stdDeviation": 124335,
+                                        "medianDuration": 890439,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "3",
+                                        "value": "3",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 6152718,
+                                        "trimmedAverage": 6152718,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 6152718,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "priority",
+                                "label": "Priority",
+                                "displayName": null,
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "3 - Moderate",
+                                        "value": "3",
+                                        "caseCount": 9,
+                                        "variantCount": 1,
+                                        "avgDuration": 1778565,
+                                        "trimmedAverage": 1778565,
+                                        "stdDeviation": 3049540,
+                                        "medianDuration": 114655,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "4 - Low",
+                                        "value": "4",
+                                        "caseCount": 19,
+                                        "variantCount": 1,
+                                        "avgDuration": 427774,
+                                        "trimmedAverage": 388025,
+                                        "stdDeviation": 399960,
+                                        "medianDuration": 437963,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            },
+                            {
+                                "field": "category",
+                                "label": "Category",
+                                "displayName": "Category",
+                                "isExcluded": false,
+                                "excludedLimit": 0,
+                                "line": [
+                                    {
+                                        "label": "Employee Organization",
+                                        "value": "Employee Organization",
+                                        "caseCount": 2,
+                                        "variantCount": 1,
+                                        "avgDuration": 306551,
+                                        "trimmedAverage": 306551,
+                                        "stdDeviation": 199669,
+                                        "medianDuration": 306551,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Software",
+                                        "value": "software",
+                                        "caseCount": 2,
+                                        "variantCount": 1,
+                                        "avgDuration": 612368,
+                                        "trimmedAverage": 612368,
+                                        "stdDeviation": 5587,
+                                        "medianDuration": 612368,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Employee Portal",
+                                        "value": "Employee Portal",
+                                        "caseCount": 4,
+                                        "variantCount": 1,
+                                        "avgDuration": 275358,
+                                        "trimmedAverage": 275358,
+                                        "stdDeviation": 258540,
+                                        "medianDuration": 256577,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Reporting/BI",
+                                        "value": "Reporting/BI",
+                                        "caseCount": 1,
+                                        "variantCount": 1,
+                                        "avgDuration": 122543,
+                                        "trimmedAverage": 122543,
+                                        "stdDeviation": 0,
+                                        "medianDuration": 122543,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "IT Business Services",
+                                        "value": "IT Business Services",
+                                        "caseCount": 12,
+                                        "variantCount": 1,
+                                        "avgDuration": 1609680,
+                                        "trimmedAverage": 1137017,
+                                        "stdDeviation": 2622268,
+                                        "medianDuration": 462029,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    },
+                                    {
+                                        "label": "Hardware",
+                                        "value": "hardware",
+                                        "caseCount": 7,
+                                        "variantCount": 1,
+                                        "avgDuration": 250974,
+                                        "trimmedAverage": 250974,
+                                        "stdDeviation": 303814,
+                                        "medianDuration": 110951,
+                                        "totalTouchPoints": 0,
+                                        "avgTouchPoints": 0.0,
+                                        "totalIdleTime": -1,
+                                        "avgIdleTime": -1
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "version": {
+                    "id": "fc3a14dd2b67a210c9a1f9b36e91bf0f",
+                    "automationDiscoveryReport": null,
+                    "lastMined": "2025-08-22 19:40:44",
+                    "filterSets": [
+                        {
+                            "id": "dddcdb182b7be610c9a1f9b36e91bfc7",
+                            "name": "Email Channel Filter",
+                            "filter": {
+                                "dataFilter": [],
+                                "breakdowns": [
+                                    {
+                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                        "breakdowns": [
+                                            {
+                                                "field": "contact_type",
+                                                "values": [
+                                                    "email"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "findingFilter": null,
+                                "adIntentFilter": null,
+                                "orderedFilters": []
+                            },
+                            "caseCount": 4135,
+                            "variantCount": 414,
+                            "totalDuration": 4024239890,
+                            "maxDuration": 25446248,
+                            "minDuration": 0,
+                            "avgDuration": 973214,
+                            "medianDuration": 724200,
+                            "stdDeviation": 1210273,
+                            "trimmedAverage": 816168
+                        },
+                        {
+                            "id": "c5c399a82bbf2a10c9a1f9b36e91bf19",
+                            "name": "Happy Path",
+                            "filter": {
+                                "dataFilter": [],
+                                "breakdowns": [],
+                                "findingFilter": null,
+                                "adIntentFilter": null,
+                                "orderedFilters": [
+                                    {
+                                        "type": "TRANSITION",
+                                        "repetitions": null,
+                                        "advancedTransitions": [
+                                            {
+                                                "advancedTransitions": [
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "__case",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "created"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "1"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "2001"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "2"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "6"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "ALWAYS",
+                                                        "values": [
+                                                            "7"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "__case",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "completed"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    }
+                                                ],
+                                                "transitionConstraints": []
+                                            }
+                                        ],
+                                        "variantFilter": null,
+                                        "viewFilter": null
+                                    }
+                                ]
+                            },
+                            "caseCount": 1430,
+                            "variantCount": 1,
+                            "totalDuration": 1041250210,
+                            "maxDuration": 6211017,
+                            "minDuration": 4382,
+                            "avgDuration": 728147,
+                            "medianDuration": 689989,
+                            "stdDeviation": 646654,
+                            "trimmedAverage": 656121
+                        },
+                        {
+                            "id": "8cfde9242bf36a10c9a1f9b36e91bf25",
+                            "name": "Happy Path 2",
+                            "filter": {
+                                "dataFilter": [],
+                                "breakdowns": [],
+                                "findingFilter": null,
+                                "adIntentFilter": null,
+                                "orderedFilters": [
+                                    {
+                                        "type": "TRANSITION",
+                                        "repetitions": null,
+                                        "advancedTransitions": [
+                                            {
+                                                "advancedTransitions": [
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "__case",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "ALWAYS",
+                                                        "values": [
+                                                            "created"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "ALWAYS",
+                                                        "values": [
+                                                            "1"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "ALWAYS",
+                                                        "values": [
+                                                            "2001"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "2"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "FIRST",
+                                                        "values": [
+                                                            "4001"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "LAST",
+                                                        "values": [
+                                                            "2"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "state",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "LAST",
+                                                        "values": [
+                                                            "6"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    },
+                                                    {
+                                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                                        "field": "__case",
+                                                        "predicate": "EQ",
+                                                        "occurrence": "ALWAYS",
+                                                        "values": [
+                                                            "completed"
+                                                        ],
+                                                        "relation": "FOLLOWED_BY",
+                                                        "conditionType": "SINGLE",
+                                                        "context": null,
+                                                        "left": null,
+                                                        "right": null
+                                                    }
+                                                ],
+                                                "transitionConstraints": []
+                                            }
+                                        ],
+                                        "variantFilter": null,
+                                        "viewFilter": null
+                                    }
+                                ]
+                            },
+                            "caseCount": 28,
+                            "variantCount": 1,
+                            "totalDuration": 24134796,
+                            "maxDuration": 7924376,
+                            "minDuration": 21612,
+                            "avgDuration": 861957,
+                            "medianDuration": 170713,
+                            "stdDeviation": 1809648,
+                            "trimmedAverage": 622646
+                        },
+                        {
+                            "id": "e95d5b982b7be610c9a1f9b36e91bf9b",
+                            "name": "Phone Channel Filter",
+                            "filter": {
+                                "dataFilter": [],
+                                "breakdowns": [
+                                    {
+                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                        "breakdowns": [
+                                            {
+                                                "field": "contact_type",
+                                                "values": [
+                                                    "phone"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "findingFilter": null,
+                                "adIntentFilter": null,
+                                "orderedFilters": []
+                            },
+                            "caseCount": 2427,
+                            "variantCount": 341,
+                            "totalDuration": 1639775853,
+                            "maxDuration": 6900850,
+                            "minDuration": 0,
+                            "avgDuration": 675639,
+                            "medianDuration": 667675,
+                            "stdDeviation": 707752,
+                            "trimmedAverage": 587859
+                        },
+                        {
+                            "id": "cc5ed75c2b7be610c9a1f9b36e91bfce",
+                            "name": "Priority 1 Phone Channel Filter",
+                            "filter": {
+                                "dataFilter": [],
+                                "breakdowns": [
+                                    {
+                                        "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                        "breakdowns": [
+                                            {
+                                                "field": "contact_type",
+                                                "values": [
+                                                    "phone"
+                                                ]
+                                            },
+                                            {
+                                                "field": "priority",
+                                                "values": [
+                                                    "1"
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "findingFilter": null,
+                                "adIntentFilter": null,
+                                "orderedFilters": []
+                            },
+                            "caseCount": 1,
+                            "variantCount": 1,
+                            "totalDuration": 425851,
+                            "maxDuration": 425851,
+                            "minDuration": 425851,
+                            "avgDuration": 425851,
+                            "medianDuration": 425851,
+                            "stdDeviation": 0,
+                            "trimmedAverage": 425851
+                        }
+                    ],
+                    "projectDefinition": {
+                        "name": "Incident Analysis",
+                        "projectId": "7c3bb2cd9364b110ad66fa4e1dba104e",
+                        "paUuid": null,
+                        "domain": "global",
+                        "source": "MANUAL",
+                        "projectEntities": [
+                            {
+                                "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                                "parentId": null,
+                                "name": "Incidents",
+                                "sourceType": {
+                                    "value": "TABLE"
+                                },
+                                "table": {
+                                    "name": "incident",
+                                    "label": "Incident"
+                                },
+                                "filter": {
+                                    "encodedQuery": "active=false^sys_created_by=po_demo_user^contact_type!=alert",
+                                    "displayValue": "Active = false .and. Created by = po_demo_user .and. Channel != Alert"
+                                },
+                                "activities": [
+                                    {
+                                        "id": "6afbba0193a4b110ad66fa4e1dba100a",
+                                        "field": "state",
+                                        "label": "State",
+                                        "displayName": null,
+                                        "isGrouped": false
+                                    }
+                                ],
+                                "activitiesOfInterest": []
+                            }
+                        ],
+                        "permissions": {
+                            "canMine": true,
+                            "canWrite": true,
+                            "canDelete": true,
+                            "canShare": true
+                        }
+                    },
+                    "miningStats": {
+                        "totalRecords": 22433
+                    },
+                    "versionEntityConfigs": [
+                        {
+                            "entityId": "3b5b3acd9364b110ad66fa4e1dba10cb",
+                            "touchPointEnabled": false,
+                            "touchPointFields": [],
+                            "idleTimeEnabled": false,
+                            "controlFlowField": "state",
+                            "groupField": "assignment_group",
+                            "controlFlowValueMapping": []
+                        }
+                    ]
+                },
+                "findings": []
+            }
+        }
+    }
+}
