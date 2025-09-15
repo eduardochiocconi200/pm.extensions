@@ -140,12 +140,12 @@ public class SysAuditLogDAOREST
 		return MAX_RESULT_SET;
 	}
 
-	public SysAuditLog findByIds(final SysAuditLogPK id, final ArrayList<String> ids)
+	public SysAuditLog findByIds(final SysAuditLogPK id, final List<String> ids)
 	{
 		return findByIds(id, ids, null);
 	}
 
-	public SysAuditLog findByIds(final SysAuditLogPK id, final ArrayList<String> ids, final String condition)
+	public SysAuditLog findByIds(final SysAuditLogPK id, final List<String> ids, final String condition)
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
 		int baseOffset = 0;
@@ -156,7 +156,7 @@ public class SysAuditLogDAOREST
 		do {
 			long startTime = System.currentTimeMillis();
 			String instancesInSysLog = getNextBatch(baseOffset, ids);
-			String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit?";
+			String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit?sysparm_offset=0&sysparm_limit=100000&";
 			url += "sysparm_query=documentkeyIN" + instancesInSysLog;
 			if (condition != null) {
 				url += URLEncoder.encode("^", StandardCharsets.UTF_8) + condition + "&";
@@ -215,7 +215,7 @@ public class SysAuditLogDAOREST
 		return sysAuditLog;
 	}
 
-	private String getNextBatch(final int baseOffset, final ArrayList<String> ids)
+	private String getNextBatch(final int baseOffset, final List<String> ids)
 	{
 		boolean processedFirstId = false;
 		StringBuffer sb = new StringBuffer();
