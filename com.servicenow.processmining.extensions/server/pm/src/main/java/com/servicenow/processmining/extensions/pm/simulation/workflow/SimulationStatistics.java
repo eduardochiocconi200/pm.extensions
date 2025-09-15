@@ -1,6 +1,7 @@
 package com.servicenow.processmining.extensions.pm.simulation.workflow;
 
 import com.servicenow.processmining.extensions.pm.simulation.core.Simulator;
+import com.servicenow.processmining.extensions.sn.core.TimeUtility;
 
 public class SimulationStatistics
 {
@@ -57,7 +58,7 @@ public class SimulationStatistics
     public String getSummary()
     {
         StringBuffer sb = new StringBuffer();
-        sb.append("Total Simulation Time: " + getTotalSimulationTime() + "\n");
+        sb.append("Simulation Time Span: " + getTotalSimulationTime() + " millisecond(s). " + TimeUtility.millisecondsToDays(getTotalSimulationTime()) + " day(s).\n");
         sb.append("Total simulated workflow instances: " + getNumberOfCreatedInstances() + "\n");
         sb.append("Activity Simulation Stats:\n");
         for (String activityId : getSimulator().getSimulationState().getProcessModel().getNodes().keySet()) {
@@ -67,7 +68,7 @@ public class SimulationStatistics
                 activityResourceCapacity = getSimulator().getSimulationState().getProcessModel().getNodes().get(activityId).getResources().getCapacity();
                 int activityMaxResourceUsedCapacity = getSimulator().getSimulationState().getMaxActivityStateCount().get(activityId);
                 int activityMaxQueue = getSimulator().getSimulationState().getMaxActivityStateQueue().get(activityId);
-                sb.append("Activity (" + activityId + "-" + activityName + "): Available Resource Capacity: (" + (activityResourceCapacity == -1 ? "Unlimited" : activityResourceCapacity)+ "), Max Used Resource Capacity: (" + activityMaxResourceUsedCapacity + "), Max Waiting Queue size: (" + activityMaxQueue + ")\n");
+                sb.append("Activity (" + activityId + "-" + activityName + "): Available Resource Capacity: (" + (activityResourceCapacity == -1 ? "Unlimited" : activityResourceCapacity)+ "), Max Used Resource Capacity: (" + activityMaxResourceUsedCapacity + "), Max Waiting Queue size: (" + activityMaxQueue + ").\n");
             }
         }
 
