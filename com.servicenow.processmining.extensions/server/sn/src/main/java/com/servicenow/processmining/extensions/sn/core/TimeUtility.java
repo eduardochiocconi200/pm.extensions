@@ -38,6 +38,14 @@ public class TimeUtility
         return seconds  / 60 / 60 / 24;
     }
 
+    public static double millisecondsToDays(final double millis)
+    {
+        long millisecondsInADay = 1000L * 60 * 60 * 24;
+        double d = millis/millisecondsInADay;
+
+        return d;
+    }
+
     public static String secondsToWeeks(final String seconds)
     {
         Long secondsLong = Long.valueOf(seconds) / 60 / 60 / 24 / 7;
