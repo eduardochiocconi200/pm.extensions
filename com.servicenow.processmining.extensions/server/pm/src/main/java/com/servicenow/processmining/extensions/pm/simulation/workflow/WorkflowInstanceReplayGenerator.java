@@ -1,5 +1,6 @@
 package com.servicenow.processmining.extensions.pm.simulation.workflow;
 
+import com.servicenow.processmining.extensions.pm.model.ProcessMiningModelNode;
 import com.servicenow.processmining.extensions.pm.simulation.core.SimulationGenerator;
 import com.servicenow.processmining.extensions.pm.simulation.core.Simulator;
 import com.servicenow.processmining.extensions.pm.simulation.serialization.SysAuditEntryComparator;
@@ -24,6 +25,7 @@ public class WorkflowInstanceReplayGenerator
     private SysAuditLog sortedAuditLog = null;
     private int lastCreationEventIndex = 0;
     private long firstReplayTimestamp = 0;
+    private HashMap<String, String> invalidDocumentKeys = null;
 
     public WorkflowInstanceReplayGenerator(final Simulator simulator, final SysAuditLog auditLog)
     {
@@ -44,9 +46,14 @@ public class WorkflowInstanceReplayGenerator
     public SysAuditLog getSortedAuditLog()
     {
         if (sortedAuditLog == null) {
+            identifyInvalidAuditLogs();
+            logger.debug("Loading and sorting all events chronologically ...");
             TreeSet<SysAuditEntry> cronologicallySortedAuditEvents = new TreeSet<SysAuditEntry>(new SysAuditEntryComparator());
             HashMap<String, String> createdRecords = new HashMap<String, String>();
             for (SysAuditEntry entry : getAuditLog().getLog()) {
+                if (invalidDocumentKeys.get(entry.getDocumentKey()) != null) {
+                    continue;
+                }
                 if (createdRecords.get(entry.getDocumentKey()) == null) {
                     createdRecords.put(entry.getDocumentKey(), entry.getDocumentKey());
                     SysAuditEntry createdEntry = new SysAuditEntry(new SysAuditEntryPK(entry.getDocumentKey()));
@@ -67,18 +74,49 @@ public class WorkflowInstanceReplayGenerator
                 sortedAuditLog.getLog().add(sae);
             }
 
-            if (debug) {
+            if (logger.isTraceEnabled()) {
                 for (SysAuditEntry sae: sortedAuditLog.getLog()) {
-                    logger.debug(sae.getSysCreatedOn() + "," + sae.getDocumentKey() + "," + sae.getFieldName() + "," + sae.getOldValue() + "," + sae.getNewValue());
+                    logger.trace(sae.getSysCreatedOn() + "," + sae.getDocumentKey() + "," + sae.getFieldName() + "," + sae.getOldValue() + "," + sae.getNewValue());
                 }
             }
 
-            if ((getAuditLog().getLog().size() + createdRecords.size()) != sortedAuditLog.getLog().size()) {
-                throw new RuntimeException("Audit Logs should have SAME size. Log size is: (" + getAuditLog().getLog().size() + "). Sorted Log size is: (" + this.sortedAuditLog.getLog().size() + ")");
+            if ((getAuditLog().getLog().size() + createdRecords.size()) < sortedAuditLog.getLog().size()) {
+                throw new RuntimeException("Sorted Audit Logs should have SAME OR SMALLER size. Log size is: (" + getAuditLog().getLog().size() + "). Sorted Log size is: (" + this.sortedAuditLog.getLog().size() + ")");
             }
         }
 
         return sortedAuditLog;
+    }
+
+    private void identifyInvalidAuditLogs()
+    {
+        if (invalidDocumentKeys == null) {
+            invalidDocumentKeys = new HashMap<String, String>();
+            HashMap<String, String> nodeValues = getNodeValues();
+            for (SysAuditEntry entry : getAuditLog().getLog()) {
+                if (nodeValues.get(entry.getNewValue()) == null) {
+                    if (invalidDocumentKeys.get(entry.getDocumentKey()) == null) {
+                        invalidDocumentKeys.put(entry.getDocumentKey(), entry.getDocumentKey());
+                    }
+                }
+                else if (nodeValues.get(entry.getOldValue()) == null) {
+                    if (invalidDocumentKeys.get(entry.getDocumentKey()) == null) {
+                        invalidDocumentKeys.put(entry.getDocumentKey(), entry.getDocumentKey());
+                    }
+                }
+            }
+        }
+    }
+
+    private HashMap<String, String> getNodeValues()
+    {
+        WorkflowSimulator wis = (WorkflowSimulator) getSimulator();
+        HashMap<String, String> nodeValues = new HashMap<String, String>();
+        for (ProcessMiningModelNode node : wis.getSimulationState().getProcessModel().getNodes().values()) {
+            nodeValues.put(node.getValue(), node.getValue());
+        }
+
+        return nodeValues;
     }
 
     @Override
@@ -94,15 +132,18 @@ public class WorkflowInstanceReplayGenerator
 
     private int getNextCreationEventIndex()
     {
-        for (int i=lastCreationEventIndex; i < getSortedAuditLog().getLog().size(); i++) {
-            // If it is a creation event ...
-            SysAuditEntry sae = getSortedAuditLog().getLog().get(i);
-            if (sae.getFieldName().equals(CREATED_FIELD_ATTRIBUTE_NAME)) {
-                return i;
+        if (lastCreationEventIndex >= 0) {
+            for (int i=lastCreationEventIndex; i < getSortedAuditLog().getLog().size(); i++) {
+                // If it is a creation event ...
+                SysAuditEntry sae = getSortedAuditLog().getLog().get(i);
+                if (sae.getFieldName().equals(CREATED_FIELD_ATTRIBUTE_NAME)) {
+                    return i;
+                }
             }
         }
 
-        return -1;
+        lastCreationEventIndex = -1;
+        return lastCreationEventIndex;
     }
 
     private void dispatchStrategy(final int nextCreationEventIndex)
@@ -154,7 +195,6 @@ public class WorkflowInstanceReplayGenerator
         return true;
     }
 
-    private final static boolean debug = true;
     private final static String CREATED_FIELD_ATTRIBUTE_NAME = "created";
     private static final Logger logger = LoggerFactory.getLogger(WorkflowInstanceReplayGenerator.class);
 }
