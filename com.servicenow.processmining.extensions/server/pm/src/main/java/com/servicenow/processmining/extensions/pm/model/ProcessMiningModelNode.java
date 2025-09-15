@@ -148,6 +148,6 @@ public class ProcessMiningModelNode
 
     public String toString()
     {
-        return "[Node: Id: '" + getId() + "', Name: '" + getName() + "', Activity: '" + getActivityId() + "', Entity: '" + getEntityId() + "', Start: '" + getIsStart() + "', End: '" + getIsEnd() + "', AbsoluteFreq: '" +getAbsoluteFrequency() + "', CaseFreq: '" + getCaseFrequency() + "', MaxReps: '" + getMaxReps() + "', FieldLabel: '" + getFieldLabel() + "', Field: '" + getField() + "', Value: '" + getValue() + "']";
+        return "[Node: Id: '" + getId() + "', Name: '" + getName() + "', Activity: '" + getActivityId() + "', Entity: '" + getEntityId() + "', Start: '" + getIsStart() + "', End: '" + getIsEnd() + "', AbsoluteFreq: '" + getAbsoluteFrequency() + "', CaseFreq: '" + getCaseFrequency() + "', MaxReps: '" + getMaxReps() + "', FieldLabel: '" + getFieldLabel() + "', Field: '" + getField() + "', Value: '" + getValue() + "']";
     }
 }
