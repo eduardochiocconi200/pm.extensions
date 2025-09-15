@@ -1,0 +1,16 @@
+[
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"work_notes","oldvalue":"JOURNAL FIELD ADDITION","newvalue":"The related alert Alert0020139 state is now Closed","user":"admin","sys_created_on":"2024-05-31 03:42:37","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"state","oldvalue":"1","newvalue":"6","user":"admin","sys_created_on":"2024-05-31 03:42:37","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"close_code","oldvalue":"","newvalue":"Solved Remotely (Permanently)","user":"admin","sys_created_on":"2024-05-31 03:42:37","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"incident_state","oldvalue":"1","newvalue":"6","user":"admin","sys_created_on":"2024-05-31 03:42:37","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"business_duration","oldvalue":"","newvalue":"1970-01-01 00:00:00","user":"admin","sys_created_on":"2024-05-31 03:42:37","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"business_stc","oldvalue":"","newvalue":"0","user":"admin","sys_created_on":"2024-05-31 03:42:37","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"calendar_stc","oldvalue":"","newvalue":"1145","user":"admin","sys_created_on":"2024-05-31 03:42:37","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"calendar_duration","oldvalue":"","newvalue":"1970-01-01 00:19:05","user":"admin","sys_created_on":"2024-05-31 03:42:37","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"resolved_at","oldvalue":"","newvalue":"2024-05-31 03:42:37","user":"admin","sys_created_on":"2024-05-31 03:42:37","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"close_notes","oldvalue":"","newvalue":"Closed the task associated with alert: Alert0020139","user":"admin","sys_created_on":"2024-05-31 03:42:37","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"closed_at","oldvalue":"","newvalue":"2024-06-07 04:00:01","user":"admin","sys_created_on":"2024-06-07 04:00:01","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"incident_state","oldvalue":"6","newvalue":"7","user":"admin","sys_created_on":"2024-06-07 04:00:01","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"state","oldvalue":"6","newvalue":"7","user":"admin","sys_created_on":"2024-06-07 04:00:01","sys_created_by":"system"},
+{"reason":"","tablename":"incident","documentkey":"da3331b893aec290ad66fa4e1dba10e0","fieldname":"active","oldvalue":"1","newvalue":"0","user":"admin","sys_created_on":"2024-06-07 04:00:01","sys_created_by":"system"}
+]
