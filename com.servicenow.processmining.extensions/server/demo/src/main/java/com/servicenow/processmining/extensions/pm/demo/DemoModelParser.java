@@ -8,6 +8,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import org.joda.time.DateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,10 +76,14 @@ public class DemoModelParser
     {
         String sheetName = sheet.getSheetName();
         int count = Integer.valueOf(sheet.getRow(0).getCell(1).getRawValue()).intValue();
-        double creationDelta = getCellValueAsDouble(sheet.getRow(1).getCell(1));
-        String table = getCellValueAsString(sheet.getRow(2).getCell(1));
-        DemoModelPath path = new DemoModelPath(sheetName, count, creationDelta, table);
-        int i=5;
+        DateTime creationDateTime = DateTime.now();
+        if (sheet.getRow(1) != null && sheet.getRow(1).getCell(1) != null) {
+            creationDateTime = getCellValueAsDate(sheet.getRow(1).getCell(1));
+        }
+        double creationDelta = getCellValueAsDouble(sheet.getRow(2).getCell(1));
+        String table = getCellValueAsString(sheet.getRow(3).getCell(1));
+        DemoModelPath path = new DemoModelPath(sheetName, count, creationDateTime, creationDelta, table);
+        int i=6;
         boolean hasRows = true;
         do {
             if (sheet.getRow(i) == null || (sheet.getRow(i) != null && sheet.getRow(i).getCell(0) == null)) {
@@ -117,6 +123,20 @@ public class DemoModelParser
         }
         else {
             value = cell.getRawValue();
+        }
+
+        return value;
+    }
+
+    private DateTime getCellValueAsDate(final XSSFCell cell)
+    {
+        DateTime value = null;
+
+        if (cell.getCellType() == CellType.FORMULA) {
+            value = new DateTime(cell.getDateCellValue());
+        }
+        else {
+            value = new DateTime(cell.getDateCellValue());
         }
 
         return value;
