@@ -45,12 +45,13 @@ public class DemoModelCases
     public boolean create()
     {
         for (DemoModelPath path : getModel().getPaths()) {
-            DateTime startCreationOfRecords = DateTime.now();
-            DateTime pathFirstStartTime = DateTime.now().minusSeconds((int)path.getTotalDuration());
+            DateTime batchStartTime = DateTime.now();
+            DateTime startCreationOfRecords = path.getCreationStartTime();
+            DateTime pathFirstStartTime = startCreationOfRecords.minusSeconds((int)path.getTotalDuration());
             if (!loadChoiceValues(path)) {
                 return false;
             }
-            System.out.println("Creating [" + path.getCount() + "] [" + path.getTable() + "] records for path defined in Tab: [" + path.getPathName() + "]. (A '.' will be printed for each created record. Be patient!)");
+            System.out.println("Creating [" + path.getCount() + "] [" + path.getTable() + "] records for path defined in Tab: [" + path.getPathName() + "] starting on (" + startCreationOfRecords + "). (A '.' will be printed for each created record. Be patient!)");
             for (int count=0; count < path.getCount(); count++) {
                 if (!createCase(path, pathFirstStartTime)) {
                     return false;
@@ -58,7 +59,7 @@ public class DemoModelCases
                 System.out.print(".");
                 pathFirstStartTime = pathFirstStartTime.minusSeconds((int)path.getCreationDelta());
             }
-            double elapsedTime = DateTime.now().minus(startCreationOfRecords.getMillis()).getMillis() / 1000.0 / 60.0;
+            double elapsedTime = DateTime.now().minus(batchStartTime.getMillis()).getMillis() / 1000.0 / 60.0;
             System.out.println("\nCreated (" + path.getCount() + ") " + path.getTable() + " records along with its audit log records in (" + elapsedTime + ") mins.");
         }
 
