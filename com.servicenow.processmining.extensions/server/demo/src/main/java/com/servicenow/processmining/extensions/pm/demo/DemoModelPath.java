@@ -4,19 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+import org.joda.time.DateTime;
+
 public class DemoModelPath
 {
     private String pathName = null;
     private double totalDuration = 0.0;
     private int count = 0;
+    private DateTime creationStartTime = null;
     private double creationDelta = 0.0;
     private String table = null;
     private ArrayList<DemoModelPathEntry> entries = null;
 
-    public DemoModelPath(final String pathName, final int count, final double creationDelta, final String table)
+    public DemoModelPath(final String pathName, final int count, final DateTime creationStartTime, final double creationDelta, final String table)
     {
         this.pathName = pathName;
         this.count = count;
+        this.creationStartTime = creationStartTime;
         this.creationDelta = creationDelta;
         this.table = table;
     }
@@ -29,6 +33,11 @@ public class DemoModelPath
     public int getCount()
     {
         return this.count;
+    }
+
+    public DateTime getCreationStartTime()
+    {
+        return this.creationStartTime;
     }
 
     public double getCreationDelta()
