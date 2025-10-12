@@ -145,6 +145,59 @@ public class SysAuditLogDAOREST
 		return findByIds(id, ids, null);
 	}
 
+	public SysAuditLog findByCondition(final SysAuditLogPK id, final String condition)
+	{
+		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
+		SysAuditLog sysAuditLog = new SysAuditLog(id);
+		logger.debug("Retrieving Sys Audit Logs: ");
+
+		long startTime = System.currentTimeMillis();
+		String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit?sysparm_offset=0&sysparm_limit=100000&";
+		url += "sysparm_query=" + URLEncoder.encode(condition, StandardCharsets.UTF_8) + "&";
+		url += "sysparm_fields=sys_id,documentkey,tablename,fieldname,oldvalue,newvalue,reason,sys_created_on,sys_created_by";
+		String response = snrs.executeGetRequest(url);
+		if (response == null || response != null && response.equals("")) {
+			logger.error("The requested REST API operation (SysAuditLogDAOREST.findByCondition) could not complete successfully on ServiceNow instance: (" + getInstance().getInstance() + ")!");
+			return null;
+		}
+		long endTime = System.currentTimeMillis();
+		logger.debug("Retrieved records from sys_audit in (" + (endTime-startTime) + ") milliseconds.");
+
+		JSONObject sysAuditLogResponse = new JSONObject(response);
+		if (sysAuditLogResponse.has("result")) {
+			JSONArray sysAuditLogEntries = sysAuditLogResponse.getJSONArray("result");
+			for (int i=0; i < sysAuditLogEntries.length(); i++) {
+				JSONObject resultObject = (JSONObject) sysAuditLogEntries.get(i);
+				if (resultObject.has("sys_id")) {
+					String sysId = resultObject.getString("sys_id");
+					String documentkey = resultObject.getString("documentkey");
+					String tablename = resultObject.getString("tablename");
+					String fieldname = resultObject.getString("fieldname");
+					String oldvalue = resultObject.getString("oldvalue");
+					String newvalue = resultObject.getString("newvalue");
+					String createdOn = resultObject.getString("sys_created_on");
+					String createdBy = resultObject.getString("sys_created_by");
+					String reason = resultObject.has("reason") ? resultObject.getString("reason") : "";
+
+					SysAuditEntry entry = new SysAuditEntry(new SysAuditEntryPK(sysId));
+					entry.setDocumentKey(documentkey);
+					entry.setTableName(tablename);
+					entry.setFieldName(fieldname);
+					entry.setOldValue(oldvalue);
+					entry.setNewValue(newvalue);
+					entry.setSysCreatedOn(createdOn);
+					entry.setSysCreatedBy(createdBy);
+					entry.setReason(reason);
+
+					sysAuditLog.getLog().add(entry);
+				}
+			}
+		}
+
+		logger.debug("SysAuditLogDAOREST.findById(): (" + sysAuditLog.getLog().size() + ")");
+		return sysAuditLog;
+	}
+
 	public SysAuditLog findByIds(final SysAuditLogPK id, final List<String> ids, final String condition)
 	{
 		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
