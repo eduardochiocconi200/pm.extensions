@@ -45,6 +45,13 @@ public class ProcessMiningModelTest
                 ProcessMiningModelParser pmmp = ProcessMiningModelParserFactory.getParser(getInstance(), modelVersionId);
                 if (pmmp.parse(pmmr.getProcessMiningModelJSONString())) {
                     logger.info("Retrieved and parsed Process Mining Model successfully for project: (" + version.getName() + ") - (" + version.getLastMinedTime() + ").");
+                    /*
+	 	    System.out.println("Model Name: (" + pmmp.getProcessMiningModel().getName() + ").");
+                    if (pmmp.getProcessMiningModel().getName().equals("Incident Analysis")) {
+                        System.out.println("Model Name: (" + pmmp.getProcessMiningModel().getName() + ")");
+                        System.out.println("Process Model JSON: (" + pmmr.getProcessMiningModelJSONString() + ")");
+                    }
+		    */
                 }
             }
             Assert.assertNull(pmmr.getErrorMessage());
