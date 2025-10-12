@@ -47,7 +47,8 @@ public class DemoModelImport
 
     private boolean parseArgs()
     {
-        if (args.length != 8) {
+        // We need minimally 1 parameter.
+        if (args.length < 2) {
             System.err.println(usage());
             return false;
         }
@@ -81,7 +82,7 @@ public class DemoModelImport
     {
         StringBuffer sb = new StringBuffer();
         sb.append("Invalid input parameters to run the demo import case creation application. Check usage details and try again.\n\n");
-        sb.append("Usage: java -jar pm-demo-data-import.jar -f [XLS file] -i instance -u user -p password\n");
+        sb.append("Usage: java -jar pm-demo-data-import.jar -f [XLS file] -i instance -u user -p password -d tag\n");
         sb.append(" -f [specified the file location, that contains the details to create case instances along with their specific path updates.]\n");
         sb.append(" -i [specifies the instance name where the cases will be created (ie: processminingec1demo.service-now.com). Include domain suffix (ie: instance.service-now.com).]\n");
         sb.append(" -u [specifies the user in the instance specified in the -i parameter, that will own the created cases. Specify a user with enough permissions.]\n");
