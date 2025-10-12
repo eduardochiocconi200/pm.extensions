@@ -11,6 +11,7 @@ import com.servicenow.processmining.extensions.sc.entities.SysAuditLog;
 import com.servicenow.processmining.extensions.sc.entities.SysAuditLogPK;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.TreeSet;
 
@@ -46,31 +47,35 @@ public class WorkflowInstanceReplayGenerator
     public SysAuditLog getSortedAuditLog()
     {
         if (sortedAuditLog == null) {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             identifyInvalidAuditLogs();
             logger.debug("Loading and sorting all events chronologically ...");
             TreeSet<SysAuditEntry> cronologicallySortedAuditEvents = new TreeSet<SysAuditEntry>(new SysAuditEntryComparator());
-            HashMap<String, String> createdRecords = new HashMap<String, String>();
             for (SysAuditEntry entry : getAuditLog().getLog()) {
                 if (invalidDocumentKeys.get(entry.getDocumentKey()) != null) {
                     continue;
                 }
-                if (createdRecords.get(entry.getDocumentKey()) == null) {
-                    createdRecords.put(entry.getDocumentKey(), entry.getDocumentKey());
-                    SysAuditEntry createdEntry = new SysAuditEntry(new SysAuditEntryPK(entry.getDocumentKey()));
-                    createdEntry.setDocumentKey(entry.getDocumentKey());
-                    createdEntry.setTableName(entry.getTableName());
-                    createdEntry.setFieldName(CREATED_FIELD_ATTRIBUTE_NAME);
-                    createdEntry.setReason(entry.getReason());
-                    createdEntry.setSysCreatedOn(entry.getSysCreatedOn());
-                    createdEntry.setSysCreatedBy(entry.getSysCreatedBy());
-                    createdEntry.setNewValue(entry.getSysCreatedOn());
-                    cronologicallySortedAuditEvents.add(createdEntry);
-                }
                 cronologicallySortedAuditEvents.add(entry);
             }
 
+            HashMap<String, String> createdRecords = new HashMap<String, String>();
             sortedAuditLog = new SysAuditLog((SysAuditLogPK) auditLog.getPK());
             for (SysAuditEntry sae: cronologicallySortedAuditEvents) {
+                // If it is the first time we see the documentKey (caseId), then we need to create the starting point node link transition.
+                if (createdRecords.get(sae.getDocumentKey()) == null) {
+                    createdRecords.put(sae.getDocumentKey(), sae.getDocumentKey());
+                    SysAuditEntry createdEntry = new SysAuditEntry(new SysAuditEntryPK(sae.getDocumentKey()));
+                    createdEntry.setDocumentKey(sae.getDocumentKey());
+                    createdEntry.setTableName(sae.getTableName());
+                    createdEntry.setFieldName(CREATED_FIELD_ATTRIBUTE_NAME);
+                    createdEntry.setReason(sae.getReason());
+                    Timestamp creationTS = Timestamp.valueOf(sae.getSysCreatedOn());
+                    creationTS = new Timestamp(creationTS.getTime()-1000);
+                    createdEntry.setSysCreatedOn(formatter.format(creationTS));
+                    createdEntry.setSysCreatedBy(sae.getSysCreatedBy());
+                    // createdEntry.setNewValue(entry.getSysCreatedOn());
+                    sortedAuditLog.getLog().add(createdEntry);
+                }
                 sortedAuditLog.getLog().add(sae);
             }
 
