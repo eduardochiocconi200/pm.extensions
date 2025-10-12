@@ -24,9 +24,9 @@ public class WorkflowSimulatorReplayTest
   public void test()
   {
     logger.info("Starting Simulation Replay Tests ...");
-    boolean runOne = true;
+    boolean runOne = false;
     if (runOne) {
-      test9();
+      test13();
     }
     else {
       test1();
@@ -38,6 +38,10 @@ public class WorkflowSimulatorReplayTest
       test7();
       test8();
       test9();
+      test10();
+      test11();
+      test12();
+      test13();
     }
   }
 
@@ -73,7 +77,7 @@ public class WorkflowSimulatorReplayTest
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
     Assert.assertEquals(2, sim.getStatistics().getNumberOfCreatedInstances());
-    Assert.assertEquals(1917684000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    Assert.assertEquals(1917685000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
     long endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
 
@@ -93,7 +97,7 @@ public class WorkflowSimulatorReplayTest
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
     Assert.assertEquals(4, sim.getStatistics().getNumberOfCreatedInstances());
-    Assert.assertEquals(1991569000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    Assert.assertEquals(1991570000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
     long endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
 
@@ -108,12 +112,12 @@ public class WorkflowSimulatorReplayTest
     long startTime = System.currentTimeMillis();
     WorkflowInstance.setDisplay(new PrintSimulationState());
     WorkflowSimulationSamples sample12 = new WorkflowSimulationSamplesTest12("");
-    WorkflowSimulator sim = new WorkflowSimulator(sample12.getModel(), getSysAuditLog4(), "incident", "state");
+    WorkflowSimulator sim = new WorkflowSimulator(sample12.getModel(), getSysAuditIncidentStateLog("/simulation/audit-log-1.json", 857), "incident", "state");
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
     Assert.assertEquals(167, sim.getStatistics().getNumberOfCreatedInstances());
-    Assert.assertEquals(2809858000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    Assert.assertEquals(2809859000.0, sim.getStatistics().getTotalSimulationTime(), 0.0);
     long endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
 
@@ -128,7 +132,7 @@ public class WorkflowSimulatorReplayTest
     long startTime = System.currentTimeMillis();
     WorkflowInstance.setDisplay(new PrintSimulationState());
     WorkflowSimulationSamples sample13 = new WorkflowSimulationSamplesTest13("");
-    WorkflowSimulator sim = new WorkflowSimulator(sample13.getModel(), getSysAuditLog5(), "incident", "state");
+    WorkflowSimulator sim = new WorkflowSimulator(sample13.getModel(),getSysAuditIncidentStateLog("/simulation/audit-log-2.json", 2), "incident", "state");
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -148,7 +152,7 @@ public class WorkflowSimulatorReplayTest
     long startTime = System.currentTimeMillis();
     WorkflowInstance.setDisplay(new PrintSimulationState());
     WorkflowSimulationSamples sample13 = new WorkflowSimulationSamplesTest13("");
-    WorkflowSimulator sim = new WorkflowSimulator(sample13.getModel(), getSysAuditLog6(), "incident", "state");
+    WorkflowSimulator sim = new WorkflowSimulator(sample13.getModel(), getSysAuditIncidentStateLog("/simulation/audit-log-3.json", 6), "incident", "state");
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -168,12 +172,12 @@ public class WorkflowSimulatorReplayTest
     long startTime = System.currentTimeMillis();
     WorkflowInstance.setDisplay(new PrintSimulationState());
     WorkflowSimulationSamples sample13 = new WorkflowSimulationSamplesTest13("");
-    WorkflowSimulator sim = new WorkflowSimulator(sample13.getModel(), getSysAuditLog7(), "incident", "state");
+    WorkflowSimulator sim = new WorkflowSimulator(sample13.getModel(), getSysAuditIncidentStateLog("/simulation/audit-log-4.json", 18), "incident", "state");
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
     Assert.assertEquals(3, sim.getStatistics().getNumberOfCreatedInstances());
-    Assert.assertEquals(3.3004E7, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    Assert.assertEquals(3.3005E7, sim.getStatistics().getTotalSimulationTime(), 0.0);
     long endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
 
@@ -188,12 +192,12 @@ public class WorkflowSimulatorReplayTest
     long startTime = System.currentTimeMillis();
     WorkflowInstance.setDisplay(new PrintSimulationState());
     WorkflowSimulationSamples sample14 = new WorkflowSimulationSamplesTest14("");
-    WorkflowSimulator sim = new WorkflowSimulator(sample14.getModel(), getSysAuditLog7(), "incident", "state");
+    WorkflowSimulator sim = new WorkflowSimulator(sample14.getModel(), getSysAuditIncidentStateLog("/simulation/audit-log-4.json", 18), "incident", "state");
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
     Assert.assertEquals(3, sim.getStatistics().getNumberOfCreatedInstances());
-    Assert.assertEquals(1.05615E8, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    Assert.assertEquals(1.05632E8, sim.getStatistics().getTotalSimulationTime(), 0.0);
     long endTime = System.currentTimeMillis();
     logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
 
@@ -208,7 +212,7 @@ public class WorkflowSimulatorReplayTest
     long startTime = System.currentTimeMillis();
     WorkflowInstance.setDisplay(new PrintSimulationState());
     WorkflowSimulationSamples sample14 = new WorkflowSimulationSamplesTest14("");
-    WorkflowSimulator sim = new WorkflowSimulator(sample14.getModel(), getSysAuditLog8(), "incident", "state");
+    WorkflowSimulator sim = new WorkflowSimulator(sample14.getModel(), getSysAuditIncidentStateLog("/simulation/audit-log-rework-1.json", 8), "incident", "state");
     Assert.assertTrue(sim.validateEmptyQueues());
     sim.run();
     Assert.assertTrue(sim.validateEmptyQueues());
@@ -221,20 +225,100 @@ public class WorkflowSimulatorReplayTest
     logger.info("Completing Simulation Replay Test1 in (" + (testCaseEndTime - testCaseStartTime) + ") ...");
   }
 
-  private void loadAuditData()
+  private void test10()
+  {
+    logger.info("Starting Simulation Replay Test10 ...");
+    long testCaseStartTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
+    WorkflowInstance.setDisplay(new PrintSimulationState());
+    WorkflowSimulationSamples sample14 = new WorkflowSimulationSamplesTest14("");
+    WorkflowSimulator sim = new WorkflowSimulator(sample14.getModel(), getSysAuditIncidentStateLog("/simulation/audit-log-rework-2.json", 8), "incident", "state");
+    Assert.assertTrue(sim.validateEmptyQueues());
+    sim.run();
+    Assert.assertTrue(sim.validateEmptyQueues());
+    Assert.assertEquals(1, sim.getStatistics().getNumberOfCreatedInstances());
+    Assert.assertEquals(1.19105E8, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    long endTime = System.currentTimeMillis();
+    logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
+
+    long testCaseEndTime = System.currentTimeMillis();
+    logger.info("Completing Simulation Replay Test1 in (" + (testCaseEndTime - testCaseStartTime) + ") ...");
+  }
+
+  private void test11()
+  {
+    logger.info("Starting Simulation Replay Test11 ...");
+    long testCaseStartTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
+    WorkflowInstance.setDisplay(new PrintSimulationState());
+    WorkflowSimulationSamples sample14 = new WorkflowSimulationSamplesTest14("");
+    WorkflowSimulator sim = new WorkflowSimulator(sample14.getModel(), getSysAuditIncidentStateLog("/simulation/audit-log-rework-3.json", 32), "incident", "state");
+    Assert.assertTrue(sim.validateEmptyQueues());
+    sim.run();
+    Assert.assertTrue(sim.validateEmptyQueues());
+    Assert.assertEquals(4, sim.getStatistics().getNumberOfCreatedInstances());
+    Assert.assertEquals(1.345531E9, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    long endTime = System.currentTimeMillis();
+    logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
+
+    long testCaseEndTime = System.currentTimeMillis();
+    logger.info("Completing Simulation Replay Test1 in (" + (testCaseEndTime - testCaseStartTime) + ") ...");
+  }
+
+  private void test12()
+  {
+    logger.info("Starting Simulation Replay Test12 ...");
+    long testCaseStartTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
+    WorkflowInstance.setDisplay(new PrintSimulationState());
+    WorkflowSimulationSamples sample14 = new WorkflowSimulationSamplesTest14("");
+    WorkflowSimulator sim = new WorkflowSimulator(sample14.getModel(), getSysAuditIncidentStateLog("/simulation/audit-log-incident-100.json", 84), "incident", "state");
+    Assert.assertTrue(sim.validateEmptyQueues());
+    sim.run();
+    Assert.assertTrue(sim.validateEmptyQueues());
+    Assert.assertEquals(55, sim.getStatistics().getNumberOfCreatedInstances());
+    Assert.assertEquals(8.24275119E11, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    long endTime = System.currentTimeMillis();
+    logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
+
+    long testCaseEndTime = System.currentTimeMillis();
+    logger.info("Completing Simulation Replay Test1 in (" + (testCaseEndTime - testCaseStartTime) + ") ...");
+  }
+
+  private void test13()
+  {
+    logger.info("Starting Simulation Replay Test13 ...");
+    long testCaseStartTime = System.currentTimeMillis();
+    long startTime = System.currentTimeMillis();
+    WorkflowInstance.setDisplay(new PrintSimulationState());
+    WorkflowSimulationSamples sample14 = new WorkflowSimulationSamplesTest15("");
+    WorkflowSimulator sim = new WorkflowSimulator(sample14.getModel(), getSysAuditIncidentStateLog("/simulation/audit-log-incident-60.json",300), "incident", "state");
+    Assert.assertTrue(sim.validateEmptyQueues());
+    sim.run();
+    Assert.assertTrue(sim.validateEmptyQueues());
+    Assert.assertEquals(60, sim.getStatistics().getNumberOfCreatedInstances());
+    Assert.assertEquals(3.756178063E12, sim.getStatistics().getTotalSimulationTime(), 0.0);
+    long endTime = System.currentTimeMillis();
+    logger.info("Completing Test Case in (" + (endTime - startTime) + ") ...");
+
+    long testCaseEndTime = System.currentTimeMillis();
+    logger.info("Completing Simulation Replay Test1 in (" + (testCaseEndTime - testCaseStartTime) + ") ...");
+  }
+
+  private void loadAuditData(final String fileName)
   {
     if (serializer == null) {
       serializer = new AuditLogSerializer();
     }
 
-    String auditLogJSONString = new TestUtility().loadProcessMiningModel("/simulation/audit-log-1.json");
+    String auditLogJSONString = new TestUtility().loadProcessMiningModel(fileName);
     Assert.assertTrue(serializer.parse(auditLogJSONString));
   }
 
   // Load one record: da3a07c7936886506e79bb1e1dba1025
   private SysAuditLog getSysAuditLog1()
   {
-    loadAuditData();
+    loadAuditData("/simulation/audit-log-1.json");
     SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
 
     for (SysAuditEntry se : serializer.getLog().getFieldNameFilteredLog("state")) {
@@ -251,7 +335,7 @@ public class WorkflowSimulatorReplayTest
   // Load 2 records
   private SysAuditLog getSysAuditLog2()
   {
-    loadAuditData();
+    loadAuditData("/simulation/audit-log-1.json");
     SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
 
     for (SysAuditEntry se : serializer.getLog().getFieldNameFilteredLog("state")) {
@@ -269,7 +353,7 @@ public class WorkflowSimulatorReplayTest
   // Load 4 records
   private SysAuditLog getSysAuditLog3()
   {
-    loadAuditData();
+    loadAuditData("/simulation/audit-log-1.json");
     SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
 
     for (SysAuditEntry se : serializer.getLog().getFieldNameFilteredLog("state")) {
@@ -287,103 +371,15 @@ public class WorkflowSimulatorReplayTest
   }
 
   // All records
-  private SysAuditLog getSysAuditLog4()
+  private SysAuditLog getSysAuditIncidentStateLog(final String fileName, final int totalRecords)
   {
-    loadAuditData();
+    loadAuditData(fileName);
     SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
     for (SysAuditEntry se : serializer.getLog().getFieldNameFilteredLog("state")) {
       stateAuditLog.getLog().add(se);
     }
 
-    Assert.assertEquals(857, stateAuditLog.getLog().size());
-
-    return stateAuditLog;
-  }
-
-  private void loadAuditData2()
-  {
-    if (serializer == null) {
-      serializer = new AuditLogSerializer();
-    }
-    String auditLogJSONString = new TestUtility().loadProcessMiningModel("/simulation/audit-log-2.json");
-    Assert.assertTrue(serializer.parse(auditLogJSONString));
-  }  
-
-  private SysAuditLog getSysAuditLog5()
-  {
-    loadAuditData2();
-    SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
-    for (SysAuditEntry se : serializer.getLog().getFieldNameFilteredLog("state")) {
-      stateAuditLog.getLog().add(se);
-    }
-
-    Assert.assertEquals(2, stateAuditLog.getLog().size());
-
-    return stateAuditLog;
-  }
-
-  private void loadAuditData3()
-  {
-    if (serializer == null) {
-      serializer = new AuditLogSerializer();
-    }
-    String auditLogJSONString = new TestUtility().loadProcessMiningModel("/simulation/audit-log-3.json");
-    Assert.assertTrue(serializer.parse(auditLogJSONString));
-  }
-
-  private SysAuditLog getSysAuditLog6()
-  {
-    loadAuditData3();
-    SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
-    for (SysAuditEntry se : serializer.getLog().getFieldNameFilteredLog("state")) {
-      stateAuditLog.getLog().add(se);
-    }
-
-    Assert.assertEquals(6, stateAuditLog.getLog().size());
-
-    return stateAuditLog;
-  }
-
-  private void loadAuditData4()
-  {
-    if (serializer == null) {
-      serializer = new AuditLogSerializer();
-    }
-    String auditLogJSONString = new TestUtility().loadProcessMiningModel("/simulation/audit-log-4.json");
-    Assert.assertTrue(serializer.parse(auditLogJSONString));
-  }
-
-  private SysAuditLog getSysAuditLog7()
-  {
-    loadAuditData4();
-    SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
-    for (SysAuditEntry se : serializer.getLog().getFieldNameFilteredLog("state")) {
-      stateAuditLog.getLog().add(se);
-    }
-
-    Assert.assertEquals(18, stateAuditLog.getLog().size());
-
-    return stateAuditLog;
-  }
-
-  private void loadAuditData5()
-  {
-    if (serializer == null) {
-      serializer = new AuditLogSerializer();
-    }
-    String auditLogJSONString = new TestUtility().loadProcessMiningModel("/simulation/audit-log-rework-1.json");
-    Assert.assertTrue(serializer.parse(auditLogJSONString));
-  }
-
-  private SysAuditLog getSysAuditLog8()
-  {
-    loadAuditData5();
-    SysAuditLog stateAuditLog = new SysAuditLog((SysAuditLogPK) serializer.getLog().getPK());
-    for (SysAuditEntry se : serializer.getLog().getFieldNameFilteredLog("state")) {
-      stateAuditLog.getLog().add(se);
-    }
-
-    Assert.assertEquals(8, stateAuditLog.getLog().size());
+    Assert.assertEquals(totalRecords, stateAuditLog.getLog().size());
 
     return stateAuditLog;
   }
