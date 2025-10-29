@@ -10,7 +10,9 @@ import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowRESTService;
 
 import java.net.URLEncoder;
+
 import java.nio.charset.StandardCharsets;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -18,10 +20,13 @@ import java.util.StringTokenizer;
 import java.util.TreeMap;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +51,7 @@ public class DemoModelCases
     {
         for (DemoModelPath path : getModel().getPaths()) {
             DateTime batchStartTime = DateTime.now();
-            DateTime startCreationOfRecords = path.getCreationStartTime();
+            DateTime startCreationOfRecords = path.getCreationStartTime().withZone(DateTimeZone.UTC);
             DateTime pathFirstStartTime = startCreationOfRecords.minusSeconds((int)path.getTotalDuration());
             if (!loadChoiceValues(path)) {
                 return false;
@@ -95,9 +100,10 @@ public class DemoModelCases
 
     private boolean createRecord(final DemoModelPath path, final DateTime createdOn)
     {
+        boolean batch = false;
         HashMap<String, String> values = path.getInitialValues();
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-		String url = "https://" + getInstance().getInstance() + "/api/now/table/" + path.getTable();
+		String url = "https://" + getInstance().getInstance() + "/api/now/table/" + path.getTable() + "?sysparm_display_value=false";
 		String payload = createPayload(path, values);
 		String response = snrs.executePostRequest(url, payload);
 		if (response == null || response != null && response.equals("")) {
@@ -112,7 +118,7 @@ public class DemoModelCases
         creationUpdateValues.put("opened_at", createdOnDT);
         creationUpdateValues.put("sys_created_by", "maint");
 
-        url = "https://" + getInstance().getInstance() + "/api/snc/fixaudittrail/" + path.getTable() + "/" + this.caseSysId;
+        url = "https://" + getInstance().getInstance() + "/api/snc/fixaudittrail/" + path.getTable() + "/" + this.caseSysId + "?sysparm_display_value=false";
 		payload = createPayload(path, creationUpdateValues);
 		response = snrs.executePutRequest(url, payload);
 		if (response == null || response != null && response.equals("")) {
@@ -130,7 +136,12 @@ public class DemoModelCases
 			return false;
 		}
 
-        return fixAuditTrail(path, createdOn);
+        if (batch) {
+            return fixAuditTrailBatch(path, createdOn);
+        }
+        else {
+            return fixAuditTrail(path, createdOn);
+        }
     }
 
     private String getCaseCreationResponse(final String response)
@@ -202,7 +213,7 @@ public class DemoModelCases
         String attributeName = "state";
         if (getModel().getChoiceValues(tableName, attributeName).size() == 0) {
             ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-            String sysChoiceQueryUrl = "https://" + getInstance().getInstance() + "/api/now/table/sys_choice?sysparm_fields=name,element,label&sysparm_query=name=" + tableName + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element=" + attributeName + URLEncoder.encode("^", StandardCharsets.UTF_8) + "language=en" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "ORDERBYDESCsys_created_on";
+            String sysChoiceQueryUrl = "https://" + getInstance().getInstance() + "/api/now/table/sys_choice?sysparm_display_value=false&ysparm_fields=name,element,label&sysparm_query=name=" + tableName + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element=" + attributeName + URLEncoder.encode("^", StandardCharsets.UTF_8) + "language=en" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "ORDERBYDESCsys_created_on";
             String response = snrs.executeGetRequest(sysChoiceQueryUrl);
             if (response == null || response != null && response.equals("")) {
                 System.err.println("Could not load Choice values. Error: (" + snrs.getErrorMessage() + ") - Status Code: (" + snrs.getErrorStatusCode() + ")");
@@ -255,6 +266,7 @@ public class DemoModelCases
     private boolean updateRecord(final DemoModelPath path, final DateTime createdOn)
     {
         TreeMap<Double, HashMap<String, String>> updateBatches = path.getPostInitialValues();
+        DateTime previousRecordUpdateTS = null;
         DateTime recordUpdateTS = createdOn;
         Double previousUpdateTS = null;
         for (Double updateTime : updateBatches.keySet()) {
@@ -264,20 +276,127 @@ public class DemoModelCases
             }
             else {
                 recordUpdateTS = recordUpdateTS.plusSeconds(updateTime.intValue() - previousUpdateTS.intValue());
+                recordUpdateTS = adjustRandomVariation(recordUpdateTS);
             }
+
+            if (previousUpdateTS != null && updateBatches.get(previousUpdateTS).get(DemoModelPath.TASK_SCRIPT_FIELD_NAME) != null) {
+                String taskName = updateBatches.get(previousUpdateTS).get(DemoModelPath.TASK_SCRIPT_FIELD_NAME);
+                if (!processCaseTask(previousRecordUpdateTS, recordUpdateTS, taskName)) {
+                    return false;
+                }
+            }
+
             if (!processUpdateRecordBatch(path, previousUpdateTS, updateTime, recordUpdateTS, updateBatches.get(updateTime))) {
                 return false;
             }
             previousUpdateTS = updateTime;
+            previousRecordUpdateTS = recordUpdateTS;
         }
 
         return true;
     }
 
-    private boolean processUpdateRecordBatch(final DemoModelPath path, final Double previousUpdateTime, final Double updateTime, final DateTime createdOn, HashMap<String, String> updateValues)
+    // Let's add a random deviation to the createdOn to avoid all data being equally sparsed.
+    private DateTime adjustRandomVariation(final DateTime recordUpdateTS)
+    {
+        Random random = new Random();
+        // We will create a randomness of 5 mins (600 seconds) + o - the next time.
+        int seconds = (int) random.nextDouble(120);
+        seconds = (seconds % 2 == 0) ? seconds : (seconds * -1);
+        DateTime adjustedTime = recordUpdateTS.plusSeconds(seconds);
+        if (adjustedTime.isAfterNow()) {
+            adjustedTime = DateTime.now();
+        }
+
+        return adjustedTime;
+    }
+
+    private boolean processCaseTask(final DateTime previousUpdateTS, final DateTime recordUpdateTS, final String taskName)
     {
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-        String url = "https://" + getInstance().getInstance() + "/api/now/table/" + path.getTable() + "/" + this.caseSysId;
+	String url = "https://" + getInstance().getInstance() + "/api/sn_tm_core/taskmininginteraction?sysparm_display_value=false";
+	// We need to make sure the random delta for step execution does not burn until the task breakdown.
+        // DateTime taskStartTS = previousUpdateTS.getMillis() < recordUpdateTS.getMillis() ? recordUpdateTS : previousUpdateTS.plusMinutes(1);
+	String tasksPayload = createTaskPayload(previousUpdateTS, recordUpdateTS, taskName);
+	String response = snrs.executePostRequest(url, tasksPayload);
+	if (response == null || response != null && response.equals("")) {
+		logger.error("Failed invoking " + "https://" + getInstance().getInstance() + "/api/sn_tm_core/taskmininginteraction endpoint.");
+		logger.error("Error Code: (" + snrs.getErrorStatusCode() + ") - (" + snrs.getErrorMessage() + ")");
+		return false;
+	}
+
+        return true;
+    }
+
+    private String createTaskPayload(final DateTime previousUpdateTS, final DateTime recordUpdateTS, final String taskName)
+    {
+        String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZZ";
+        DateTimeFormatter formatter = DateTimeFormat.forPattern(pattern);
+        String payload = "[\n";
+        double totalTaskExecutionTimeInMillis = recordUpdateTS.getMillis() - previousUpdateTS.getMillis();
+
+        boolean processedFirstEntry = false;
+        Double taskDuration = 0.0;
+        Double accumulatedTasksDuration = 0.0;
+        for (DemoModelTaskEntry taskEntry : getModel().getTask(taskName).getEntries()) {
+            if (processedFirstEntry) {
+                payload += ",\n";
+            }
+
+            // Make Proper time + timezone adjustments.
+            String formattedDateTime = adjustTaskDateTime(previousUpdateTS, formatter, accumulatedTasksDuration);
+            taskDuration = ((taskEntry.getPercentageOfTotalTaskExecutionTime()*totalTaskExecutionTimeInMillis)/100.00);
+            accumulatedTasksDuration += taskDuration;
+
+            payload += "{\n";
+            payload += "\"userId\": \"" + taskEntry.getUserId() + "\", \n";
+            payload += "\"hostName\": \"" + taskEntry.getHostName() + "\", \n";
+            payload += "\"applicationName\": \"" + taskEntry.getApplicationName() + "\", \n";
+            payload += "\"screenName\": \"" + taskEntry.getScreenName() + "\", \n";
+            payload += "\"url\": \"" + (taskEntry.getURL() == null ? "" : taskEntry.getURL()) + "\", \n";
+            payload += "\"startDateTime\": \"" + formattedDateTime + "\", \n";
+            payload += "\"duration\": " + (taskDuration/1000.00) + ", \n";
+            payload += "\"mouseClickCount\": " + taskEntry.getMouseClickCount() + " \n";
+            payload += "}";
+            processedFirstEntry = true;
+        }
+
+        if (totalTaskExecutionTimeInMillis != accumulatedTasksDuration.doubleValue()) {
+            throw new RuntimeException("Total Task: (" + totalTaskExecutionTimeInMillis + ") != (" + accumulatedTasksDuration.doubleValue() + ") : Accumulated Task.");
+        }
+
+        payload += "\n]";
+    
+        return payload;
+    }
+
+    private String adjustTaskDateTime(final DateTime recordUpdateTS, final DateTimeFormatter formatter, final Double duration)
+    {
+        DateTime taskDateTime = recordUpdateTS.plusMillis(duration.intValue());
+
+        DateTimeZone localTimeZone = DateTimeZone.getDefault();
+        DateTimeZone utcTimeZone = DateTimeZone.forID("UTC");
+
+        // Get the offset in milliseconds for each time zone at the reference instant
+        int localTZOffsetMillis = localTimeZone.getOffset(taskDateTime);
+        int utcTZOffsetMillis = utcTimeZone.getOffset(taskDateTime);
+
+        // Calculate the difference in offsets
+        int offsetDifferenceMillis = utcTZOffsetMillis - localTZOffsetMillis;
+
+        // Convert the difference to hours
+        taskDateTime = taskDateTime.plusMillis(offsetDifferenceMillis);
+       
+        String formattedDateTime = formatter.print(taskDateTime);
+
+        return formattedDateTime;
+    }
+
+    private boolean processUpdateRecordBatch(final DemoModelPath path, final Double previousUpdateTime, final Double updateTime, final DateTime createdOn, HashMap<String, String> updateValues)
+    {
+        boolean batch = false;
+        ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
+        String url = "https://" + getInstance().getInstance() + "/api/now/table/" + path.getTable() + "/" + this.caseSysId + "?sysparm_display_value=false";
         String payload = createPayload(path, updateValues);
         String response = snrs.executePutRequest(url, payload);
         if (response == null || response != null && response.equals("")) {
@@ -288,6 +407,7 @@ public class DemoModelCases
         }
 
         // Let's add a random deviation to the createdOn to avoid all data being equally sparsed.
+/*
         Random random = new Random();
         // We will create a randomness of 5 mins (600 seconds) + o - the next time.
         int seconds = (int) random.nextDouble(600);
@@ -296,8 +416,14 @@ public class DemoModelCases
         if (adjustedTime.isAfterNow()) {
             adjustedTime = DateTime.now();
         }
+*/
 
-        return fixAuditTrail(path, adjustedTime);
+        if (batch) {
+            return fixAuditTrailBatch(path, createdOn);
+        }
+        else {
+            return fixAuditTrail(path, createdOn);
+        }
     }
 
     private boolean fixAuditTrail(final DemoModelPath path, final DateTime createdOn)
@@ -305,7 +431,7 @@ public class DemoModelCases
         SysAuditLogDAOREST wfDAO = new SysAuditLogDAOREST(getInstance());
         ArrayList<String> ids = new ArrayList<String>();
         ids.add(caseSysId);
-        SysAuditLog sysAuditLog = wfDAO.findByIds(new SysAuditLogPK(path.getTable()), ids, "reasonISEMPTY");
+        SysAuditLog sysAuditLog = getEmptyReasonSysAuditLogForIds(path, wfDAO, ids);
         for (SysAuditEntry entry : sysAuditLog.getLog()) {
             if (entry.getReason().equals("")) {
                 // Fix creation time ...
@@ -314,7 +440,7 @@ public class DemoModelCases
                 String payload = getUpdatedSysAuditPayload(entry);
                 SysAuditEntryPK pk = ((SysAuditEntryPK) entry.getPK());
                 ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-                String url = "https://" + getInstance().getInstance() + "/api/snc/fixaudittrail/sys_audit/" + pk.getSysId();
+                String url = "https://" + getInstance().getInstance() + "/api/snc/fixaudittrail/sys_audit/" + pk.getSysId() + "?sysparm_display_value=false";
                 String response = snrs.executePutRequest(url, payload);
                 if (response == null || response != null && response.equals("")) {
                     return false;
@@ -330,11 +456,72 @@ public class DemoModelCases
         return true;
     }
 
+    private boolean fixAuditTrailBatch(final DemoModelPath path, final DateTime createdOn)
+    {
+        SysAuditLogDAOREST wfDAO = new SysAuditLogDAOREST(getInstance());
+        ArrayList<String> ids = new ArrayList<String>();
+        ArrayList<SysAuditEntry> workNotesOrCommentsEntries = new ArrayList<SysAuditEntry>();
+        ids.add(caseSysId);
+        SysAuditLog sysAuditLog = getEmptyReasonSysAuditLogForIds(path, wfDAO, ids);
+        String payload = "[ ";
+        boolean firstEntryProcessed = false;
+        for (SysAuditEntry entry : sysAuditLog.getLog()) {
+            if (entry.getReason().equals("")) {
+                if (firstEntryProcessed) {
+                    payload += ",\n";
+                }
+                // Fix creation time ...
+                entry.setSysCreatedOn(dateToString(createdOn));
+                entry.setReason(getModel().getDataIdentifier() != null ? getModel().getDataIdentifier() : "pm_eval");
+                payload += getUpdatedSysAuditPayloadBatch(entry);
+                if (entry.getFieldName().equals("work_notes") || entry.getFieldName().equals("comments")) {
+                    workNotesOrCommentsEntries.add(entry);
+                }
+                firstEntryProcessed = true;
+            }
+        }
+        payload += "]";
+
+        ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
+        String url = "https://" + getInstance().getInstance() + "/api/snc/fixaudittrailbatch/sys_audit?sysparm_display_value=false";
+        String response = snrs.executePutRequest(url, payload);
+        if (response == null || response != null && response.equals("")) {
+            return false;
+        }
+
+        // Fix Work Notes and Comments.
+        payload = "[ ";
+        payload += "]";
+        for (SysAuditEntry entry : sysAuditLog.getLog()) {
+            // If it is the work_notes or comments attribute, we also need to update the record in the sys_journal_field table
+            if (!fixWorkNotesOrCommentsBatch(entry, createdOn)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private SysAuditLog getEmptyReasonSysAuditLogForIds(final DemoModelPath path, SysAuditLogDAOREST wfDAO, ArrayList<String> ids)
+    {
+        SysAuditLogPK pk = new SysAuditLogPK(path.getTable());
+        SysAuditLog sysAuditLog = wfDAO.findByIds(pk, ids);
+        SysAuditLog sysAuditLogWithEmptyReason = new SysAuditLog(pk);
+        for (SysAuditEntry entry : sysAuditLog.getLog()) {
+            String reason = entry.getReason();
+            if (reason == null || (reason != null && reason.equals(""))) {
+                sysAuditLogWithEmptyReason.getLog().add(entry);
+            }
+        }
+
+        return sysAuditLog;
+    }
+
     private boolean fixWorkNotesOrComments(final SysAuditEntry entry, final DateTime createdOn)
     {
         if (entry.getFieldName().equals("work_notes") || entry.getFieldName().equals("comments")) {
             ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-            String sysJournalFieldQueryUrl = "https://" + getInstance().getInstance() + "/api/now/table/sys_journal_field?sysparm_query=table=incident" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element=work_notes" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element_id=" + entry.getDocumentKey() + URLEncoder.encode("^", StandardCharsets.UTF_8) + "ORDERBYDESCsys_created_on";
+            String sysJournalFieldQueryUrl = "https://" + getInstance().getInstance() + "/api/now/table/sys_journal_field?sysparm_display_value=false&sysparm_query=table=incident" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element=work_notes" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element_id=" + entry.getDocumentKey() + URLEncoder.encode("^", StandardCharsets.UTF_8) + "ORDERBYDESCsys_created_on";
             String response = snrs.executeGetRequest(sysJournalFieldQueryUrl);
             if (response == null || response != null && response.equals("")) {
                 return false;
@@ -343,7 +530,30 @@ public class DemoModelCases
             String sysJournalFieldPayload = getUpdatedSysJournalFieldPayload(response, dateToString(createdOn));
             String sysJournalFieldKey = getSysJournalFieldKey(response);
             snrs = new ServiceNowRESTService(getInstance());
-            String sysJournalFieldUrl = "https://" + getInstance().getInstance() + "/api/snc/fixaudittrail/sys_journal_field/" + sysJournalFieldKey;
+            String sysJournalFieldUrl = "https://" + getInstance().getInstance() + "/api/snc/fixaudittrail/sys_journal_field/" + sysJournalFieldKey + "?sysparm_display_value=false";
+            response = snrs.executePutRequest(sysJournalFieldUrl, sysJournalFieldPayload);
+            if (response == null || response != null && response.equals("")) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean fixWorkNotesOrCommentsBatch(final SysAuditEntry entry, final DateTime createdOn)
+    {
+        if (entry.getFieldName().equals("work_notes") || entry.getFieldName().equals("comments")) {
+            ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
+            String sysJournalFieldQueryUrl = "https://" + getInstance().getInstance() + "/api/now/table/sys_journal_field?sysparm_display_value=false&sysparm_query=table=incident" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element=work_notes" + URLEncoder.encode("^", StandardCharsets.UTF_8) + "element_id=" + entry.getDocumentKey() + URLEncoder.encode("^", StandardCharsets.UTF_8) + "ORDERBYDESCsys_created_on";
+            String response = snrs.executeGetRequest(sysJournalFieldQueryUrl);
+            if (response == null || response != null && response.equals("")) {
+                return false;
+            }
+
+            String sysJournalFieldPayload = getUpdatedSysJournalFieldPayload(response, dateToString(createdOn));
+            String sysJournalFieldKey = getSysJournalFieldKey(response);
+            snrs = new ServiceNowRESTService(getInstance());
+            String sysJournalFieldUrl = "https://" + getInstance().getInstance() + "/api/snc/fixaudittrail/sys_journal_field/" + sysJournalFieldKey + "?sysparm_display_value=false";
             response = snrs.executePutRequest(sysJournalFieldUrl, sysJournalFieldPayload);
             if (response == null || response != null && response.equals("")) {
                 return false;
@@ -388,6 +598,23 @@ public class DemoModelCases
     private String getUpdatedSysAuditPayload(final SysAuditEntry entry)
     {
         String sysAuditPayload = "{";
+        sysAuditPayload += "\"sys_created_on\":";
+        sysAuditPayload += "\"" + entry.getSysCreatedOn() + "\",";
+        sysAuditPayload += "\"reason\":";
+        sysAuditPayload += "\"" + entry.getReason() + "\"";
+        sysAuditPayload += "}";
+
+        return sysAuditPayload;
+    }
+
+    private String getUpdatedSysAuditPayloadBatch(final SysAuditEntry entry)
+    {
+        SysAuditEntryPK pk = ((SysAuditEntryPK) entry.getPK());
+        String auditLogRecordSysId = pk.getSysId();
+
+        String sysAuditPayload = "{";
+        sysAuditPayload += "\"sys_id\":";
+        sysAuditPayload += "\"" + auditLogRecordSysId + "\",";
         sysAuditPayload += "\"sys_created_on\":";
         sysAuditPayload += "\"" + entry.getSysCreatedOn() + "\",";
         sysAuditPayload += "\"reason\":";
