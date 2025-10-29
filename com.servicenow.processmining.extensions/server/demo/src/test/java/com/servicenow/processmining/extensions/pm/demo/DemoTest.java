@@ -11,23 +11,17 @@ public class DemoTest
     @Test
     public void test()
     {
-        // DemoModelParser parser = new DemoModelParser("src/test/resources/Incident Demo Data.xlsx");
-        // DemoModelParser parser = new DemoModelParser("/Users/eduardo.chiocconi/Downloads/Incident Demo Data_DP2.xlsx");
-        DemoModelParser parser = new DemoModelParser("/Users/eduardo.chiocconi/Downloads/Case Demo Data_EC1.xlsx", "ITSM-Demo-Data");
+        long startTime = System.currentTimeMillis();
+        // DemoModelParser parser = new DemoModelParser("src/test/resources/Incident Demo Data.xlsx", "TM-Demo-2");
+        DemoModelParser parser = new DemoModelParser("/Users/eduardo.chiocconi/Downloads/Incident Demo Data.xlsx", "TM-Demo-2");
         Assert.assertTrue(parser.parse());
 
         ServiceNowInstance instance = new ServiceNowInstance(snInstance, snUser, snPassword);
         DemoModelCases cases = new DemoModelCases(parser.getModel(), instance);
         Assert.assertTrue(cases.create());
+        long endTime = System.currentTimeMillis();
+        System.out.println("Execution Time: (" + (endTime - startTime) + ")");
     }
-
-//     protected static final String snInstance = "pascalewashproc2.service-now.com";
-//     protected static final String snUser = "admin";
-//     protected static final String snPassword = "Norway@67";
-
-//    protected static final String snInstance = "processminingec1demo.service-now.com";
-//    protected static final String snUser = "admin";
-//    protected static final String snPassword = "323ElatiCtDanville!";
 
     protected static final String snInstance = ServiceNowTestCredentials.getInstanceName();
     protected static final String snUser = ServiceNowTestCredentials.getUserName();
