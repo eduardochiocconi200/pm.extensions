@@ -9,7 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.joda.time.DateTime;
-
+import org.joda.time.DateTimeZone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,6 +58,9 @@ public class DemoModelParser
                 if (sheet.getSheetName().startsWith("Path")) {
                     getModel().addPath(parsePathSheet(sheet));
                 }
+                else if (sheet.getSheetName().startsWith("Task")) {
+                    getModel().addTask(parseTaskSheet(sheet));
+                }
             }
 
             // Closing file output streams
@@ -104,10 +107,56 @@ public class DemoModelParser
             }
         }
         while (hasRows);
-        logger.debug("Sheet: (" + sheet.getSheetName() + "). Last Row: (" + i + ")");
+        logger.debug("Sheet: (" + sheetName + "). Last Row: (" + i + ")");
         path.setTotalDuration(path.getEntries().get(path.getEntries().size()-1).getTime());
 
         return path;
+    }
+
+    private DemoModelTask parseTaskSheet(final XSSFSheet sheet)
+    {
+        String sheetName = sheet.getSheetName();
+        String taskName = getCellValueAsString(sheet.getRow(0).getCell(1));
+        DemoModelTask task = new DemoModelTask(sheetName, taskName);
+
+        int i=3;
+        boolean hasRows = true;
+        do {
+            if (sheet.getRow(i) == null || (sheet.getRow(i) != null && sheet.getRow(i).getCell(0) == null)) {
+                hasRows = false;
+            }
+            else {
+                String userId = getCellValueAsString(sheet.getRow(i).getCell(0));
+                String hostName = getCellValueAsString(sheet.getRow(i).getCell(1));
+                String appName = getCellValueAsString(sheet.getRow(i).getCell(2));
+                String screenName = getCellValueAsString(sheet.getRow(i).getCell(3));
+                String url = getCellValueAsString(sheet.getRow(i).getCell(4));
+                double percentageOfTotalTaskExecutionTime = getCellValueAsDouble(sheet.getRow(i).getCell(5));
+                int numberOfMouseClicks = getCellValueAsInt(sheet.getRow(i).getCell(6));
+
+                if (userId == null || hostName == null) {
+                    hasRows = false;
+                }
+                else {
+                    DemoModelTaskEntry entry = new DemoModelTaskEntry();
+                    entry.setUserId(userId);
+                    entry.setHostName(hostName);
+                    entry.setApplicationName(appName);
+                    entry.setScreenName(screenName);
+                    entry.setURL(url);
+                    entry.setPercentageOfTotalTaskExecutionTime(percentageOfTotalTaskExecutionTime);
+                    entry.setMouseClickCount(numberOfMouseClicks);
+
+                    task.addEntry(entry);
+                    i++;
+                }
+            }
+        }
+        while (hasRows);
+
+        logger.debug("Sheet: (" + sheetName + "). Last Row: (" + i + ")");
+
+        return task;
     }
 
     private double getCellValueAsDouble(final XSSFCell cell)
@@ -115,10 +164,18 @@ public class DemoModelParser
         return cell.getNumericCellValue();
     }
 
+    private int getCellValueAsInt(final XSSFCell cell)
+    {
+        return Double.valueOf(cell.getNumericCellValue()).intValue();
+    }
+
     private String getCellValueAsString(final XSSFCell cell)
     {
         String value = null;
-        if (cell.getCellType() == CellType.STRING) {
+        if (cell == null || cell.getCellType() == CellType.BLANK) {
+            value = null;
+        }
+        else if (cell.getCellType() == CellType.STRING) {
             value = cell.getStringCellValue();
         }
         else {
@@ -133,10 +190,10 @@ public class DemoModelParser
         DateTime value = null;
 
         if (cell.getCellType() == CellType.FORMULA) {
-            value = new DateTime(cell.getDateCellValue());
+            value = new DateTime(cell.getDateCellValue()).withZone(DateTimeZone.UTC);
         }
         else {
-            value = new DateTime(cell.getDateCellValue());
+            value = new DateTime(cell.getDateCellValue()).withZone(DateTimeZone.UTC);
         }
 
         return value;
