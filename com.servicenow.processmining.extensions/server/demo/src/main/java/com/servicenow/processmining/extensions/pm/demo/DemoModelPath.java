@@ -109,4 +109,6 @@ public class DemoModelPath
 
         return values;
     }
+
+    public static final String TASK_SCRIPT_FIELD_NAME = "task_script";
 }
