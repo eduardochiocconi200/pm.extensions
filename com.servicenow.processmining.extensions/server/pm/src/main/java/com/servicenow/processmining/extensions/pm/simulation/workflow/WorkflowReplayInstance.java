@@ -139,16 +139,19 @@ public class WorkflowReplayInstance
         return nextNodeCompletionTime;
     }
 
-    private void printSysLogForInstance()
+    public String printSysLogForInstance()
     {
+        StringBuffer sb = new StringBuffer();
         WorkflowInstanceReplayGenerator generator = ((WorkflowInstanceReplayGenerator) getSimulator().getGenerator());
         int i=0;
         for (SysAuditEntry sae : generator.getSortedAuditLog().getLog()) {
             if (sae.getDocumentKey().equals(this.getId())) {
-                System.out.println("[" + this.getId() + "] - (" + i + ") = (" + sae.toJSON() + ")");
+                sb.append("[" + this.getId() + "] - (" + i + ") = (" + sae.toJSON() + ")\n");
             }
             i++;
         }
+
+        return sb.toString();
     }
 
     private static final Logger logger = LoggerFactory.getLogger(WorkflowReplayInstance.class);
