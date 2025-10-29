@@ -209,7 +209,7 @@ public class SysAuditLogDAOREST
 		do {
 			long startTime = System.currentTimeMillis();
 			String instancesInSysLog = getNextBatch(baseOffset, ids);
-			String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit?sysparm_offset=0&sysparm_limit=100000&";
+			String url = "https://" + getInstance().getInstance() + "/api/now/table/sys_audit?sysparm_display_value=false&sysparm_offset=0&sysparm_limit=100000&";
 			url += "sysparm_query=documentkeyIN" + instancesInSysLog;
 			if (condition != null) {
 				url += URLEncoder.encode("^", StandardCharsets.UTF_8) + condition + "&";
