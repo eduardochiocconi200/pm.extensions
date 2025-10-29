@@ -13,5 +13,6 @@
     "now.instance.OAuth.client.id": "",
     "now.instance.user.password": "",
     "now.instance.OAuth.client.secret": "",
-    "workbench.editor.limit.value": 20
+    "workbench.editor.limit.value": 20,
+    "java.format.settings.url": ".vscode/java-formatter.xml"
 }
