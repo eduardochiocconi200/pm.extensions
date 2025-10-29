@@ -7,6 +7,7 @@ public class DemoModel
 {
     private String dataIdentifier = null;
     private ArrayList<DemoModelPath> paths = null;
+    private ArrayList<DemoModelTask> tasks = null;
     private HashMap<String, ArrayList<String>> choiceValues = new HashMap<String, ArrayList<String>>();
 
     public DemoModel(final String dataIdentifier)
@@ -31,6 +32,31 @@ public class DemoModel
         }
 
         return paths;
+    }
+
+    public boolean addTask(final DemoModelTask task)
+    {
+        return getTasks().add(task);
+    }
+
+    public ArrayList<DemoModelTask> getTasks()
+    {
+        if (tasks == null) {
+            tasks = new ArrayList<DemoModelTask>();
+        }
+
+        return tasks;
+    }
+
+    public DemoModelTask getTask(final String taskId)
+    {
+        for (DemoModelTask task : getTasks()) {
+            if (task.getTaskId().equals(taskId)) {
+                return task;
+            }
+        }
+
+        return null;
     }
 
     public boolean addChoiceValue(final String table, final String attribute, final String choiceValue)
