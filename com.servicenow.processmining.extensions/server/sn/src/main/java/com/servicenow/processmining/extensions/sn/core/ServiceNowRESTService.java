@@ -64,6 +64,7 @@ public class ServiceNowRESTService
     private String executePostPutRequest(final String url, final String payload, final boolean isPost)
     {
         logger.debug("Enter ServiceNowRESTService.executePostRequest(" + url + ")");
+        checkURL(url);
         String response = null;
         this.errorStatusCode = -1;
         this.errorMessage = "";
@@ -149,6 +150,7 @@ public class ServiceNowRESTService
     public String executeGetRequest(final String url)
     {
         logger.debug("Enter ServiceNowRESTService.executeGetRequest(" + url + ")");
+        checkURL(url);
         String response = null;
         this.errorStatusCode = -1;
         this.errorMessage = "";
@@ -213,6 +215,7 @@ public class ServiceNowRESTService
     public String executeDeleteRequest(final String url)
     {
         logger.debug("Enter ServiceNowRESTService.executeDeleteRequest(" + url + ")");
+        checkURL(url);
         String response = null;
         this.errorStatusCode = -1;
         this.errorMessage = "";
@@ -285,6 +288,13 @@ public class ServiceNowRESTService
         request.addHeader("Content-Type", "application/json, application/xml");
         String auth = getInstance().getUser() + ":" + getInstance().getPassword();
         request.addHeader("Authorization", "Basic " + Base64.getEncoder().encodeToString(auth.getBytes()));
+    }
+
+    private void checkURL(String url)
+    {
+        if (url.indexOf("sysparm_display_value=false") < 0) {
+            throw new RuntimeException("Missing mandatory query parameter: 'sysparm_display_value=false' in URL: (" + url + ")");
+        }
     }
 
     private static final int MAX_RETRY_TIMES = 3;
