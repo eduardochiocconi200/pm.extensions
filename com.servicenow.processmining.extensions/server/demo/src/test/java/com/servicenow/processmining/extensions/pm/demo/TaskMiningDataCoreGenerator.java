@@ -4,8 +4,6 @@ import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowRESTService;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
 
-import java.util.Date;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
@@ -13,34 +11,31 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class TaskMiningDataCoreGenerator
 {
-    private ServiceNowInstance instance = null;
+	private ServiceNowInstance instance = null;
 
-    public static void main(String[] args)
-    {
-        TaskMiningDataCoreGenerator tm = new TaskMiningDataCoreGenerator();
-        //tm.insertTaskMiningCoreDataRecord();
-        long timeMillis = 1748779539000L;
-        Date d = new Date(timeMillis);
-        System.out.println("d: (" + d + ")");
-    }
+	public static void main(String[] args)
+	{
+		TaskMiningDataCoreGenerator tm = new TaskMiningDataCoreGenerator();
+		tm.insertTaskMiningCoreDataRecord();
+	}
 
-    public TaskMiningDataCoreGenerator()
-    {
-    }
-    
-    public boolean insertTaskMiningCoreDataRecord()
-    {
-        ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
+	public TaskMiningDataCoreGenerator()
+	{
+	}
+
+	public boolean insertTaskMiningCoreDataRecord()
+	{
+		ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
 		String url = "https://" + getInstance().getInstance() + "/api/sn_tm_core/taskmininginteraction?sysparm_display_value=false";
 		String payload = createPayload();
-        System.out.println("Sending Payload: (" + payload + ")");
+		System.out.println("Sending Payload: (" + payload + ")");
 		String response = snrs.executePostRequest(url, payload);
 		if (response == null || response != null && response.equals("")) {
 			return false;
 		}
 
-        return true;
-    }
+		return true;
+	}
 
     private String createPayload()
     {
