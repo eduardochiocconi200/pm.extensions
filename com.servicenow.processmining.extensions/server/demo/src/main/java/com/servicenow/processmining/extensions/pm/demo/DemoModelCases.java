@@ -314,16 +314,14 @@ public class DemoModelCases
     private boolean processCaseTask(final DateTime previousUpdateTS, final DateTime recordUpdateTS, final String taskName)
     {
         ServiceNowRESTService snrs = new ServiceNowRESTService(getInstance());
-	String url = "https://" + getInstance().getInstance() + "/api/sn_tm_core/taskmininginteraction?sysparm_display_value=false";
-	// We need to make sure the random delta for step execution does not burn until the task breakdown.
-        // DateTime taskStartTS = previousUpdateTS.getMillis() < recordUpdateTS.getMillis() ? recordUpdateTS : previousUpdateTS.plusMinutes(1);
-	String tasksPayload = createTaskPayload(previousUpdateTS, recordUpdateTS, taskName);
-	String response = snrs.executePostRequest(url, tasksPayload);
-	if (response == null || response != null && response.equals("")) {
-		logger.error("Failed invoking " + "https://" + getInstance().getInstance() + "/api/sn_tm_core/taskmininginteraction endpoint.");
-		logger.error("Error Code: (" + snrs.getErrorStatusCode() + ") - (" + snrs.getErrorMessage() + ")");
-		return false;
-	}
+        String url = "https://" + getInstance().getInstance() + "/api/sn_tm_core/taskmininginteraction?sysparm_display_value=false";
+        String tasksPayload = createTaskPayload(previousUpdateTS, recordUpdateTS, taskName);
+        String response = snrs.executePostRequest(url, tasksPayload);
+        if (response == null || response != null && response.equals("")) {
+            logger.error("Failed invoking " + "https://" + getInstance().getInstance() + "/api/sn_tm_core/taskmininginteraction endpoint.");
+            logger.error("Error Code: (" + snrs.getErrorStatusCode() + ") - (" + snrs.getErrorMessage() + ")");
+            return false;
+        }
 
         return true;
     }
@@ -405,18 +403,6 @@ public class DemoModelCases
             System.err.println("This way, the update transaction can be completed successfully.");
             return false;
         }
-
-        // Let's add a random deviation to the createdOn to avoid all data being equally sparsed.
-/*
-        Random random = new Random();
-        // We will create a randomness of 5 mins (600 seconds) + o - the next time.
-        int seconds = (int) random.nextDouble(600);
-        seconds = (seconds % 2 == 0) ? seconds : (seconds * -1);
-        DateTime adjustedTime = createdOn.plusSeconds(seconds);
-        if (adjustedTime.isAfterNow()) {
-            adjustedTime = DateTime.now();
-        }
-*/
 
         if (batch) {
             return fixAuditTrailBatch(path, createdOn);
