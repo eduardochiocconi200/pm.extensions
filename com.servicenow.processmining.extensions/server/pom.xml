@@ -11,6 +11,7 @@
 	<modules>
 		<module>sn</module>
 		<module>sc</module>
+		<module>tm</module>
 		<module>pm</module>
 		<module>api</module>
 		<module>demo</module>
