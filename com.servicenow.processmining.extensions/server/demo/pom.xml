@@ -97,18 +97,18 @@
         <dependencies>
                 <dependency>
                         <groupId>com.servicenow.processmining.extensions.server</groupId>
-                        <artifactId>com.servicenow.processmining.extensions.server.sc</artifactId>
+                        <artifactId>com.servicenow.processmining.extensions.server.pm</artifactId>
                         <version>0.0.1-SNAPSHOT</version>
                 </dependency>
                 <dependency>
                         <groupId>org.apache.poi</groupId>
                         <artifactId>poi</artifactId>
-                        <version>5.2.5</version>
+                        <version>5.4.1</version>
                 </dependency>
                 <dependency>
                         <groupId>org.apache.poi</groupId>
                         <artifactId>poi-ooxml</artifactId>
-                        <version>5.2.5</version>
+                        <version>5.4.1</version>
                 </dependency>
                 <dependency>
                         <groupId>joda-time</groupId>
