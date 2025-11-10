@@ -1,10 +1,10 @@
 package com.servicenow.processmining.extensions.pm.demo;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
 import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 public class DemoTest
 {
