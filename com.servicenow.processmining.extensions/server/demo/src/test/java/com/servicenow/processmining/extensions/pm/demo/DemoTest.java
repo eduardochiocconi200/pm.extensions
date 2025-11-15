@@ -19,6 +19,9 @@ public class DemoTest
         ServiceNowInstance instance = new ServiceNowInstance(snInstance, snUser, snPassword);
         DemoModelCases cases = new DemoModelCases(parser.getModel(), instance);
         Assert.assertTrue(cases.create());
+        DemoModelTimeline timeline = new DemoModelTimeline(parser.getModel());
+        Assert.assertTrue(timeline.create());
+
         long endTime = System.currentTimeMillis();
         System.out.println("Execution Time: (" + (endTime - startTime) + ")");
     }
