@@ -1,4 +1,4 @@
-package com.servicenow.processmining.extensions;
+package com.servicenow.processmining.extensions.pm.demo;
 
 import com.servicenow.processmining.extensions.pm.demo.DemoModelTaskEntry;
 
