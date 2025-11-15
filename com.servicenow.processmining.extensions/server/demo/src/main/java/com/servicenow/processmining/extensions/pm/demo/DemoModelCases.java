@@ -265,6 +265,7 @@ public class DemoModelCases
 
     private boolean updateRecord(final DemoModelPath path, final DateTime createdOn)
     {
+        boolean adjustTime = false;
         TreeMap<Double, HashMap<String, String>> updateBatches = path.getPostInitialValues();
         DateTime previousRecordUpdateTS = null;
         DateTime recordUpdateTS = createdOn;
@@ -276,7 +277,9 @@ public class DemoModelCases
             }
             else {
                 recordUpdateTS = recordUpdateTS.plusSeconds(updateTime.intValue() - previousUpdateTS.intValue());
-                recordUpdateTS = adjustRandomVariation(recordUpdateTS);
+                if (adjustTime) {
+                    recordUpdateTS = adjustRandomVariation(recordUpdateTS);
+                }
             }
 
             if (previousUpdateTS != null && updateBatches.get(previousUpdateTS).get(DemoModelPath.TASK_SCRIPT_FIELD_NAME) != null) {
