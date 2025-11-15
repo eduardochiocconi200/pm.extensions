@@ -2,6 +2,9 @@ package com.servicenow.processmining.extensions.pm.demo;
 
 import org.junit.Assert;
 
+import com.servicenow.processmining.extensions.sn.core.ServiceNowInstance;
+import com.servicenow.processmining.extensions.sn.core.ServiceNowTestCredentials;
+
 public class TimelineTest
 {
 
@@ -14,8 +17,23 @@ public class TimelineTest
 
         DemoModelTimeline timeline = new DemoModelTimeline(parser.getModel());
         Assert.assertTrue(timeline.create());
-        // Assert.assertTrue(timeline.printSorted());
+        Assert.assertTrue(timeline.printSorted());
+
+        ServiceNowInstance instance = new ServiceNowInstance(snInstance, snUser, snPassword);
+
+        // We first create all the records and create the audit trail by updating them ...
+        DemoModelProcessMiningInstances instances = new DemoModelProcessMiningInstances(timeline, instance);
+        Assert.assertTrue(instances.create());
+
+        // Then we fill in the task details.
+        DemoModelTaskMiningTasks taskMiningTasks = new DemoModelTaskMiningTasks(timeline, instance);
+        Assert.assertTrue(taskMiningTasks.createRecords());
+
         long endTime = System.currentTimeMillis();
         System.out.println("Execution Time: (" + (endTime - startTime) + ")");
     }
+
+    protected static final String snInstance = ServiceNowTestCredentials.getInstanceName();
+    protected static final String snUser = ServiceNowTestCredentials.getUserName();
+    protected static final String snPassword = ServiceNowTestCredentials.getPassword();
 }
