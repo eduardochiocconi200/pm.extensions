@@ -202,9 +202,11 @@ public class Timeline
             }
         }
 
-//        for (TaskFractionTimelineItem tf : taskFractions) {
-//            System.out.println(tf);
-//        }
+        /*
+        for (TaskFractionTimelineItem tf : taskFractions) {
+            System.out.println(tf);
+        }
+        */
 
         return true;
     }
@@ -234,9 +236,11 @@ public class Timeline
             }
         }
 
+        /*
         for (TaskTimelineItem tti : tasksTimeline) {
             System.out.println(tti);
         }
+        */
 
         return true;
     }
