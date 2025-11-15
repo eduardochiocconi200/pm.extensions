@@ -60,6 +60,11 @@ public class TimelineItem
         return this.nextEventTime;
     }
 
+    public Double getDurationInMillis()
+    {
+        return Double.valueOf(getNextEventTime().getMillis() - getEventTime().getMillis());
+    }
+
     public ArrayList<DateTime> getOverlappingTasks()
     {
         if (this.overlappingTasks == null) {
