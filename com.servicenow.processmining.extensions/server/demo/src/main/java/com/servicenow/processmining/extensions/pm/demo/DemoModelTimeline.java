@@ -18,6 +18,7 @@ public class DemoModelTimeline
 {
     private DemoModel model = null;
     private Timeline timeline = null;
+    private boolean addTimeRandomness = false;
 
     public DemoModelTimeline(final DemoModel model)
     {
@@ -42,15 +43,17 @@ public class DemoModelTimeline
     {
         for (DemoModelPath path : getModel().getPaths()) {
             DateTime batchStartTime = DateTime.now();
-            DateTime startCreationOfRecords = path.getCreationStartTime().withZone(DateTimeZone.UTC);
-            DateTime pathFirstStartTime = startCreationOfRecords.minusSeconds((int)path.getTotalDuration());
+            DateTime startCreationOfRecords = path.getCreationStartTime();
+
+            // DateTime pathFirstStartTime = startCreationOfRecords.minusSeconds((int)path.getTotalDuration()).withZone(DateTimeZone.UTC);
+            DateTime pathFirstStartTime = startCreationOfRecords;
             System.out.println("Creating [" + path.getCount() + "] [" + path.getTable() + "] records for path defined in Tab: [" + path.getPathName() + "] starting on (" + startCreationOfRecords + "). (A '.' will be printed for each created record. Be patient!)");
             for (int count=0; count < path.getCount(); count++) {
                 if (!createCase(path, pathFirstStartTime)) {
                     return false;
                 }
                 System.out.print(".");
-                pathFirstStartTime = pathFirstStartTime.minusSeconds((int)path.getCreationDelta());
+                pathFirstStartTime = pathFirstStartTime.plusSeconds((int)path.getCreationDelta());
             }
             double elapsedTime = DateTime.now().minus(batchStartTime.getMillis()).getMillis() / 1000.0 / 60.0;
             System.out.println("\nCreated (" + path.getCount() + ") " + path.getTable() + " records along with its audit log records in (" + elapsedTime + ") mins.");
@@ -95,6 +98,8 @@ public class DemoModelTimeline
         DateTime previousTime = createdOn;
         DateTime eventTime = createdOn;
         InstanceTimelineItem item = new InstanceTimelineItem(instanceId, startId, endId, previousTime, eventTime);
+        item.setUpdateValues(path.getInitialValues());
+        item.setTableName(path.getTable());
 
         return getTimeline().add(item);
     }
@@ -111,10 +116,12 @@ public class DemoModelTimeline
             }
             else {
                 recordUpdateTS = recordUpdateTS.plusSeconds(updateTime.intValue() - previousUpdateTS.intValue());
-                // recordUpdateTS = adjustRandomVariation(recordUpdateTS);
+                if (addTimeRandomness) {
+                    recordUpdateTS = adjustRandomVariation(recordUpdateTS);
+                }
             }
 
-            if (!processUpdateRecordBatch(path, createdOn, updateTime, recordUpdateTS, previousUpdateTS, updateBatches)) {
+            if (!processUpdateRecord(path, createdOn, updateTime, recordUpdateTS, previousUpdateTS, updateBatches)) {
                 return false;
             }
 
@@ -131,7 +138,7 @@ public class DemoModelTimeline
         return true;
     }
 
-    private boolean processUpdateRecordBatch(final DemoModelPath path, final DateTime createdOn, final Double updateTime, final DateTime recordUpdateTS, final Double previousUpdateTime, final TreeMap<Double, HashMap<String, String>> updateBatches)
+    private boolean processUpdateRecord(final DemoModelPath path, final DateTime createdOn, final Double updateTime, final DateTime recordUpdateTS, final Double previousUpdateTime, final TreeMap<Double, HashMap<String, String>> updateBatches)
     {
         HashMap<String, String> updateTimeUpdates = updateBatches.get(updateTime);
         HashMap<String, String> previousTimeUpdates = previousUpdateTime.equals(0.0) ? path.getInitialValues() : updateBatches.get(previousUpdateTime);
@@ -141,9 +148,11 @@ public class DemoModelTimeline
         if (endId == null || (endId != null && endId.equals(""))) {
             throw new RuntimeException("Creation event (offset = 0) does not have any state specified");
         }
-        DateTime previousTime = createdOn.plusMillis(previousUpdateTime.intValue()*1000);
+        DateTime previousTime = createdOn.plusMillis(previousUpdateTime.intValue()*1000).withZone(DateTimeZone.UTC);
         DateTime eventTime = recordUpdateTS;
         InstanceTimelineItem item = new InstanceTimelineItem(instanceId, startId, endId, previousTime, eventTime);
+        item.setUpdateValues(path.getPostInitialValues().get(updateTime));
+        item.setTableName(path.getTable());
 
         return getTimeline().add(item);
     }
@@ -152,8 +161,8 @@ public class DemoModelTimeline
     {
         Double taskDuration = 0.0;
         Double accumulatedTasksDuration = 0.0;
-        DateTime taskStartDateTime = createdOn.plusMillis(taskStartTime.intValue()*1000);
-        DateTime taskEndDateTime = createdOn.plusMillis(taskEndTime.intValue()*1000);
+        DateTime taskStartDateTime = createdOn.plusMillis(taskStartTime.intValue()*1000).withZone(DateTimeZone.UTC);
+        DateTime taskEndDateTime = createdOn.plusMillis(taskEndTime.intValue()*1000).withZone(DateTimeZone.UTC);
         double totalTaskExecutionTimeInMillis = taskEndDateTime.getMillis() - taskStartDateTime.getMillis();
 
         DemoModelTask dmt = getModel().getTask(taskName);
@@ -169,6 +178,12 @@ public class DemoModelTimeline
             DateTime startTime = previousItem == null ? taskStartDateTime : previousItem.getNextEventTime();
             DateTime endTime = taskStartDateTime.plusMillis(accumulatedTasksDuration.intValue());
             TaskTimelineItem item = new TaskTimelineItem(instanceId, taskId, startId, endId, startTime, endTime);
+            item.setApplicationName(taskEntry.getApplicationName());
+            item.setHostName(taskEntry.getHostName());
+            item.setMouseClickCount(String.valueOf(taskEntry.getMouseClickCount()));
+            item.setScreenName(taskEntry.getScreenName());
+            item.setURL(taskEntry.getURL());
+            item.setUserId(taskEntry.getUserId());
             getTimeline().add(item);
             if (previousItem != null) {
                 previousItem.setNextEventTime(startTime);
@@ -192,9 +207,9 @@ public class DemoModelTimeline
         // We will create a randomness of 5 mins (600 seconds) + o - the next time.
         int seconds = (int) random.nextDouble(120);
         seconds = (seconds % 2 == 0) ? seconds : (seconds * -1);
-        DateTime adjustedTime = recordUpdateTS.plusSeconds(seconds);
+        DateTime adjustedTime = recordUpdateTS.plusSeconds(seconds).withZone(DateTimeZone.UTC);
         if (adjustedTime.isAfterNow()) {
-            adjustedTime = DateTime.now();
+            adjustedTime = DateTime.now().withZone(DateTimeZone.UTC);
         }
 
         return adjustedTime;
