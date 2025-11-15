@@ -3,6 +3,8 @@ package com.servicenow.processmining.extensions.pm.demo;
 import java.io.File;
 import java.io.FileInputStream;
 
+import java.util.TimeZone;
+
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -10,6 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +26,7 @@ public class DemoModelParser
     {
         this.modelFileLocation = modelFileLocation;
         this.dataIdentifier = dataIdentifier;
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
 
     public String getModelFileLocation()
@@ -190,10 +194,10 @@ public class DemoModelParser
         DateTime value = null;
 
         if (cell.getCellType() == CellType.FORMULA) {
-            value = new DateTime(cell.getDateCellValue()).withZone(DateTimeZone.UTC);
+            value = new DateTime(cell.getDateCellValue(), DateTimeZone.UTC);
         }
         else {
-            value = new DateTime(cell.getDateCellValue()).withZone(DateTimeZone.UTC);
+            value = new DateTime(cell.getDateCellValue(), DateTimeZone.UTC);
         }
 
         return value;
