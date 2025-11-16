@@ -86,7 +86,7 @@ public class TaskTimelineItem
         this.url = url;
     }
 
-    public Object getURL()
+    public String getURL()
     {
         return this.url;
     }
