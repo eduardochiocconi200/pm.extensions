@@ -18,7 +18,7 @@ public class DemoModelTimeline
 {
     private DemoModel model = null;
     private Timeline timeline = null;
-    private boolean addTimeRandomness = false;
+    private boolean addTimeRandomness = true;
 
     public DemoModelTimeline(final DemoModel model)
     {
@@ -109,39 +109,51 @@ public class DemoModelTimeline
         TreeMap<Double, HashMap<String, String>> updateBatches = path.getPostInitialValues();
         DateTime recordUpdateTS = createdOn;
         Double previousUpdateTS = 0.0;
+        Double previousOriginalUpdateTS = 0.0;
+        Double adjustedUpdateTime = 0.0;
+        String taskName = null;
         for (Double updateTime : updateBatches.keySet()) {
             logger.debug("Update Batch: (" + updateTime + ") = (" + updateBatches.get(updateTime) + ")");
+            adjustedUpdateTime = updateTime;
             if (previousUpdateTS == 0.0) {
                 recordUpdateTS = recordUpdateTS.plusSeconds(updateTime.intValue());
             }
             else {
                 recordUpdateTS = recordUpdateTS.plusSeconds(updateTime.intValue() - previousUpdateTS.intValue());
                 if (addTimeRandomness) {
+                    long beforeTimeUpdate = recordUpdateTS.getMillis();
                     recordUpdateTS = adjustRandomVariation(recordUpdateTS);
+                    long afterTimeUpdate = recordUpdateTS.getMillis();
+                    adjustedUpdateTime = updateTime + ((afterTimeUpdate-beforeTimeUpdate)/1000);
                 }
             }
 
-            if (!processUpdateRecord(path, createdOn, updateTime, recordUpdateTS, previousUpdateTS, updateBatches)) {
+            if (!processUpdateRecord(path, createdOn, updateTime, recordUpdateTS, previousUpdateTS, previousOriginalUpdateTS, updateBatches)) {
                 return false;
             }
 
-            if (previousUpdateTS != 0.0 && updateBatches.get(previousUpdateTS).get(DemoModelPath.TASK_SCRIPT_FIELD_NAME) != null) {
-                String taskName = updateBatches.get(previousUpdateTS).get(DemoModelPath.TASK_SCRIPT_FIELD_NAME);
-                if (!processCaseTask(createdOn, previousUpdateTS, updateTime, taskName)) {
+            if (taskName != null) {
+                if (!processCaseTask(createdOn, previousUpdateTS, adjustedUpdateTime, taskName)) {
                     return false;
                 }
             }
+            taskName = null;
 
-            previousUpdateTS = updateTime;
+            if (updateBatches.get(updateTime).get(DemoModelPath.TASK_SCRIPT_FIELD_NAME) != null) {
+                taskName = updateBatches.get(updateTime).get(DemoModelPath.TASK_SCRIPT_FIELD_NAME);
+            }
+
+            previousOriginalUpdateTS = updateTime;
+            previousUpdateTS = adjustedUpdateTime;
         }
 
         return true;
     }
 
-    private boolean processUpdateRecord(final DemoModelPath path, final DateTime createdOn, final Double updateTime, final DateTime recordUpdateTS, final Double previousUpdateTime, final TreeMap<Double, HashMap<String, String>> updateBatches)
+    private boolean processUpdateRecord(final DemoModelPath path, final DateTime createdOn, final Double updateTime, final DateTime recordUpdateTS, final Double previousUpdateTime, final Double previousOriginalUpdateTime, final TreeMap<Double, HashMap<String, String>> updateBatches)
     {
         HashMap<String, String> updateTimeUpdates = updateBatches.get(updateTime);
-        HashMap<String, String> previousTimeUpdates = previousUpdateTime.equals(0.0) ? path.getInitialValues() : updateBatches.get(previousUpdateTime);
+        HashMap<String, String> previousTimeUpdates = previousUpdateTime.equals(0.0) ? path.getInitialValues() : updateBatches.get(previousOriginalUpdateTime);
         String instanceId = String.valueOf(createdOn.getMillis());
         String startId = previousTimeUpdates.get("state");
         String endId = updateTimeUpdates.get("state");
@@ -204,13 +216,10 @@ public class DemoModelTimeline
     private DateTime adjustRandomVariation(final DateTime recordUpdateTS)
     {
         Random random = new Random();
-        // We will create a randomness of 5 mins (600 seconds) + o - the next time.
+        // We will create a randomness of 2 mins (120 seconds) + o - the next time.
         int seconds = (int) random.nextDouble(120);
         seconds = (seconds % 2 == 0) ? seconds : (seconds * -1);
         DateTime adjustedTime = recordUpdateTS.plusSeconds(seconds).withZone(DateTimeZone.UTC);
-        if (adjustedTime.isAfterNow()) {
-            adjustedTime = DateTime.now().withZone(DateTimeZone.UTC);
-        }
 
         return adjustedTime;
     }
