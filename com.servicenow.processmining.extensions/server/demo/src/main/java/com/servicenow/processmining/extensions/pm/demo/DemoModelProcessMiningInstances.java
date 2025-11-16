@@ -58,7 +58,7 @@ public class DemoModelProcessMiningInstances
         return this.instance;
     }
 
-    public boolean create()
+    public boolean createRecords()
     {
         if (!loadChoiceValues()) {
             return false;
