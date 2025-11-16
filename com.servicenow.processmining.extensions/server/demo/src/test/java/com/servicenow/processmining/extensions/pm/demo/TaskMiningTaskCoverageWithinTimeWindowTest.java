@@ -1,7 +1,5 @@
 package com.servicenow.processmining.extensions.pm.demo;
 
-import com.servicenow.processmining.extensions.pm.demo.DemoModelTaskEntry;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -9,15 +7,20 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
 import org.junit.Assert;
-import org.junit.Test;
 
 // https://empechiocconi1.service-now.com/api/now/table/sys_audit?sysparm_display_value=false&sysparm_query=tablename=incident%5efieldnameINstate,assigned_to%5edocumentkeyIN816142952bbc7a90c9a1f9b36e91bf78%5esys_created_on%3E=2025-06-01%2009:33:20%5esys_created_on%3C=2025-10-24%2006:26:16&sysparm_fields=sys_id,documentkey,tablename,fieldname,oldvalue,newvalue,reason,sys_created_on,sys_created_by,sys_updated_on&sysparm_order=sys_created_on&sysparm_order_direction=desc
 
 public class TaskMiningTaskCoverageWithinTimeWindowTest
 {
-    @Test
-    public void test()
+    public static void main(String args[])
+    {
+        TaskMiningTaskCoverageWithinTimeWindowTest test = new TaskMiningTaskCoverageWithinTimeWindowTest();
+        test.run();
+    }
+
+    public void run()
     {
         Date d = new Date(1748779478000L);
         Date dUTC = new Date(1748779478000L);
