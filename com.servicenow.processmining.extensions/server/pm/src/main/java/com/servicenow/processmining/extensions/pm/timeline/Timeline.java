@@ -42,6 +42,18 @@ public class Timeline
         return getTimeline();
     }
 
+    public ArrayList<TaskTimelineItem> getTasksTimeline()
+    {
+        return this.tasksTimeline;
+    }
+
+    public ArrayList<TaskTimelineItem> getSortedTasksTimeline()
+    {
+        Collections.sort(getTasksTimeline());
+
+        return this.tasksTimeline;
+    }
+
     public boolean add(TimelineItem item)
     {
         return getTimeline().add(item);
@@ -178,6 +190,12 @@ public class Timeline
                     DateTime factionTaskEndTime = overlappingTime;
                     TaskFractionTimelineItem taskFraction = new TaskFractionTimelineItem(instanceId, taskId, 
                         tti, startId, endId, fractionTaskStartTime, factionTaskEndTime);
+                    taskFraction.setApplicationName(tti.getApplicationName());
+                    taskFraction.setHostName(tti.getHostName());
+                    taskFraction.setMouseClickCount(tti.getMouseClickCount());
+                    taskFraction.setScreenName(tti.getScreenName());
+                    taskFraction.setURL(tti.getURL());
+                    taskFraction.setUserId(tti.getUserId());
                     ArrayList<TaskFractionTimelineItem> fractionArray = taskFractions.get(fractionTaskStartTime);
                     if (fractionArray == null) {
                         fractionArray = new ArrayList<TaskFractionTimelineItem>();
@@ -193,6 +211,13 @@ public class Timeline
                 taskId = tti.getTaskId() + "-" + i;                
                 TaskFractionTimelineItem taskFraction = new TaskFractionTimelineItem(instanceId, taskId, 
                         tti, startId, endId, fractionTaskStartTime, factionTaskEndTime);
+                taskFraction.setApplicationName(tti.getApplicationName());
+                taskFraction.setHostName(tti.getHostName());
+                taskFraction.setMouseClickCount(tti.getMouseClickCount());
+                taskFraction.setScreenName(tti.getScreenName());
+                taskFraction.setURL(tti.getURL());
+                taskFraction.setUserId(tti.getUserId());
+
                 ArrayList<TaskFractionTimelineItem> fractionArray = taskFractions.get(fractionTaskStartTime);
                 if (fractionArray == null) {
                     fractionArray = new ArrayList<TaskFractionTimelineItem>();
@@ -232,6 +257,13 @@ public class Timeline
                 DateTime sTime = new DateTime(sTimeMillis).withZone(DateTimeZone.UTC);
                 DateTime eTime = new DateTime(eTimeMillis).withZone(DateTimeZone.UTC);
                 TaskTimelineItem tti = new TaskTimelineItem(instanceId, taskId, startId, endId, sTime, eTime);
+                tti.setApplicationName(tf.getApplicationName());
+                tti.setHostName(tf.getHostName());
+                tti.setMouseClickCount(tf.getMouseClickCount());
+                tti.setScreenName(tf.getScreenName());
+                tti.setURL(tf.getURL());
+                tti.setUserId(tf.getUserId());
+
                 tasksTimeline.add(tti);
             }
         }
