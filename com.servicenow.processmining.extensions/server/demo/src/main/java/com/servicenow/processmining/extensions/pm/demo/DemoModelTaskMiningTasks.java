@@ -35,8 +35,8 @@ public class DemoModelTaskMiningTasks
 
     public boolean createRecords()
     {
-        for (int i=0; i < getTimeline().getTimeline().getSortedTimeline().size(); i++) {
-            TimelineItem ti = getTimeline().getTimeline().getSortedTimeline().get(i);
+        for (int i=0; i < getTimeline().getTimeline().getSortedTasksTimeline().size(); i++) {
+            TimelineItem ti = getTimeline().getTimeline().getSortedTasksTimeline().get(i);
             if (ti instanceof TaskTimelineItem) {
                 if (!processCaseTask((TaskTimelineItem) ti)) {
                     return false;
