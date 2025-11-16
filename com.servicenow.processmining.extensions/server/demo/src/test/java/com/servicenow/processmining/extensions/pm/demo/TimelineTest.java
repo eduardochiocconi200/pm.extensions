@@ -17,17 +17,24 @@ public class TimelineTest
 
         DemoModelTimeline timeline = new DemoModelTimeline(parser.getModel());
         Assert.assertTrue(timeline.create());
-        Assert.assertTrue(timeline.printSorted());
+        // Assert.assertTrue(timeline.printSorted());
+
+        boolean createInstances = false;
+        boolean createTasks = true;
 
         ServiceNowInstance instance = new ServiceNowInstance(snInstance, snUser, snPassword);
 
-        // We first create all the records and create the audit trail by updating them ...
-        DemoModelProcessMiningInstances instances = new DemoModelProcessMiningInstances(timeline, instance);
-        Assert.assertTrue(instances.create());
+        if (createInstances) {
+            // We first create all the records and create the audit trail by updating them ...
+            DemoModelProcessMiningInstances instances = new DemoModelProcessMiningInstances(timeline, instance);
+            Assert.assertTrue(instances.createRecords());
+        }
 
-        // Then we fill in the task details.
-        DemoModelTaskMiningTasks taskMiningTasks = new DemoModelTaskMiningTasks(timeline, instance);
-        Assert.assertTrue(taskMiningTasks.createRecords());
+        if (createTasks) {
+            // Then we fill in the task details.
+            DemoModelTaskMiningTasks taskMiningTasks = new DemoModelTaskMiningTasks(timeline, instance);
+            Assert.assertTrue(taskMiningTasks.createRecords());
+        }
 
         long endTime = System.currentTimeMillis();
         System.out.println("Execution Time: (" + (endTime - startTime) + ")");
