@@ -219,7 +219,7 @@ public class DemoModelProcessMiningInstances
         }
     }
 
-    private String getValue(final String value)
+    private String getValue(String value)
     {
         if (value.indexOf(",") > 0) {
             StringTokenizer st = new StringTokenizer(value, ",");
@@ -230,7 +230,7 @@ public class DemoModelProcessMiningInstances
             }
             Random rand = new Random();
             int randomIndex = rand.nextInt(values.size());
-            return values.get(randomIndex);
+            value = values.get(randomIndex);
         }
 
         return value;
