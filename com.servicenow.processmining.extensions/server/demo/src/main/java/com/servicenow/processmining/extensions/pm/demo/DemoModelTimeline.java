@@ -157,9 +157,6 @@ public class DemoModelTimeline
         String instanceId = String.valueOf(createdOn.getMillis());
         String startId = previousTimeUpdates.get("state");
         String endId = updateTimeUpdates.get("state");
-        if (endId == null || (endId != null && endId.equals(""))) {
-            throw new RuntimeException("Creation event (offset = 0) does not have any state specified");
-        }
         DateTime previousTime = createdOn.plusMillis(previousUpdateTime.intValue()*1000).withZone(DateTimeZone.UTC);
         DateTime eventTime = recordUpdateTS;
         InstanceTimelineItem item = new InstanceTimelineItem(instanceId, startId, endId, previousTime, eventTime);
