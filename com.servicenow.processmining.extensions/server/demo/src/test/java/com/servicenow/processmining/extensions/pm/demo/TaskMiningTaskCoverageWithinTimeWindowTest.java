@@ -2,6 +2,7 @@ package com.servicenow.processmining.extensions.pm.demo;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -22,8 +23,9 @@ public class TaskMiningTaskCoverageWithinTimeWindowTest
 
     public void run()
     {
-        Date d = new Date(1748779478000L);
-        Date dUTC = new Date(1748779478000L);
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        Date d = new Date(1748870785000L);
+        Date dUTC = new Date(1748870785000L);
         System.out.println("d: (" + d + ")");
         System.out.println("dUTC: (" + dUTC + ")");
         DateTime previousUpdateTS = new DateTime(2025, 11, 01, 5, 4, 48, DateTimeZone.UTC);
